@@ -1,1 +1,172 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>Cron Expression Generator - SA Labs</title><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script><style>body{font-family:sans-serif;background:#0f172a;color:#f8fafc;padding:2rem;}input{background:#1e293b;color:#f8fafc;border:1px solid #334155;padding:0.5rem;font-size:1.2rem;border-radius:4px;}</style></head><body><h1>Cron Expression Generator</h1><p>Common Crontab Examples:</p><ul><li><code>0 * * * *</code> - Every hour</li><li><code>*/15 * * * *</code> - Every 15 minutes</li><li><code>0 0 * * *</code> - Daily at midnight</li></ul></body></html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cron Expression Generator & Human Parser - SA Labs</title>
+  <meta name="description" content="Generate crontab expressions interactively with human readable explanations and presets. Pure client-side tool by SA Labs.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Cron Expression Generator",
+    "url": "https://salabs.quanxs.com/tools/cron-generator.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All"
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #151d30;
+      --border: #23314d;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --success: #22c55e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+    header { background: rgba(21, 29, 48, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { font-size: 1.25rem; font-weight: 700; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    header nav a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
+    header nav a:hover { color: var(--accent); }
+    .main-container { flex: 1; max-width: 1200px; margin: 0 auto; width: 100%; padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem; }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+    .result-box { text-align: center; background: #090d16; padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 1.5rem; }
+    .cron-expr { font-family: 'Fira Code', monospace; font-size: 2.2rem; font-weight: 700; color: #a7f3d0; margin-bottom: 0.5rem; letter-spacing: 2px; }
+    .cron-desc { font-size: 1rem; color: var(--accent); font-weight: 500; }
+    .grid-builder { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .field-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .field-group label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
+    select, input[type="text"] { background: #090d16; color: var(--text); border: 1px solid var(--border); padding: 0.6rem; border-radius: 6px; font-family: 'Fira Code', monospace; outline: none; }
+    .btn { background: #1e293b; color: var(--text); border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 6px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+    .btn:hover { background: var(--border); color: var(--accent); }
+    .btn-primary { background: var(--accent); color: #0b0f19; border: none; font-weight: 600; }
+    .presets { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+    footer { text-align: center; padding: 1rem; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border); background: var(--card-bg); margin-top: auto; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>⏰ Cron Expression Generator & Builder</h1>
+    <nav><a href="../index.html">← Back to Portal Dashboard</a></nav>
+  </header>
+
+  <main class="main-container">
+    <div class="card">
+      <div class="result-box">
+        <div class="cron-expr" id="cron-result">0 * * * *</div>
+        <div class="cron-desc" id="cron-human-desc">Runs at minute 0 past every hour</div>
+        <div style="margin-top: 1rem;">
+          <button class="btn btn-primary" onclick="copyCron()">📋 Copy Cron Expression</button>
+        </div>
+      </div>
+
+      <h3 style="margin-bottom: 1rem; font-size: 1rem; color: var(--text-muted);">INTERACTIVE BUILDER</h3>
+      <div class="grid-builder">
+        <div class="field-group">
+          <label>MINUTE (0-59)</label>
+          <select id="min-sel" onchange="buildCron()">
+            <option value="0">At minute 0 (:00)</option>
+            <option value="*">Every minute (*)</option>
+            <option value="*/5">Every 5 minutes (*/5)</option>
+            <option value="*/15">Every 15 minutes (*/15)</option>
+            <option value="*/30">Every 30 minutes (*/30)</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label>HOUR (0-23)</label>
+          <select id="hour-sel" onchange="buildCron()">
+            <option value="*">Every hour (*)</option>
+            <option value="0">At 00:00 (Midnight)</option>
+            <option value="12">At 12:00 (Noon)</option>
+            <option value="*/2">Every 2 hours (*/2)</option>
+            <option value="*/6">Every 6 hours (*/6)</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label>DAY OF MONTH (1-31)</label>
+          <select id="dom-sel" onchange="buildCron()">
+            <option value="*">Every day (*)</option>
+            <option value="1">1st of every month</option>
+            <option value="15">15th of every month</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label>MONTH (1-12)</label>
+          <select id="month-sel" onchange="buildCron()">
+            <option value="*">Every month (*)</option>
+            <option value="1">January (1)</option>
+            <option value="6">June (6)</option>
+            <option value="12">December (12)</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label>DAY OF WEEK (0-6)</label>
+          <select id="dow-sel" onchange="buildCron()">
+            <option value="*">Every day of week (*)</option>
+            <option value="0">Sunday only (0)</option>
+            <option value="1">Monday only (1)</option>
+            <option value="5">Friday only (5)</option>
+            <option value="1-5">Monday to Friday (1-5)</option>
+          </select>
+        </div>
+      </div>
+
+      <h3 style="margin-bottom: 0.5rem; font-size: 1rem; color: var(--text-muted);">COMMON PRESETS</h3>
+      <div class="presets">
+        <button class="btn" onclick="applyPreset('*/5 * * * *', 'Every 5 minutes')">Every 5 minutes</button>
+        <button class="btn" onclick="applyPreset('0 * * * *', 'Every hour at minute 0')">Every hour</button>
+        <button class="btn" onclick="applyPreset('0 0 * * *', 'Daily at midnight (00:00)')">Daily at midnight</button>
+        <button class="btn" onclick="applyPreset('0 0 * * 0', 'At 00:00 every Sunday')">Weekly (Sunday)</button>
+        <button class="btn" onclick="applyPreset('0 0 1 * *', 'At 00:00 on the 1st of every month')">Monthly (1st)</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 SA Labs (`salabs.quanxs.com`) - High Performance Client-Side Utilities</p>
+  </footer>
+
+  <script>
+    function buildCron() {
+      const min = document.getElementById('min-sel').value;
+      const hour = document.getElementById('hour-sel').value;
+      const dom = document.getElementById('dom-sel').value;
+      const month = document.getElementById('month-sel').value;
+      const dow = document.getElementById('dow-sel').value;
+
+      const expr = `${min} ${hour} ${dom} ${month} ${dow}`;
+      document.getElementById('cron-result').textContent = expr;
+      updateHumanDesc(expr);
+    }
+
+    function applyPreset(expr, desc) {
+      document.getElementById('cron-result').textContent = expr;
+      document.getElementById('cron-human-desc').textContent = desc;
+    }
+
+    function updateHumanDesc(expr) {
+      if (expr === '0 * * * *') document.getElementById('cron-human-desc').textContent = 'Runs at minute 0 past every hour';
+      else if (expr === '*/5 * * * *') document.getElementById('cron-human-desc').textContent = 'Runs every 5 minutes';
+      else if (expr === '0 0 * * *') document.getElementById('cron-human-desc').textContent = 'Runs daily at 00:00 (Midnight)';
+      else document.getElementById('cron-human-desc').textContent = `Custom schedule (${expr})`;
+    }
+
+    function copyCron() {
+      const expr = document.getElementById('cron-result').textContent;
+      navigator.clipboard.writeText(expr).then(() => alert(`📋 Cron expression '${expr}' copied!`));
+    }
+  </script>
+</body>
+</html>
