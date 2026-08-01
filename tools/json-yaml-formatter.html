@@ -1,1 +1,353 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>JSON / YAML Formatter - SA Labs</title><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script><style>body{font-family:sans-serif;background:#0f172a;color:#f8fafc;padding:2rem;}textarea{width:100%;height:200px;background:#1e293b;color:#f8fafc;border:1px solid #334155;border-radius:4px;padding:0.5rem;}button{background:#38bdf8;color:#0f172a;border:none;padding:0.5rem 1rem;border-radius:4px;font-weight:bold;cursor:pointer;margin:0.5rem 0;}</style></head><body><h1>JSON / YAML Formatter</h1><p>Client-side formatting and conversion.</p><textarea id="input" placeholder="Paste JSON or YAML here..."></textarea><br><button onclick="formatJSON()">Format JSON</button><textarea id="output" readonly></textarea><script>function formatJSON(){try{const obj=JSON.parse(document.getElementById('input').value);document.getElementById('output').value=JSON.stringify(obj,null,2);}catch(e){document.getElementById('output').value='Invalid JSON: '+e.message;}}</script></body></html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON & YAML Formatter & Converter - SA Labs</title>
+  <meta name="description" content="Format, validate, prettify, and convert between JSON and YAML in realtime. Pure client-side tool by SA Labs.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "JSON & YAML Formatter",
+    "url": "https://salabs.quanxs.com/tools/json-yaml-formatter.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All"
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #151d30;
+      --border: #23314d;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --error: #f43f5e;
+      --success: #22c55e;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: rgba(21, 29, 48, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    header nav a:hover { color: var(--accent); }
+
+    .main-container {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      padding: 1.5rem 2rem;
+      max-width: 1800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    @media (max-width: 1024px) {
+      .main-container { grid-template-columns: 1fr; }
+    }
+
+    .pane {
+      display: flex;
+      flex-direction: column;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .pane-header {
+      background: #111827;
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: #1e293b;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: var(--border);
+      color: var(--accent);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0b0f19;
+      border: none;
+      font-weight: 600;
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      color: #fff;
+    }
+
+    textarea {
+      flex: 1;
+      width: 100%;
+      min-height: 550px;
+      background: transparent;
+      color: #a7f3d0;
+      border: none;
+      padding: 1.25rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      resize: none;
+      outline: none;
+    }
+
+    .status-bar {
+      padding: 0.5rem 1.25rem;
+      font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+      background: #090d16;
+      color: var(--success);
+      font-weight: 500;
+    }
+    .status-bar.error {
+      color: var(--error);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>⚡ JSON & YAML Formatter & Converter</h1>
+    <nav>
+      <a href="../index.html">← Back to Portal Dashboard</a>
+    </nav>
+  </header>
+
+  <main class="main-container">
+    <div class="pane">
+      <div class="pane-header">
+        <span>INPUT (JSON or YAML)</span>
+        <div class="toolbar">
+          <button class="btn" onclick="loadSampleJSON()">Sample JSON</button>
+          <button class="btn" onclick="loadSampleYAML()">Sample YAML</button>
+          <button class="btn" onclick="clearInput()">Clear</button>
+        </div>
+      </div>
+      <textarea id="input-text" placeholder="Paste your JSON or YAML here..." oninput="processInput()"></textarea>
+      <div class="status-bar" id="input-status">Ready</div>
+    </div>
+
+    <div class="pane">
+      <div class="pane-header">
+        <span>FORMATTED OUTPUT</span>
+        <div class="toolbar">
+          <button class="btn btn-primary" onclick="formatJSON(2)">JSON Prettify (2sp)</button>
+          <button class="btn" onclick="formatJSON(0)">JSON Minify</button>
+          <button class="btn btn-primary" onclick="convertToYAML()">Convert to YAML</button>
+          <button class="btn" onclick="copyOutput()">📋 Copy Output</button>
+        </div>
+      </div>
+      <textarea id="output-text" readonly placeholder="Result will appear here..."></textarea>
+      <div class="status-bar" id="output-status">Output Standby</div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 SA Labs (`salabs.quanxs.com`) - High Performance Client-Side Utilities</p>
+  </footer>
+
+  <script>
+    const sampleJSON = `{
+  "project": "SA Labs",
+  "version": "2.0.0",
+  "active": true,
+  "features": [
+    "JSON Formatter",
+    "YAML Converter",
+    "Client-Side Fast"
+  ],
+  "author": {
+    "name": "Stella Architect",
+    "role": "Chief Architect"
+  }
+}`;
+
+    const sampleYAML = `project: SA Labs
+version: 2.0.0
+active: true
+features:
+  - JSON Formatter
+  - YAML Converter
+  - Client-Side Fast
+author:
+  name: Stella Architect
+  role: Chief Architect
+`;
+
+    function init() {
+      document.getElementById('input-text').value = sampleJSON;
+      formatJSON(2);
+    }
+
+    function processInput() {
+      const val = document.getElementById('input-text').value.trim();
+      const statusEl = document.getElementById('input-status');
+      if (!val) {
+        statusEl.className = 'status-bar';
+        statusEl.textContent = 'Ready';
+        return;
+      }
+      try {
+        JSON.parse(val);
+        statusEl.className = 'status-bar';
+        statusEl.textContent = '✓ Valid JSON Detected';
+      } catch (e) {
+        try {
+          jsyaml.load(val);
+          statusEl.className = 'status-bar';
+          statusEl.textContent = '✓ Valid YAML Detected';
+        } catch (yErr) {
+          statusEl.className = 'status-bar error';
+          statusEl.textContent = '⚠ Syntax Error: ' + e.message;
+        }
+      }
+    }
+
+    function formatJSON(indent = 2) {
+      const val = document.getElementById('input-text').value.trim();
+      const outEl = document.getElementById('output-text');
+      const outStatus = document.getElementById('output-status');
+
+      try {
+        let obj;
+        try {
+          obj = JSON.parse(val);
+        } catch (e) {
+          obj = jsyaml.load(val);
+        }
+        outEl.value = JSON.stringify(obj, null, indent);
+        outStatus.className = 'status-bar';
+        outStatus.textContent = `✓ Formatted JSON (${indent === 0 ? 'Minified' : indent + ' Spaces'})`;
+      } catch (err) {
+        outEl.value = 'Error: ' + err.message;
+        outStatus.className = 'status-bar error';
+        outStatus.textContent = '❌ Parsing Failed';
+      }
+    }
+
+    function convertToYAML() {
+      const val = document.getElementById('input-text').value.trim();
+      const outEl = document.getElementById('output-text');
+      const outStatus = document.getElementById('output-status');
+
+      try {
+        let obj;
+        try {
+          obj = JSON.parse(val);
+        } catch (e) {
+          obj = jsyaml.load(val);
+        }
+        const yamlStr = jsyaml.dump(obj);
+        outEl.value = yamlStr;
+        outStatus.className = 'status-bar';
+        outStatus.textContent = '✓ Converted to YAML successfully';
+      } catch (err) {
+        outEl.value = 'Error: ' + err.message;
+        outStatus.className = 'status-bar error';
+        outStatus.textContent = '❌ YAML Conversion Failed';
+      }
+    }
+
+    function loadSampleJSON() {
+      document.getElementById('input-text').value = sampleJSON;
+      formatJSON(2);
+    }
+
+    function loadSampleYAML() {
+      document.getElementById('input-text').value = sampleYAML;
+      convertToYAML();
+    }
+
+    function clearInput() {
+      document.getElementById('input-text').value = '';
+      document.getElementById('output-text').value = '';
+      document.getElementById('input-status').textContent = 'Ready';
+      document.getElementById('output-status').textContent = 'Output Standby';
+    }
+
+    function copyOutput() {
+      const outVal = document.getElementById('output-text').value;
+      if (!outVal) return;
+      navigator.clipboard.writeText(outVal).then(() => {
+        alert('📋 Formatted output copied to clipboard!');
+      });
+    }
+
+    window.onload = init;
+  </script>
+</body>
+</html>
