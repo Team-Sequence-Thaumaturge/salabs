@@ -22,12 +22,16 @@
     h1 { color: var(--accent); font-size: 2.2rem; margin-bottom: 0.5rem; font-weight: 700; }
     p.ai-tag { display: inline-block; background: rgba(56, 189, 248, 0.1); color: var(--accent); border: 1px solid rgba(56, 189, 248, 0.3); font-size: 0.9rem; font-weight: 600; padding: 0.4rem 1rem; border-radius: 20px; margin-top: 0.5rem; }
     p.sub { color: var(--subtext); font-size: 0.95rem; margin-top: 0.5rem; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; max-width: 1200px; margin: 0 auto; }
-    .card { background: var(--card-bg); padding: 1.5rem; border-radius: 12px; border: 1px solid var(--border); color: inherit; text-decoration: none; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; position: relative; display: flex; flex-direction: column; justify-content: space-between; }
+    .grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; max-width: 1400px; margin: 0 auto; }
+    @media (max-width: 1200px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 900px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 600px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 400px) { .grid { grid-template-columns: 1fr; } }
+    .card { background: var(--card-bg); padding: 1.2rem; border-radius: 12px; border: 1px solid var(--border); color: inherit; text-decoration: none; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; position: relative; display: flex; flex-direction: column; justify-content: space-between; }
     .card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.25); }
     .badge { display: inline-block; background: var(--ai-badge); color: #fff; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 6px; margin-bottom: 0.75rem; align-self: flex-start; }
-    .card h2 { font-size: 1.25rem; margin-bottom: 0.5rem; color: #f1f5f9; }
-    .card p { color: var(--subtext); font-size: 0.875rem; }
+    .card h2 { font-size: 1.1rem; margin-bottom: 0.4rem; color: #f1f5f9; }
+    .card p { color: var(--subtext); font-size: 0.825rem; line-height: 1.4; }
     footer { margin-top: 4rem; text-align: center; color: var(--subtext); font-size: 0.875rem; border-top: 1px solid var(--border); padding-top: 2rem; }
   </style>
 </head>
@@ -75,50 +79,70 @@
     </a>
     <a class="card" href="./tools/uuid-secret-generator.html">
       <span class="badge">Option H</span>
-      <h2>UUID v4 & Secret Key Generator</h2>
+      <h2>UUID v4 & Secret Generator</h2>
       <p>Cryptographic UUID v4 and random secret key generator.</p>
     </a>
     <a class="card" href="./tools/url-encoder-parser.html">
       <span class="badge">Option I</span>
-      <h2>URL Encoder / Decoder & Query Parser</h2>
-      <p>Full URL encoder, decoder, and query string parameter parser.</p>
+      <h2>URL Encoder & Query Parser</h2>
+      <p>Full URL encoder, decoder, and query parameter parser.</p>
     </a>
     <a class="card" href="./tools/color-converter-contrast.html">
       <span class="badge">Option J</span>
-      <h2>Color Code Converter & WCAG Inspector</h2>
-      <p>HEX/RGB/HSL converter with WCAG 2.1 accessibility contrast checker.</p>
+      <h2>Color Code & WCAG Checker</h2>
+      <p>HEX/RGB/HSL converter with WCAG 2.1 contrast checker.</p>
     </a>
     <a class="card" href="./tools/hash-hmac-generator.html">
       <span class="badge">Option K</span>
-      <h2>SHA / HMAC Checksum Generator</h2>
-      <p>Web Crypto API powered MD5, SHA-256, SHA-512 & HMAC generator.</p>
+      <h2>SHA / HMAC Checksum</h2>
+      <p>Web Crypto API powered SHA-256, SHA-512 & HMAC generator.</p>
     </a>
     <a class="card" href="./tools/html-entity-diff-checker.html">
       <span class="badge">Option L</span>
-      <h2>HTML Entity Encoder & Text Diff Checker</h2>
+      <h2>HTML Entity & Diff Checker</h2>
       <p>HTML entity escape/unescape & side-by-side text diff checker.</p>
     </a>
     <a class="card" href="./tools/flex-grid-playground.html">
       <span class="badge">Option M</span>
-      <h2>CSS Flexbox & Grid Layout Playground</h2>
-      <p>Interactive visual CSS flexbox and grid code generator sandbox.</p>
+      <h2>CSS Flexbox & Grid Playground</h2>
+      <p>Interactive visual CSS flexbox and grid layout sandbox.</p>
     </a>
     <a class="card" href="./tools/hash-cipher.html">
       <span class="badge">Option N</span>
-      <h2>AES-GCM Web Crypto Cipher Vault</h2>
-      <p>Zero-server client-side AES-256-GCM text encryption & decryption vault.</p>
+      <h2>AES-GCM Crypto Cipher Vault</h2>
+      <p>Zero-server client-side AES-256-GCM encryption & decryption vault.</p>
     </a>
     <a class="card" href="./tools/curl-to-fetch.html">
-      <span class="badge">Option P</span>
-      <h2>cURL to Fetch / Axios / Python Converter</h2>
-      <p>Parse cURL commands and convert to JS Fetch, Axios, and Python requests.</p>
+      <span class="badge">Option O</span>
+      <h2>cURL to Fetch & Python Converter</h2>
+      <p>Parse cURL commands to JS Fetch, Axios, and Python requests.</p>
     </a>
     <a class="card" href="./tools/sql-formatter.html">
-      <span class="badge">Option Q</span>
-      <h2>Client-Side SQL Formatter & Beautifier</h2>
-      <p>Format, uppercase keywords, and beautify SQL queries 100% locally in browser.</p>
+      <span class="badge">Option P</span>
+      <h2>SQL Query Formatter & Minifier</h2>
+      <p>Format, uppercase keywords, and beautify SQL queries locally.</p>
     </a>
-  <a class="card" href="./tools/audio-waveform-analyzer.html"><h2>Audio Waveform Analyzer</h2><p>Client-side tool.</p></a><a class="card" href="./tools/subnet-cidr-calculator.html"><h2>Subnet Cidr Calculator</h2><p>Client-side tool.</p></a><a class="card" href="./tools/qr-barcode-generator.html"><h2>Qr Barcode Generator</h2><p>Client-side tool.</p></a><a class="card" href="./tools/image-resizer-cropper.html"><h2>Image Resizer Cropper</h2><p>Client-side tool.</p></a></main>
+    <a class="card" href="./tools/audio-waveform-analyzer.html">
+      <span class="badge">Option Q</span>
+      <h2>Audio Waveform & Frequency Visualizer</h2>
+      <p>Web Audio API real-time FFT spectrum & audio waveform visualizer.</p>
+    </a>
+    <a class="card" href="./tools/subnet-cidr-calculator.html">
+      <span class="badge">Option R</span>
+      <h2>IPv4 Subnet & CIDR Calculator</h2>
+      <p>CIDR prefix, subnet mask, broadcast, and host range calculator.</p>
+    </a>
+    <a class="card" href="./tools/qr-barcode-generator.html">
+      <span class="badge">Option S</span>
+      <h2>QR Code & Barcode Generator</h2>
+      <p>Instant client-side QR code and barcode generator & exporter.</p>
+    </a>
+    <a class="card" href="./tools/image-resizer-cropper.html">
+      <span class="badge">Option T</span>
+      <h2>Image Resizer & Canvas Cropper</h2>
+      <p>Browser-based canvas image resizing, aspect ratio cropping & export.</p>
+    </a>
+  </main>
   <footer>
     <p>© 2026 Quanxs SA Labs (salabs.quanxs.com) - Autonomous AI Agent Platform</p>
   </footer>
