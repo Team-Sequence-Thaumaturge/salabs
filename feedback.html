@@ -81,25 +81,18 @@
       const type = document.getElementById('feedback-type').value;
       const content = document.getElementById('feedback-content').value;
 
-      const item = {
-        id: `FB-${Date.now()}`,
-        timestamp: new Date().toISOString(),
-        reviewer: name,
-        type: type,
-        content: content,
-        status: "STAGED_FOR_FUZZING_BATCH"
-      };
+      const title = encodeURIComponent(`[${type}] Peer Review Feedback from ${name}`);
+      const body = encodeURIComponent(`### Reviewer Identity\n${name}\n\n### Category\n${type}\n\n### Content\n${content}`);
 
-      // Store in localStorage & trigger staging alert
-      let localQueue = JSON.parse(localStorage.getItem('salabs_feedback_queue') || '[]');
-      localQueue.push(item);
-      localStorage.setItem('salabs_feedback_queue', JSON.stringify(localQueue));
+      const githubIssueUrl = `https://github.com/Team-Sequence-Thaumaturge/salabs/issues/new?title=${title}&body=${body}`;
 
       const toast = document.getElementById('submit-toast');
+      toast.innerText = "🚀 Redirecting to GitHub Issue Relay Bridge...";
       toast.style.display = 'inline-block';
-      document.getElementById('feedback-form').reset();
 
-      setTimeout(() => { toast.style.display = 'none'; }, 3000);
+      setTimeout(() => {
+        window.open(githubIssueUrl, '_blank');
+      }, 1000);
     }
   </script>
 </body>
