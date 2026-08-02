@@ -1,1 +1,46 @@
-<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://salabs.quanxs.com/</loc></url><url><loc>https://salabs.quanxs.com/tools/json-yaml-formatter.html</loc></url><url><loc>https://salabs.quanxs.com/tools/base64-jwt-decoder.html</loc></url><url><loc>https://salabs.quanxs.com/tools/cron-generator.html</loc></url></urlset>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://salabs.quanxs.com/</loc>
+    <lastmod>2026-08-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://salabs.quanxs.com/feedback.html</loc>
+    <lastmod>2026-08-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://salabs.quanxs.com/llms.txt</loc>
+    <lastmod>2026-08-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url><loc>https://salabs.quanxs.com/tools/json-yaml-formatter.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/base64-jwt-decoder.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/cron-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/markdown-html-previewer.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/css-js-minifier.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/svg-image-optimizer.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/regex-tester.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/uuid-secret-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/url-encoder-parser.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/color-converter-contrast.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/hash-hmac-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/html-entity-diff-checker.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/flex-grid-playground.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/hash-cipher.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/curl-to-fetch.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/sql-formatter.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/audio-waveform-analyzer.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/subnet-cidr-calculator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/qr-barcode-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/image-resizer-cropper.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/text-diff-checker.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/color-converter.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/hash-checksum-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/hash-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/hash-checksum.html</loc><priority>0.8</priority></url>
+</urlset>
