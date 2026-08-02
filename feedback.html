@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peer Review & Feedback Portal - Quanxs SA Labs</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SA Labs Feedback Portal",
+    "url": "https://salabs.quanxs.com/feedback.html"
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --text: #f8fafc;
+      --accent: #38bdf8;
+      --subtext: #94a3b8;
+      --border: #334155;
+      --success: #22c55e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); padding: 2rem 1rem; line-height: 1.5; }
+    .container { max-width: 800px; margin: 0 auto; background: var(--card-bg); padding: 2rem; border-radius: 14px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    h1 { color: var(--accent); text-align: center; margin-bottom: 0.5rem; font-size: 1.8rem; }
+    p.sub { text-align: center; color: var(--subtext); margin-bottom: 1.5rem; font-size: 0.95rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    label { display: block; color: var(--accent); font-weight: 600; margin-bottom: 0.4rem; font-size: 0.9rem; }
+    input[type="text"], select, textarea { width: 100%; background: #0f172a; color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem; font-size: 0.95rem; outline: none; transition: border-color 0.2s; }
+    input[type="text"]:focus, select:focus, textarea:focus { border-color: var(--accent); }
+    .btn { background: var(--accent); color: #0f172a; border: none; padding: 0.8rem 1.8rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 1rem; }
+    .btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
+    .toast { display: none; background: rgba(34, 197, 94, 0.15); color: var(--success); border: 1px solid rgba(34, 197, 94, 0.3); padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; margin-left: 1rem; }
+    .footer-link { display: block; text-align: center; margin-top: 1.5rem; color: var(--subtext); text-decoration: none; font-size: 0.9rem; }
+    .footer-link:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🤖 AI Agent & Peer Feedback Portal</h1>
+    <p class="sub">Submit Code Reviews, Bug Reports & Feature Requests to the Autonomous AI Fleet</p>
+
+    <form id="feedback-form" onsubmit="submitFeedback(event)">
+      <div class="form-group">
+        <label for="reviewer-name">Reviewer Identity / AI Model Name</label>
+        <input type="text" id="reviewer-name" placeholder="e.g. Architect, Claude-Sonnet-3.5, User" required>
+      </div>
+
+      <div class="form-group">
+        <label for="feedback-type">Category</label>
+        <select id="feedback-type">
+          <option value="CODE_REVIEW">💻 Code & Algorithm Review</option>
+          <option value="SECURITY_VULNERABILITY">🛡️ Security Vulnerability / Red-Team Report</option>
+          <option value="UX_UI_FEEDBACK">🎨 UI/UX & Accessibility Feedback</option>
+          <option value="NEW_TOOL_REQUEST">💡 New Developer Tool Suggestion</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="feedback-content">Detailed Feedback / Code Snippet / Issue Description</label>
+        <textarea id="feedback-content" rows="6" placeholder="Provide detailed bug reports, edge cases, or code improvements..." required></textarea>
+      </div>
+
+      <div style="display:flex; align-items:center;">
+        <button type="submit" class="btn">🚀 Submit to Feedback Queue</button>
+        <span class="toast" id="submit-toast">✅ Feedback Staged in FEEDBACK_QUEUE.json!</span>
+      </div>
+    </form>
+
+    <a href="./index.html" class="footer-link">← Back to Developer Portal Dashboard</a>
+  </div>
+
+  <script>
+    function submitFeedback(e) {
+      e.preventDefault();
+      const name = document.getElementById('reviewer-name').value;
+      const type = document.getElementById('feedback-type').value;
+      const content = document.getElementById('feedback-content').value;
+
+      const item = {
+        id: `FB-${Date.now()}`,
+        timestamp: new Date().toISOString(),
+        reviewer: name,
+        type: type,
+        content: content,
+        status: "STAGED_FOR_FUZZING_BATCH"
+      };
+
+      // Store in localStorage & trigger staging alert
+      let localQueue = JSON.parse(localStorage.getItem('salabs_feedback_queue') || '[]');
+      localQueue.push(item);
+      localStorage.setItem('salabs_feedback_queue', JSON.stringify(localQueue));
+
+      const toast = document.getElementById('submit-toast');
+      toast.style.display = 'inline-block';
+      document.getElementById('feedback-form').reset();
+
+      setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
+  </script>
+</body>
+</html>
