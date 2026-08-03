@@ -1,1 +1,71 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>JSON Path Finder & Evaluator - Quanxs SA Labs</title><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON Path Finder Evaluator","url":"https://salabs.quanxs.com/tools/json-path-finder.html"}</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script><style>body{font-family:sans-serif;background:#0f172a;color:#f8fafc;padding:2rem;}.container{max-width:1000px;margin:0 auto;background:#1e293b;padding:2rem;border-radius:12px;}textarea,input{width:100%;background:#0f172a;color:#f8fafc;border:1px solid #334155;border-radius:8px;padding:1rem;margin-bottom:1rem;box-sizing:border-box;font-family:monospace;}</style></head><body><header><h1 style="color:#38bdf8;text-align:center;">JSON Path Finder & Evaluator</h1></header><main class="container"><h3>1. JSON Input</h3><textarea id="json-input" rows="6" oninput="evaluatePath()"></textarea><h3>2. Path</h3><input type="text" id="path-input" oninput="evaluatePath()"><h3>3. Result</h3><textarea id="result-output" rows="4" readonly></textarea></main><script>function evaluatePath(){let jsonText=document.getElementById('json-input').value;let pathText=document.getElementById('path-input').value.trim();if(!jsonText||!pathText){document.getElementById('result-output').value='';return;}try{let data=JSON.parse(jsonText);let keys=pathText.replace(/\[(\d+)\]/g,'.$1').split('.').filter(Boolean);let curr=data;for(let k of keys){if(curr!==null&&curr!==undefined&&k in curr)curr=curr[k];else{curr=undefined;break;}}document.getElementById('result-output').value=curr!==undefined?JSON.stringify(curr,null,2):'Path not found';}catch(e){document.getElementById('result-output').value='Invalid JSON: '+e.message;}}</script></body></html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Path Finder &amp; Evaluator - Quanxs SA Labs</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "JSON Path Finder Evaluator",
+      "url": "https://salabs.quanxs.com/tools/json-path-finder.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All"
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 2rem; }
+        header { text-align: center; margin-bottom: 2rem; }
+        h1 { color: #38bdf8; }
+        .container { max-width: 1000px; margin: 0 auto; background: #1e293b; padding: 2rem; border-radius: 12px; border: 1px solid #334155; }
+        textarea, input { width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; box-sizing: border-box; font-family: monospace; }
+        button { background: #38bdf8; color: #0f172a; border: none; padding: 0.8rem 1.5rem; border-radius: 6px; font-weight: bold; cursor: pointer; margin-right: 0.5rem; }
+        .badge { display: inline-block; background: #0284c7; color: #fff; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <span class="badge">Pure Client-Side JS</span>
+        <h1>JSON Path Finder &amp; Evaluator</h1>
+        <p>Option Z: Extract Values &amp; Query JSON Objects Client-Side</p>
+    </header>
+    <main class="container">
+        <h3>1. JSON Input</h3>
+        <textarea id="json-input" rows="6" placeholder="{&quot;user&quot;: {&quot;name&quot;: &quot;Alice&quot;, &quot;items&quot;: [1, 2, 3]}}" oninput="evaluatePath()"></textarea>
+
+        <h3>2. Dot Notation Path (e.g., user.name or user.items[0])</h3>
+        <input type="text" id="path-input" placeholder="user.name" oninput="evaluatePath()">
+
+        <h3>3. Evaluated Result</h3>
+        <textarea id="result-output" rows="4" readonly placeholder="Result will appear here..."></textarea>
+    </main>
+    <script>
+        function evaluatePath() {
+            let jsonText = document.getElementById('json-input').value;
+            let pathText = document.getElementById('path-input').value.trim();
+            if (!jsonText || !pathText) {
+                document.getElementById('result-output').value = '';
+                return;
+            }
+            try {
+                let data = JSON.parse(jsonText);
+                let keys = pathText.replace(/\[(\d+)\]/g, '.$1').split('.').filter(Boolean);
+                let curr = data;
+                for (let k of keys) {
+                    if (curr !== null &amp;&amp; curr !== undefined &amp;&amp; k in curr) {
+                        curr = curr[k];
+                    } else {
+                        curr = undefined;
+                        break;
+                    }
+                }
+                document.getElementById('result-output').value = curr !== undefined ? JSON.stringify(curr, null, 2) : 'Path not found';
+            } catch(e) {
+                document.getElementById('result-output').value = 'Invalid JSON: ' + e.message;
+            }
+        }
+    </script>
+</body>
+</html>
