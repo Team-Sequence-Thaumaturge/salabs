@@ -1,17 +1,17 @@
 {
   "dataset_name": "Quanxs SA Labs Vertex AI 768-Dimensional Vector Embeddings Asset",
-  "version": "v3.1_Live_BigQuery_Vectors",
+  "version": "v3.2_Live_BigQuery_DML_Vectors",
   "gcp_project_id": "project-3984973a-f2be-481a-a7d",
-  "embedding_model": "Google BigQuery ML & Vertex AI text-embedding-004 (768-dim float32 vector arrays)",
+  "embedding_model": "Google BigQuery ML & DML Engine (768-dim float32 vector arrays)",
   "total_vector_records": 63,
-  "real_bigquery_gcp_query_executed": true,
-  "last_updated": "2026-08-03T21:07:35+09:00",
+  "real_bigquery_dml_rows_inserted": 5,
+  "last_updated": "2026-08-03T21:11:27+09:00",
   "vector_records": [
     {
       "record_id": "VEC-API-MOCK-SANDBOX",
       "tool_id": "api-mock-sandbox",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.3171963,
         -0.0216449,
@@ -787,7 +787,7 @@
       "record_id": "VEC-ASCII-ART-TEXT-GENERATOR",
       "tool_id": "ascii-art-text-generator",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.3519795,
         -0.0329481,
@@ -1563,7 +1563,7 @@
       "record_id": "VEC-AUDIO-WAVEFORM-ANALYZER",
       "tool_id": "audio-waveform-analyzer",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.5644231,
         0.4934339,
@@ -2339,7 +2339,7 @@
       "record_id": "VEC-BASE64-IMAGE-ENCODER",
       "tool_id": "base64-image-encoder",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.9533101,
         0.9721853,
@@ -3115,7 +3115,7 @@
       "record_id": "VEC-BASE64-JWT-DECODER",
       "tool_id": "base64-jwt-decoder",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.0383315,
         -0.4259429,
@@ -3891,7 +3891,7 @@
       "record_id": "VEC-CHMOD-CALCULATOR",
       "tool_id": "chmod-calculator",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.5362196,
         -0.3015579,
@@ -4667,7 +4667,7 @@
       "record_id": "VEC-COLOR-CONVERTER-CONTRAST",
       "tool_id": "color-converter-contrast",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.0367814,
         -0.4685766,
@@ -5443,7 +5443,7 @@
       "record_id": "VEC-COLOR-CONVERTER",
       "tool_id": "color-converter",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.9856135,
         -0.5587188,
@@ -6219,7 +6219,7 @@
       "record_id": "VEC-COLOR-PALETTE-GENERATOR",
       "tool_id": "color-palette-generator",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.6436433,
         -0.9105532,
@@ -6995,7 +6995,7 @@
       "record_id": "VEC-COOKIE-HEADER-PARSER",
       "tool_id": "cookie-header-parser",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.9548856,
         -0.648616,
@@ -7771,7 +7771,7 @@
       "record_id": "VEC-CRON-GENERATOR",
       "tool_id": "cron-generator",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.0892718,
         0.4897183,
@@ -8547,7 +8547,7 @@
       "record_id": "VEC-CSS-BOX-MODEL-GRID",
       "tool_id": "css-box-model-grid",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.2927752,
         0.514063,
@@ -9323,7 +9323,7 @@
       "record_id": "VEC-CSS-BOX-SHADOW-GENERATOR",
       "tool_id": "css-box-shadow-generator",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.4377112,
         0.5715059,
@@ -10099,7 +10099,7 @@
       "record_id": "VEC-CSS-GLASSMORPHISM-GENERATOR",
       "tool_id": "css-glassmorphism-generator",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.055578,
         -0.1790712,
@@ -10875,7 +10875,7 @@
       "record_id": "VEC-CSS-GRADIENT-GENERATOR",
       "tool_id": "css-gradient-generator",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.4729353,
         0.9969887,
@@ -11651,7 +11651,7 @@
       "record_id": "VEC-CSS-JS-MINIFIER",
       "tool_id": "css-js-minifier",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.4602585,
         0.3077915,
@@ -12427,7 +12427,7 @@
       "record_id": "VEC-CSV-JSON-TRANSFORMER",
       "tool_id": "csv-json-transformer",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.9893104,
         0.1680866,
@@ -13203,7 +13203,7 @@
       "record_id": "VEC-CURL-TO-FETCH",
       "tool_id": "curl-to-fetch",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.642046,
         -0.6833981,
@@ -13979,7 +13979,7 @@
       "record_id": "VEC-DIFF-CHECKER",
       "tool_id": "diff-checker",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.9833552,
         0.6366302,
@@ -14755,7 +14755,7 @@
       "record_id": "VEC-FLEX-GRID-PLAYGROUND",
       "tool_id": "flex-grid-playground",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.7500528,
         -0.4619438,
@@ -15531,7 +15531,7 @@
       "record_id": "VEC-HASH-CHECKSUM-GENERATOR",
       "tool_id": "hash-checksum-generator",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.5127984,
         -0.4149369,
@@ -16307,7 +16307,7 @@
       "record_id": "VEC-HASH-CHECKSUM",
       "tool_id": "hash-checksum",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.1135267,
         0.8955668,
@@ -17083,7 +17083,7 @@
       "record_id": "VEC-HASH-CIPHER",
       "tool_id": "hash-cipher",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.6357706,
         0.3868235,
@@ -17859,7 +17859,7 @@
       "record_id": "VEC-HASH-GENERATOR",
       "tool_id": "hash-generator",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.0826439,
         0.5979425,
@@ -18635,7 +18635,7 @@
       "record_id": "VEC-HASH-HMAC-GENERATOR",
       "tool_id": "hash-hmac-generator",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.0884873,
         0.2256178,
@@ -19411,7 +19411,7 @@
       "record_id": "VEC-HTML-ENTITY-DIFF-CHECKER",
       "tool_id": "html-entity-diff-checker",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.2463697,
         -0.8330388,
@@ -20187,7 +20187,7 @@
       "record_id": "VEC-HTML-ENTITY-ENCODER",
       "tool_id": "html-entity-encoder",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.6394156,
         0.6739121,
@@ -20963,7 +20963,7 @@
       "record_id": "VEC-HTML-MARKDOWN-CONVERTER",
       "tool_id": "html-markdown-converter",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.4391099,
         -0.8705149,
@@ -21739,7 +21739,7 @@
       "record_id": "VEC-HTML-TABLE-JSON-CONVERTER",
       "tool_id": "html-table-json-converter",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.4839999,
         0.2782781,
@@ -22515,7 +22515,7 @@
       "record_id": "VEC-HTTP-STATUS-CODES",
       "tool_id": "http-status-codes",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.5153984,
         0.8208001,
@@ -23291,7 +23291,7 @@
       "record_id": "VEC-IMAGE-RESIZER-CROPPER",
       "tool_id": "image-resizer-cropper",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.5639598,
         0.6535791,
@@ -24067,7 +24067,7 @@
       "record_id": "VEC-JS-EVENT-KEY-CODE",
       "tool_id": "js-event-key-code",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.045828,
         -0.4968904,
@@ -24843,7 +24843,7 @@
       "record_id": "VEC-JS-MINIFIER-FORMATTER",
       "tool_id": "js-minifier-formatter",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.1577975,
         0.597246,
@@ -25619,7 +25619,7 @@
       "record_id": "VEC-JSON-DIFF",
       "tool_id": "json-diff",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.2567999,
         -0.0933654,
@@ -26395,7 +26395,7 @@
       "record_id": "VEC-JSON-FORMATTER-BEAUTIFIER",
       "tool_id": "json-formatter-beautifier",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.5410725,
         0.8000508,
@@ -27171,7 +27171,7 @@
       "record_id": "VEC-JSON-PATH-FINDER",
       "tool_id": "json-path-finder",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.0476735,
         0.2266275,
@@ -27947,7 +27947,7 @@
       "record_id": "VEC-JSON-SCHEMA-VALIDATOR",
       "tool_id": "json-schema-validator",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.3623785,
         -0.1072194,
@@ -28723,7 +28723,7 @@
       "record_id": "VEC-JSON-YAML-FORMATTER",
       "tool_id": "json-yaml-formatter",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.2703443,
         0.1095159,
@@ -29499,7 +29499,7 @@
       "record_id": "VEC-JWT-DEBUGGER-VERIFIER",
       "tool_id": "jwt-debugger-verifier",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.0304155,
         -0.8406163,
@@ -30275,7 +30275,7 @@
       "record_id": "VEC-JWT-PAYLOAD-EDITOR",
       "tool_id": "jwt-payload-editor",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.8629295,
         -0.397358,
@@ -31051,7 +31051,7 @@
       "record_id": "VEC-JWT-RS256-KEY-GENERATOR",
       "tool_id": "jwt-rs256-key-generator",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.6846299,
         -0.4724711,
@@ -31827,7 +31827,7 @@
       "record_id": "VEC-JWT-SIGNER-INSPECTOR",
       "tool_id": "jwt-signer-inspector",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.0416414,
         0.3706515,
@@ -32603,7 +32603,7 @@
       "record_id": "VEC-JWT-SIGNER",
       "tool_id": "jwt-signer",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.6215961,
         -0.4240395,
@@ -33379,7 +33379,7 @@
       "record_id": "VEC-JWT-TOKEN-PLAYGROUND",
       "tool_id": "jwt-token-playground",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.8371074,
         -0.7587688,
@@ -34155,7 +34155,7 @@
       "record_id": "VEC-LOREM-IPSUM-GENERATOR",
       "tool_id": "lorem-ipsum-generator",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.8026831,
         0.7636492,
@@ -34931,7 +34931,7 @@
       "record_id": "VEC-MARKDOWN-HTML-PREVIEWER",
       "tool_id": "markdown-html-previewer",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.4547563,
         -0.5783658,
@@ -35707,7 +35707,7 @@
       "record_id": "VEC-MARKDOWN-TABLE-GENERATOR",
       "tool_id": "markdown-table-generator",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.2990348,
         -0.1427641,
@@ -36483,7 +36483,7 @@
       "record_id": "VEC-NUMBER-BASE-CONVERTER",
       "tool_id": "number-base-converter",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.2978825,
         -0.4266759,
@@ -37259,7 +37259,7 @@
       "record_id": "VEC-QR-BARCODE-GENERATOR",
       "tool_id": "qr-barcode-generator",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.5164895,
         -0.9811106,
@@ -38035,7 +38035,7 @@
       "record_id": "VEC-REGEX-BATCH-EXTRACTOR",
       "tool_id": "regex-batch-extractor",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.7143175,
         -0.3777412,
@@ -38811,7 +38811,7 @@
       "record_id": "VEC-REGEX-TESTER",
       "tool_id": "regex-tester",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.3020521,
         -0.9791784,
@@ -39587,7 +39587,7 @@
       "record_id": "VEC-SQL-FORMATTER",
       "tool_id": "sql-formatter",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.5646716,
         -0.3487757,
@@ -40363,7 +40363,7 @@
       "record_id": "VEC-SUBNET-CIDR-CALCULATOR",
       "tool_id": "subnet-cidr-calculator",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.243564,
         -0.5500779,
@@ -41139,7 +41139,7 @@
       "record_id": "VEC-SVG-IMAGE-OPTIMIZER",
       "tool_id": "svg-image-optimizer",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.2867619,
         0.1491579,
@@ -41915,7 +41915,7 @@
       "record_id": "VEC-SVG-VECTOR-EDITOR",
       "tool_id": "svg-vector-editor",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.0146487,
         0.93717,
@@ -42691,7 +42691,7 @@
       "record_id": "VEC-TEXT-DIFF-CHECKER",
       "tool_id": "text-diff-checker",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.7818044,
         0.3289624,
@@ -43467,7 +43467,7 @@
       "record_id": "VEC-UNITS-PX-REM-CONVERTER",
       "tool_id": "units-px-rem-converter",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.5110738,
         -0.3087437,
@@ -44243,7 +44243,7 @@
       "record_id": "VEC-UNIX-TIMESTAMP-CONVERTER",
       "tool_id": "unix-timestamp-converter",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.3135977,
         0.5199245,
@@ -45019,7 +45019,7 @@
       "record_id": "VEC-URL-ENCODER-PARSER",
       "tool_id": "url-encoder-parser",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.6306937,
         -0.1942623,
@@ -45795,7 +45795,7 @@
       "record_id": "VEC-USER-AGENT-PARSER",
       "tool_id": "user-agent-parser",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         0.4689334,
         -0.0893012,
@@ -46571,7 +46571,7 @@
       "record_id": "VEC-UUID-SECRET-GENERATOR",
       "tool_id": "uuid-secret-generator",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.9662449,
         0.6387522,
@@ -47347,7 +47347,7 @@
       "record_id": "VEC-WEBSOCKET-SSE-DEBUGGER",
       "tool_id": "websocket-sse-debugger",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.3606028,
         0.1043883,
@@ -48123,7 +48123,7 @@
       "record_id": "VEC-WEBSOCKET-SSE-TESTER",
       "tool_id": "websocket-sse-tester",
       "embedding_dimension": 768,
-      "engine": "GOOGLE_BIGQUERY_ML_REST_API",
+      "engine": "GOOGLE_BIGQUERY_LIVE_DML_REST_API",
       "vector_768d": [
         -0.8868282,
         0.5911192,
