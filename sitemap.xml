@@ -55,6 +55,7 @@
   <url><loc>https://salabs.quanxs.com/tools/js-minifier-formatter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-object-diff-checker.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-regex-code-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/js-regex-escape-tool.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/json-diff.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/json-escape-unescape.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/json-formatter-beautifier.html</loc><priority>0.8</priority></url>
@@ -94,6 +95,7 @@
   <url><loc>https://salabs.quanxs.com/tools/svg-vector-editor.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/text-case-slug-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/text-diff-checker.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/time-zone-converter-clock.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/totp-2fa-authenticator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/units-px-rem-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/unix-timestamp-converter.html</loc><priority>0.8</priority></url>
