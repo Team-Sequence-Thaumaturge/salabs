@@ -17,6 +17,7 @@
   <url><loc>https://salabs.quanxs.com/tools/cron-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-box-model-grid.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-box-shadow-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/css-flexbox-playground.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-glassmorphism-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-gradient-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-grid-layout-generator.html</loc><priority>0.8</priority></url>
@@ -46,6 +47,7 @@
   <url><loc>https://salabs.quanxs.com/tools/json-formatter-beautifier.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/json-path-finder.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/json-schema-validator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/json-to-csv-exporter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/json-yaml-formatter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/jwt-debugger-verifier.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/jwt-payload-editor.html</loc><priority>0.8</priority></url>
@@ -62,6 +64,7 @@
   <url><loc>https://salabs.quanxs.com/tools/regex-batch-extractor.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/regex-cheat-sheet-tester.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/regex-tester.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/sha256-hash-calculator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/sql-formatter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/string-case-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/subnet-cidr-calculator.html</loc><priority>0.8</priority></url>
