@@ -9,6 +9,7 @@
   <url><loc>https://salabs.quanxs.com/tools/base64-image-encoder.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/base64-jwt-decoder.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/chmod-calculator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/color-contrast-accessibility-checker.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/color-converter-contrast.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/color-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/color-palette-generator.html</loc><priority>0.8</priority></url>
@@ -55,9 +56,11 @@
   <url><loc>https://salabs.quanxs.com/tools/lorem-ipsum-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/markdown-html-previewer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/markdown-table-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/markdown-to-pdf-exporter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/number-base-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/qr-barcode-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/regex-batch-extractor.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/regex-cheat-sheet-tester.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/regex-tester.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/sql-formatter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/string-case-converter.html</loc><priority>0.8</priority></url>
