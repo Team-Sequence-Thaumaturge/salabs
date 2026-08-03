@@ -58,6 +58,7 @@
   <url><loc>https://salabs.quanxs.com/tools/regex-batch-extractor.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/regex-tester.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/sql-formatter.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/string-case-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/subnet-cidr-calculator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/svg-image-optimizer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/svg-vector-editor.html</loc><priority>0.8</priority></url>
@@ -69,4 +70,6 @@
   <url><loc>https://salabs.quanxs.com/tools/uuid-secret-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/websocket-sse-debugger.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/websocket-sse-tester.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/xml-json-converter.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/yaml-json-converter.html</loc><priority>0.8</priority></url>
 </urlset>
