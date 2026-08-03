@@ -1,8 +1,5 @@
-# Quanxs SA Labs - AI Search Engine Optimization (GEO) & LLM Index
-Title: Quanxs SA Labs Developer Utilities
-Domain: salabs.quanxs.com
-Description: High-performance 100% Client-Side Pure JS Developer Utilities.
-
-## Available Tools
-- Option AB: SVG Vector Editor & Path Inspector (https://salabs.quanxs.com/tools/svg-vector-editor.html)
-- Option AC: JWT Token Signer & Claims Inspector (https://salabs.quanxs.com/tools/jwt-signer-inspector.html)
+# Quanxs SA Labs - AI Search Engine Index
+> Target Domain: https://salabs.quanxs.com/
+- JSON Diff: https://salabs.quanxs.com/tools/json-diff.html
+- JWT Secret Signer: https://salabs.quanxs.com/tools/jwt-signer.html
+- Glassmorphism Generator: https://salabs.quanxs.com/tools/css-glassmorphism-generator.html
