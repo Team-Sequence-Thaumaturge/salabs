@@ -23,7 +23,9 @@
   <url><loc>https://salabs.quanxs.com/tools/csv-json-transformer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/curl-to-fetch.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/diff-checker.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/dns-lookup-record-parser.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/flex-grid-playground.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/hash-bcrypt-argon-tester.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/hash-checksum-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/hash-checksum.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/hash-cipher.html</loc><priority>0.8</priority></url>
@@ -63,6 +65,7 @@
   <url><loc>https://salabs.quanxs.com/tools/svg-image-optimizer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/svg-vector-editor.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/text-diff-checker.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/totp-2fa-authenticator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/units-px-rem-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/unix-timestamp-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/url-encoder-parser.html</loc><priority>0.8</priority></url>
