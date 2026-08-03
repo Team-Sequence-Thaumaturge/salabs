@@ -21,6 +21,7 @@
   <url><loc>https://salabs.quanxs.com/tools/css-box-shadow-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-clamp-calculator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-flexbox-playground.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/css-font-typography-tester.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-glassmorphism-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-gradient-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-grid-layout-generator.html</loc><priority>0.8</priority></url>
@@ -40,6 +41,7 @@
   <url><loc>https://salabs.quanxs.com/tools/hash-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/hash-hmac-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/hash-sha512-keccak.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/html-canvas-signature-pad.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/html-entity-diff-checker.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/html-entity-encoder.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/html-formatting-sanitizer.html</loc><priority>0.8</priority></url>
@@ -52,6 +54,7 @@
   <url><loc>https://salabs.quanxs.com/tools/js-event-key-code.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-minifier-formatter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-object-diff-checker.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/js-regex-code-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/json-diff.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/json-escape-unescape.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/json-formatter-beautifier.html</loc><priority>0.8</priority></url>
@@ -80,6 +83,7 @@
   <url><loc>https://salabs.quanxs.com/tools/regex-tester.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/regex-visualizer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/sacm-coder-middleware-studio.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/sacp_chat_studio.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/sha256-hash-calculator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/sql-formatter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/sql-query-builder.html</loc><priority>0.8</priority></url>
