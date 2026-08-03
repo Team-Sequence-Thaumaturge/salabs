@@ -21,10 +21,12 @@
   <url><loc>https://salabs.quanxs.com/tools/hash-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/hash-hmac-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/html-entity-diff-checker.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/html-table-json-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/image-resizer-cropper.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/json-diff.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/json-schema-validator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/json-yaml-formatter.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/jwt-debugger-verifier.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/jwt-signer-inspector.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/jwt-signer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/jwt-token-playground.html</loc><priority>0.8</priority></url>
