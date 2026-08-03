@@ -8,6 +8,7 @@
   <url><loc>https://salabs.quanxs.com/tools/audio-bpm-metronome.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/audio-noise-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/audio-tone-frequency-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/audio-voice-recorder.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/audio-waveform-analyzer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/base64-image-encoder.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/base64-jwt-decoder.html</loc><priority>0.8</priority></url>
@@ -20,6 +21,7 @@
   <url><loc>https://salabs.quanxs.com/tools/color-rgb-hsl-picker.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/cookie-header-parser.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/cron-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/crypto-random-token-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-animation-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-animation-keyframe-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-border-radius-generator.html</loc><priority>0.8</priority></url>
@@ -56,6 +58,7 @@
   <url><loc>https://salabs.quanxs.com/tools/hex-hexdump-viewer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/html-canvas-chart-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/html-canvas-drawing-pad.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/html-canvas-particle-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/html-canvas-signature-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/html-canvas-signature-pad.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/html-entity-diff-checker.html</loc><priority>0.8</priority></url>
