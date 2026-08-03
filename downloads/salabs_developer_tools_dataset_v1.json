@@ -1,0 +1,1025 @@
+{
+  "dataset_name": "Quanxs SA Labs Pure JS Developer Utility Code Asset Benchmark",
+  "version": "v6.0_HandsFree_12Day_Engine",
+  "total_tools": 78,
+  "total_mined_functions": 161,
+  "last_updated": "2026-08-03T23:09:55+09:00",
+  "items": [
+    {
+      "tool_id": "api-mock-sandbox",
+      "filename": "api-mock-sandbox.html",
+      "size_bytes": 2301,
+      "public_url": "https://salabs.quanxs.com/tools/api-mock-sandbox.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "runMockRequest"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "ascii-art-text-generator",
+      "filename": "ascii-art-text-generator.html",
+      "size_bytes": 2460,
+      "public_url": "https://salabs.quanxs.com/tools/ascii-art-text-generator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "renderASCII"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "audio-waveform-analyzer",
+      "filename": "audio-waveform-analyzer.html",
+      "size_bytes": 2701,
+      "public_url": "https://salabs.quanxs.com/tools/audio-waveform-analyzer.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 5,
+      "functions": [
+        "render",
+        "loadAudio",
+        "pauseAudio",
+        "playAudio",
+        "drawVisualizer"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "base64-image-encoder",
+      "filename": "base64-image-encoder.html",
+      "size_bytes": 2827,
+      "public_url": "https://salabs.quanxs.com/tools/base64-image-encoder.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "encodeImg"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "base64-jwt-decoder",
+      "filename": "base64-jwt-decoder.html",
+      "size_bytes": 1213,
+      "public_url": "https://salabs.quanxs.com/tools/base64-jwt-decoder.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "decodeStr"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "chmod-calculator",
+      "filename": "chmod-calculator.html",
+      "size_bytes": 2587,
+      "public_url": "https://salabs.quanxs.com/tools/chmod-calculator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "calcChmod"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "color-contrast-accessibility-checker",
+      "filename": "color-contrast-accessibility-checker.html",
+      "size_bytes": 2436,
+      "public_url": "https://salabs.quanxs.com/tools/color-contrast-accessibility-checker.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "getLum",
+        "calcContrast"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "color-converter-contrast",
+      "filename": "color-converter-contrast.html",
+      "size_bytes": 2935,
+      "public_url": "https://salabs.quanxs.com/tools/color-converter-contrast.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 4,
+      "functions": [
+        "syncColorInput",
+        "updateColors",
+        "getLuminance",
+        "calculateContrastRatio"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "color-converter",
+      "filename": "color-converter.html",
+      "size_bytes": 1920,
+      "public_url": "https://salabs.quanxs.com/tools/color-converter.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "update"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "color-palette-generator",
+      "filename": "color-palette-generator.html",
+      "size_bytes": 2392,
+      "public_url": "https://salabs.quanxs.com/tools/color-palette-generator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "randomHex",
+        "generatePalette"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "cookie-header-parser",
+      "filename": "cookie-header-parser.html",
+      "size_bytes": 1550,
+      "public_url": "https://salabs.quanxs.com/tools/cookie-header-parser.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "parseCookies"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "cron-generator",
+      "filename": "cron-generator.html",
+      "size_bytes": 710,
+      "public_url": "https://salabs.quanxs.com/tools/cron-generator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 0,
+      "functions": [],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "css-box-model-grid",
+      "filename": "css-box-model-grid.html",
+      "size_bytes": 1413,
+      "public_url": "https://salabs.quanxs.com/tools/css-box-model-grid.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 0,
+      "functions": [],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "css-box-shadow-generator",
+      "filename": "css-box-shadow-generator.html",
+      "size_bytes": 4054,
+      "public_url": "https://salabs.quanxs.com/tools/css-box-shadow-generator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "updateShadow"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "css-flexbox-playground",
+      "filename": "css-flexbox-playground.html",
+      "size_bytes": 2230,
+      "public_url": "https://salabs.quanxs.com/tools/css-flexbox-playground.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "updateFlex"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "css-glassmorphism-generator",
+      "filename": "css-glassmorphism-generator.html",
+      "size_bytes": 2301,
+      "public_url": "https://salabs.quanxs.com/tools/css-glassmorphism-generator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "updateGlass"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "css-gradient-generator",
+      "filename": "css-gradient-generator.html",
+      "size_bytes": 2224,
+      "public_url": "https://salabs.quanxs.com/tools/css-gradient-generator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "updateGradient"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "css-grid-layout-generator",
+      "filename": "css-grid-layout-generator.html",
+      "size_bytes": 1919,
+      "public_url": "https://salabs.quanxs.com/tools/css-grid-layout-generator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "updateGrid"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "css-js-minifier",
+      "filename": "css-js-minifier.html",
+      "size_bytes": 8315,
+      "public_url": "https://salabs.quanxs.com/tools/css-js-minifier.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 9,
+      "functions": [
+        "copyOutput",
+        "updateStats",
+        "clearInput",
+        "init",
+        "loadSampleCSS",
+        "loadSampleJS",
+        "calculateReductionRatio",
+        "beautifyCode",
+        "minifyCode"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "csv-json-transformer",
+      "filename": "csv-json-transformer.html",
+      "size_bytes": 2311,
+      "public_url": "https://salabs.quanxs.com/tools/csv-json-transformer.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "csvToJson",
+        "jsonToCsv"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "curl-to-fetch",
+      "filename": "curl-to-fetch.html",
+      "size_bytes": 8526,
+      "public_url": "https://salabs.quanxs.com/tools/curl-to-fetch.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 4,
+      "functions": [
+        "parseCurl",
+        "generateCode",
+        "copyCode",
+        "setLang"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "diff-checker",
+      "filename": "diff-checker.html",
+      "size_bytes": 2075,
+      "public_url": "https://salabs.quanxs.com/tools/diff-checker.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "compareDiff"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "dns-lookup-record-parser",
+      "filename": "dns-lookup-record-parser.html",
+      "size_bytes": 2175,
+      "public_url": "https://salabs.quanxs.com/tools/dns-lookup-record-parser.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "queryDoH"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "flex-grid-playground",
+      "filename": "flex-grid-playground.html",
+      "size_bytes": 2778,
+      "public_url": "https://salabs.quanxs.com/tools/flex-grid-playground.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "updateLayout"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "hash-bcrypt-argon-tester",
+      "filename": "hash-bcrypt-argon-tester.html",
+      "size_bytes": 2144,
+      "public_url": "https://salabs.quanxs.com/tools/hash-bcrypt-argon-tester.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "derivePBKDF2"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "hash-checksum-generator",
+      "filename": "hash-checksum-generator.html",
+      "size_bytes": 1810,
+      "public_url": "https://salabs.quanxs.com/tools/hash-checksum-generator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "digest",
+        "calculateHashes"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "hash-checksum",
+      "filename": "hash-checksum.html",
+      "size_bytes": 1807,
+      "public_url": "https://salabs.quanxs.com/tools/hash-checksum.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "hashText",
+        "calculateHashes"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "hash-cipher",
+      "filename": "hash-cipher.html",
+      "size_bytes": 2159,
+      "public_url": "https://salabs.quanxs.com/tools/hash-cipher.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "computeHashes"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "hash-generator",
+      "filename": "hash-generator.html",
+      "size_bytes": 2093,
+      "public_url": "https://salabs.quanxs.com/tools/hash-generator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "getHash",
+        "calculateHashes"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "hash-hmac-generator",
+      "filename": "hash-hmac-generator.html",
+      "size_bytes": 2048,
+      "public_url": "https://salabs.quanxs.com/tools/hash-hmac-generator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "buf2hex",
+        "computeHashes"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "html-entity-diff-checker",
+      "filename": "html-entity-diff-checker.html",
+      "size_bytes": 3296,
+      "public_url": "https://salabs.quanxs.com/tools/html-entity-diff-checker.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 4,
+      "functions": [
+        "unescapeEntities",
+        "compareTextDiff",
+        "escapeEntities",
+        "escapeHtml"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "html-entity-encoder",
+      "filename": "html-entity-encoder.html",
+      "size_bytes": 1875,
+      "public_url": "https://salabs.quanxs.com/tools/html-entity-encoder.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 3,
+      "functions": [
+        "decodeMode",
+        "processEntity",
+        "encodeMode"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "html-formatting-sanitizer",
+      "filename": "html-formatting-sanitizer.html",
+      "size_bytes": 1499,
+      "public_url": "https://salabs.quanxs.com/tools/html-formatting-sanitizer.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "sanitizeHTML"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "html-markdown-converter",
+      "filename": "html-markdown-converter.html",
+      "size_bytes": 1827,
+      "public_url": "https://salabs.quanxs.com/tools/html-markdown-converter.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "convertHtmlToMd"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "html-table-json-converter",
+      "filename": "html-table-json-converter.html",
+      "size_bytes": 2804,
+      "public_url": "https://salabs.quanxs.com/tools/html-table-json-converter.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 3,
+      "functions": [
+        "parseTable",
+        "convertToJSON",
+        "convertToCSV"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "http-status-codes",
+      "filename": "http-status-codes.html",
+      "size_bytes": 2171,
+      "public_url": "https://salabs.quanxs.com/tools/http-status-codes.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "filterCodes"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "image-resizer-cropper",
+      "filename": "image-resizer-cropper.html",
+      "size_bytes": 2555,
+      "public_url": "https://salabs.quanxs.com/tools/image-resizer-cropper.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 3,
+      "functions": [
+        "resizeImage",
+        "loadImage",
+        "downloadResized"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "js-event-key-code",
+      "filename": "js-event-key-code.html",
+      "size_bytes": 1740,
+      "public_url": "https://salabs.quanxs.com/tools/js-event-key-code.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 0,
+      "functions": [],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "js-minifier-formatter",
+      "filename": "js-minifier-formatter.html",
+      "size_bytes": 1875,
+      "public_url": "https://salabs.quanxs.com/tools/js-minifier-formatter.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "formatJS",
+        "minifyJS"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "js-object-diff-checker",
+      "filename": "js-object-diff-checker.html",
+      "size_bytes": 2024,
+      "public_url": "https://salabs.quanxs.com/tools/js-object-diff-checker.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "compareObjects"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "json-diff",
+      "filename": "json-diff.html",
+      "size_bytes": 3032,
+      "public_url": "https://salabs.quanxs.com/tools/json-diff.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "findDiff",
+        "compareJSON"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "json-formatter-beautifier",
+      "filename": "json-formatter-beautifier.html",
+      "size_bytes": 2095,
+      "public_url": "https://salabs.quanxs.com/tools/json-formatter-beautifier.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "minifyJson",
+        "formatJson"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "json-path-finder",
+      "filename": "json-path-finder.html",
+      "size_bytes": 3661,
+      "public_url": "https://salabs.quanxs.com/tools/json-path-finder.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "evaluatePath"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "json-schema-validator",
+      "filename": "json-schema-validator.html",
+      "size_bytes": 2393,
+      "public_url": "https://salabs.quanxs.com/tools/json-schema-validator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 3,
+      "functions": [
+        "generateSchemaFromObj",
+        "inferType",
+        "generateSchema"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "json-to-csv-exporter",
+      "filename": "json-to-csv-exporter.html",
+      "size_bytes": 2240,
+      "public_url": "https://salabs.quanxs.com/tools/json-to-csv-exporter.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "convertJSON",
+        "downloadCSV"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "json-yaml-formatter",
+      "filename": "json-yaml-formatter.html",
+      "size_bytes": 1128,
+      "public_url": "https://salabs.quanxs.com/tools/json-yaml-formatter.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "formatJSON"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "jwt-debugger-verifier",
+      "filename": "jwt-debugger-verifier.html",
+      "size_bytes": 2391,
+      "public_url": "https://salabs.quanxs.com/tools/jwt-debugger-verifier.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "base64UrlDecode",
+        "debugJWT"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "jwt-payload-editor",
+      "filename": "jwt-payload-editor.html",
+      "size_bytes": 1810,
+      "public_url": "https://salabs.quanxs.com/tools/jwt-payload-editor.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "buildToken",
+        "base64url"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "jwt-rs256-key-generator",
+      "filename": "jwt-rs256-key-generator.html",
+      "size_bytes": 1848,
+      "public_url": "https://salabs.quanxs.com/tools/jwt-rs256-key-generator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "generateKeys"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "jwt-signer-inspector",
+      "filename": "jwt-signer-inspector.html",
+      "size_bytes": 2681,
+      "public_url": "https://salabs.quanxs.com/tools/jwt-signer-inspector.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 3,
+      "functions": [
+        "base64UrlEncode",
+        "signJWT",
+        "base64UrlEncodeBuffer"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "jwt-signer",
+      "filename": "jwt-signer.html",
+      "size_bytes": 3209,
+      "public_url": "https://salabs.quanxs.com/tools/jwt-signer.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 4,
+      "functions": [
+        "b64u",
+        "b64uBuf",
+        "verifyJWT",
+        "signJWT"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "jwt-token-playground",
+      "filename": "jwt-token-playground.html",
+      "size_bytes": 2116,
+      "public_url": "https://salabs.quanxs.com/tools/jwt-token-playground.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "generateJWT",
+        "b64url"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "lorem-ipsum-generator",
+      "filename": "lorem-ipsum-generator.html",
+      "size_bytes": 2204,
+      "public_url": "https://salabs.quanxs.com/tools/lorem-ipsum-generator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "copyOutput",
+        "generateText"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "markdown-html-previewer",
+      "filename": "markdown-html-previewer.html",
+      "size_bytes": 10548,
+      "public_url": "https://salabs.quanxs.com/tools/markdown-html-previewer.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 7,
+      "functions": [
+        "copyHTMLOutput",
+        "init",
+        "clearMarkdown",
+        "switchTab",
+        "loadSampleMarkdown",
+        "updatePreview",
+        "calculateSum"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "markdown-table-generator",
+      "filename": "markdown-table-generator.html",
+      "size_bytes": 1620,
+      "public_url": "https://salabs.quanxs.com/tools/markdown-table-generator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "generateTable"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "markdown-to-pdf-exporter",
+      "filename": "markdown-to-pdf-exporter.html",
+      "size_bytes": 1819,
+      "public_url": "https://salabs.quanxs.com/tools/markdown-to-pdf-exporter.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "renderMD"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "number-base-converter",
+      "filename": "number-base-converter.html",
+      "size_bytes": 3384,
+      "public_url": "https://salabs.quanxs.com/tools/number-base-converter.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "convert"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "qr-barcode-generator",
+      "filename": "qr-barcode-generator.html",
+      "size_bytes": 9325,
+      "public_url": "https://salabs.quanxs.com/tools/qr-barcode-generator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 6,
+      "functions": [
+        "showToast",
+        "switchMode",
+        "downloadImage",
+        "onInputChanged",
+        "generateOutput",
+        "manualGenerate"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "regex-batch-extractor",
+      "filename": "regex-batch-extractor.html",
+      "size_bytes": 2958,
+      "public_url": "https://salabs.quanxs.com/tools/regex-batch-extractor.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "processRegex"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "regex-cheat-sheet-tester",
+      "filename": "regex-cheat-sheet-tester.html",
+      "size_bytes": 2251,
+      "public_url": "https://salabs.quanxs.com/tools/regex-cheat-sheet-tester.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "addPattern",
+        "testRegex"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "regex-tester",
+      "filename": "regex-tester.html",
+      "size_bytes": 3021,
+      "public_url": "https://salabs.quanxs.com/tools/regex-tester.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "testRegex"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "sha256-hash-calculator",
+      "filename": "sha256-hash-calculator.html",
+      "size_bytes": 1845,
+      "public_url": "https://salabs.quanxs.com/tools/sha256-hash-calculator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "calcHashes"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "sql-formatter",
+      "filename": "sql-formatter.html",
+      "size_bytes": 5599,
+      "public_url": "https://salabs.quanxs.com/tools/sql-formatter.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "copySQL",
+        "formatSQL"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "string-case-converter",
+      "filename": "string-case-converter.html",
+      "size_bytes": 2278,
+      "public_url": "https://salabs.quanxs.com/tools/string-case-converter.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "transformCases"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "subnet-cidr-calculator",
+      "filename": "subnet-cidr-calculator.html",
+      "size_bytes": 3026,
+      "public_url": "https://salabs.quanxs.com/tools/subnet-cidr-calculator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "numToIp",
+        "calculateSubnet"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "svg-image-optimizer",
+      "filename": "svg-image-optimizer.html",
+      "size_bytes": 2328,
+      "public_url": "https://salabs.quanxs.com/tools/svg-image-optimizer.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "optimizeSVG",
+        "convertImageToWebP"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "svg-vector-editor",
+      "filename": "svg-vector-editor.html",
+      "size_bytes": 2830,
+      "public_url": "https://salabs.quanxs.com/tools/svg-vector-editor.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "renderSVG",
+        "downloadSVG"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "text-diff-checker",
+      "filename": "text-diff-checker.html",
+      "size_bytes": 2323,
+      "public_url": "https://salabs.quanxs.com/tools/text-diff-checker.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "esc",
+        "compareText"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "totp-2fa-authenticator",
+      "filename": "totp-2fa-authenticator.html",
+      "size_bytes": 2940,
+      "public_url": "https://salabs.quanxs.com/tools/totp-2fa-authenticator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 4,
+      "functions": [
+        "leftpad",
+        "dec2hex",
+        "generateTOTP",
+        "base32tohex"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "units-px-rem-converter",
+      "filename": "units-px-rem-converter.html",
+      "size_bytes": 2012,
+      "public_url": "https://salabs.quanxs.com/tools/units-px-rem-converter.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "convertFromRem",
+        "convertFromPx"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "unix-timestamp-converter",
+      "filename": "unix-timestamp-converter.html",
+      "size_bytes": 2356,
+      "public_url": "https://salabs.quanxs.com/tools/unix-timestamp-converter.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 3,
+      "functions": [
+        "updateNow",
+        "convertDate",
+        "convertTS"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "url-encoder-parser",
+      "filename": "url-encoder-parser.html",
+      "size_bytes": 2877,
+      "public_url": "https://salabs.quanxs.com/tools/url-encoder-parser.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 3,
+      "functions": [
+        "parseQueryParams",
+        "encodeURL",
+        "decodeURL"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "user-agent-parser",
+      "filename": "user-agent-parser.html",
+      "size_bytes": 3453,
+      "public_url": "https://salabs.quanxs.com/tools/user-agent-parser.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "parseUA"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "uuid-secret-generator",
+      "filename": "uuid-secret-generator.html",
+      "size_bytes": 1944,
+      "public_url": "https://salabs.quanxs.com/tools/uuid-secret-generator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "generateSecret",
+        "generateUUIDs"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "websocket-sse-debugger",
+      "filename": "websocket-sse-debugger.html",
+      "size_bytes": 2933,
+      "public_url": "https://salabs.quanxs.com/tools/websocket-sse-debugger.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 5,
+      "functions": [
+        "sendWS",
+        "log",
+        "connectWS",
+        "connectSSE",
+        "disconnect"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "websocket-sse-tester",
+      "filename": "websocket-sse-tester.html",
+      "size_bytes": 3396,
+      "public_url": "https://salabs.quanxs.com/tools/websocket-sse-tester.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 5,
+      "functions": [
+        "disconnectWS",
+        "log",
+        "connectWS",
+        "clearLog",
+        "sendMessage"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "xml-json-converter",
+      "filename": "xml-json-converter.html",
+      "size_bytes": 2239,
+      "public_url": "https://salabs.quanxs.com/tools/xml-json-converter.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "nodeToObj",
+        "xmlToJson"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    },
+    {
+      "tool_id": "yaml-json-converter",
+      "filename": "yaml-json-converter.html",
+      "size_bytes": 2482,
+      "public_url": "https://salabs.quanxs.com/tools/yaml-json-converter.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 3,
+      "functions": [
+        "simpleToYaml",
+        "convertYamlToJson",
+        "convertJsonToYaml"
+      ],
+      "last_inspected": "2026-08-03T23:09:55+09:00"
+    }
+  ]
+}
