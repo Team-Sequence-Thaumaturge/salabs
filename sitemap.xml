@@ -5,6 +5,7 @@
   <url><loc>https://salabs.quanxs.com/llms.txt</loc><priority>0.9</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/api-mock-sandbox.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/audio-waveform-analyzer.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/base64-image-encoder.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/base64-jwt-decoder.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/color-converter-contrast.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/color-converter.html</loc><priority>0.8</priority></url>
@@ -38,6 +39,7 @@
   <url><loc>https://salabs.quanxs.com/tools/jwt-signer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/jwt-token-playground.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/markdown-html-previewer.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/number-base-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/qr-barcode-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/regex-batch-extractor.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/regex-tester.html</loc><priority>0.8</priority></url>
@@ -48,6 +50,7 @@
   <url><loc>https://salabs.quanxs.com/tools/text-diff-checker.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/units-px-rem-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/url-encoder-parser.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/user-agent-parser.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/uuid-secret-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/websocket-sse-debugger.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/websocket-sse-tester.html</loc><priority>0.8</priority></url>
