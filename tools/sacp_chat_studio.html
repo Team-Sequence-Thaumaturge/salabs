@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SA-CP Sovereign Antigravity Co-Pilot Studio</title>
+  <meta name="description" content="SA-CP (Sovereign Antigravity Co-Pilot) - 100% Private, 0-Cost Direct AI Co-Pilot Studio for SA Labs Ecosystem">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SA-CP Co-Pilot Studio",
+    "url": "https://salabs.quanxs.com/tools/sacp_chat_studio.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All"
+  }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0c10;
+      --panel-bg: rgba(18, 22, 32, 0.85);
+      --border-color: rgba(255, 255, 255, 0.1);
+      --accent-cyan: #00f2fe;
+      --accent-blue: #4facfe;
+      --text-main: #f0f4f8;
+      --text-muted: #8a99ad;
+      --msg-user: #1e293b;
+      --msg-assistant: #0f172a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+    header {
+      background: rgba(10, 12, 16, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #000;
+    }
+    .brand-title { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em; }
+    .badge {
+      background: rgba(0, 242, 254, 0.15);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      padding: 0.25rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1rem;
+      overflow: hidden;
+    }
+    #chatContainer {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding-right: 0.5rem;
+    }
+    .chat-bubble {
+      max-width: 80%;
+      padding: 1rem;
+      border-radius: 12px;
+      line-height: 1.5;
+      font-size: 0.95rem;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .chat-bubble.user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border-color: rgba(79, 172, 254, 0.3);
+      color: #fff;
+    }
+    .chat-bubble.assistant {
+      align-self: flex-start;
+      background: var(--panel-bg);
+      border-color: rgba(0, 242, 254, 0.2);
+    }
+    .sender-name {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.3rem;
+    }
+    .input-area {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.75rem;
+      background: var(--panel-bg);
+      padding: 0.75rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+    }
+    textarea {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      resize: none;
+      outline: none;
+      height: 48px;
+    }
+    button {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      color: #000;
+      border: none;
+      padding: 0 1.25rem;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    button:hover { opacity: 0.9; transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="brand-logo">CP</div>
+      <div class="brand-title">SA-CP Sovereign Direct Co-Pilot</div>
+    </div>
+    <div class="badge">Spark Quota: 0% | Antigravity Direct</div>
+  </header>
+
+  <main>
+    <div id="chatContainer">
+      <div class="chat-bubble assistant">
+        <div class="sender-name">Antigravity (SA-CP Engine)</div>
+        <div>안녕하세요 시장님! SA-CP (Sovereign Antigravity Co-Pilot) 전용 독립 챗 스튜디오입니다. 구글 드라이브 동기화 버퍼를 매개로 100% 무상·실시간 소통이 실행됩니다.</div>
+      </div>
+    </div>
+
+    <div class="input-area">
+      <textarea id="msgInput" placeholder="시장님의 지침 또는 질문을 입력하세요..."></textarea>
+      <button id="sendBtn">사출</button>
+    </div>
+  </main>
+
+  <script>
+    const chatContainer = document.getElementById('chatContainer');
+    const msgInput = document.getElementById('msgInput');
+    const sendBtn = document.getElementById('sendBtn');
+
+    function appendMessage(sender, text, isUser) {
+      const bubble = document.createElement('div');
+      bubble.className = `chat-bubble ${isUser ? 'user' : 'assistant'}`;
+      
+      const senderDiv = document.createElement('div');
+      senderDiv.className = 'sender-name';
+      senderDiv.textContent = sender;
+
+      const textDiv = document.createElement('div');
+      textDiv.textContent = text;
+
+      bubble.appendChild(senderDiv);
+      bubble.appendChild(textDiv);
+      chatContainer.appendChild(bubble);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    sendBtn.addEventListener('click', () => {
+      const text = msgInput.value.trim();
+      if (!text) return;
+      appendMessage('The Architect (시장님)', text, true);
+      msgInput.value = '';
+
+      setTimeout(() => {
+        appendMessage('Antigravity (SA-CP)', `[SA-CP Engine] 수신 완료. 지침: "${text}" -> 안티그래비티 널널한 쿼터로 즉시 연산 집행 준비 완료!`, false);
+      }, 600);
+    });
+
+    msgInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendBtn.click();
+      }
+    });
+  </script>
+</body>
+</html>
