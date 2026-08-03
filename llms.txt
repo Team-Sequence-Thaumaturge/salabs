@@ -1,5 +1,6 @@
-# Quanxs SA Labs - AI Search Engine Index
-> Target Domain: https://salabs.quanxs.com/
-- JSON Diff: https://salabs.quanxs.com/tools/json-diff.html
-- JWT Secret Signer: https://salabs.quanxs.com/tools/jwt-signer.html
-- Glassmorphism Generator: https://salabs.quanxs.com/tools/css-glassmorphism-generator.html
+# Quanxs SA Labs Developer Utility Suite
+> High-performance 100% Client-Side Pure JS Developer Utilities
+
+## Available Tools
+- WebSocket & SSE Realtime Client Tester: https://salabs.quanxs.com/tools/websocket-sse-tester.html
+- JSON Schema Generator & Validator: https://salabs.quanxs.com/tools/json-schema-validator.html
