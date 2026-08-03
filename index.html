@@ -115,7 +115,8 @@ function closeModal(){ document.getElementById('feedback-modal').style.display='
 function submitFeedback(){
   let text = document.getElementById('feedback-text').value;
   if(text.trim()){
-    alert('Thank you! Your feedback has been stashed for Antigravity AI engine.');
+    let targetUrl = 'https://github.com/Team-Sequence-Thaumaturge/salabs/issues/new?title=' + encodeURIComponent('User Feedback / Bug Report') + '&body=' + encodeURIComponent(text);
+    window.open(targetUrl, '_blank');
     closeModal();
   }
 }
