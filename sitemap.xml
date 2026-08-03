@@ -21,6 +21,7 @@
   <url><loc>https://salabs.quanxs.com/tools/css-animation-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-animation-keyframe-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-border-radius-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/css-box-border-radius-studio.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-box-model-grid.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-box-shadow-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-clamp-calculator.html</loc><priority>0.8</priority></url>
@@ -87,6 +88,7 @@
   <url><loc>https://salabs.quanxs.com/tools/lorem-markdown-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/markdown-html-previewer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/markdown-table-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/markdown-to-html-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/markdown-to-pdf-exporter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/markdown-toc-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/meta-tag-generator.html</loc><priority>0.8</priority></url>
@@ -116,6 +118,7 @@
   <url><loc>https://salabs.quanxs.com/tools/url-encoder-parser.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/user-agent-parser.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/uuid-secret-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/uuid-v7-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/websocket-sse-debugger.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/websocket-sse-tester.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/xml-json-converter.html</loc><priority>0.8</priority></url>
