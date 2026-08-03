@@ -19,6 +19,7 @@
   <url><loc>https://salabs.quanxs.com/tools/css-animation-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-box-model-grid.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-box-shadow-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/css-clamp-calculator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-flexbox-playground.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-glassmorphism-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-gradient-generator.html</loc><priority>0.8</priority></url>
@@ -44,6 +45,7 @@
   <url><loc>https://salabs.quanxs.com/tools/html-table-json-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/http-status-codes.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/image-resizer-cropper.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/ip-geolocation-lookup.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-array-flat-dedupe.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-event-key-code.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-minifier-formatter.html</loc><priority>0.8</priority></url>
@@ -62,6 +64,7 @@
   <url><loc>https://salabs.quanxs.com/tools/jwt-signer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/jwt-token-playground.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/lorem-ipsum-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/lorem-markdown-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/markdown-html-previewer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/markdown-table-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/markdown-to-pdf-exporter.html</loc><priority>0.8</priority></url>
