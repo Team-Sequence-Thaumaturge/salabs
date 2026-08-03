@@ -34,6 +34,7 @@
   <url><loc>https://salabs.quanxs.com/tools/diff-checker.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/dns-lookup-record-parser.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/flex-grid-playground.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/graphql-query-formatter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/hash-bcrypt-argon-tester.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/hash-checksum-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/hash-checksum.html</loc><priority>0.8</priority></url>
@@ -47,10 +48,12 @@
   <url><loc>https://salabs.quanxs.com/tools/html-formatting-sanitizer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/html-markdown-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/html-table-json-converter.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/http-request-builder.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/http-status-codes.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/image-resizer-cropper.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/ip-geolocation-lookup.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-array-flat-dedupe.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/js-ast-parser-studio.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-event-key-code.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-minifier-formatter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-object-diff-checker.html</loc><priority>0.8</priority></url>
