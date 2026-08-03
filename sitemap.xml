@@ -26,6 +26,7 @@
   <url><loc>https://salabs.quanxs.com/tools/css-box-filter-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-box-model-grid.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-box-shadow-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/css-button-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-clamp-calculator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-cubic-bezier-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-flexbox-playground.html</loc><priority>0.8</priority></url>
@@ -63,10 +64,12 @@
   <url><loc>https://salabs.quanxs.com/tools/html-table-json-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/http-request-builder.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/http-status-codes.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/image-color-picker.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/image-resizer-cropper.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/ip-geolocation-lookup.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-array-flat-dedupe.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-ast-parser-studio.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/js-benchmarking-timer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-event-key-code.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-minifier-formatter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-object-diff-checker.html</loc><priority>0.8</priority></url>
