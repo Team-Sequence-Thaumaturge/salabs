@@ -13,6 +13,7 @@
   <url><loc>https://salabs.quanxs.com/tools/color-converter-contrast.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/color-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/color-palette-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/color-rgb-hsl-picker.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/cookie-header-parser.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/cron-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-box-model-grid.html</loc><priority>0.8</priority></url>
@@ -22,6 +23,7 @@
   <url><loc>https://salabs.quanxs.com/tools/css-gradient-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-grid-layout-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-js-minifier.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/csv-delimiter-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/csv-json-transformer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/curl-to-fetch.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/diff-checker.html</loc><priority>0.8</priority></url>
@@ -66,6 +68,7 @@
   <url><loc>https://salabs.quanxs.com/tools/regex-batch-extractor.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/regex-cheat-sheet-tester.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/regex-tester.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/sacm-coder-middleware-studio.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/sha256-hash-calculator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/sql-formatter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/string-case-converter.html</loc><priority>0.8</priority></url>
@@ -73,6 +76,7 @@
   <url><loc>https://salabs.quanxs.com/tools/svg-image-optimizer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/svg-path-viewer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/svg-vector-editor.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/text-case-slug-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/text-diff-checker.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/totp-2fa-authenticator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/units-px-rem-converter.html</loc><priority>0.8</priority></url>

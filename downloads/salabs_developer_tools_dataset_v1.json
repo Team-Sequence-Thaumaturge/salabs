@@ -1,9 +1,9 @@
 {
   "dataset_name": "Quanxs SA Labs Pure JS Developer Utility Code Asset Benchmark",
   "version": "v6.0_HandsFree_12Day_Engine",
-  "total_tools": 78,
-  "total_mined_functions": 161,
-  "last_updated": "2026-08-03T23:09:55+09:00",
+  "total_tools": 82,
+  "total_mined_functions": 165,
+  "last_updated": "2026-08-03T23:32:24+09:00",
   "items": [
     {
       "tool_id": "api-mock-sandbox",
@@ -15,7 +15,7 @@
       "functions": [
         "runMockRequest"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "ascii-art-text-generator",
@@ -27,7 +27,7 @@
       "functions": [
         "renderASCII"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "audio-waveform-analyzer",
@@ -37,13 +37,13 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 5,
       "functions": [
-        "render",
-        "loadAudio",
         "pauseAudio",
+        "loadAudio",
+        "render",
         "playAudio",
         "drawVisualizer"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "base64-image-encoder",
@@ -55,7 +55,7 @@
       "functions": [
         "encodeImg"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "base64-jwt-decoder",
@@ -67,7 +67,7 @@
       "functions": [
         "decodeStr"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "chmod-calculator",
@@ -79,7 +79,7 @@
       "functions": [
         "calcChmod"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "color-contrast-accessibility-checker",
@@ -92,7 +92,7 @@
         "getLum",
         "calcContrast"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "color-converter-contrast",
@@ -102,12 +102,12 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 4,
       "functions": [
-        "syncColorInput",
         "updateColors",
         "getLuminance",
+        "syncColorInput",
         "calculateContrastRatio"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "color-converter",
@@ -119,7 +119,7 @@
       "functions": [
         "update"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "color-palette-generator",
@@ -132,7 +132,7 @@
         "randomHex",
         "generatePalette"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "cookie-header-parser",
@@ -144,7 +144,7 @@
       "functions": [
         "parseCookies"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "cron-generator",
@@ -154,7 +154,7 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 0,
       "functions": [],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "css-box-model-grid",
@@ -164,7 +164,7 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 0,
       "functions": [],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "css-box-shadow-generator",
@@ -176,7 +176,7 @@
       "functions": [
         "updateShadow"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "css-flexbox-playground",
@@ -188,7 +188,7 @@
       "functions": [
         "updateFlex"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "css-glassmorphism-generator",
@@ -200,7 +200,7 @@
       "functions": [
         "updateGlass"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "css-gradient-generator",
@@ -212,7 +212,7 @@
       "functions": [
         "updateGradient"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "css-grid-layout-generator",
@@ -224,7 +224,7 @@
       "functions": [
         "updateGrid"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "css-js-minifier",
@@ -234,17 +234,17 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 9,
       "functions": [
-        "copyOutput",
-        "updateStats",
-        "clearInput",
-        "init",
-        "loadSampleCSS",
+        "minifyCode",
         "loadSampleJS",
-        "calculateReductionRatio",
         "beautifyCode",
-        "minifyCode"
+        "copyOutput",
+        "calculateReductionRatio",
+        "loadSampleCSS",
+        "init",
+        "updateStats",
+        "clearInput"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "csv-json-transformer",
@@ -254,10 +254,10 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 2,
       "functions": [
-        "csvToJson",
-        "jsonToCsv"
+        "jsonToCsv",
+        "csvToJson"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "curl-to-fetch",
@@ -267,12 +267,12 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 4,
       "functions": [
-        "parseCurl",
-        "generateCode",
+        "setLang",
         "copyCode",
-        "setLang"
+        "generateCode",
+        "parseCurl"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "diff-checker",
@@ -284,7 +284,7 @@
       "functions": [
         "compareDiff"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "dns-lookup-record-parser",
@@ -296,7 +296,7 @@
       "functions": [
         "queryDoH"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "flex-grid-playground",
@@ -308,7 +308,7 @@
       "functions": [
         "updateLayout"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "hash-bcrypt-argon-tester",
@@ -320,7 +320,7 @@
       "functions": [
         "derivePBKDF2"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "hash-checksum-generator",
@@ -333,7 +333,7 @@
         "digest",
         "calculateHashes"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "hash-checksum",
@@ -346,7 +346,7 @@
         "hashText",
         "calculateHashes"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "hash-cipher",
@@ -358,7 +358,7 @@
       "functions": [
         "computeHashes"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "hash-generator",
@@ -371,7 +371,7 @@
         "getHash",
         "calculateHashes"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "hash-hmac-generator",
@@ -381,10 +381,10 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 2,
       "functions": [
-        "buf2hex",
-        "computeHashes"
+        "computeHashes",
+        "buf2hex"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "html-entity-diff-checker",
@@ -394,12 +394,12 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 4,
       "functions": [
+        "escapeEntities",
         "unescapeEntities",
         "compareTextDiff",
-        "escapeEntities",
         "escapeHtml"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "html-entity-encoder",
@@ -409,11 +409,11 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 3,
       "functions": [
-        "decodeMode",
+        "encodeMode",
         "processEntity",
-        "encodeMode"
+        "decodeMode"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "html-formatting-sanitizer",
@@ -425,7 +425,7 @@
       "functions": [
         "sanitizeHTML"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "html-markdown-converter",
@@ -437,7 +437,7 @@
       "functions": [
         "convertHtmlToMd"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "html-table-json-converter",
@@ -451,7 +451,7 @@
         "convertToJSON",
         "convertToCSV"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "http-status-codes",
@@ -463,7 +463,7 @@
       "functions": [
         "filterCodes"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "image-resizer-cropper",
@@ -473,11 +473,23 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 3,
       "functions": [
+        "downloadResized",
         "resizeImage",
-        "loadImage",
-        "downloadResized"
+        "loadImage"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
+    },
+    {
+      "tool_id": "js-array-flat-dedupe",
+      "filename": "js-array-flat-dedupe.html",
+      "size_bytes": 1671,
+      "public_url": "https://salabs.quanxs.com/tools/js-array-flat-dedupe.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "processArray"
+      ],
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "js-event-key-code",
@@ -487,7 +499,7 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 0,
       "functions": [],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "js-minifier-formatter",
@@ -497,10 +509,10 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 2,
       "functions": [
-        "formatJS",
-        "minifyJS"
+        "minifyJS",
+        "formatJS"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "js-object-diff-checker",
@@ -512,7 +524,7 @@
       "functions": [
         "compareObjects"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "json-diff",
@@ -525,7 +537,7 @@
         "findDiff",
         "compareJSON"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "json-formatter-beautifier",
@@ -535,10 +547,10 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 2,
       "functions": [
-        "minifyJson",
-        "formatJson"
+        "formatJson",
+        "minifyJson"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "json-path-finder",
@@ -550,7 +562,7 @@
       "functions": [
         "evaluatePath"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "json-schema-validator",
@@ -560,11 +572,11 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 3,
       "functions": [
-        "generateSchemaFromObj",
+        "generateSchema",
         "inferType",
-        "generateSchema"
+        "generateSchemaFromObj"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "json-to-csv-exporter",
@@ -574,10 +586,10 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 2,
       "functions": [
-        "convertJSON",
-        "downloadCSV"
+        "downloadCSV",
+        "convertJSON"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "json-yaml-formatter",
@@ -589,7 +601,7 @@
       "functions": [
         "formatJSON"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "jwt-debugger-verifier",
@@ -599,10 +611,10 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 2,
       "functions": [
-        "base64UrlDecode",
-        "debugJWT"
+        "debugJWT",
+        "base64UrlDecode"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "jwt-payload-editor",
@@ -612,10 +624,10 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 2,
       "functions": [
-        "buildToken",
-        "base64url"
+        "base64url",
+        "buildToken"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "jwt-rs256-key-generator",
@@ -627,7 +639,7 @@
       "functions": [
         "generateKeys"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "jwt-signer-inspector",
@@ -638,10 +650,10 @@
       "mined_functions_count": 3,
       "functions": [
         "base64UrlEncode",
-        "signJWT",
-        "base64UrlEncodeBuffer"
+        "base64UrlEncodeBuffer",
+        "signJWT"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "jwt-signer",
@@ -651,12 +663,12 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 4,
       "functions": [
-        "b64u",
         "b64uBuf",
+        "b64u",
         "verifyJWT",
         "signJWT"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "jwt-token-playground",
@@ -666,10 +678,10 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 2,
       "functions": [
-        "generateJWT",
-        "b64url"
+        "b64url",
+        "generateJWT"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "lorem-ipsum-generator",
@@ -679,10 +691,10 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 2,
       "functions": [
-        "copyOutput",
-        "generateText"
+        "generateText",
+        "copyOutput"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "markdown-html-previewer",
@@ -692,15 +704,15 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 7,
       "functions": [
-        "copyHTMLOutput",
-        "init",
         "clearMarkdown",
-        "switchTab",
-        "loadSampleMarkdown",
         "updatePreview",
-        "calculateSum"
+        "loadSampleMarkdown",
+        "init",
+        "calculateSum",
+        "copyHTMLOutput",
+        "switchTab"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "markdown-table-generator",
@@ -712,7 +724,7 @@
       "functions": [
         "generateTable"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "markdown-to-pdf-exporter",
@@ -724,7 +736,19 @@
       "functions": [
         "renderMD"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
+    },
+    {
+      "tool_id": "meta-tag-generator",
+      "filename": "meta-tag-generator.html",
+      "size_bytes": 1735,
+      "public_url": "https://salabs.quanxs.com/tools/meta-tag-generator.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "genMeta"
+      ],
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "number-base-converter",
@@ -736,7 +760,7 @@
       "functions": [
         "convert"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "qr-barcode-generator",
@@ -746,14 +770,14 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 6,
       "functions": [
-        "showToast",
-        "switchMode",
+        "manualGenerate",
         "downloadImage",
-        "onInputChanged",
         "generateOutput",
-        "manualGenerate"
+        "onInputChanged",
+        "switchMode",
+        "showToast"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "regex-batch-extractor",
@@ -765,7 +789,7 @@
       "functions": [
         "processRegex"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "regex-cheat-sheet-tester",
@@ -778,7 +802,7 @@
         "addPattern",
         "testRegex"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "regex-tester",
@@ -790,7 +814,19 @@
       "functions": [
         "testRegex"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
+    },
+    {
+      "tool_id": "sacm-coder-middleware-studio",
+      "filename": "sacm-coder-middleware-studio.html",
+      "size_bytes": 6943,
+      "public_url": "https://salabs.quanxs.com/tools/sacm-coder-middleware-studio.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "processSACMCoder"
+      ],
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "sha256-hash-calculator",
@@ -802,7 +838,7 @@
       "functions": [
         "calcHashes"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "sql-formatter",
@@ -812,10 +848,10 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 2,
       "functions": [
-        "copySQL",
-        "formatSQL"
+        "formatSQL",
+        "copySQL"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "string-case-converter",
@@ -827,7 +863,7 @@
       "functions": [
         "transformCases"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "subnet-cidr-calculator",
@@ -840,7 +876,7 @@
         "numToIp",
         "calculateSubnet"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "svg-image-optimizer",
@@ -850,10 +886,22 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 2,
       "functions": [
-        "optimizeSVG",
-        "convertImageToWebP"
+        "convertImageToWebP",
+        "optimizeSVG"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
+    },
+    {
+      "tool_id": "svg-path-viewer",
+      "filename": "svg-path-viewer.html",
+      "size_bytes": 1605,
+      "public_url": "https://salabs.quanxs.com/tools/svg-path-viewer.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "renderSVG"
+      ],
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "svg-vector-editor",
@@ -863,10 +911,10 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 2,
       "functions": [
-        "renderSVG",
-        "downloadSVG"
+        "downloadSVG",
+        "renderSVG"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "text-diff-checker",
@@ -876,10 +924,10 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 2,
       "functions": [
-        "esc",
-        "compareText"
+        "compareText",
+        "esc"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "totp-2fa-authenticator",
@@ -889,12 +937,12 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 4,
       "functions": [
-        "leftpad",
+        "base32tohex",
         "dec2hex",
-        "generateTOTP",
-        "base32tohex"
+        "leftpad",
+        "generateTOTP"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "units-px-rem-converter",
@@ -904,10 +952,10 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 2,
       "functions": [
-        "convertFromRem",
-        "convertFromPx"
+        "convertFromPx",
+        "convertFromRem"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "unix-timestamp-converter",
@@ -917,11 +965,11 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 3,
       "functions": [
-        "updateNow",
         "convertDate",
+        "updateNow",
         "convertTS"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "url-encoder-parser",
@@ -932,10 +980,10 @@
       "mined_functions_count": 3,
       "functions": [
         "parseQueryParams",
-        "encodeURL",
-        "decodeURL"
+        "decodeURL",
+        "encodeURL"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "user-agent-parser",
@@ -947,7 +995,7 @@
       "functions": [
         "parseUA"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "uuid-secret-generator",
@@ -957,10 +1005,10 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 2,
       "functions": [
-        "generateSecret",
-        "generateUUIDs"
+        "generateUUIDs",
+        "generateSecret"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "websocket-sse-debugger",
@@ -971,12 +1019,12 @@
       "mined_functions_count": 5,
       "functions": [
         "sendWS",
-        "log",
         "connectWS",
         "connectSSE",
+        "log",
         "disconnect"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "websocket-sse-tester",
@@ -986,13 +1034,13 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 5,
       "functions": [
+        "connectWS",
         "disconnectWS",
         "log",
-        "connectWS",
-        "clearLog",
-        "sendMessage"
+        "sendMessage",
+        "clearLog"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "xml-json-converter",
@@ -1005,7 +1053,7 @@
         "nodeToObj",
         "xmlToJson"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     },
     {
       "tool_id": "yaml-json-converter",
@@ -1015,11 +1063,11 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 3,
       "functions": [
-        "simpleToYaml",
+        "convertJsonToYaml",
         "convertYamlToJson",
-        "convertJsonToYaml"
+        "simpleToYaml"
       ],
-      "last_inspected": "2026-08-03T23:09:55+09:00"
+      "last_inspected": "2026-08-03T23:32:24+09:00"
     }
   ]
 }
