@@ -16,6 +16,7 @@
   <url><loc>https://salabs.quanxs.com/tools/css-box-model-grid.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-box-shadow-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-glassmorphism-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/css-gradient-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-js-minifier.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/csv-json-transformer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/curl-to-fetch.html</loc><priority>0.8</priority></url>
@@ -38,11 +39,13 @@
   <url><loc>https://salabs.quanxs.com/tools/json-schema-validator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/json-yaml-formatter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/jwt-debugger-verifier.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/jwt-rs256-key-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/jwt-signer-inspector.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/jwt-signer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/jwt-token-playground.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/lorem-ipsum-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/markdown-html-previewer.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/markdown-table-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/number-base-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/qr-barcode-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/regex-batch-extractor.html</loc><priority>0.8</priority></url>
