@@ -8,6 +8,7 @@
   <url><loc>https://salabs.quanxs.com/tools/audio-waveform-analyzer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/base64-image-encoder.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/base64-jwt-decoder.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/chmod-calculator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/color-converter-contrast.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/color-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/color-palette-generator.html</loc><priority>0.8</priority></url>
@@ -20,6 +21,7 @@
   <url><loc>https://salabs.quanxs.com/tools/css-js-minifier.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/csv-json-transformer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/curl-to-fetch.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/diff-checker.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/flex-grid-playground.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/hash-checksum-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/hash-checksum.html</loc><priority>0.8</priority></url>
@@ -30,6 +32,7 @@
   <url><loc>https://salabs.quanxs.com/tools/html-entity-encoder.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/html-markdown-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/html-table-json-converter.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/http-status-codes.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/image-resizer-cropper.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-event-key-code.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-minifier-formatter.html</loc><priority>0.8</priority></url>
