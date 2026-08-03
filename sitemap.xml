@@ -55,6 +55,7 @@
   <url><loc>https://salabs.quanxs.com/tools/jwt-debugger-verifier.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/jwt-payload-editor.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/jwt-rs256-key-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/jwt-rs256-signature-validator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/jwt-signer-inspector.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/jwt-signer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/jwt-token-playground.html</loc><priority>0.8</priority></url>
@@ -68,9 +69,11 @@
   <url><loc>https://salabs.quanxs.com/tools/regex-batch-extractor.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/regex-cheat-sheet-tester.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/regex-tester.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/regex-visualizer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/sacm-coder-middleware-studio.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/sha256-hash-calculator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/sql-formatter.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/sql-query-builder.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/string-case-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/subnet-cidr-calculator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/svg-image-optimizer.html</loc><priority>0.8</priority></url>
