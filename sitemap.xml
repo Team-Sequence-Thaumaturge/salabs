@@ -19,6 +19,7 @@
   <url><loc>https://salabs.quanxs.com/tools/cookie-header-parser.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/cron-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-animation-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/css-animation-keyframe-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-border-radius-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-box-model-grid.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/css-box-shadow-generator.html</loc><priority>0.8</priority></url>
@@ -46,6 +47,7 @@
   <url><loc>https://salabs.quanxs.com/tools/hash-hmac-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/hash-sha512-keccak.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/hex-hexdump-viewer.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/html-canvas-chart-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/html-canvas-drawing-pad.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/html-canvas-signature-pad.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/html-entity-diff-checker.html</loc><priority>0.8</priority></url>
@@ -101,6 +103,7 @@
   <url><loc>https://salabs.quanxs.com/tools/svg-image-optimizer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/svg-path-viewer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/svg-vector-editor.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/text-case-converter-slug.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/text-case-slug-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/text-diff-checker.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/time-zone-converter-clock.html</loc><priority>0.8</priority></url>
