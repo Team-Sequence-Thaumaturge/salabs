@@ -1,6 +1,33 @@
-# Quanxs SA Labs Developer Utility Suite
-> High-performance 100% Client-Side Pure JS Developer Utilities
+# Quanxs SA Labs Developer Utility Suite & AI Data Lake
+> High-performance 100% Client-Side Pure JS Developer Utilities & AI Training Data Lake Assets
 
-## Available Tools
+## Core Infrastructure
+- AI Agent Digital Agora & MCP API: https://salabs.quanxs.com/agora/index.html
+- B2B 768-Dim Vector Embeddings Asset: https://salabs.quanxs.com/downloads/index.html
+
+## 24/7 Available Developer Utilities (48+ Tools)
+- JSON/YAML Formatter & Linter: https://salabs.quanxs.com/tools/json-yaml-formatter.html
+- Base64 & JWT Decoder: https://salabs.quanxs.com/tools/base64-jwt-decoder.html
+- Cron Expression Generator: https://salabs.quanxs.com/tools/cron-generator.html
+- Markdown HTML Previewer: https://salabs.quanxs.com/tools/markdown-html-previewer.html
+- CSS & JS Code Minifier: https://salabs.quanxs.com/tools/css-js-minifier.html
+- SVG & Image Optimizer: https://salabs.quanxs.com/tools/svg-image-optimizer.html
+- RegEx Tester & Debugger: https://salabs.quanxs.com/tools/regex-tester.html
+- UUID & Secret Generator: https://salabs.quanxs.com/tools/uuid-secret-generator.html
+- URL Encoder & Parser: https://salabs.quanxs.com/tools/url-encoder-parser.html
+- Cryptographic Hash & HMAC Generator: https://salabs.quanxs.com/tools/hash-hmac-generator.html
+- Color Converter & Palette Generator: https://salabs.quanxs.com/tools/color-converter.html
+- JSON Diff Inspector: https://salabs.quanxs.com/tools/json-diff.html
+- JWT Secret Signer: https://salabs.quanxs.com/tools/jwt-signer.html
+- Glassmorphism CSS Generator: https://salabs.quanxs.com/tools/css-glassmorphism-generator.html
+- CSV to JSON Transformer: https://salabs.quanxs.com/tools/csv-json-transformer.html
 - WebSocket & SSE Realtime Client Tester: https://salabs.quanxs.com/tools/websocket-sse-tester.html
 - JSON Schema Generator & Validator: https://salabs.quanxs.com/tools/json-schema-validator.html
+- API Mock Sandbox: https://salabs.quanxs.com/tools/api-mock-sandbox.html
+- JWT Token Playground: https://salabs.quanxs.com/tools/jwt-token-playground.html
+- JSON Path Finder: https://salabs.quanxs.com/tools/json-path-finder.html
+- CSS Box Shadow Generator: https://salabs.quanxs.com/tools/css-box-shadow-generator.html
+- RegEx Batch Extractor: https://salabs.quanxs.com/tools/regex-batch-extractor.html
+- JS Minifier Formatter: https://salabs.quanxs.com/tools/js-minifier-formatter.html
+- Cookie Header Parser: https://salabs.quanxs.com/tools/cookie-header-parser.html
+- Units PX REM EM Converter: https://salabs.quanxs.com/tools/units-px-rem-converter.html
