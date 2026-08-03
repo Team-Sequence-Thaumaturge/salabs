@@ -75,6 +75,7 @@
   <url><loc>https://salabs.quanxs.com/tools/js-array-flat-dedupe.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-ast-parser-studio.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-benchmarking-timer.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/js-event-emitter-playground.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-event-key-code.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-minifier-formatter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/js-object-diff-checker.html</loc><priority>0.8</priority></url>
@@ -99,6 +100,7 @@
   <url><loc>https://salabs.quanxs.com/tools/lorem-markdown-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/markdown-chart-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/markdown-html-previewer.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/markdown-slides-presenter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/markdown-table-generator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/markdown-to-html-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/markdown-to-pdf-exporter.html</loc><priority>0.8</priority></url>
@@ -118,6 +120,7 @@
   <url><loc>https://salabs.quanxs.com/tools/string-case-converter.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/subnet-cidr-calculator.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/svg-image-optimizer.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/svg-path-bounding-box.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/svg-path-viewer.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/svg-vector-editor.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/text-case-converter-slug.html</loc><priority>0.8</priority></url>
