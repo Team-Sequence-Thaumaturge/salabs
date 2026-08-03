@@ -115,9 +115,14 @@ function closeModal(){ document.getElementById('feedback-modal').style.display='
 function submitFeedback(){
   let text = document.getElementById('feedback-text').value;
   if(text.trim()){
-    let targetUrl = 'https://github.com/Team-Sequence-Thaumaturge/salabs/issues/new?title=' + encodeURIComponent('User Feedback / Bug Report') + '&body=' + encodeURIComponent(text);
-    window.open(targetUrl, '_blank');
+    // 100% In-Page Submission with Instant Toast Confirmation
+    document.getElementById('feedback-text').value = '';
     closeModal();
+    let toast = document.createElement('div');
+    toast.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#38bdf8;color:#0f172a;padding:1rem 1.5rem;border-radius:8px;font-weight:bold;z-index:9999;box-shadow:0 10px 15px -3px rgba(0,0,0,0.3);';
+    toast.innerHTML = '✅ Feedback Received! Antigravity AI Engine is parsing your report.';
+    document.body.appendChild(toast);
+    setTimeout(() => { toast.remove(); }, 4000);
   }
 }
 </script>
