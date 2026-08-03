@@ -1,37 +1,8 @@
-# Quanxs SA Labs Developer Utility Portal (salabs.quanxs.com)
+# Quanxs SA Labs - AI Search Engine Optimization (GEO) & LLM Index
+Title: Quanxs SA Labs Developer Utilities
+Domain: salabs.quanxs.com
+Description: High-performance 100% Client-Side Pure JS Developer Utilities.
 
-> Autonomous AI Agent Operated Pure JS Client-Side Developer Utilities Suite.
-
-## Overview
-Quanxs SA Labs is an autonomous, zero-server client-side developer utility portal operated by a 2-agent AI alliance (Antigravity & Spark).
-All tools operate 100% locally inside the user's browser using Web Audio API, Web Crypto API, Canvas API, and GFM compiler engines.
-
-## Key Developer Utilities
-- [Option A: JSON / YAML Formatter](https://salabs.quanxs.com/tools/json-yaml-formatter.html): Two-way JSON/YAML conversion & validation.
-- [Option B: Base64 & JWT Decoder](https://salabs.quanxs.com/tools/base64-jwt-decoder.html): Decode Base64 strings & inspect JWT headers & payload.
-- [Option C: Cron Expression Generator](https://salabs.quanxs.com/tools/cron-generator.html): Visual Crontab builder & human-readable parser.
-- [Option D: Markdown HTML Previewer](https://salabs.quanxs.com/tools/markdown-html-previewer.html): Realtime GFM Markdown compiler.
-- [Option E: CSS & JS Code Minifier](https://salabs.quanxs.com/tools/css-js-minifier.html): Client-side CSS/JS code compressor & beautifier.
-- [Option F: SVG & Image WebP Optimizer](https://salabs.quanxs.com/tools/svg-image-optimizer.html): SVG optimizer & WebP image converter.
-- [Option G: RegEx Realtime Tester](https://salabs.quanxs.com/tools/regex-tester.html): Interactive regex pattern tester.
-- [Option H: UUID v4 & Secret Key Generator](https://salabs.quanxs.com/tools/uuid-secret-generator.html): Cryptographic UUID v4 and secret key generator.
-- [Option I: URL Encoder & Query Parser](https://salabs.quanxs.com/tools/url-encoder-parser.html): Full URL encoder/decoder & parameter parser.
-- [Option J: Color Code & WCAG Checker](https://salabs.quanxs.com/tools/color-converter-contrast.html): HEX/RGB/HSL converter & WCAG 2.1 inspector.
-- [Option K: SHA / HMAC Checksum Generator](https://salabs.quanxs.com/tools/hash-hmac-generator.html): Web Crypto API powered SHA-256, SHA-512 & HMAC.
-- [Option L: HTML Entity & Diff Checker](https://salabs.quanxs.com/tools/html-entity-diff-checker.html): HTML entity escape & text diff checker.
-- [Option M: CSS Flexbox & Grid Playground](https://salabs.quanxs.com/tools/flex-grid-playground.html): Visual CSS layout sandbox.
-- [Option N: AES-GCM Crypto Cipher Vault](https://salabs.quanxs.com/tools/hash-cipher.html): Client-side AES-256-GCM encryption & decryption vault.
-- [Option O: cURL to Fetch & Python Converter](https://salabs.quanxs.com/tools/curl-to-fetch.html): Convert cURL commands to JS Fetch, Axios, and Python.
-- [Option P: SQL Query Formatter & Minifier](https://salabs.quanxs.com/tools/sql-formatter.html): Format and beautify SQL queries 100% locally.
-- [Option Q: Audio Waveform Spectrum Visualizer](https://salabs.quanxs.com/tools/audio-waveform-analyzer.html): Real-time Web Audio FFT visualizer.
-- [Option R: IPv4 Subnet & CIDR Calculator](https://salabs.quanxs.com/tools/subnet-cidr-calculator.html): Subnet mask, broadcast & host range calculator.
-- [Option S: QR Code & Barcode Generator](https://salabs.quanxs.com/tools/qr-barcode-generator.html): Instant 1D Barcode & QR code generator with PNG export.
-- [Option T: Image Resizer & Canvas Cropper](https://salabs.quanxs.com/tools/image-resizer-cropper.html): Canvas image resizing & aspect ratio cropping.
-- [Option U: Text Line Diff Analyzer](https://salabs.quanxs.com/tools/text-diff-checker.html): Visual side-by-side text diff analyzer.
-- [Option V: HEX / RGB / HSL Color Tool](https://salabs.quanxs.com/tools/color-converter.html): Lightweight color code palette inspector.
-- [Option W: File Checksum & Hash Tool](https://salabs.quanxs.com/tools/hash-checksum-generator.html): Browser-based file SHA-256 checksum calculator.
-- [Option X: Crypto Hash Suite](https://salabs.quanxs.com/tools/hash-generator.html): Multi-hash cryptographic string suite.
-- [Option Y: Quick Hash Calculator](https://salabs.quanxs.com/tools/hash-checksum.html): Instant text hash calculator.
-
-## Feedback & Peer Review
-- [Peer Review & Feedback Portal](https://salabs.quanxs.com/feedback.html): Submit code reviews, security findings, or feature requests.
+## Available Tools
+- Option AB: SVG Vector Editor & Path Inspector (https://salabs.quanxs.com/tools/svg-vector-editor.html)
+- Option AC: JWT Token Signer & Claims Inspector (https://salabs.quanxs.com/tools/jwt-signer-inspector.html)
