@@ -1,1 +1,49 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>Number Base Converter (Bin, Oct, Dec, Hex) - Quanxs SA Labs</title><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Number Base Converter","url":"https://salabs.quanxs.com/tools/number-base-converter.html"}</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script><style>body{font-family:sans-serif;background:#0f172a;color:#f8fafc;padding:2rem;}.container{max-width:1000px;margin:0 auto;background:#1e293b;padding:2rem;border-radius:12px;}input{width:100%;background:#0f172a;color:#f8fafc;border:1px solid #334155;border-radius:8px;padding:1rem;margin-bottom:1rem;box-sizing:border-box;font-family:monospace;}</style></head><body><header><h1 style="color:#38bdf8;text-align:center;">Number Base Converter</h1></header><main class="container"><h3>Decimal</h3><input type="text" id="dec-in" oninput="convert('dec')"><h3>Binary</h3><input type="text" id="bin-in" oninput="convert('bin')"><h3>Hexadecimal</h3><input type="text" id="hex-in" oninput="convert('hex')"><h3>Octal</h3><input type="text" id="oct-in" oninput="convert('oct')"></main><script>function convert(source){let num=NaN;if(source==='dec')num=parseInt(document.getElementById('dec-in').value,10);else if(source==='bin')num=parseInt(document.getElementById('bin-in').value,2);else if(source==='hex')num=parseInt(document.getElementById('hex-in').value,16);else if(source==='oct')num=parseInt(document.getElementById('oct-in').value,8);if(isNaN(num)){if(source!=='dec')document.getElementById('dec-in').value='';if(source!=='bin')document.getElementById('bin-in').value='';if(source!=='hex')document.getElementById('hex-in').value='';if(source!=='oct')document.getElementById('oct-in').value='';return;}if(source!=='dec')document.getElementById('dec-in').value=num.toString(10);if(source!=='bin')document.getElementById('bin-in').value=num.toString(2);if(source!=='hex')document.getElementById('hex-in').value=num.toString(16).toUpperCase();if(source!=='oct')document.getElementById('oct-in').value=num.toString(8);}</script></body></html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Number Base Converter - Quanxs SA Labs</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Number Base Converter",
+      "url": "https://salabs.quanxs.com/tools/number-base-converter.html"
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <style>
+        body { font-family: sans-serif; background: #0f172a; color: #f8fafc; padding: 2rem; }
+        .container { max-width: 800px; margin: 0 auto; background: #1e293b; padding: 2rem; border-radius: 12px; }
+        input { width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; padding: 1rem; border-radius: 8px; box-sizing: border-box; margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Number Base Converter</h1>
+        <h3>Decimal</h3>
+        <input type="text" id="dec-in" oninput="convert('dec')">
+        <h3>Binary</h3>
+        <input type="text" id="bin-in" oninput="convert('bin')">
+        <h3>Hexadecimal</h3>
+        <input type="text" id="hex-in" oninput="convert('hex')">
+        <h3>Octal</h3>
+        <input type="text" id="oct-in" oninput="convert('oct')">
+    </div>
+    <script>
+        function convert(src) {
+            let val = document.getElementById(src + '-in').value;
+            let num = NaN;
+            if (src === 'dec') num = parseInt(val, 10);
+            else if (src === 'bin') num = parseInt(val, 2);
+            else if (src === 'hex') num = parseInt(val, 16);
+            else if (src === 'oct') num = parseInt(val, 8);
+            if (isNaN(num)) return;
+            if (src !== 'dec') document.getElementById('dec-in').value = num.toString(10);
+            if (src !== 'bin') document.getElementById('bin-in').value = num.toString(2);
+            if (src !== 'hex') document.getElementById('hex-in').value = num.toString(16).toUpperCase();
+            if (src !== 'oct') document.getElementById('oct-in').value = num.toString(8);
+        }
+    </script>
+</body>
+</html>
