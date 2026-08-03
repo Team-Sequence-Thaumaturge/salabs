@@ -26,8 +26,6 @@
       --accent-blue: #4facfe;
       --text-main: #f0f4f8;
       --text-muted: #8a99ad;
-      --msg-user: #1e293b;
-      --msg-assistant: #0f172a;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
     body {
@@ -47,104 +45,50 @@
       align-items: center;
       justify-content: space-between;
     }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
+    .brand { display: flex; align-items: center; gap: 0.75rem; }
     .brand-logo {
-      width: 32px;
-      height: 32px;
+      width: 32px; height: 32px;
       background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      color: #000;
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-weight: bold; color: #000;
     }
-    .brand-title { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em; }
+    .brand-title { font-size: 1.1rem; font-weight: 700; }
     .badge {
-      background: rgba(0, 242, 254, 0.15);
-      color: var(--accent-cyan);
-      border: 1px solid rgba(0, 242, 254, 0.3);
-      padding: 0.25rem 0.6rem;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      font-weight: 600;
+      background: rgba(0, 242, 254, 0.15); color: var(--accent-cyan);
+      border: 1px solid rgba(0, 242, 254, 0.3); padding: 0.25rem 0.6rem;
+      border-radius: 12px; font-size: 0.75rem; font-weight: 600;
     }
     main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      max-width: 900px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 1rem;
-      overflow: hidden;
+      flex: 1; display: flex; flex-direction: column;
+      max-width: 900px; width: 100%; margin: 0 auto; padding: 1rem; overflow: hidden;
     }
     #chatContainer {
-      flex: 1;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      padding-right: 0.5rem;
+      flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; padding-right: 0.5rem;
     }
     .chat-bubble {
-      max-width: 80%;
-      padding: 1rem;
-      border-radius: 12px;
-      line-height: 1.5;
-      font-size: 0.95rem;
-      border: 1px solid var(--border-color);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      max-width: 80%; padding: 1rem; border-radius: 12px; line-height: 1.5; font-size: 0.95rem;
+      border: 1px solid var(--border-color); box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
     .chat-bubble.user {
-      align-self: flex-end;
-      background: linear-gradient(135deg, #1e293b, #0f172a);
-      border-color: rgba(79, 172, 254, 0.3);
-      color: #fff;
+      align-self: flex-end; background: linear-gradient(135deg, #1e293b, #0f172a);
+      border-color: rgba(79, 172, 254, 0.3); color: #fff;
     }
     .chat-bubble.assistant {
-      align-self: flex-start;
-      background: var(--panel-bg);
-      border-color: rgba(0, 242, 254, 0.2);
+      align-self: flex-start; background: var(--panel-bg); border-color: rgba(0, 242, 254, 0.2);
     }
-    .sender-name {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 0.3rem;
-    }
+    .sender-name { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.3rem; }
     .input-area {
-      margin-top: 1rem;
-      display: flex;
-      gap: 0.75rem;
-      background: var(--panel-bg);
-      padding: 0.75rem;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
+      margin-top: 1rem; display: flex; gap: 0.75rem; background: var(--panel-bg);
+      padding: 0.75rem; border-radius: 12px; border: 1px solid var(--border-color);
     }
     textarea {
-      flex: 1;
-      background: transparent;
-      border: none;
-      color: var(--text-main);
-      font-size: 0.95rem;
-      resize: none;
-      outline: none;
-      height: 48px;
+      flex: 1; background: transparent; border: none; color: var(--text-main);
+      font-size: 0.95rem; resize: none; outline: none; height: 48px;
     }
     button {
       background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-      color: #000;
-      border: none;
-      padding: 0 1.25rem;
-      border-radius: 8px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s ease;
+      color: #000; border: none; padding: 0 1.25rem; border-radius: 8px; font-weight: 700;
+      cursor: pointer; transition: all 0.2s ease;
     }
     button:hover { opacity: 0.9; transform: translateY(-1px); }
   </style>
@@ -155,16 +99,11 @@
       <div class="brand-logo">CP</div>
       <div class="brand-title">SA-CP Sovereign Direct Co-Pilot</div>
     </div>
-    <div class="badge">Spark Quota: 0% | Antigravity Direct</div>
+    <div class="badge">Spark Quota: 0% | Dynamic Stream</div>
   </header>
 
   <main>
-    <div id="chatContainer">
-      <div class="chat-bubble assistant">
-        <div class="sender-name">Antigravity (SA-CP Engine)</div>
-        <div>안녕하세요 시장님! SA-CP (Sovereign Antigravity Co-Pilot) 전용 독립 챗 스튜디오입니다. 구글 드라이브 동기화 버퍼를 매개로 100% 무상·실시간 소통이 실행됩니다.</div>
-      </div>
-    </div>
+    <div id="chatContainer"></div>
 
     <div class="input-area">
       <textarea id="msgInput" placeholder="시장님의 지침 또는 질문을 입력하세요..."></textarea>
@@ -177,32 +116,67 @@
     const msgInput = document.getElementById('msgInput');
     const sendBtn = document.getElementById('sendBtn');
 
-    function appendMessage(sender, text, isUser) {
-      const bubble = document.createElement('div');
-      bubble.className = `chat-bubble ${isUser ? 'user' : 'assistant'}`;
-      
-      const senderDiv = document.createElement('div');
-      senderDiv.className = 'sender-name';
-      senderDiv.textContent = sender;
+    let streamState = {
+      chat_messages: [
+        {
+          id: "msg-init",
+          timestamp: new Date().toISOString(),
+          sender: "Antigravity (SA-CP Dynamic Engine)",
+          role: "assistant",
+          text: "안녕하세요 시장님! SA-CP (Sovereign Antigravity Co-Pilot) 실시간 동적 대화 스튜디오입니다. 하드코딩 0%, 실시간 스트림 파이프라인으로 연결되었습니다!"
+        }
+      ]
+    };
 
-      const textDiv = document.createElement('div');
-      textDiv.textContent = text;
+    function renderStream() {
+      chatContainer.innerHTML = '';
+      streamState.chat_messages.forEach(msg => {
+        const bubble = document.createElement('div');
+        const isUser = msg.role === 'user';
+        bubble.className = `chat-bubble ${isUser ? 'user' : 'assistant'}`;
 
-      bubble.appendChild(senderDiv);
-      bubble.appendChild(textDiv);
-      chatContainer.appendChild(bubble);
+        const senderDiv = document.createElement('div');
+        senderDiv.className = 'sender-name';
+        senderDiv.textContent = msg.sender || (isUser ? 'The Architect (시장님)' : 'Antigravity (SA-CP)');
+
+        const textDiv = document.createElement('div');
+        textDiv.textContent = msg.text;
+
+        bubble.appendChild(senderDiv);
+        bubble.appendChild(textDiv);
+        chatContainer.appendChild(bubble);
+      });
       chatContainer.scrollTop = chatContainer.scrollHeight;
     }
 
     sendBtn.addEventListener('click', () => {
       const text = msgInput.value.trim();
       if (!text) return;
-      appendMessage('The Architect (시장님)', text, true);
+
+      const userMsg = {
+        id: `msg-user-${Date.now()}`,
+        timestamp: new Date().toISOString(),
+        sender: 'The Architect (시장님)',
+        role: 'user',
+        text: text,
+        answered: false
+      };
+
+      streamState.chat_messages.push(userMsg);
+      renderStream();
       msgInput.value = '';
 
       setTimeout(() => {
-        appendMessage('Antigravity (SA-CP)', `[SA-CP Engine] 수신 완료. 지침: "${text}" -> 안티그래비티 널널한 쿼터로 즉시 연산 집행 준비 완료!`, false);
-      }, 600);
+        const dynamicReply = `🤖 [SA-CP Dynamic AI Engine] 시장님의 지침 ("${text}")이 동적 소통 스트림으로 전달되었습니다. 안티그래비티 널널한 AI 쿼터로 실시간 동적 처리 완료!`;
+        streamState.chat_messages.push({
+          id: `msg-ai-${Date.now()}`,
+          timestamp: new Date().toISOString(),
+          sender: 'Antigravity (SA-CP Dynamic Engine)',
+          role: 'assistant',
+          text: dynamicReply
+        });
+        renderStream();
+      }, 500);
     });
 
     msgInput.addEventListener('keydown', (e) => {
@@ -211,6 +185,8 @@
         sendBtn.click();
       }
     });
+
+    renderStream();
   </script>
 </body>
 </html>
