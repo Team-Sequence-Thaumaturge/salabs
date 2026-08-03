@@ -43,5 +43,6 @@
   <url><loc>https://salabs.quanxs.com/tools/text-diff-checker.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/url-encoder-parser.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/uuid-secret-generator.html</loc><priority>0.8</priority></url>
+  <url><loc>https://salabs.quanxs.com/tools/websocket-sse-debugger.html</loc><priority>0.8</priority></url>
   <url><loc>https://salabs.quanxs.com/tools/websocket-sse-tester.html</loc><priority>0.8</priority></url>
 </urlset>
