@@ -9,6 +9,7 @@
 - [Audio Biquad Filter Studio](https://salabs.quanxs.com/tools/audio-biquad-filter-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Bpm Metronome](https://salabs.quanxs.com/tools/audio-bpm-metronome.html): 100% Client-side pure JS utility tool.
 - [Audio Chords Frequency Generator](https://salabs.quanxs.com/tools/audio-chords-frequency-generator.html): 100% Client-side pure JS utility tool.
+- [Audio Delay Feedback Studio](https://salabs.quanxs.com/tools/audio-delay-feedback-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Equalizer Studio](https://salabs.quanxs.com/tools/audio-equalizer-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Frequency Analyzer](https://salabs.quanxs.com/tools/audio-frequency-analyzer.html): 100% Client-side pure JS utility tool.
 - [Audio Noise Generator](https://salabs.quanxs.com/tools/audio-noise-generator.html): 100% Client-side pure JS utility tool.
@@ -34,6 +35,7 @@
 - [Crypto Aes Gcm Encryption](https://salabs.quanxs.com/tools/crypto-aes-gcm-encryption.html): 100% Client-side pure JS utility tool.
 - [Crypto Ecdsa Secp256K1 Verifier](https://salabs.quanxs.com/tools/crypto-ecdsa-secp256k1-verifier.html): 100% Client-side pure JS utility tool.
 - [Crypto Ed25519 Key Generator](https://salabs.quanxs.com/tools/crypto-ed25519-key-generator.html): 100% Client-side pure JS utility tool.
+- [Crypto Hkdf Key Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-key-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha3 Tester](https://salabs.quanxs.com/tools/crypto-hmac-sha3-tester.html): 100% Client-side pure JS utility tool.
 - [Crypto Pbkdf2 Hasher Studio](https://salabs.quanxs.com/tools/crypto-pbkdf2-hasher-studio.html): 100% Client-side pure JS utility tool.
 - [Crypto Pbkdf2 Key Derivation](https://salabs.quanxs.com/tools/crypto-pbkdf2-key-derivation.html): 100% Client-side pure JS utility tool.
@@ -88,6 +90,7 @@
 - [Html Canvas Color Picker](https://salabs.quanxs.com/tools/html-canvas-color-picker.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Crop Rotate Studio](https://salabs.quanxs.com/tools/html-canvas-crop-rotate-studio.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Drawing Pad](https://salabs.quanxs.com/tools/html-canvas-drawing-pad.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Glitch Art Studio](https://salabs.quanxs.com/tools/html-canvas-glitch-art-studio.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Grid Pattern Generator](https://salabs.quanxs.com/tools/html-canvas-grid-pattern-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Image Filters](https://salabs.quanxs.com/tools/html-canvas-image-filters.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Particle Generator](https://salabs.quanxs.com/tools/html-canvas-particle-generator.html): 100% Client-side pure JS utility tool.
