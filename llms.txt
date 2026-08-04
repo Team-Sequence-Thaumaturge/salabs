@@ -6,6 +6,7 @@
 - [Api Mock Sandbox](https://salabs.quanxs.com/tools/api-mock-sandbox.html): 100% Client-side pure JS utility tool.
 - [Ascii Art Text Generator](https://salabs.quanxs.com/tools/ascii-art-text-generator.html): 100% Client-side pure JS utility tool.
 - [Audio Bpm Metronome](https://salabs.quanxs.com/tools/audio-bpm-metronome.html): 100% Client-side pure JS utility tool.
+- [Audio Frequency Analyzer](https://salabs.quanxs.com/tools/audio-frequency-analyzer.html): 100% Client-side pure JS utility tool.
 - [Audio Noise Generator](https://salabs.quanxs.com/tools/audio-noise-generator.html): 100% Client-side pure JS utility tool.
 - [Audio Tone Frequency Generator](https://salabs.quanxs.com/tools/audio-tone-frequency-generator.html): 100% Client-side pure JS utility tool.
 - [Audio Voice Recorder](https://salabs.quanxs.com/tools/audio-voice-recorder.html): 100% Client-side pure JS utility tool.
@@ -30,6 +31,7 @@
 - [Css Box Model Grid](https://salabs.quanxs.com/tools/css-box-model-grid.html): 100% Client-side pure JS utility tool.
 - [Css Box Shadow 3D](https://salabs.quanxs.com/tools/css-box-shadow-3d.html): 100% Client-side pure JS utility tool.
 - [Css Box Shadow Generator](https://salabs.quanxs.com/tools/css-box-shadow-generator.html): 100% Client-side pure JS utility tool.
+- [Css Box Shadow Inset Studio](https://salabs.quanxs.com/tools/css-box-shadow-inset-studio.html): 100% Client-side pure JS utility tool.
 - [Css Button Generator](https://salabs.quanxs.com/tools/css-button-generator.html): 100% Client-side pure JS utility tool.
 - [Css Clamp Calculator](https://salabs.quanxs.com/tools/css-clamp-calculator.html): 100% Client-side pure JS utility tool.
 - [Css Cubic Bezier Generator](https://salabs.quanxs.com/tools/css-cubic-bezier-generator.html): 100% Client-side pure JS utility tool.
@@ -77,6 +79,7 @@
 - [Js Benchmarking Timer](https://salabs.quanxs.com/tools/js-benchmarking-timer.html): 100% Client-side pure JS utility tool.
 - [Js Event Emitter Playground](https://salabs.quanxs.com/tools/js-event-emitter-playground.html): 100% Client-side pure JS utility tool.
 - [Js Event Key Code](https://salabs.quanxs.com/tools/js-event-key-code.html): 100% Client-side pure JS utility tool.
+- [Js Localstorage Session Manager](https://salabs.quanxs.com/tools/js-localstorage-session-manager.html): 100% Client-side pure JS utility tool.
 - [Js Minifier Formatter](https://salabs.quanxs.com/tools/js-minifier-formatter.html): 100% Client-side pure JS utility tool.
 - [Js Object Diff Checker](https://salabs.quanxs.com/tools/js-object-diff-checker.html): 100% Client-side pure JS utility tool.
 - [Js Promise Async Visualizer](https://salabs.quanxs.com/tools/js-promise-async-visualizer.html): 100% Client-side pure JS utility tool.
@@ -89,6 +92,7 @@
 - [Json Schema Validator](https://salabs.quanxs.com/tools/json-schema-validator.html): 100% Client-side pure JS utility tool.
 - [Json To Csv Exporter](https://salabs.quanxs.com/tools/json-to-csv-exporter.html): 100% Client-side pure JS utility tool.
 - [Json Yaml Formatter](https://salabs.quanxs.com/tools/json-yaml-formatter.html): 100% Client-side pure JS utility tool.
+- [Jules Json Tree Visualizer](https://salabs.quanxs.com/tools/jules-json-tree-visualizer.html): 100% Client-side pure JS utility tool.
 - [Jwt Debugger Verifier](https://salabs.quanxs.com/tools/jwt-debugger-verifier.html): 100% Client-side pure JS utility tool.
 - [Jwt Payload Editor](https://salabs.quanxs.com/tools/jwt-payload-editor.html): 100% Client-side pure JS utility tool.
 - [Jwt Rs256 Key Generator](https://salabs.quanxs.com/tools/jwt-rs256-key-generator.html): 100% Client-side pure JS utility tool.
@@ -113,7 +117,6 @@
 - [Regex Tester](https://salabs.quanxs.com/tools/regex-tester.html): 100% Client-side pure JS utility tool.
 - [Regex Visualizer](https://salabs.quanxs.com/tools/regex-visualizer.html): 100% Client-side pure JS utility tool.
 - [Sacm Coder Middleware Studio](https://salabs.quanxs.com/tools/sacm-coder-middleware-studio.html): 100% Client-side pure JS utility tool.
-- [Sacp_Chat_Studio](https://salabs.quanxs.com/tools/sacp_chat_studio.html): 100% Client-side pure JS utility tool.
 - [Sha256 Hash Calculator](https://salabs.quanxs.com/tools/sha256-hash-calculator.html): 100% Client-side pure JS utility tool.
 - [Sql Formatter](https://salabs.quanxs.com/tools/sql-formatter.html): 100% Client-side pure JS utility tool.
 - [Sql Query Builder](https://salabs.quanxs.com/tools/sql-query-builder.html): 100% Client-side pure JS utility tool.
