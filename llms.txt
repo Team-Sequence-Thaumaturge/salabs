@@ -12,6 +12,7 @@
 - [Audio Chorus Flanger Studio](https://salabs.quanxs.com/tools/audio-chorus-flanger-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Compressor Limiter Studio](https://salabs.quanxs.com/tools/audio-compressor-limiter-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Delay Feedback Studio](https://salabs.quanxs.com/tools/audio-delay-feedback-studio.html): 100% Client-side pure JS utility tool.
+- [Audio Distortion Bitcrusher Studio](https://salabs.quanxs.com/tools/audio-distortion-bitcrusher-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Distortion Overdrive Studio](https://salabs.quanxs.com/tools/audio-distortion-overdrive-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Equalizer Studio](https://salabs.quanxs.com/tools/audio-equalizer-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Frequency Analyzer](https://salabs.quanxs.com/tools/audio-frequency-analyzer.html): 100% Client-side pure JS utility tool.
@@ -58,6 +59,7 @@
 - [Crypto Ecdsa Secp256K1 Verifier](https://salabs.quanxs.com/tools/crypto-ecdsa-secp256k1-verifier.html): 100% Client-side pure JS utility tool.
 - [Crypto Ed25519 Key Generator](https://salabs.quanxs.com/tools/crypto-ed25519-key-generator.html): 100% Client-side pure JS utility tool.
 - [Crypto Ed25519 Signature Validator](https://salabs.quanxs.com/tools/crypto-ed25519-signature-validator.html): 100% Client-side pure JS utility tool.
+- [Crypto Hkdf Expand Extract Studio](https://salabs.quanxs.com/tools/crypto-hkdf-expand-extract-studio.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Key Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-key-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha512 Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-sha512-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha1 Validator](https://salabs.quanxs.com/tools/crypto-hmac-sha1-validator.html): 100% Client-side pure JS utility tool.
@@ -122,6 +124,7 @@
 - [Html Canvas Ascii Banner Studio](https://salabs.quanxs.com/tools/html-canvas-ascii-banner-studio.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Camera Feed](https://salabs.quanxs.com/tools/html-canvas-ascii-camera-feed.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Contour Map](https://salabs.quanxs.com/tools/html-canvas-ascii-contour-map.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii Landscape Generator](https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Matrix Rain](https://salabs.quanxs.com/tools/html-canvas-ascii-matrix-rain.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Video Player](https://salabs.quanxs.com/tools/html-canvas-ascii-video-player.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Chart Generator](https://salabs.quanxs.com/tools/html-canvas-chart-generator.html): 100% Client-side pure JS utility tool.
