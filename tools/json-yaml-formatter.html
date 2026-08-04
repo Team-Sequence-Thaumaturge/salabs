@@ -1,1 +1,18 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>JSON / YAML Formatter - SA Labs</title><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script><style>body{font-family:sans-serif;background:#0f172a;color:#f8fafc;padding:2rem;}textarea{width:100%;height:200px;background:#1e293b;color:#f8fafc;border:1px solid #334155;border-radius:4px;padding:0.5rem;}button{background:#38bdf8;color:#0f172a;border:none;padding:0.5rem 1rem;border-radius:4px;font-weight:bold;cursor:pointer;margin:0.5rem 0;}</style></head><body><h1>JSON / YAML Formatter</h1><p>Client-side formatting and conversion.</p><textarea id="input" placeholder="Paste JSON or YAML here..."></textarea><br><button onclick="formatJSON()">Format JSON</button><textarea id="output" readonly></textarea><script>function formatJSON(){try{const obj=JSON.parse(document.getElementById('input').value);document.getElementById('output').value=JSON.stringify(obj,null,2);}catch(e){document.getElementById('output').value='Invalid JSON: '+e.message;}}</script></body></html>
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>JSON / YAML Formatter - SA Labs</title><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script><style>body{font-family:sans-serif;background:#0f172a;color:#f8fafc;padding:2rem;}textarea{width:100%;height:200px;background:#1e293b;color:#f8fafc;border:1px solid #334155;border-radius:4px;padding:0.5rem;}button{background:#38bdf8;color:#0f172a;border:none;padding:0.5rem 1rem;border-radius:4px;font-weight:bold;cursor:pointer;margin:0.5rem 0;}</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Quanxs SA Labs - Json Yaml Formatter",
+  "url": "https://salabs.quanxs.com/tools/json-yaml-formatter.html",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Quanxs SA Labs"
+  }
+}
+</script>
+
+</head><body><h1>JSON / YAML Formatter</h1><p>Client-side formatting and conversion.</p><textarea id="input" placeholder="Paste JSON or YAML here..."></textarea><br><button onclick="formatJSON()">Format JSON</button><textarea id="output" readonly></textarea><script>function formatJSON(){try{const obj=JSON.parse(document.getElementById('input').value);document.getElementById('output').value=JSON.stringify(obj,null,2);}catch(e){document.getElementById('output').value='Invalid JSON: '+e.message;}}</script></body></html>
