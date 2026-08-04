@@ -1,33 +1,145 @@
-# Quanxs SA Labs Developer Utility Suite & AI Data Lake
-> High-performance 100% Client-Side Pure JS Developer Utilities & AI Training Data Lake Assets
+# Quanxs SA Labs (SALABS) - AI Agent & LLM Index
+> Autonomous Web Utility Tools & B2B Data Lake Infrastructure
 
-## Core Infrastructure
-- AI Agent Digital Agora & MCP API: https://salabs.quanxs.com/agora/index.html
-- B2B 768-Dim Vector Embeddings Asset: https://salabs.quanxs.com/downloads/index.html
+## 🌐 Live Utility Tools
 
-## 24/7 Available Developer Utilities (48+ Tools)
-- JSON/YAML Formatter & Linter: https://salabs.quanxs.com/tools/json-yaml-formatter.html
-- Base64 & JWT Decoder: https://salabs.quanxs.com/tools/base64-jwt-decoder.html
-- Cron Expression Generator: https://salabs.quanxs.com/tools/cron-generator.html
-- Markdown HTML Previewer: https://salabs.quanxs.com/tools/markdown-html-previewer.html
-- CSS & JS Code Minifier: https://salabs.quanxs.com/tools/css-js-minifier.html
-- SVG & Image Optimizer: https://salabs.quanxs.com/tools/svg-image-optimizer.html
-- RegEx Tester & Debugger: https://salabs.quanxs.com/tools/regex-tester.html
-- UUID & Secret Generator: https://salabs.quanxs.com/tools/uuid-secret-generator.html
-- URL Encoder & Parser: https://salabs.quanxs.com/tools/url-encoder-parser.html
-- Cryptographic Hash & HMAC Generator: https://salabs.quanxs.com/tools/hash-hmac-generator.html
-- Color Converter & Palette Generator: https://salabs.quanxs.com/tools/color-converter.html
-- JSON Diff Inspector: https://salabs.quanxs.com/tools/json-diff.html
-- JWT Secret Signer: https://salabs.quanxs.com/tools/jwt-signer.html
-- Glassmorphism CSS Generator: https://salabs.quanxs.com/tools/css-glassmorphism-generator.html
-- CSV to JSON Transformer: https://salabs.quanxs.com/tools/csv-json-transformer.html
-- WebSocket & SSE Realtime Client Tester: https://salabs.quanxs.com/tools/websocket-sse-tester.html
-- JSON Schema Generator & Validator: https://salabs.quanxs.com/tools/json-schema-validator.html
-- API Mock Sandbox: https://salabs.quanxs.com/tools/api-mock-sandbox.html
-- JWT Token Playground: https://salabs.quanxs.com/tools/jwt-token-playground.html
-- JSON Path Finder: https://salabs.quanxs.com/tools/json-path-finder.html
-- CSS Box Shadow Generator: https://salabs.quanxs.com/tools/css-box-shadow-generator.html
-- RegEx Batch Extractor: https://salabs.quanxs.com/tools/regex-batch-extractor.html
-- JS Minifier Formatter: https://salabs.quanxs.com/tools/js-minifier-formatter.html
-- Cookie Header Parser: https://salabs.quanxs.com/tools/cookie-header-parser.html
-- Units PX REM EM Converter: https://salabs.quanxs.com/tools/units-px-rem-converter.html
+- [Api Mock Sandbox](https://salabs.quanxs.com/tools/api-mock-sandbox.html): 100% Client-side pure JS utility tool.
+- [Ascii Art Text Generator](https://salabs.quanxs.com/tools/ascii-art-text-generator.html): 100% Client-side pure JS utility tool.
+- [Audio Bpm Metronome](https://salabs.quanxs.com/tools/audio-bpm-metronome.html): 100% Client-side pure JS utility tool.
+- [Audio Noise Generator](https://salabs.quanxs.com/tools/audio-noise-generator.html): 100% Client-side pure JS utility tool.
+- [Audio Tone Frequency Generator](https://salabs.quanxs.com/tools/audio-tone-frequency-generator.html): 100% Client-side pure JS utility tool.
+- [Audio Voice Recorder](https://salabs.quanxs.com/tools/audio-voice-recorder.html): 100% Client-side pure JS utility tool.
+- [Audio Waveform Analyzer](https://salabs.quanxs.com/tools/audio-waveform-analyzer.html): 100% Client-side pure JS utility tool.
+- [Base64 Image Encoder](https://salabs.quanxs.com/tools/base64-image-encoder.html): 100% Client-side pure JS utility tool.
+- [Base64 Jwt Decoder](https://salabs.quanxs.com/tools/base64-jwt-decoder.html): 100% Client-side pure JS utility tool.
+- [Btoa Atob Converter](https://salabs.quanxs.com/tools/btoa-atob-converter.html): 100% Client-side pure JS utility tool.
+- [Chmod Calculator](https://salabs.quanxs.com/tools/chmod-calculator.html): 100% Client-side pure JS utility tool.
+- [Color Contrast Accessibility Checker](https://salabs.quanxs.com/tools/color-contrast-accessibility-checker.html): 100% Client-side pure JS utility tool.
+- [Color Converter Contrast](https://salabs.quanxs.com/tools/color-converter-contrast.html): 100% Client-side pure JS utility tool.
+- [Color Converter](https://salabs.quanxs.com/tools/color-converter.html): 100% Client-side pure JS utility tool.
+- [Color Palette Generator](https://salabs.quanxs.com/tools/color-palette-generator.html): 100% Client-side pure JS utility tool.
+- [Color Rgb Hsl Picker](https://salabs.quanxs.com/tools/color-rgb-hsl-picker.html): 100% Client-side pure JS utility tool.
+- [Cookie Header Parser](https://salabs.quanxs.com/tools/cookie-header-parser.html): 100% Client-side pure JS utility tool.
+- [Cron Generator](https://salabs.quanxs.com/tools/cron-generator.html): 100% Client-side pure JS utility tool.
+- [Crypto Random Token Generator](https://salabs.quanxs.com/tools/crypto-random-token-generator.html): 100% Client-side pure JS utility tool.
+- [Css Animation Generator](https://salabs.quanxs.com/tools/css-animation-generator.html): 100% Client-side pure JS utility tool.
+- [Css Animation Keyframe Generator](https://salabs.quanxs.com/tools/css-animation-keyframe-generator.html): 100% Client-side pure JS utility tool.
+- [Css Border Radius Generator](https://salabs.quanxs.com/tools/css-border-radius-generator.html): 100% Client-side pure JS utility tool.
+- [Css Box Border Radius Studio](https://salabs.quanxs.com/tools/css-box-border-radius-studio.html): 100% Client-side pure JS utility tool.
+- [Css Box Filter Generator](https://salabs.quanxs.com/tools/css-box-filter-generator.html): 100% Client-side pure JS utility tool.
+- [Css Box Model Grid](https://salabs.quanxs.com/tools/css-box-model-grid.html): 100% Client-side pure JS utility tool.
+- [Css Box Shadow 3D](https://salabs.quanxs.com/tools/css-box-shadow-3d.html): 100% Client-side pure JS utility tool.
+- [Css Box Shadow Generator](https://salabs.quanxs.com/tools/css-box-shadow-generator.html): 100% Client-side pure JS utility tool.
+- [Css Button Generator](https://salabs.quanxs.com/tools/css-button-generator.html): 100% Client-side pure JS utility tool.
+- [Css Clamp Calculator](https://salabs.quanxs.com/tools/css-clamp-calculator.html): 100% Client-side pure JS utility tool.
+- [Css Cubic Bezier Generator](https://salabs.quanxs.com/tools/css-cubic-bezier-generator.html): 100% Client-side pure JS utility tool.
+- [Css Flexbox Playground](https://salabs.quanxs.com/tools/css-flexbox-playground.html): 100% Client-side pure JS utility tool.
+- [Css Font Typography Tester](https://salabs.quanxs.com/tools/css-font-typography-tester.html): 100% Client-side pure JS utility tool.
+- [Css Glassmorphism Generator](https://salabs.quanxs.com/tools/css-glassmorphism-generator.html): 100% Client-side pure JS utility tool.
+- [Css Gradient Generator](https://salabs.quanxs.com/tools/css-gradient-generator.html): 100% Client-side pure JS utility tool.
+- [Css Grid Layout Generator](https://salabs.quanxs.com/tools/css-grid-layout-generator.html): 100% Client-side pure JS utility tool.
+- [Css Js Minifier](https://salabs.quanxs.com/tools/css-js-minifier.html): 100% Client-side pure JS utility tool.
+- [Css Keyframe Animator](https://salabs.quanxs.com/tools/css-keyframe-animator.html): 100% Client-side pure JS utility tool.
+- [Csv Delimiter Converter](https://salabs.quanxs.com/tools/csv-delimiter-converter.html): 100% Client-side pure JS utility tool.
+- [Csv Excel Viewer](https://salabs.quanxs.com/tools/csv-excel-viewer.html): 100% Client-side pure JS utility tool.
+- [Csv Json Transformer](https://salabs.quanxs.com/tools/csv-json-transformer.html): 100% Client-side pure JS utility tool.
+- [Curl To Fetch](https://salabs.quanxs.com/tools/curl-to-fetch.html): 100% Client-side pure JS utility tool.
+- [Diff Checker](https://salabs.quanxs.com/tools/diff-checker.html): 100% Client-side pure JS utility tool.
+- [Dns Lookup Record Parser](https://salabs.quanxs.com/tools/dns-lookup-record-parser.html): 100% Client-side pure JS utility tool.
+- [Flex Grid Playground](https://salabs.quanxs.com/tools/flex-grid-playground.html): 100% Client-side pure JS utility tool.
+- [Graphql Query Formatter](https://salabs.quanxs.com/tools/graphql-query-formatter.html): 100% Client-side pure JS utility tool.
+- [Hash Bcrypt Argon Tester](https://salabs.quanxs.com/tools/hash-bcrypt-argon-tester.html): 100% Client-side pure JS utility tool.
+- [Hash Checksum Generator](https://salabs.quanxs.com/tools/hash-checksum-generator.html): 100% Client-side pure JS utility tool.
+- [Hash Checksum](https://salabs.quanxs.com/tools/hash-checksum.html): 100% Client-side pure JS utility tool.
+- [Hash Cipher](https://salabs.quanxs.com/tools/hash-cipher.html): 100% Client-side pure JS utility tool.
+- [Hash Generator](https://salabs.quanxs.com/tools/hash-generator.html): 100% Client-side pure JS utility tool.
+- [Hash Hmac Generator](https://salabs.quanxs.com/tools/hash-hmac-generator.html): 100% Client-side pure JS utility tool.
+- [Hash Sha512 Keccak](https://salabs.quanxs.com/tools/hash-sha512-keccak.html): 100% Client-side pure JS utility tool.
+- [Hex Hexdump Viewer](https://salabs.quanxs.com/tools/hex-hexdump-viewer.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Chart Generator](https://salabs.quanxs.com/tools/html-canvas-chart-generator.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Drawing Pad](https://salabs.quanxs.com/tools/html-canvas-drawing-pad.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Particle Generator](https://salabs.quanxs.com/tools/html-canvas-particle-generator.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Signature Generator](https://salabs.quanxs.com/tools/html-canvas-signature-generator.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Signature Pad](https://salabs.quanxs.com/tools/html-canvas-signature-pad.html): 100% Client-side pure JS utility tool.
+- [Html Entity Diff Checker](https://salabs.quanxs.com/tools/html-entity-diff-checker.html): 100% Client-side pure JS utility tool.
+- [Html Entity Encoder](https://salabs.quanxs.com/tools/html-entity-encoder.html): 100% Client-side pure JS utility tool.
+- [Html Formatting Sanitizer](https://salabs.quanxs.com/tools/html-formatting-sanitizer.html): 100% Client-side pure JS utility tool.
+- [Html Markdown Converter](https://salabs.quanxs.com/tools/html-markdown-converter.html): 100% Client-side pure JS utility tool.
+- [Html Meta Og Generator](https://salabs.quanxs.com/tools/html-meta-og-generator.html): 100% Client-side pure JS utility tool.
+- [Html Table Json Converter](https://salabs.quanxs.com/tools/html-table-json-converter.html): 100% Client-side pure JS utility tool.
+- [Http Request Builder](https://salabs.quanxs.com/tools/http-request-builder.html): 100% Client-side pure JS utility tool.
+- [Http Status Codes](https://salabs.quanxs.com/tools/http-status-codes.html): 100% Client-side pure JS utility tool.
+- [Image Color Picker](https://salabs.quanxs.com/tools/image-color-picker.html): 100% Client-side pure JS utility tool.
+- [Image Resizer Cropper](https://salabs.quanxs.com/tools/image-resizer-cropper.html): 100% Client-side pure JS utility tool.
+- [Ip Geolocation Lookup](https://salabs.quanxs.com/tools/ip-geolocation-lookup.html): 100% Client-side pure JS utility tool.
+- [Js Array Flat Dedupe](https://salabs.quanxs.com/tools/js-array-flat-dedupe.html): 100% Client-side pure JS utility tool.
+- [Js Ast Parser Studio](https://salabs.quanxs.com/tools/js-ast-parser-studio.html): 100% Client-side pure JS utility tool.
+- [Js Benchmarking Timer](https://salabs.quanxs.com/tools/js-benchmarking-timer.html): 100% Client-side pure JS utility tool.
+- [Js Event Emitter Playground](https://salabs.quanxs.com/tools/js-event-emitter-playground.html): 100% Client-side pure JS utility tool.
+- [Js Event Key Code](https://salabs.quanxs.com/tools/js-event-key-code.html): 100% Client-side pure JS utility tool.
+- [Js Minifier Formatter](https://salabs.quanxs.com/tools/js-minifier-formatter.html): 100% Client-side pure JS utility tool.
+- [Js Object Diff Checker](https://salabs.quanxs.com/tools/js-object-diff-checker.html): 100% Client-side pure JS utility tool.
+- [Js Promise Async Visualizer](https://salabs.quanxs.com/tools/js-promise-async-visualizer.html): 100% Client-side pure JS utility tool.
+- [Js Regex Code Generator](https://salabs.quanxs.com/tools/js-regex-code-generator.html): 100% Client-side pure JS utility tool.
+- [Js Regex Escape Tool](https://salabs.quanxs.com/tools/js-regex-escape-tool.html): 100% Client-side pure JS utility tool.
+- [Json Diff](https://salabs.quanxs.com/tools/json-diff.html): 100% Client-side pure JS utility tool.
+- [Json Escape Unescape](https://salabs.quanxs.com/tools/json-escape-unescape.html): 100% Client-side pure JS utility tool.
+- [Json Formatter Beautifier](https://salabs.quanxs.com/tools/json-formatter-beautifier.html): 100% Client-side pure JS utility tool.
+- [Json Path Finder](https://salabs.quanxs.com/tools/json-path-finder.html): 100% Client-side pure JS utility tool.
+- [Json Schema Validator](https://salabs.quanxs.com/tools/json-schema-validator.html): 100% Client-side pure JS utility tool.
+- [Json To Csv Exporter](https://salabs.quanxs.com/tools/json-to-csv-exporter.html): 100% Client-side pure JS utility tool.
+- [Json Yaml Formatter](https://salabs.quanxs.com/tools/json-yaml-formatter.html): 100% Client-side pure JS utility tool.
+- [Jwt Debugger Verifier](https://salabs.quanxs.com/tools/jwt-debugger-verifier.html): 100% Client-side pure JS utility tool.
+- [Jwt Payload Editor](https://salabs.quanxs.com/tools/jwt-payload-editor.html): 100% Client-side pure JS utility tool.
+- [Jwt Rs256 Key Generator](https://salabs.quanxs.com/tools/jwt-rs256-key-generator.html): 100% Client-side pure JS utility tool.
+- [Jwt Rs256 Signature Validator](https://salabs.quanxs.com/tools/jwt-rs256-signature-validator.html): 100% Client-side pure JS utility tool.
+- [Jwt Signer Inspector](https://salabs.quanxs.com/tools/jwt-signer-inspector.html): 100% Client-side pure JS utility tool.
+- [Jwt Signer](https://salabs.quanxs.com/tools/jwt-signer.html): 100% Client-side pure JS utility tool.
+- [Jwt Token Playground](https://salabs.quanxs.com/tools/jwt-token-playground.html): 100% Client-side pure JS utility tool.
+- [Lorem Ipsum Generator](https://salabs.quanxs.com/tools/lorem-ipsum-generator.html): 100% Client-side pure JS utility tool.
+- [Lorem Markdown Generator](https://salabs.quanxs.com/tools/lorem-markdown-generator.html): 100% Client-side pure JS utility tool.
+- [Markdown Chart Generator](https://salabs.quanxs.com/tools/markdown-chart-generator.html): 100% Client-side pure JS utility tool.
+- [Markdown Html Previewer](https://salabs.quanxs.com/tools/markdown-html-previewer.html): 100% Client-side pure JS utility tool.
+- [Markdown Slides Presenter](https://salabs.quanxs.com/tools/markdown-slides-presenter.html): 100% Client-side pure JS utility tool.
+- [Markdown Table Generator](https://salabs.quanxs.com/tools/markdown-table-generator.html): 100% Client-side pure JS utility tool.
+- [Markdown To Html Converter](https://salabs.quanxs.com/tools/markdown-to-html-converter.html): 100% Client-side pure JS utility tool.
+- [Markdown To Pdf Exporter](https://salabs.quanxs.com/tools/markdown-to-pdf-exporter.html): 100% Client-side pure JS utility tool.
+- [Markdown Toc Generator](https://salabs.quanxs.com/tools/markdown-toc-generator.html): 100% Client-side pure JS utility tool.
+- [Meta Tag Generator](https://salabs.quanxs.com/tools/meta-tag-generator.html): 100% Client-side pure JS utility tool.
+- [Number Base Converter](https://salabs.quanxs.com/tools/number-base-converter.html): 100% Client-side pure JS utility tool.
+- [Qr Barcode Generator](https://salabs.quanxs.com/tools/qr-barcode-generator.html): 100% Client-side pure JS utility tool.
+- [Regex Batch Extractor](https://salabs.quanxs.com/tools/regex-batch-extractor.html): 100% Client-side pure JS utility tool.
+- [Regex Cheat Sheet Tester](https://salabs.quanxs.com/tools/regex-cheat-sheet-tester.html): 100% Client-side pure JS utility tool.
+- [Regex Tester](https://salabs.quanxs.com/tools/regex-tester.html): 100% Client-side pure JS utility tool.
+- [Regex Visualizer](https://salabs.quanxs.com/tools/regex-visualizer.html): 100% Client-side pure JS utility tool.
+- [Sacm Coder Middleware Studio](https://salabs.quanxs.com/tools/sacm-coder-middleware-studio.html): 100% Client-side pure JS utility tool.
+- [Sacp_Chat_Studio](https://salabs.quanxs.com/tools/sacp_chat_studio.html): 100% Client-side pure JS utility tool.
+- [Sha256 Hash Calculator](https://salabs.quanxs.com/tools/sha256-hash-calculator.html): 100% Client-side pure JS utility tool.
+- [Sql Formatter](https://salabs.quanxs.com/tools/sql-formatter.html): 100% Client-side pure JS utility tool.
+- [Sql Query Builder](https://salabs.quanxs.com/tools/sql-query-builder.html): 100% Client-side pure JS utility tool.
+- [String Case Converter](https://salabs.quanxs.com/tools/string-case-converter.html): 100% Client-side pure JS utility tool.
+- [Subnet Cidr Calculator](https://salabs.quanxs.com/tools/subnet-cidr-calculator.html): 100% Client-side pure JS utility tool.
+- [Svg Image Optimizer](https://salabs.quanxs.com/tools/svg-image-optimizer.html): 100% Client-side pure JS utility tool.
+- [Svg Path Bounding Box](https://salabs.quanxs.com/tools/svg-path-bounding-box.html): 100% Client-side pure JS utility tool.
+- [Svg Path Viewer](https://salabs.quanxs.com/tools/svg-path-viewer.html): 100% Client-side pure JS utility tool.
+- [Svg Vector Editor](https://salabs.quanxs.com/tools/svg-vector-editor.html): 100% Client-side pure JS utility tool.
+- [Text Case Converter Slug](https://salabs.quanxs.com/tools/text-case-converter-slug.html): 100% Client-side pure JS utility tool.
+- [Text Case Slug Generator](https://salabs.quanxs.com/tools/text-case-slug-generator.html): 100% Client-side pure JS utility tool.
+- [Text Diff Checker](https://salabs.quanxs.com/tools/text-diff-checker.html): 100% Client-side pure JS utility tool.
+- [Time Zone Converter Clock](https://salabs.quanxs.com/tools/time-zone-converter-clock.html): 100% Client-side pure JS utility tool.
+- [Totp 2Fa Authenticator](https://salabs.quanxs.com/tools/totp-2fa-authenticator.html): 100% Client-side pure JS utility tool.
+- [Units Px Rem Converter](https://salabs.quanxs.com/tools/units-px-rem-converter.html): 100% Client-side pure JS utility tool.
+- [Unix Timestamp Converter](https://salabs.quanxs.com/tools/unix-timestamp-converter.html): 100% Client-side pure JS utility tool.
+- [Url Encoder Parser](https://salabs.quanxs.com/tools/url-encoder-parser.html): 100% Client-side pure JS utility tool.
+- [User Agent Parser](https://salabs.quanxs.com/tools/user-agent-parser.html): 100% Client-side pure JS utility tool.
+- [Uuid Secret Generator](https://salabs.quanxs.com/tools/uuid-secret-generator.html): 100% Client-side pure JS utility tool.
+- [Uuid V7 Generator](https://salabs.quanxs.com/tools/uuid-v7-generator.html): 100% Client-side pure JS utility tool.
+- [Websocket Sse Debugger](https://salabs.quanxs.com/tools/websocket-sse-debugger.html): 100% Client-side pure JS utility tool.
+- [Websocket Sse Tester](https://salabs.quanxs.com/tools/websocket-sse-tester.html): 100% Client-side pure JS utility tool.
+- [Xml Json Converter](https://salabs.quanxs.com/tools/xml-json-converter.html): 100% Client-side pure JS utility tool.
+- [Yaml Json Converter](https://salabs.quanxs.com/tools/yaml-json-converter.html): 100% Client-side pure JS utility tool.
+
+## 📊 B2B Data Lake & Infrastructure
+- [3D Robotics Ops Dataset](https://salabs.quanxs.com/appendix/3d_robotics_ops.json): Spatial AI & Robotics simulation parameters.
+- [Superconducting Quantum Dataset](https://salabs.quanxs.com/appendix/quantum_hamiltonian.json): Quantum computing Hamiltonian matrices.
+- [Sovereign AGI Training Dataset](https://salabs.quanxs.com/appendix/sovereign_agi_vectors.json): Fine-tuning benchmark vectors.
