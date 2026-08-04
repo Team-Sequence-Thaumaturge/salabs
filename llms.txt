@@ -18,6 +18,7 @@
 - [Audio Phaser Flanger Studio](https://salabs.quanxs.com/tools/audio-phaser-flanger-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Ping Pong Delay Studio](https://salabs.quanxs.com/tools/audio-ping-pong-delay-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Reverb Convolver Studio](https://salabs.quanxs.com/tools/audio-reverb-convolver-studio.html): 100% Client-side pure JS utility tool.
+- [Audio Spectral Subtraction Denoiser](https://salabs.quanxs.com/tools/audio-spectral-subtraction-denoiser.html): 100% Client-side pure JS utility tool.
 - [Audio Synth Keyboard](https://salabs.quanxs.com/tools/audio-synth-keyboard.html): 100% Client-side pure JS utility tool.
 - [Audio Tone Frequency Generator](https://salabs.quanxs.com/tools/audio-tone-frequency-generator.html): 100% Client-side pure JS utility tool.
 - [Audio Tremolo Vibrato Studio](https://salabs.quanxs.com/tools/audio-tremolo-vibrato-studio.html): 100% Client-side pure JS utility tool.
@@ -55,6 +56,7 @@
 - [Crypto Random Token Generator](https://salabs.quanxs.com/tools/crypto-random-token-generator.html): 100% Client-side pure JS utility tool.
 - [Crypto Rsa Signature Verifier](https://salabs.quanxs.com/tools/crypto-rsa-signature-verifier.html): 100% Client-side pure JS utility tool.
 - [Crypto Subtle Digest Calculator](https://salabs.quanxs.com/tools/crypto-subtle-digest-calculator.html): 100% Client-side pure JS utility tool.
+- [Crypto X509 Cert Parser](https://salabs.quanxs.com/tools/crypto-x509-cert-parser.html): 100% Client-side pure JS utility tool.
 - [Css Animation Generator](https://salabs.quanxs.com/tools/css-animation-generator.html): 100% Client-side pure JS utility tool.
 - [Css Animation Keyframe Generator](https://salabs.quanxs.com/tools/css-animation-keyframe-generator.html): 100% Client-side pure JS utility tool.
 - [Css Backdrop Filter Generator](https://salabs.quanxs.com/tools/css-backdrop-filter-generator.html): 100% Client-side pure JS utility tool.
@@ -116,6 +118,7 @@
 - [Html Canvas Particle Generator](https://salabs.quanxs.com/tools/html-canvas-particle-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Signature Generator](https://salabs.quanxs.com/tools/html-canvas-signature-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Signature Pad](https://salabs.quanxs.com/tools/html-canvas-signature-pad.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Sobel Edge Detector](https://salabs.quanxs.com/tools/html-canvas-sobel-edge-detector.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Sprite Sheet Animator](https://salabs.quanxs.com/tools/html-canvas-sprite-sheet-animator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Threshold Binarizer](https://salabs.quanxs.com/tools/html-canvas-threshold-binarizer.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Watermark Studio](https://salabs.quanxs.com/tools/html-canvas-watermark-studio.html): 100% Client-side pure JS utility tool.
