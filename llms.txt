@@ -68,6 +68,7 @@
 - [Curl To Fetch](https://salabs.quanxs.com/tools/curl-to-fetch.html): 100% Client-side pure JS utility tool.
 - [Diff Checker](https://salabs.quanxs.com/tools/diff-checker.html): 100% Client-side pure JS utility tool.
 - [Dns Lookup Record Parser](https://salabs.quanxs.com/tools/dns-lookup-record-parser.html): 100% Client-side pure JS utility tool.
+- [Finops Cloud Cost Quota Calculator](https://salabs.quanxs.com/tools/finops-cloud-cost-quota-calculator.html): 100% Client-side pure JS utility tool.
 - [Flex Grid Playground](https://salabs.quanxs.com/tools/flex-grid-playground.html): 100% Client-side pure JS utility tool.
 - [Graphql Query Formatter](https://salabs.quanxs.com/tools/graphql-query-formatter.html): 100% Client-side pure JS utility tool.
 - [Hash Bcrypt Argon Tester](https://salabs.quanxs.com/tools/hash-bcrypt-argon-tester.html): 100% Client-side pure JS utility tool.
@@ -144,7 +145,9 @@
 - [Markdown Toc Generator](https://salabs.quanxs.com/tools/markdown-toc-generator.html): 100% Client-side pure JS utility tool.
 - [Meta Tag Generator](https://salabs.quanxs.com/tools/meta-tag-generator.html): 100% Client-side pure JS utility tool.
 - [Number Base Converter](https://salabs.quanxs.com/tools/number-base-converter.html): 100% Client-side pure JS utility tool.
+- [Polyglot Code Graph Analyzer](https://salabs.quanxs.com/tools/polyglot-code-graph-analyzer.html): 100% Client-side pure JS utility tool.
 - [Qr Barcode Generator](https://salabs.quanxs.com/tools/qr-barcode-generator.html): 100% Client-side pure JS utility tool.
+- [Quantum Trajectory Matrix Visualizer](https://salabs.quanxs.com/tools/quantum-trajectory-matrix-visualizer.html): 100% Client-side pure JS utility tool.
 - [Regex Batch Extractor](https://salabs.quanxs.com/tools/regex-batch-extractor.html): 100% Client-side pure JS utility tool.
 - [Regex Cheat Sheet Tester](https://salabs.quanxs.com/tools/regex-cheat-sheet-tester.html): 100% Client-side pure JS utility tool.
 - [Regex Tester](https://salabs.quanxs.com/tools/regex-tester.html): 100% Client-side pure JS utility tool.
