@@ -36,6 +36,7 @@
 - [Css Box Shadow 3D](https://salabs.quanxs.com/tools/css-box-shadow-3d.html): 100% Client-side pure JS utility tool.
 - [Css Box Shadow Generator](https://salabs.quanxs.com/tools/css-box-shadow-generator.html): 100% Client-side pure JS utility tool.
 - [Css Box Shadow Inset Studio](https://salabs.quanxs.com/tools/css-box-shadow-inset-studio.html): 100% Client-side pure JS utility tool.
+- [Css Box Shadow Neumorphic Generator](https://salabs.quanxs.com/tools/css-box-shadow-neumorphic-generator.html): 100% Client-side pure JS utility tool.
 - [Css Button Generator](https://salabs.quanxs.com/tools/css-button-generator.html): 100% Client-side pure JS utility tool.
 - [Css Clamp Calculator](https://salabs.quanxs.com/tools/css-clamp-calculator.html): 100% Client-side pure JS utility tool.
 - [Css Clip Path Generator](https://salabs.quanxs.com/tools/css-clip-path-generator.html): 100% Client-side pure JS utility tool.
@@ -89,6 +90,7 @@
 - [Js Data Structure Visualizer](https://salabs.quanxs.com/tools/js-data-structure-visualizer.html): 100% Client-side pure JS utility tool.
 - [Js Event Emitter Playground](https://salabs.quanxs.com/tools/js-event-emitter-playground.html): 100% Client-side pure JS utility tool.
 - [Js Event Key Code](https://salabs.quanxs.com/tools/js-event-key-code.html): 100% Client-side pure JS utility tool.
+- [Js Event Loop Visualizer](https://salabs.quanxs.com/tools/js-event-loop-visualizer.html): 100% Client-side pure JS utility tool.
 - [Js Localstorage Session Manager](https://salabs.quanxs.com/tools/js-localstorage-session-manager.html): 100% Client-side pure JS utility tool.
 - [Js Minifier Formatter](https://salabs.quanxs.com/tools/js-minifier-formatter.html): 100% Client-side pure JS utility tool.
 - [Js Object Diff Checker](https://salabs.quanxs.com/tools/js-object-diff-checker.html): 100% Client-side pure JS utility tool.
