@@ -16,6 +16,7 @@
 - [Audio Distortion Bitcrusher Studio](https://salabs.quanxs.com/tools/audio-distortion-bitcrusher-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Distortion Overdrive Studio](https://salabs.quanxs.com/tools/audio-distortion-overdrive-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Envelope Adsr Studio](https://salabs.quanxs.com/tools/audio-envelope-adsr-studio.html): 100% Client-side pure JS utility tool.
+- [Audio Envelope Shaper Studio](https://salabs.quanxs.com/tools/audio-envelope-shaper-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Equalizer Studio](https://salabs.quanxs.com/tools/audio-equalizer-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Synthesizer](https://salabs.quanxs.com/tools/audio-formant-vowel-synthesizer.html): 100% Client-side pure JS utility tool.
 - [Audio Frequency Analyzer](https://salabs.quanxs.com/tools/audio-frequency-analyzer.html): 100% Client-side pure JS utility tool.
@@ -62,6 +63,7 @@
 - [Cookie Header Parser](https://salabs.quanxs.com/tools/cookie-header-parser.html): 100% Client-side pure JS utility tool.
 - [Cron Generator](https://salabs.quanxs.com/tools/cron-generator.html): 100% Client-side pure JS utility tool.
 - [Crypto Aes Cbc Pbkdf2 Encryptor](https://salabs.quanxs.com/tools/crypto-aes-cbc-pbkdf2-encryptor.html): 100% Client-side pure JS utility tool.
+- [Crypto Aes Ctr Encryptor](https://salabs.quanxs.com/tools/crypto-aes-ctr-encryptor.html): 100% Client-side pure JS utility tool.
 - [Crypto Aes Gcm Encryption](https://salabs.quanxs.com/tools/crypto-aes-gcm-encryption.html): 100% Client-side pure JS utility tool.
 - [Crypto Aes Kw Key Wrap](https://salabs.quanxs.com/tools/crypto-aes-kw-key-wrap.html): 100% Client-side pure JS utility tool.
 - [Crypto Chacha20 Poly1305 Key Generator](https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-key-generator.html): 100% Client-side pure JS utility tool.
