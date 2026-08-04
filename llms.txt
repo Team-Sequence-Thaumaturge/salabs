@@ -47,6 +47,7 @@
 - [Css Grid Layout Generator](https://salabs.quanxs.com/tools/css-grid-layout-generator.html): 100% Client-side pure JS utility tool.
 - [Css Js Minifier](https://salabs.quanxs.com/tools/css-js-minifier.html): 100% Client-side pure JS utility tool.
 - [Css Keyframe Animator](https://salabs.quanxs.com/tools/css-keyframe-animator.html): 100% Client-side pure JS utility tool.
+- [Css Text Shadow Generator](https://salabs.quanxs.com/tools/css-text-shadow-generator.html): 100% Client-side pure JS utility tool.
 - [Csv Delimiter Converter](https://salabs.quanxs.com/tools/csv-delimiter-converter.html): 100% Client-side pure JS utility tool.
 - [Csv Excel Viewer](https://salabs.quanxs.com/tools/csv-excel-viewer.html): 100% Client-side pure JS utility tool.
 - [Csv Json Transformer](https://salabs.quanxs.com/tools/csv-json-transformer.html): 100% Client-side pure JS utility tool.
@@ -69,6 +70,7 @@
 - [Html Canvas Particle Generator](https://salabs.quanxs.com/tools/html-canvas-particle-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Signature Generator](https://salabs.quanxs.com/tools/html-canvas-signature-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Signature Pad](https://salabs.quanxs.com/tools/html-canvas-signature-pad.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Watermark Studio](https://salabs.quanxs.com/tools/html-canvas-watermark-studio.html): 100% Client-side pure JS utility tool.
 - [Html Entity Diff Checker](https://salabs.quanxs.com/tools/html-entity-diff-checker.html): 100% Client-side pure JS utility tool.
 - [Html Entity Encoder](https://salabs.quanxs.com/tools/html-entity-encoder.html): 100% Client-side pure JS utility tool.
 - [Html Formatting Sanitizer](https://salabs.quanxs.com/tools/html-formatting-sanitizer.html): 100% Client-side pure JS utility tool.
@@ -125,6 +127,7 @@
 - [Regex Tester](https://salabs.quanxs.com/tools/regex-tester.html): 100% Client-side pure JS utility tool.
 - [Regex Visualizer](https://salabs.quanxs.com/tools/regex-visualizer.html): 100% Client-side pure JS utility tool.
 - [Sacm Coder Middleware Studio](https://salabs.quanxs.com/tools/sacm-coder-middleware-studio.html): 100% Client-side pure JS utility tool.
+- [Screen Resolution Dpi Checker](https://salabs.quanxs.com/tools/screen-resolution-dpi-checker.html): 100% Client-side pure JS utility tool.
 - [Sha256 Hash Calculator](https://salabs.quanxs.com/tools/sha256-hash-calculator.html): 100% Client-side pure JS utility tool.
 - [Sql Formatter](https://salabs.quanxs.com/tools/sql-formatter.html): 100% Client-side pure JS utility tool.
 - [Sql Query Builder](https://salabs.quanxs.com/tools/sql-query-builder.html): 100% Client-side pure JS utility tool.
