@@ -16,6 +16,7 @@
 - [Audio Waveform Analyzer](https://salabs.quanxs.com/tools/audio-waveform-analyzer.html): 100% Client-side pure JS utility tool.
 - [Base64 Image Encoder](https://salabs.quanxs.com/tools/base64-image-encoder.html): 100% Client-side pure JS utility tool.
 - [Base64 Jwt Decoder](https://salabs.quanxs.com/tools/base64-jwt-decoder.html): 100% Client-side pure JS utility tool.
+- [Browser Performance Timer](https://salabs.quanxs.com/tools/browser-performance-timer.html): 100% Client-side pure JS utility tool.
 - [Btoa Atob Converter](https://salabs.quanxs.com/tools/btoa-atob-converter.html): 100% Client-side pure JS utility tool.
 - [Chmod Calculator](https://salabs.quanxs.com/tools/chmod-calculator.html): 100% Client-side pure JS utility tool.
 - [Color Contrast Accessibility Checker](https://salabs.quanxs.com/tools/color-contrast-accessibility-checker.html): 100% Client-side pure JS utility tool.
@@ -50,6 +51,7 @@
 - [Css Grid Layout Generator](https://salabs.quanxs.com/tools/css-grid-layout-generator.html): 100% Client-side pure JS utility tool.
 - [Css Js Minifier](https://salabs.quanxs.com/tools/css-js-minifier.html): 100% Client-side pure JS utility tool.
 - [Css Keyframe Animator](https://salabs.quanxs.com/tools/css-keyframe-animator.html): 100% Client-side pure JS utility tool.
+- [Css Scrollbar Customizer](https://salabs.quanxs.com/tools/css-scrollbar-customizer.html): 100% Client-side pure JS utility tool.
 - [Css Text Shadow Generator](https://salabs.quanxs.com/tools/css-text-shadow-generator.html): 100% Client-side pure JS utility tool.
 - [Csv Delimiter Converter](https://salabs.quanxs.com/tools/csv-delimiter-converter.html): 100% Client-side pure JS utility tool.
 - [Csv Excel Viewer](https://salabs.quanxs.com/tools/csv-excel-viewer.html): 100% Client-side pure JS utility tool.
@@ -70,6 +72,7 @@
 - [Html Canvas Chart Generator](https://salabs.quanxs.com/tools/html-canvas-chart-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Color Picker](https://salabs.quanxs.com/tools/html-canvas-color-picker.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Drawing Pad](https://salabs.quanxs.com/tools/html-canvas-drawing-pad.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Image Filters](https://salabs.quanxs.com/tools/html-canvas-image-filters.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Particle Generator](https://salabs.quanxs.com/tools/html-canvas-particle-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Signature Generator](https://salabs.quanxs.com/tools/html-canvas-signature-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Signature Pad](https://salabs.quanxs.com/tools/html-canvas-signature-pad.html): 100% Client-side pure JS utility tool.
