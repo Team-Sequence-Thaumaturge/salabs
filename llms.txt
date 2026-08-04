@@ -25,6 +25,7 @@
 - [Crypto Random Token Generator](https://salabs.quanxs.com/tools/crypto-random-token-generator.html): 100% Client-side pure JS utility tool.
 - [Css Animation Generator](https://salabs.quanxs.com/tools/css-animation-generator.html): 100% Client-side pure JS utility tool.
 - [Css Animation Keyframe Generator](https://salabs.quanxs.com/tools/css-animation-keyframe-generator.html): 100% Client-side pure JS utility tool.
+- [Css Backdrop Filter Generator](https://salabs.quanxs.com/tools/css-backdrop-filter-generator.html): 100% Client-side pure JS utility tool.
 - [Css Border Radius Generator](https://salabs.quanxs.com/tools/css-border-radius-generator.html): 100% Client-side pure JS utility tool.
 - [Css Box Border Radius Studio](https://salabs.quanxs.com/tools/css-box-border-radius-studio.html): 100% Client-side pure JS utility tool.
 - [Css Box Filter Generator](https://salabs.quanxs.com/tools/css-box-filter-generator.html): 100% Client-side pure JS utility tool.
@@ -77,6 +78,7 @@
 - [Js Array Flat Dedupe](https://salabs.quanxs.com/tools/js-array-flat-dedupe.html): 100% Client-side pure JS utility tool.
 - [Js Ast Parser Studio](https://salabs.quanxs.com/tools/js-ast-parser-studio.html): 100% Client-side pure JS utility tool.
 - [Js Benchmarking Timer](https://salabs.quanxs.com/tools/js-benchmarking-timer.html): 100% Client-side pure JS utility tool.
+- [Js Data Structure Visualizer](https://salabs.quanxs.com/tools/js-data-structure-visualizer.html): 100% Client-side pure JS utility tool.
 - [Js Event Emitter Playground](https://salabs.quanxs.com/tools/js-event-emitter-playground.html): 100% Client-side pure JS utility tool.
 - [Js Event Key Code](https://salabs.quanxs.com/tools/js-event-key-code.html): 100% Client-side pure JS utility tool.
 - [Js Localstorage Session Manager](https://salabs.quanxs.com/tools/js-localstorage-session-manager.html): 100% Client-side pure JS utility tool.
@@ -137,6 +139,7 @@
 - [User Agent Parser](https://salabs.quanxs.com/tools/user-agent-parser.html): 100% Client-side pure JS utility tool.
 - [Uuid Secret Generator](https://salabs.quanxs.com/tools/uuid-secret-generator.html): 100% Client-side pure JS utility tool.
 - [Uuid V7 Generator](https://salabs.quanxs.com/tools/uuid-v7-generator.html): 100% Client-side pure JS utility tool.
+- [Web Speech Synthesis Studio](https://salabs.quanxs.com/tools/web-speech-synthesis-studio.html): 100% Client-side pure JS utility tool.
 - [Websocket Sse Debugger](https://salabs.quanxs.com/tools/websocket-sse-debugger.html): 100% Client-side pure JS utility tool.
 - [Websocket Sse Tester](https://salabs.quanxs.com/tools/websocket-sse-tester.html): 100% Client-side pure JS utility tool.
 - [Xml Json Converter](https://salabs.quanxs.com/tools/xml-json-converter.html): 100% Client-side pure JS utility tool.
