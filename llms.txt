@@ -16,6 +16,7 @@
 - [Audio Frequency Analyzer](https://salabs.quanxs.com/tools/audio-frequency-analyzer.html): 100% Client-side pure JS utility tool.
 - [Audio Noise Generator](https://salabs.quanxs.com/tools/audio-noise-generator.html): 100% Client-side pure JS utility tool.
 - [Audio Phaser Flanger Studio](https://salabs.quanxs.com/tools/audio-phaser-flanger-studio.html): 100% Client-side pure JS utility tool.
+- [Audio Ping Pong Delay Studio](https://salabs.quanxs.com/tools/audio-ping-pong-delay-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Reverb Convolver Studio](https://salabs.quanxs.com/tools/audio-reverb-convolver-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Synth Keyboard](https://salabs.quanxs.com/tools/audio-synth-keyboard.html): 100% Client-side pure JS utility tool.
 - [Audio Tone Frequency Generator](https://salabs.quanxs.com/tools/audio-tone-frequency-generator.html): 100% Client-side pure JS utility tool.
@@ -40,6 +41,7 @@
 - [Cron Generator](https://salabs.quanxs.com/tools/cron-generator.html): 100% Client-side pure JS utility tool.
 - [Crypto Aes Gcm Encryption](https://salabs.quanxs.com/tools/crypto-aes-gcm-encryption.html): 100% Client-side pure JS utility tool.
 - [Crypto Chacha20 Poly1305 Tester](https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-tester.html): 100% Client-side pure JS utility tool.
+- [Crypto Ecc Secp256K1 Key Generator](https://salabs.quanxs.com/tools/crypto-ecc-secp256k1-key-generator.html): 100% Client-side pure JS utility tool.
 - [Crypto Ecdsa P256 Signer](https://salabs.quanxs.com/tools/crypto-ecdsa-p256-signer.html): 100% Client-side pure JS utility tool.
 - [Crypto Ecdsa Secp256K1 Verifier](https://salabs.quanxs.com/tools/crypto-ecdsa-secp256k1-verifier.html): 100% Client-side pure JS utility tool.
 - [Crypto Ed25519 Key Generator](https://salabs.quanxs.com/tools/crypto-ed25519-key-generator.html): 100% Client-side pure JS utility tool.
@@ -100,6 +102,7 @@
 - [Html Canvas Ascii Avatar Generator](https://salabs.quanxs.com/tools/html-canvas-ascii-avatar-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Banner Studio](https://salabs.quanxs.com/tools/html-canvas-ascii-banner-studio.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Matrix Rain](https://salabs.quanxs.com/tools/html-canvas-ascii-matrix-rain.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii Video Player](https://salabs.quanxs.com/tools/html-canvas-ascii-video-player.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Chart Generator](https://salabs.quanxs.com/tools/html-canvas-chart-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Color Palette Extractor](https://salabs.quanxs.com/tools/html-canvas-color-palette-extractor.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Color Picker](https://salabs.quanxs.com/tools/html-canvas-color-picker.html): 100% Client-side pure JS utility tool.
