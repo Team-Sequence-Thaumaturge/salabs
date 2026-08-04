@@ -34,6 +34,7 @@
 - [Audio Spectral Noise Gate Studio](https://salabs.quanxs.com/tools/audio-spectral-noise-gate-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Spectral Subtraction Denoiser](https://salabs.quanxs.com/tools/audio-spectral-subtraction-denoiser.html): 100% Client-side pure JS utility tool.
 - [Audio Spectral Vocoder Studio](https://salabs.quanxs.com/tools/audio-spectral-vocoder-studio.html): 100% Client-side pure JS utility tool.
+- [Audio Spectral Vocoder Synthesizer](https://salabs.quanxs.com/tools/audio-spectral-vocoder-synthesizer.html): 100% Client-side pure JS utility tool.
 - [Audio Sub Bass Booster](https://salabs.quanxs.com/tools/audio-sub-bass-booster.html): 100% Client-side pure JS utility tool.
 - [Audio Sub Bass Enhancer Studio](https://salabs.quanxs.com/tools/audio-sub-bass-enhancer-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Sub Bass Harmonic Generator](https://salabs.quanxs.com/tools/audio-sub-bass-harmonic-generator.html): 100% Client-side pure JS utility tool.
@@ -77,6 +78,7 @@
 - [Crypto Ed25519 Signature Validator](https://salabs.quanxs.com/tools/crypto-ed25519-signature-validator.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Expand Extract Studio](https://salabs.quanxs.com/tools/crypto-hkdf-expand-extract-studio.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Key Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-key-derivation.html): 100% Client-side pure JS utility tool.
+- [Crypto Hkdf Sha256 Expander](https://salabs.quanxs.com/tools/crypto-hkdf-sha256-expander.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha384 Derivation Studio](https://salabs.quanxs.com/tools/crypto-hkdf-sha384-derivation-studio.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha512 Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-sha512-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha1 Validator](https://salabs.quanxs.com/tools/crypto-hmac-sha1-validator.html): 100% Client-side pure JS utility tool.
@@ -149,6 +151,7 @@
 - [Html Canvas Ascii 3D Icosahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-icosahedron.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron Knot](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii 3D Pyramid Renderer](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-pyramid-renderer.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Sphere](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-sphere.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Tetrahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-tetrahedron.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Torus Knot](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot.html): 100% Client-side pure JS utility tool.
