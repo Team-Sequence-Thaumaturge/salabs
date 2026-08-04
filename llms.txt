@@ -19,6 +19,7 @@
 - [Audio Ping Pong Delay Studio](https://salabs.quanxs.com/tools/audio-ping-pong-delay-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Reverb Convolver Studio](https://salabs.quanxs.com/tools/audio-reverb-convolver-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Spectral Subtraction Denoiser](https://salabs.quanxs.com/tools/audio-spectral-subtraction-denoiser.html): 100% Client-side pure JS utility tool.
+- [Audio Sub Bass Synthesizer](https://salabs.quanxs.com/tools/audio-sub-bass-synthesizer.html): 100% Client-side pure JS utility tool.
 - [Audio Synth Keyboard](https://salabs.quanxs.com/tools/audio-synth-keyboard.html): 100% Client-side pure JS utility tool.
 - [Audio Tone Frequency Generator](https://salabs.quanxs.com/tools/audio-tone-frequency-generator.html): 100% Client-side pure JS utility tool.
 - [Audio Tremolo Vibrato Studio](https://salabs.quanxs.com/tools/audio-tremolo-vibrato-studio.html): 100% Client-side pure JS utility tool.
@@ -48,6 +49,7 @@
 - [Crypto Ed25519 Key Generator](https://salabs.quanxs.com/tools/crypto-ed25519-key-generator.html): 100% Client-side pure JS utility tool.
 - [Crypto Ed25519 Signature Validator](https://salabs.quanxs.com/tools/crypto-ed25519-signature-validator.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Key Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-key-derivation.html): 100% Client-side pure JS utility tool.
+- [Crypto Hkdf Sha512 Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-sha512-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha3 Tester](https://salabs.quanxs.com/tools/crypto-hmac-sha3-tester.html): 100% Client-side pure JS utility tool.
 - [Crypto Pbes2 Pbkdf2 Encryptor](https://salabs.quanxs.com/tools/crypto-pbes2-pbkdf2-encryptor.html): 100% Client-side pure JS utility tool.
 - [Crypto Pbkdf2 Hasher Studio](https://salabs.quanxs.com/tools/crypto-pbkdf2-hasher-studio.html): 100% Client-side pure JS utility tool.
