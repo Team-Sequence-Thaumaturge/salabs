@@ -7,6 +7,7 @@
 - [Ascii Art Text Generator](https://salabs.quanxs.com/tools/ascii-art-text-generator.html): 100% Client-side pure JS utility tool.
 - [Audio Bpm Metronome](https://salabs.quanxs.com/tools/audio-bpm-metronome.html): 100% Client-side pure JS utility tool.
 - [Audio Chords Frequency Generator](https://salabs.quanxs.com/tools/audio-chords-frequency-generator.html): 100% Client-side pure JS utility tool.
+- [Audio Equalizer Studio](https://salabs.quanxs.com/tools/audio-equalizer-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Frequency Analyzer](https://salabs.quanxs.com/tools/audio-frequency-analyzer.html): 100% Client-side pure JS utility tool.
 - [Audio Noise Generator](https://salabs.quanxs.com/tools/audio-noise-generator.html): 100% Client-side pure JS utility tool.
 - [Audio Synth Keyboard](https://salabs.quanxs.com/tools/audio-synth-keyboard.html): 100% Client-side pure JS utility tool.
@@ -30,6 +31,7 @@
 - [Css Animation Keyframe Generator](https://salabs.quanxs.com/tools/css-animation-keyframe-generator.html): 100% Client-side pure JS utility tool.
 - [Css Backdrop Filter Generator](https://salabs.quanxs.com/tools/css-backdrop-filter-generator.html): 100% Client-side pure JS utility tool.
 - [Css Border Radius Generator](https://salabs.quanxs.com/tools/css-border-radius-generator.html): 100% Client-side pure JS utility tool.
+- [Css Box Border Gradient Studio](https://salabs.quanxs.com/tools/css-box-border-gradient-studio.html): 100% Client-side pure JS utility tool.
 - [Css Box Border Radius Studio](https://salabs.quanxs.com/tools/css-box-border-radius-studio.html): 100% Client-side pure JS utility tool.
 - [Css Box Filter Generator](https://salabs.quanxs.com/tools/css-box-filter-generator.html): 100% Client-side pure JS utility tool.
 - [Css Box Model Grid](https://salabs.quanxs.com/tools/css-box-model-grid.html): 100% Client-side pure JS utility tool.
@@ -97,6 +99,7 @@
 - [Js Promise Async Visualizer](https://salabs.quanxs.com/tools/js-promise-async-visualizer.html): 100% Client-side pure JS utility tool.
 - [Js Regex Code Generator](https://salabs.quanxs.com/tools/js-regex-code-generator.html): 100% Client-side pure JS utility tool.
 - [Js Regex Escape Tool](https://salabs.quanxs.com/tools/js-regex-escape-tool.html): 100% Client-side pure JS utility tool.
+- [Js Web Worker Playground](https://salabs.quanxs.com/tools/js-web-worker-playground.html): 100% Client-side pure JS utility tool.
 - [Json Diff](https://salabs.quanxs.com/tools/json-diff.html): 100% Client-side pure JS utility tool.
 - [Json Escape Unescape](https://salabs.quanxs.com/tools/json-escape-unescape.html): 100% Client-side pure JS utility tool.
 - [Json Formatter Beautifier](https://salabs.quanxs.com/tools/json-formatter-beautifier.html): 100% Client-side pure JS utility tool.
