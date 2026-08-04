@@ -24,6 +24,7 @@
 - [Audio Voice Pitch Shifter](https://salabs.quanxs.com/tools/audio-voice-pitch-shifter.html): 100% Client-side pure JS utility tool.
 - [Audio Voice Recorder](https://salabs.quanxs.com/tools/audio-voice-recorder.html): 100% Client-side pure JS utility tool.
 - [Audio Waveform Analyzer](https://salabs.quanxs.com/tools/audio-waveform-analyzer.html): 100% Client-side pure JS utility tool.
+- [Audio White Noise Generator](https://salabs.quanxs.com/tools/audio-white-noise-generator.html): 100% Client-side pure JS utility tool.
 - [Base64 Image Encoder](https://salabs.quanxs.com/tools/base64-image-encoder.html): 100% Client-side pure JS utility tool.
 - [Base64 Jwt Decoder](https://salabs.quanxs.com/tools/base64-jwt-decoder.html): 100% Client-side pure JS utility tool.
 - [Browser Memory Leak Detector](https://salabs.quanxs.com/tools/browser-memory-leak-detector.html): 100% Client-side pure JS utility tool.
@@ -51,6 +52,7 @@
 - [Crypto Pbkdf2 Salt Generator](https://salabs.quanxs.com/tools/crypto-pbkdf2-salt-generator.html): 100% Client-side pure JS utility tool.
 - [Crypto Random Token Generator](https://salabs.quanxs.com/tools/crypto-random-token-generator.html): 100% Client-side pure JS utility tool.
 - [Crypto Rsa Signature Verifier](https://salabs.quanxs.com/tools/crypto-rsa-signature-verifier.html): 100% Client-side pure JS utility tool.
+- [Crypto Subtle Digest Calculator](https://salabs.quanxs.com/tools/crypto-subtle-digest-calculator.html): 100% Client-side pure JS utility tool.
 - [Css Animation Generator](https://salabs.quanxs.com/tools/css-animation-generator.html): 100% Client-side pure JS utility tool.
 - [Css Animation Keyframe Generator](https://salabs.quanxs.com/tools/css-animation-keyframe-generator.html): 100% Client-side pure JS utility tool.
 - [Css Backdrop Filter Generator](https://salabs.quanxs.com/tools/css-backdrop-filter-generator.html): 100% Client-side pure JS utility tool.
@@ -95,6 +97,7 @@
 - [Hash Sha512 Keccak](https://salabs.quanxs.com/tools/hash-sha512-keccak.html): 100% Client-side pure JS utility tool.
 - [Hex Hexdump Viewer](https://salabs.quanxs.com/tools/hex-hexdump-viewer.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Art Editor](https://salabs.quanxs.com/tools/html-canvas-ascii-art-editor.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii Avatar Generator](https://salabs.quanxs.com/tools/html-canvas-ascii-avatar-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Banner Studio](https://salabs.quanxs.com/tools/html-canvas-ascii-banner-studio.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Matrix Rain](https://salabs.quanxs.com/tools/html-canvas-ascii-matrix-rain.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Chart Generator](https://salabs.quanxs.com/tools/html-canvas-chart-generator.html): 100% Client-side pure JS utility tool.
