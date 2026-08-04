@@ -27,6 +27,7 @@
 - [Cookie Header Parser](https://salabs.quanxs.com/tools/cookie-header-parser.html): 100% Client-side pure JS utility tool.
 - [Cron Generator](https://salabs.quanxs.com/tools/cron-generator.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha3 Tester](https://salabs.quanxs.com/tools/crypto-hmac-sha3-tester.html): 100% Client-side pure JS utility tool.
+- [Crypto Pbkdf2 Key Derivation](https://salabs.quanxs.com/tools/crypto-pbkdf2-key-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Random Token Generator](https://salabs.quanxs.com/tools/crypto-random-token-generator.html): 100% Client-side pure JS utility tool.
 - [Css Animation Generator](https://salabs.quanxs.com/tools/css-animation-generator.html): 100% Client-side pure JS utility tool.
 - [Css Animation Keyframe Generator](https://salabs.quanxs.com/tools/css-animation-keyframe-generator.html): 100% Client-side pure JS utility tool.
@@ -71,6 +72,7 @@
 - [Hex Hexdump Viewer](https://salabs.quanxs.com/tools/hex-hexdump-viewer.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Chart Generator](https://salabs.quanxs.com/tools/html-canvas-chart-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Color Picker](https://salabs.quanxs.com/tools/html-canvas-color-picker.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Crop Rotate Studio](https://salabs.quanxs.com/tools/html-canvas-crop-rotate-studio.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Drawing Pad](https://salabs.quanxs.com/tools/html-canvas-drawing-pad.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Image Filters](https://salabs.quanxs.com/tools/html-canvas-image-filters.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Particle Generator](https://salabs.quanxs.com/tools/html-canvas-particle-generator.html): 100% Client-side pure JS utility tool.
@@ -96,6 +98,7 @@
 - [Js Event Emitter Playground](https://salabs.quanxs.com/tools/js-event-emitter-playground.html): 100% Client-side pure JS utility tool.
 - [Js Event Key Code](https://salabs.quanxs.com/tools/js-event-key-code.html): 100% Client-side pure JS utility tool.
 - [Js Event Loop Visualizer](https://salabs.quanxs.com/tools/js-event-loop-visualizer.html): 100% Client-side pure JS utility tool.
+- [Js Intersection Observer Studio](https://salabs.quanxs.com/tools/js-intersection-observer-studio.html): 100% Client-side pure JS utility tool.
 - [Js Localstorage Session Manager](https://salabs.quanxs.com/tools/js-localstorage-session-manager.html): 100% Client-side pure JS utility tool.
 - [Js Minifier Formatter](https://salabs.quanxs.com/tools/js-minifier-formatter.html): 100% Client-side pure JS utility tool.
 - [Js Object Diff Checker](https://salabs.quanxs.com/tools/js-object-diff-checker.html): 100% Client-side pure JS utility tool.
