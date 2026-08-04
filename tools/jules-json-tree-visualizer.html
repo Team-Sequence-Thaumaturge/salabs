@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON Tree Visualizer</title>
+
+    <!-- Schema.org WebApplication JSON-LD metadata -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "JSON Tree Visualizer",
+        "description": "An interactive, client-side JSON tree visualizer and search tool with a modern dark mode UI.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All"
+      }
+    </script>
+
+    <!-- Google AdSense script tag -->
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      body {
+        background-color: #0f172a;
+        color: #e2e8f0;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        box-sizing: border-box;
+      }
+      h1 {
+        color: #38bdf8;
+        margin-top: 0;
+        font-size: 1.5rem;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        gap: 15px;
+        min-height: 0;
+      }
+      .top-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      textarea {
+        width: 100%;
+        height: 120px;
+        background-color: #1e293b;
+        color: #f8fafc;
+        border: 1px solid #334155;
+        border-radius: 6px;
+        padding: 10px;
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        box-sizing: border-box;
+        resize: vertical;
+      }
+      textarea:focus,
+      input[type="text"]:focus {
+        outline: none;
+        border-color: #38bdf8;
+        box-shadow: 0 0 0 1px #38bdf8;
+      }
+      input[type="text"] {
+        width: 100%;
+        background-color: #1e293b;
+        color: #f8fafc;
+        border: 1px solid #334155;
+        border-radius: 6px;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+      .bottom-panel {
+        flex: 1;
+        background-color: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 6px;
+        padding: 15px;
+        overflow: auto;
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      /* Tree styles */
+      .tree-ul {
+        list-style-type: none;
+        padding-left: 20px;
+        margin: 0;
+      }
+      .tree-root > .tree-ul {
+        padding-left: 0;
+      }
+      .tree-li {
+        margin: 2px 0;
+      }
+      .tree-key {
+        color: #7dd3fc;
+        font-weight: 500;
+      }
+      .tree-string {
+        color: #a7f3d0;
+      }
+      .tree-number {
+        color: #fca5a5;
+      }
+      .tree-boolean {
+        color: #fdba74;
+      }
+      .tree-null {
+        color: #94a3b8;
+        font-style: italic;
+      }
+      .tree-toggle {
+        cursor: pointer;
+        color: #94a3b8;
+        margin-right: 5px;
+        user-select: none;
+        display: inline-block;
+        width: 14px;
+        text-align: center;
+      }
+      .tree-toggle:hover {
+        color: #e2e8f0;
+      }
+      .collapsed > ul {
+        display: none;
+      }
+      .collapsed > .tree-toggle::before {
+        content: "▶";
+        font-size: 10px;
+      }
+      .expanded > .tree-toggle::before {
+        content: "▼";
+        font-size: 10px;
+      }
+      .empty-toggle {
+        display: inline-block;
+        width: 14px;
+        margin-right: 5px;
+      }
+      .hidden {
+        display: none !important;
+      }
+      .highlight {
+        background-color: #ca8a04;
+        color: #ffffff;
+        border-radius: 2px;
+        padding: 0 2px;
+      }
+      .error {
+        color: #ef4444;
+        font-size: 14px;
+        min-height: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>JSON Tree Visualizer</h1>
+    <div class="container">
+      <div class="top-panel">
+        <textarea
+          id="json-input"
+          placeholder="Paste your JSON here..."
+          spellcheck="false"
+        ></textarea>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search nodes (keys or values)..."
+          autocomplete="off"
+        />
+      </div>
+      <div id="error-msg" class="error"></div>
+      <div class="bottom-panel tree-root" id="tree-container">
+        <!-- Tree will be rendered here -->
+      </div>
+    </div>
+
+    <script>
+      const jsonInput = document.getElementById("json-input");
+      const searchInput = document.getElementById("search-input");
+      const treeContainer = document.getElementById("tree-container");
+      const errorMsg = document.getElementById("error-msg");
+
+      let currentData = null;
+
+      function updateTree() {
+        try {
+          const val = jsonInput.value.trim();
+          if (!val) {
+            currentData = null;
+            treeContainer.innerHTML = "";
+            errorMsg.textContent = "";
+            return;
+          }
+          currentData = JSON.parse(val);
+          errorMsg.textContent = "";
+          renderTree();
+          filterTree();
+        } catch (e) {
+          errorMsg.textContent = "Invalid JSON: " + e.message;
+        }
+      }
+
+      jsonInput.addEventListener("input", updateTree);
+      searchInput.addEventListener("input", filterTree);
+
+      function createNode(key, value, isLast) {
+        const li = document.createElement("li");
+        li.className = "tree-li expanded";
+
+        const isObject = value !== null && typeof value === "object";
+        const isArray = Array.isArray(value);
+
+        const toggleSpan = document.createElement("span");
+        if (isObject && Object.keys(value).length > 0) {
+          toggleSpan.className = "tree-toggle";
+          toggleSpan.addEventListener("click", (e) => {
+            e.stopPropagation();
+            li.classList.toggle("expanded");
+            li.classList.toggle("collapsed");
+          });
+        } else {
+          toggleSpan.className = "empty-toggle";
+        }
+        li.appendChild(toggleSpan);
+
+        if (key !== null) {
+          const keySpan = document.createElement("span");
+          keySpan.className = "tree-key searchable";
+          keySpan.textContent = `"${key}": `;
+          li.appendChild(keySpan);
+        }
+
+        if (isObject) {
+          const wrapper = document.createElement("span");
+          wrapper.textContent = isArray ? "[" : "{";
+          li.appendChild(wrapper);
+
+          const ul = document.createElement("ul");
+          ul.className = "tree-ul";
+          const keys = Object.keys(value);
+          keys.forEach((k, index) => {
+            ul.appendChild(createNode(k, value[k], index === keys.length - 1));
+          });
+          li.appendChild(ul);
+
+          const closing = document.createElement("span");
+          closing.textContent = (isArray ? "]" : "}") + (isLast ? "" : ",");
+          li.appendChild(closing);
+        } else {
+          const valSpan = document.createElement("span");
+          valSpan.className = "searchable";
+
+          if (typeof value === "string") {
+            valSpan.classList.add("tree-string");
+            // Add quotes internally so search doesn't mess up the quotes
+            valSpan.textContent = `"${value}"`;
+          } else if (typeof value === "number") {
+            valSpan.classList.add("tree-number");
+            valSpan.textContent = value;
+          } else if (typeof value === "boolean") {
+            valSpan.classList.add("tree-boolean");
+            valSpan.textContent = value;
+          } else if (value === null) {
+            valSpan.classList.add("tree-null");
+            valSpan.textContent = "null";
+          }
+
+          li.appendChild(valSpan);
+          if (!isLast) {
+            const comma = document.createElement("span");
+            comma.textContent = ",";
+            li.appendChild(comma);
+          }
+        }
+        return li;
+      }
+
+      function renderTree() {
+        treeContainer.innerHTML = "";
+        if (currentData !== null) {
+          const rootUl = document.createElement("ul");
+          rootUl.className = "tree-ul";
+          rootUl.appendChild(createNode(null, currentData, true));
+          treeContainer.appendChild(rootUl);
+        }
+      }
+
+      function filterTree() {
+        const query = searchInput.value.toLowerCase();
+        const allLis = Array.from(treeContainer.querySelectorAll(".tree-li"));
+        const searchables = treeContainer.querySelectorAll(".searchable");
+
+        if (!query) {
+          allLis.forEach((li) => li.classList.remove("hidden"));
+          searchables.forEach((el) => {
+            if (el.innerHTML.includes('<mark class="highlight">')) {
+              el.textContent = el.textContent;
+            }
+          });
+          return;
+        }
+
+        searchables.forEach((el) => {
+          const text = el.textContent;
+          const lowerText = text.toLowerCase();
+          if (lowerText.includes(query)) {
+            const escapedText = escapeHTML(text);
+            const regex = new RegExp(
+              `(${escapeHTML(escapeRegExp(query))})`,
+              "gi",
+            );
+            el.innerHTML = escapedText.replace(
+              regex,
+              '<mark class="highlight">$1</mark>',
+            );
+          } else {
+            el.textContent = text;
+          }
+        });
+
+        allLis.forEach((li) => {
+          li.classList.add("hidden");
+          li.dataset.match = "false";
+        });
+
+        const matchingSearchables = treeContainer.querySelectorAll(
+          ".searchable mark.highlight",
+        );
+        matchingSearchables.forEach((mark) => {
+          const li = mark.closest(".tree-li");
+          if (li) li.dataset.match = "true";
+        });
+
+        allLis.forEach((li) => {
+          if (li.dataset.match === "true") {
+            let parent = li.parentElement.closest(".tree-li");
+            while (parent) {
+              parent.classList.remove("hidden");
+              parent.classList.remove("collapsed");
+              parent.classList.add("expanded");
+              parent = parent.parentElement.closest(".tree-li");
+            }
+            li.classList.remove("hidden");
+            const descendants = li.querySelectorAll(".tree-li");
+            descendants.forEach((desc) => desc.classList.remove("hidden"));
+          }
+        });
+      }
+
+      function escapeHTML(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      }
+
+      // Initialize with sample JSON
+      jsonInput.value = JSON.stringify(
+        {
+          name: "Jules JSON Visualizer",
+          version: "1.0.0",
+          features: ["Dark Mode", "Search", "Client-side"],
+          settings: {
+            theme: "#0f172a",
+            active: true,
+          },
+          data: null,
+        },
+        null,
+        2,
+      );
+
+      updateTree();
+    </script>
+  </body>
+</html>
