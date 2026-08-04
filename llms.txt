@@ -15,6 +15,7 @@
 - [Audio Distortion Overdrive Studio](https://salabs.quanxs.com/tools/audio-distortion-overdrive-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Equalizer Studio](https://salabs.quanxs.com/tools/audio-equalizer-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Frequency Analyzer](https://salabs.quanxs.com/tools/audio-frequency-analyzer.html): 100% Client-side pure JS utility tool.
+- [Audio Lowpass Highpass Filter Studio](https://salabs.quanxs.com/tools/audio-lowpass-highpass-filter-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Noise Generator](https://salabs.quanxs.com/tools/audio-noise-generator.html): 100% Client-side pure JS utility tool.
 - [Audio Phaser Flanger Studio](https://salabs.quanxs.com/tools/audio-phaser-flanger-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Ping Pong Delay Studio](https://salabs.quanxs.com/tools/audio-ping-pong-delay-studio.html): 100% Client-side pure JS utility tool.
@@ -55,6 +56,7 @@
 - [Crypto Ed25519 Signature Validator](https://salabs.quanxs.com/tools/crypto-ed25519-signature-validator.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Key Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-key-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha512 Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-sha512-derivation.html): 100% Client-side pure JS utility tool.
+- [Crypto Hmac Sha1 Validator](https://salabs.quanxs.com/tools/crypto-hmac-sha1-validator.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha3 Tester](https://salabs.quanxs.com/tools/crypto-hmac-sha3-tester.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha512 Validator](https://salabs.quanxs.com/tools/crypto-hmac-sha512-validator.html): 100% Client-side pure JS utility tool.
 - [Crypto Pbes2 Pbkdf2 Encryptor](https://salabs.quanxs.com/tools/crypto-pbes2-pbkdf2-encryptor.html): 100% Client-side pure JS utility tool.
@@ -109,6 +111,7 @@
 - [Hash Sha512 Keccak](https://salabs.quanxs.com/tools/hash-sha512-keccak.html): 100% Client-side pure JS utility tool.
 - [Hex Hexdump Viewer](https://salabs.quanxs.com/tools/hex-hexdump-viewer.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Cube](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii 3D Sphere](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-sphere.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Art Editor](https://salabs.quanxs.com/tools/html-canvas-ascii-art-editor.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Avatar Generator](https://salabs.quanxs.com/tools/html-canvas-ascii-avatar-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Banner Studio](https://salabs.quanxs.com/tools/html-canvas-ascii-banner-studio.html): 100% Client-side pure JS utility tool.
