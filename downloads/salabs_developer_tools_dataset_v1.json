@@ -1,9 +1,9 @@
 {
   "dataset_name": "Quanxs SA Labs Pure JS Developer Utility Code Asset Benchmark",
   "version": "v6.0_HandsFree_12Day_Engine",
-  "total_tools": 161,
-  "total_mined_functions": 280,
-  "last_updated": "2026-08-04T15:44:20+09:00",
+  "total_tools": 164,
+  "total_mined_functions": 284,
+  "last_updated": "2026-08-04T16:15:01+09:00",
   "items": [
     {
       "tool_id": "api-mock-sandbox",
@@ -15,7 +15,7 @@
       "functions": [
         "runMockRequest"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "ascii-art-text-generator",
@@ -27,7 +27,7 @@
       "functions": [
         "renderASCII"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "audio-bpm-metronome",
@@ -42,7 +42,7 @@
         "updateBPM",
         "togglePlay"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "audio-chords-frequency-generator",
@@ -54,7 +54,7 @@
       "functions": [
         "playChord"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "audio-equalizer-studio",
@@ -67,7 +67,7 @@
         "loadAudio",
         "updateEQ"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "audio-frequency-analyzer",
@@ -80,7 +80,7 @@
         "startAnalyzer",
         "drawFFT"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "audio-noise-generator",
@@ -92,7 +92,7 @@
       "functions": [
         "toggleNoise"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "audio-synth-keyboard",
@@ -104,7 +104,7 @@
       "functions": [
         "playTone"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "audio-tone-frequency-generator",
@@ -119,7 +119,20 @@
         "updateWave",
         "updateFreq"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
+    },
+    {
+      "tool_id": "audio-voice-pitch-shifter",
+      "filename": "audio-voice-pitch-shifter.html",
+      "size_bytes": 1715,
+      "public_url": "https://salabs.quanxs.com/tools/audio-voice-pitch-shifter.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 2,
+      "functions": [
+        "updatePitch",
+        "playPitchTone"
+      ],
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "audio-voice-recorder",
@@ -131,7 +144,7 @@
       "functions": [
         "toggleRecord"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "audio-waveform-analyzer",
@@ -147,7 +160,7 @@
         "render",
         "loadAudio"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "base64-image-encoder",
@@ -159,19 +172,19 @@
       "functions": [
         "encodeImg"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "base64-jwt-decoder",
       "filename": "base64-jwt-decoder.html",
-      "size_bytes": 1213,
+      "size_bytes": 1668,
       "public_url": "https://salabs.quanxs.com/tools/base64-jwt-decoder.html",
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 1,
       "functions": [
         "decodeStr"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "browser-performance-timer",
@@ -183,7 +196,7 @@
       "functions": [
         "measurePerf"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "btoa-atob-converter",
@@ -196,7 +209,7 @@
         "encodeStr",
         "decodeStr"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "chmod-calculator",
@@ -208,7 +221,7 @@
       "functions": [
         "calcChmod"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "color-contrast-accessibility-checker",
@@ -221,7 +234,7 @@
         "calcContrast",
         "getLum"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "color-converter-contrast",
@@ -236,7 +249,7 @@
         "syncColorInput",
         "updateColors"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "color-converter",
@@ -248,7 +261,7 @@
       "functions": [
         "update"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "color-palette-generator",
@@ -261,7 +274,7 @@
         "generatePalette",
         "randomHex"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "color-rgb-hsl-picker",
@@ -273,7 +286,7 @@
       "functions": [
         "inspectColor"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "cookie-header-parser",
@@ -285,17 +298,17 @@
       "functions": [
         "parseCookies"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "cron-generator",
       "filename": "cron-generator.html",
-      "size_bytes": 710,
+      "size_bytes": 1157,
       "public_url": "https://salabs.quanxs.com/tools/cron-generator.html",
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 0,
       "functions": [],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "crypto-hmac-sha3-tester",
@@ -307,7 +320,7 @@
       "functions": [
         "calcHMAC"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "crypto-pbkdf2-key-derivation",
@@ -319,7 +332,7 @@
       "functions": [
         "deriveKey"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "crypto-random-token-generator",
@@ -331,7 +344,19 @@
       "functions": [
         "generateToken"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
+    },
+    {
+      "tool_id": "crypto-rsa-signature-verifier",
+      "filename": "crypto-rsa-signature-verifier.html",
+      "size_bytes": 2664,
+      "public_url": "https://salabs.quanxs.com/tools/crypto-rsa-signature-verifier.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "verifyRSASignature"
+      ],
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-animation-generator",
@@ -343,7 +368,7 @@
       "functions": [
         "updateAnim"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-animation-keyframe-generator",
@@ -355,7 +380,7 @@
       "functions": [
         "updateAnim"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-backdrop-filter-generator",
@@ -367,7 +392,7 @@
       "functions": [
         "updateBackdrop"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-border-radius-generator",
@@ -379,7 +404,7 @@
       "functions": [
         "updateRadius"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-box-border-gradient-studio",
@@ -391,7 +416,7 @@
       "functions": [
         "updateBorder"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-box-border-radius-studio",
@@ -403,7 +428,7 @@
       "functions": [
         "updateRadius"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-box-filter-generator",
@@ -415,7 +440,7 @@
       "functions": [
         "updateFilter"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-box-model-grid",
@@ -425,7 +450,7 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 0,
       "functions": [],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-box-shadow-3d",
@@ -437,7 +462,7 @@
       "functions": [
         "update3D"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-box-shadow-generator",
@@ -449,7 +474,7 @@
       "functions": [
         "updateShadow"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-box-shadow-inset-studio",
@@ -461,7 +486,7 @@
       "functions": [
         "updateInset"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-box-shadow-neumorphic-generator",
@@ -473,7 +498,7 @@
       "functions": [
         "updateNeu"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-button-generator",
@@ -485,7 +510,7 @@
       "functions": [
         "updateBtn"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-clamp-calculator",
@@ -497,7 +522,7 @@
       "functions": [
         "calcClamp"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-clip-path-generator",
@@ -509,7 +534,7 @@
       "functions": [
         "updateShape"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-cubic-bezier-generator",
@@ -522,7 +547,7 @@
         "triggerAnim",
         "updateBezier"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-flexbox-playground",
@@ -534,7 +559,7 @@
       "functions": [
         "updateFlex"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-font-typography-tester",
@@ -546,7 +571,7 @@
       "functions": [
         "updateFont"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-glassmorphism-generator",
@@ -558,7 +583,7 @@
       "functions": [
         "updateGlass"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-gradient-generator",
@@ -570,7 +595,7 @@
       "functions": [
         "updateGradient"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-grid-layout-generator",
@@ -582,7 +607,7 @@
       "functions": [
         "updateGrid"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-js-minifier",
@@ -602,7 +627,7 @@
         "copyOutput",
         "loadSampleJS"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-keyframe-animator",
@@ -614,7 +639,7 @@
       "functions": [
         "applyPreset"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-scrollbar-customizer",
@@ -626,7 +651,7 @@
       "functions": [
         "updateScrollbar"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "css-text-shadow-generator",
@@ -638,7 +663,7 @@
       "functions": [
         "updateShadow"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "csv-delimiter-converter",
@@ -650,7 +675,7 @@
       "functions": [
         "processCSV"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "csv-excel-viewer",
@@ -662,7 +687,7 @@
       "functions": [
         "renderTable"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "csv-json-transformer",
@@ -675,12 +700,12 @@
         "jsonToCsv",
         "csvToJson"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "curl-to-fetch",
       "filename": "curl-to-fetch.html",
-      "size_bytes": 8526,
+      "size_bytes": 9157,
       "public_url": "https://salabs.quanxs.com/tools/curl-to-fetch.html",
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 4,
@@ -690,7 +715,7 @@
         "copyCode",
         "generateCode"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "diff-checker",
@@ -702,7 +727,7 @@
       "functions": [
         "compareDiff"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "dns-lookup-record-parser",
@@ -714,7 +739,7 @@
       "functions": [
         "queryDoH"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "flex-grid-playground",
@@ -726,7 +751,7 @@
       "functions": [
         "updateLayout"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "graphql-query-formatter",
@@ -738,7 +763,7 @@
       "functions": [
         "formatGQL"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "hash-bcrypt-argon-tester",
@@ -750,7 +775,7 @@
       "functions": [
         "derivePBKDF2"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "hash-checksum-generator",
@@ -763,7 +788,7 @@
         "digest",
         "calculateHashes"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "hash-checksum",
@@ -776,7 +801,7 @@
         "hashText",
         "calculateHashes"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "hash-cipher",
@@ -788,7 +813,7 @@
       "functions": [
         "computeHashes"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "hash-generator",
@@ -801,7 +826,7 @@
         "getHash",
         "calculateHashes"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "hash-hmac-generator",
@@ -814,7 +839,7 @@
         "computeHashes",
         "buf2hex"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "hash-sha512-keccak",
@@ -826,7 +851,7 @@
       "functions": [
         "computeHashes"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "hex-hexdump-viewer",
@@ -838,7 +863,19 @@
       "functions": [
         "generateHexdump"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
+    },
+    {
+      "tool_id": "html-canvas-ascii-banner-studio",
+      "filename": "html-canvas-ascii-banner-studio.html",
+      "size_bytes": 1638,
+      "public_url": "https://salabs.quanxs.com/tools/html-canvas-ascii-banner-studio.html",
+      "execution_type": "PURE_CLIENT_SIDE_JS",
+      "mined_functions_count": 1,
+      "functions": [
+        "renderBanner"
+      ],
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "html-canvas-chart-generator",
@@ -850,7 +887,7 @@
       "functions": [
         "drawChart"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "html-canvas-color-picker",
@@ -862,7 +899,7 @@
       "functions": [
         "loadImage"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "html-canvas-crop-rotate-studio",
@@ -877,7 +914,7 @@
         "rotate",
         "flipH"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "html-canvas-drawing-pad",
@@ -891,7 +928,7 @@
         "clearCanvas",
         "exportPNG"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "html-canvas-image-filters",
@@ -904,7 +941,7 @@
         "loadImage",
         "applyFilters"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "html-canvas-particle-generator",
@@ -916,7 +953,7 @@
       "functions": [
         "loop"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "html-canvas-signature-generator",
@@ -929,7 +966,7 @@
         "clearCanvas",
         "exportPNG"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "html-canvas-signature-pad",
@@ -942,7 +979,7 @@
         "exportPNG",
         "clearPad"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "html-canvas-watermark-studio",
@@ -954,7 +991,7 @@
       "functions": [
         "drawWatermark"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "html-entity-diff-checker",
@@ -969,7 +1006,7 @@
         "compareTextDiff",
         "escapeEntities"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "html-entity-encoder",
@@ -983,7 +1020,7 @@
         "encodeMode",
         "processEntity"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "html-formatting-sanitizer",
@@ -995,7 +1032,7 @@
       "functions": [
         "sanitizeHTML"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "html-markdown-converter",
@@ -1007,7 +1044,7 @@
       "functions": [
         "convertHtmlToMd"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "html-meta-og-generator",
@@ -1019,7 +1056,7 @@
       "functions": [
         "genMeta"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "html-table-json-converter",
@@ -1033,7 +1070,7 @@
         "parseTable",
         "convertToCSV"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "http-request-builder",
@@ -1045,7 +1082,7 @@
       "functions": [
         "buildHTTP"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "http-status-codes",
@@ -1057,7 +1094,7 @@
       "functions": [
         "filterCodes"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "image-color-picker",
@@ -1069,7 +1106,7 @@
       "functions": [
         "loadImage"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "image-resizer-cropper",
@@ -1083,7 +1120,7 @@
         "downloadResized",
         "resizeImage"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "ip-geolocation-lookup",
@@ -1095,7 +1132,7 @@
       "functions": [
         "inspectClient"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "js-array-flat-dedupe",
@@ -1107,7 +1144,7 @@
       "functions": [
         "processArray"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "js-ast-parser-studio",
@@ -1119,7 +1156,7 @@
       "functions": [
         "parseCode"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "js-base64-url-safe-encoder",
@@ -1132,7 +1169,7 @@
         "encodeURL",
         "decodeURL"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "js-benchmarking-timer",
@@ -1144,7 +1181,7 @@
       "functions": [
         "runBenchmark"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "js-data-structure-visualizer",
@@ -1158,7 +1195,7 @@
         "popStack",
         "pushStack"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "js-event-emitter-playground",
@@ -1171,7 +1208,7 @@
         "handler",
         "emitCustomEvent"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "js-event-key-code",
@@ -1181,7 +1218,7 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 0,
       "functions": [],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "js-event-loop-visualizer",
@@ -1193,7 +1230,7 @@
       "functions": [
         "runSim"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "js-intersection-observer-studio",
@@ -1203,7 +1240,7 @@
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 0,
       "functions": [],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "js-localstorage-session-manager",
@@ -1217,7 +1254,7 @@
         "setItem",
         "refreshDump"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "js-minifier-formatter",
@@ -1230,7 +1267,7 @@
         "minifyJS",
         "formatJS"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "js-object-diff-checker",
@@ -1242,7 +1279,7 @@
       "functions": [
         "compareObjects"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "js-promise-async-visualizer",
@@ -1255,7 +1292,7 @@
         "appendLog",
         "runSimulation"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "js-regex-code-generator",
@@ -1267,7 +1304,7 @@
       "functions": [
         "genCode"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "js-regex-escape-tool",
@@ -1279,7 +1316,7 @@
       "functions": [
         "escapeRegExp"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "js-web-worker-playground",
@@ -1291,7 +1328,7 @@
       "functions": [
         "runWorker"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "json-diff",
@@ -1304,7 +1341,7 @@
         "findDiff",
         "compareJSON"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "json-escape-unescape",
@@ -1317,7 +1354,7 @@
         "escapeJSON",
         "unescapeJSON"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "json-formatter-beautifier",
@@ -1330,7 +1367,7 @@
         "minifyJson",
         "formatJson"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "json-path-finder",
@@ -1342,7 +1379,7 @@
       "functions": [
         "evaluatePath"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "json-schema-validator",
@@ -1356,7 +1393,7 @@
         "inferType",
         "generateSchema"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "json-to-csv-exporter",
@@ -1369,19 +1406,19 @@
         "downloadCSV",
         "convertJSON"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "json-yaml-formatter",
       "filename": "json-yaml-formatter.html",
-      "size_bytes": 1128,
+      "size_bytes": 1585,
       "public_url": "https://salabs.quanxs.com/tools/json-yaml-formatter.html",
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 1,
       "functions": [
         "formatJSON"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "jules-json-tree-visualizer",
@@ -1398,7 +1435,7 @@
         "createNode",
         "filterTree"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "jwt-debugger-verifier",
@@ -1411,7 +1448,7 @@
         "debugJWT",
         "base64UrlDecode"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "jwt-payload-editor",
@@ -1424,7 +1461,7 @@
         "buildToken",
         "base64url"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "jwt-rs256-key-generator",
@@ -1436,7 +1473,7 @@
       "functions": [
         "generateKeys"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "jwt-rs256-signature-validator",
@@ -1448,7 +1485,7 @@
       "functions": [
         "validateJwt"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "jwt-signer-inspector",
@@ -1462,7 +1499,7 @@
         "signJWT",
         "base64UrlEncode"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "jwt-signer",
@@ -1477,7 +1514,7 @@
         "b64u",
         "b64uBuf"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "jwt-token-playground",
@@ -1490,7 +1527,7 @@
         "b64url",
         "generateJWT"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "lorem-ipsum-generator",
@@ -1503,7 +1540,7 @@
         "generateText",
         "copyOutput"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "lorem-markdown-generator",
@@ -1515,7 +1552,7 @@
       "functions": [
         "generateLorem"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "markdown-chart-generator",
@@ -1527,7 +1564,7 @@
       "functions": [
         "renderChart"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "markdown-html-previewer",
@@ -1545,7 +1582,7 @@
         "loadSampleMarkdown",
         "calculateSum"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "markdown-slides-presenter",
@@ -1560,7 +1597,7 @@
         "prevSlide",
         "parseSlides"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "markdown-table-generator",
@@ -1572,7 +1609,7 @@
       "functions": [
         "generateTable"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "markdown-to-html-converter",
@@ -1584,7 +1621,7 @@
       "functions": [
         "convertMD"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "markdown-to-pdf-exporter",
@@ -1596,7 +1633,7 @@
       "functions": [
         "renderMD"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "markdown-toc-generator",
@@ -1608,7 +1645,7 @@
       "functions": [
         "generateTOC"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "meta-tag-generator",
@@ -1620,7 +1657,7 @@
       "functions": [
         "genMeta"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "number-base-converter",
@@ -1632,7 +1669,7 @@
       "functions": [
         "convert"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "qr-barcode-generator",
@@ -1649,7 +1686,7 @@
         "switchMode",
         "manualGenerate"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "regex-batch-extractor",
@@ -1661,7 +1698,7 @@
       "functions": [
         "processRegex"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "regex-cheat-sheet-tester",
@@ -1674,7 +1711,7 @@
         "addPattern",
         "testRegex"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "regex-tester",
@@ -1686,7 +1723,7 @@
       "functions": [
         "testRegex"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "regex-visualizer",
@@ -1698,19 +1735,19 @@
       "functions": [
         "visualize"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "sacm-coder-middleware-studio",
       "filename": "sacm-coder-middleware-studio.html",
-      "size_bytes": 6943,
+      "size_bytes": 7690,
       "public_url": "https://salabs.quanxs.com/tools/sacm-coder-middleware-studio.html",
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 1,
       "functions": [
         "processSACMCoder"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "screen-resolution-dpi-checker",
@@ -1722,7 +1759,7 @@
       "functions": [
         "checkScreen"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "sha256-hash-calculator",
@@ -1734,12 +1771,12 @@
       "functions": [
         "calcHashes"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "sql-formatter",
       "filename": "sql-formatter.html",
-      "size_bytes": 5599,
+      "size_bytes": 6153,
       "public_url": "https://salabs.quanxs.com/tools/sql-formatter.html",
       "execution_type": "PURE_CLIENT_SIDE_JS",
       "mined_functions_count": 2,
@@ -1747,7 +1784,7 @@
         "formatSQL",
         "copySQL"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "sql-query-builder",
@@ -1759,7 +1796,7 @@
       "functions": [
         "buildSQL"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "string-case-converter",
@@ -1771,7 +1808,7 @@
       "functions": [
         "transformCases"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "subnet-cidr-calculator",
@@ -1784,7 +1821,7 @@
         "calculateSubnet",
         "numToIp"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "svg-image-optimizer",
@@ -1797,7 +1834,7 @@
         "convertImageToWebP",
         "optimizeSVG"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "svg-path-bounding-box",
@@ -1809,7 +1846,7 @@
       "functions": [
         "calcBBox"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "svg-path-viewer",
@@ -1821,7 +1858,7 @@
       "functions": [
         "renderSVG"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "svg-vector-editor",
@@ -1834,7 +1871,7 @@
         "renderSVG",
         "downloadSVG"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "text-case-converter-slug",
@@ -1846,7 +1883,7 @@
       "functions": [
         "convertCases"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "text-case-slug-generator",
@@ -1858,7 +1895,7 @@
       "functions": [
         "convertText"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "text-diff-checker",
@@ -1871,7 +1908,7 @@
         "esc",
         "compareText"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "time-zone-converter-clock",
@@ -1883,7 +1920,7 @@
       "functions": [
         "convertTime"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "totp-2fa-authenticator",
@@ -1898,7 +1935,7 @@
         "dec2hex",
         "leftpad"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "units-px-rem-converter",
@@ -1911,7 +1948,7 @@
         "convertFromPx",
         "convertFromRem"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "unix-timestamp-converter",
@@ -1925,7 +1962,7 @@
         "convertTS",
         "convertDate"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "url-encoder-parser",
@@ -1939,7 +1976,7 @@
         "decodeURL",
         "parseQueryParams"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "user-agent-parser",
@@ -1951,7 +1988,7 @@
       "functions": [
         "parseUA"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "uuid-secret-generator",
@@ -1964,7 +2001,7 @@
         "generateSecret",
         "generateUUIDs"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "uuid-v7-generator",
@@ -1977,7 +2014,7 @@
         "generateUUIDv7List",
         "genV7"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "web-speech-synthesis-studio",
@@ -1991,7 +2028,7 @@
         "populateVoices",
         "speakText"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "websocket-sse-debugger",
@@ -2007,7 +2044,7 @@
         "connectWS",
         "connectSSE"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "websocket-sse-tester",
@@ -2023,7 +2060,7 @@
         "connectWS",
         "clearLog"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "xml-json-converter",
@@ -2036,7 +2073,7 @@
         "xmlToJson",
         "nodeToObj"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     },
     {
       "tool_id": "yaml-json-converter",
@@ -2050,7 +2087,7 @@
         "simpleToYaml",
         "convertJsonToYaml"
       ],
-      "last_inspected": "2026-08-04T15:44:20+09:00"
+      "last_inspected": "2026-08-04T16:15:01+09:00"
     }
   ]
 }
