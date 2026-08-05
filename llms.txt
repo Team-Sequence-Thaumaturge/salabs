@@ -46,6 +46,7 @@
 - [Audio Ring Modulator Studio](https://salabs.quanxs.com/tools/audio-ring-modulator-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Ring Modulator Synth](https://salabs.quanxs.com/tools/audio-ring-modulator-synth.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial 3D Audio Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-audio-panner.html): 100% Client-side pure JS utility tool.
+- [Audio Spatial 3D Audio Reverb](https://salabs.quanxs.com/tools/audio-spatial-3d-audio-reverb.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial 3D Binaural Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-binaural-panner.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial 3D Environment Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-environment-panner.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial 3D Headphone Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-headphone-panner.html): 100% Client-side pure JS utility tool.
@@ -126,6 +127,7 @@
 - [Crypto Hmac Sha256 Streaming Verifier](https://salabs.quanxs.com/tools/crypto-hmac-sha256-streaming-verifier.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha3 512 Validator](https://salabs.quanxs.com/tools/crypto-hmac-sha3-512-validator.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha3 Tester](https://salabs.quanxs.com/tools/crypto-hmac-sha3-tester.html): 100% Client-side pure JS utility tool.
+- [Crypto Hmac Sha384 Authenticator](https://salabs.quanxs.com/tools/crypto-hmac-sha384-authenticator.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha384 Validator](https://salabs.quanxs.com/tools/crypto-hmac-sha384-validator.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha384 Verifier](https://salabs.quanxs.com/tools/crypto-hmac-sha384-verifier.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha512 Calculator](https://salabs.quanxs.com/tools/crypto-hmac-sha512-calculator.html): 100% Client-side pure JS utility tool.
@@ -200,6 +202,7 @@
 - [Hash Hmac Generator](https://salabs.quanxs.com/tools/hash-hmac-generator.html): 100% Client-side pure JS utility tool.
 - [Hash Sha512 Keccak](https://salabs.quanxs.com/tools/hash-sha512-keccak.html): 100% Client-side pure JS utility tool.
 - [Hex Hexdump Viewer](https://salabs.quanxs.com/tools/hex-hexdump-viewer.html): 100% Client-side pure JS utility tool.
+- [Html Canvas 3D Wireframe Cube](https://salabs.quanxs.com/tools/html-canvas-3d-wireframe-cube.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Cube Renderer](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube-renderer.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Cube](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Dodecahedron Knot V2](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-dodecahedron-knot-v2.html): 100% Client-side pure JS utility tool.
