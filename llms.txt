@@ -27,6 +27,7 @@
 - [Audio Formant Vowel Shaper V2](https://salabs.quanxs.com/tools/audio-formant-vowel-shaper-v2.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Shaper V3](https://salabs.quanxs.com/tools/audio-formant-vowel-shaper-v3.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Shaper V5](https://salabs.quanxs.com/tools/audio-formant-vowel-shaper-v5.html): 100% Client-side pure JS utility tool.
+- [Audio Formant Vowel Shaper V7](https://salabs.quanxs.com/tools/audio-formant-vowel-shaper-v7.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Shaper](https://salabs.quanxs.com/tools/audio-formant-vowel-shaper.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Shifter](https://salabs.quanxs.com/tools/audio-formant-vowel-shifter.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Synthesizer](https://salabs.quanxs.com/tools/audio-formant-vowel-synthesizer.html): 100% Client-side pure JS utility tool.
@@ -149,6 +150,7 @@
 - [Crypto Secp256K1 Keypair Studio](https://salabs.quanxs.com/tools/crypto-secp256k1-keypair-studio.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr Bip340 Verifier](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-bip340-verifier.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr Signature](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-signature.html): 100% Client-side pure JS utility tool.
+- [Crypto Secp256K1 Schnorr V2](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v2.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Signature Inspector](https://salabs.quanxs.com/tools/crypto-secp256k1-signature-inspector.html): 100% Client-side pure JS utility tool.
 - [Crypto Shamir Secret Sharing Studio](https://salabs.quanxs.com/tools/crypto-shamir-secret-sharing-studio.html): 100% Client-side pure JS utility tool.
 - [Crypto Subtle Aes Ctr Cipher](https://salabs.quanxs.com/tools/crypto-subtle-aes-ctr-cipher.html): 100% Client-side pure JS utility tool.
@@ -224,6 +226,7 @@
 - [Html Canvas Ascii 3D Octahedron Wireframe](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-wireframe.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Pyramid Renderer](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-pyramid-renderer.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii 3D Pyramid V2](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-pyramid-v2.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Pyramid Wireframe](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-pyramid-wireframe.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Sphere](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-sphere.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Tetrahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-tetrahedron.html): 100% Client-side pure JS utility tool.
