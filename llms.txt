@@ -28,6 +28,7 @@
 - [Audio Phaser Flanger Studio](https://salabs.quanxs.com/tools/audio-phaser-flanger-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Phaser Stereo Panner](https://salabs.quanxs.com/tools/audio-phaser-stereo-panner.html): 100% Client-side pure JS utility tool.
 - [Audio Ping Pong Delay Studio](https://salabs.quanxs.com/tools/audio-ping-pong-delay-studio.html): 100% Client-side pure JS utility tool.
+- [Audio Pink Brown Noise Generator](https://salabs.quanxs.com/tools/audio-pink-brown-noise-generator.html): 100% Client-side pure JS utility tool.
 - [Audio Pink Noise Generator](https://salabs.quanxs.com/tools/audio-pink-noise-generator.html): 100% Client-side pure JS utility tool.
 - [Audio Reverb Convolver Studio](https://salabs.quanxs.com/tools/audio-reverb-convolver-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Ring Modulator Studio](https://salabs.quanxs.com/tools/audio-ring-modulator-studio.html): 100% Client-side pure JS utility tool.
@@ -198,6 +199,7 @@
 - [Html Canvas Ascii Landscape Studio](https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-studio.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Matrix Rain](https://salabs.quanxs.com/tools/html-canvas-ascii-matrix-rain.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Pyramid 3D](https://salabs.quanxs.com/tools/html-canvas-ascii-pyramid-3d.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii Radar Sweep](https://salabs.quanxs.com/tools/html-canvas-ascii-radar-sweep.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Raycaster](https://salabs.quanxs.com/tools/html-canvas-ascii-raycaster.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Vector Field](https://salabs.quanxs.com/tools/html-canvas-ascii-vector-field.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Vector Font Studio](https://salabs.quanxs.com/tools/html-canvas-ascii-vector-font-studio.html): 100% Client-side pure JS utility tool.
