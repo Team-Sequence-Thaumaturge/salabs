@@ -93,6 +93,7 @@
 - [Crypto Aes Ctr Encryptor](https://salabs.quanxs.com/tools/crypto-aes-ctr-encryptor.html): 100% Client-side pure JS utility tool.
 - [Crypto Aes Gcm Encryption](https://salabs.quanxs.com/tools/crypto-aes-gcm-encryption.html): 100% Client-side pure JS utility tool.
 - [Crypto Aes Kw Key Wrap](https://salabs.quanxs.com/tools/crypto-aes-kw-key-wrap.html): 100% Client-side pure JS utility tool.
+- [Crypto Bip39 Mnemonic Validator](https://salabs.quanxs.com/tools/crypto-bip39-mnemonic-validator.html): 100% Client-side pure JS utility tool.
 - [Crypto Chacha20 Poly1305 Authenticated Cipher](https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-authenticated-cipher.html): 100% Client-side pure JS utility tool.
 - [Crypto Chacha20 Poly1305 Key Derivation](https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-key-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Chacha20 Poly1305 Key Generator](https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-key-generator.html): 100% Client-side pure JS utility tool.
@@ -347,8 +348,10 @@
 - [Uuid Secret Generator](https://salabs.quanxs.com/tools/uuid-secret-generator.html): 100% Client-side pure JS utility tool.
 - [Uuid V7 Generator](https://salabs.quanxs.com/tools/uuid-v7-generator.html): 100% Client-side pure JS utility tool.
 - [Web Speech Synthesis Studio](https://salabs.quanxs.com/tools/web-speech-synthesis-studio.html): 100% Client-side pure JS utility tool.
+- [Web3 Evm Wallet Checker](https://salabs.quanxs.com/tools/web3-evm-wallet-checker.html): 100% Client-side pure JS utility tool.
 - [Websocket Sse Debugger](https://salabs.quanxs.com/tools/websocket-sse-debugger.html): 100% Client-side pure JS utility tool.
 - [Websocket Sse Tester](https://salabs.quanxs.com/tools/websocket-sse-tester.html): 100% Client-side pure JS utility tool.
+- [X402 Http 402 Payment Gateway](https://salabs.quanxs.com/tools/x402-http-402-payment-gateway.html): 100% Client-side pure JS utility tool.
 - [Xml Json Converter](https://salabs.quanxs.com/tools/xml-json-converter.html): 100% Client-side pure JS utility tool.
 - [Yaml Json Converter](https://salabs.quanxs.com/tools/yaml-json-converter.html): 100% Client-side pure JS utility tool.
 
