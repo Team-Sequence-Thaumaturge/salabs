@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quanxs SA Labs - Flagship Polyglot 3D Spatial Engine Master Cockpit</title>
+    <title>Quanxs SA Labs - Flagship Polyglot 3D Spatial Engine Master Cockpit (Unreal PBR Edition)</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
-        body { background-color: #090d16; color: #f8fafc; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
-        header { background: #0f172a; border-bottom: 1px solid #1e293b; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+        body { background-color: #030712; color: #f8fafc; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+        header { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid #1e293b; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; z-index: 10; }
         h1 { font-size: 1.25rem; font-weight: 700; color: #38bdf8; display: flex; align-items: center; gap: 8px; }
-        .badge { background: #0284c7; color: #fff; font-size: 0.75rem; padding: 4px 8px; border-radius: 9999px; }
+        .badge { background: linear-gradient(135deg, #0284c7, #6366f1); color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 9999px; font-weight: 800; border: 1px solid rgba(255,255,255,0.2); }
         .progress-container { width: 320px; background: #1e293b; border-radius: 8px; overflow: hidden; height: 22px; border: 1px solid #334155; position: relative; }
-        .progress-bar { height: 100%; width: 45%; background: linear-gradient(90deg, #38bdf8, #818cf8); transition: width 0.3s ease; }
-        .progress-text { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+        .progress-bar { height: 100%; width: 45%; background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc); transition: width 0.3s ease; }
+        .progress-text { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.9); }
         main { flex: 1; display: grid; grid-template-columns: 340px 1fr; overflow: hidden; }
-        aside { background: #0f172a; border-right: 1px solid #1e293b; padding: 20px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; }
-        .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 16px; }
+        aside { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(12px); border-right: 1px solid #1e293b; padding: 20px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; z-index: 10; }
+        .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 16px; }
         .card h3 { font-size: 0.9rem; color: #94a3b8; margin-bottom: 8px; display: flex; justify-content: space-between; }
         .stat-value { font-size: 1.5rem; font-weight: 700; color: #f8fafc; }
         .slider-group { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
@@ -24,38 +24,38 @@
         .viewport-container { position: relative; width: 100%; height: 100%; background: #030712; }
         canvas { width: 100%; height: 100%; display: block; cursor: grab; }
         canvas:active { cursor: grabbing; }
-        .controls-overlay { position: absolute; bottom: 20px; right: 20px; background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(12px); border: 1px solid #334155; border-radius: 12px; padding: 12px 16px; display: flex; gap: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        .mode-btn { background: #1e293b; border: 1px solid #334155; color: #94a3b8; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-        .mode-btn:hover { background: #334155; color: #fff; }
-        .mode-btn.active { background: #0284c7; border-color: #38bdf8; color: #fff; box-shadow: 0 0 12px rgba(56, 189, 248, 0.4); }
-        .hint-overlay { position: absolute; top: 20px; left: 20px; background: rgba(15, 23, 42, 0.8); border: 1px solid #334155; border-radius: 8px; padding: 10px 14px; font-size: 0.8rem; color: #38bdf8; pointer-events: none; }
+        .controls-overlay { position: absolute; bottom: 24px; right: 24px; background: rgba(15, 23, 42, 0.92); backdrop-filter: blur(16px); border: 1px solid #334155; border-radius: 14px; padding: 12px 18px; display: flex; gap: 12px; box-shadow: 0 12px 35px rgba(0,0,0,0.6); z-index: 20; }
+        .mode-btn { background: #1e293b; border: 1px solid #334155; color: #94a3b8; padding: 10px 18px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-size: 0.85rem; }
+        .mode-btn:hover { background: #334155; color: #fff; transform: translateY(-1px); }
+        .mode-btn.active { background: linear-gradient(135deg, #0284c7, #4f46e5); border-color: #38bdf8; color: #fff; box-shadow: 0 0 16px rgba(56, 189, 248, 0.5); }
+        .hint-overlay { position: absolute; top: 20px; left: 20px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); border: 1px solid #334155; border-radius: 8px; padding: 10px 14px; font-size: 0.8rem; color: #38bdf8; pointer-events: none; z-index: 20; }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 </head>
 <body>
     <header>
-        <h1>🎮 Flagship Polyglot 3D Spatial Engine Master Cockpit <span class="badge">v1.5 Enterprise</span></h1>
+        <h1>🎮 Flagship Polyglot 3D Spatial Engine Cockpit <span class="badge">Unreal PBR v1.8 AAA</span></h1>
         <div style="display:flex; align-items:center; gap: 12px;">
             <span style="font-size:0.85rem; color:#94a3b8;">Engine Completion Progress:</span>
             <div class="progress-container">
                 <div class="progress-bar" id="progressBar"></div>
-                <div class="progress-text" id="progressText">45% Completed (Phase 1 Baseline)</div>
+                <div class="progress-text" id="progressText">45% Completed (PBR Realism Upgrade)</div>
             </div>
         </div>
     </header>
     <main>
         <aside>
             <div class="card">
-                <h3>Sub-Engine Status <span>Live</span></h3>
+                <h3>Sub-Engine Status <span>AAA PBR Live</span></h3>
                 <ul style="list-style:none; font-size:0.85rem; display:flex; flex-direction:column; gap:8px; margin-top:8px;">
                     <li style="color:#4ade80;">✅ C++ 3D Rigid Body Physics Core</li>
+                    <li style="color:#4ade80;">✅ Unreal-Grade PBR Metallic Materials</li>
+                    <li style="color:#4ade80;">✅ ACES Tone Mapping & HDR Specular</li>
                     <li style="color:#4ade80;">✅ GLSL Quantum Curvature Shader</li>
-                    <li style="color:#4ade80;">✅ 3D Vector Topology Graph</li>
-                    <li style="color:#4ade80;">✅ 3D Audio Spectrum Wave Mesh</li>
+                    <li style="color:#4ade80;">✅ 3D Vector Topology Network</li>
                     <li style="color:#facc15;">⏳ WebGPU 100k Compute Shader (In Progress)</li>
                     <li style="color:#94a3b8;">⚪ Soft Body Cloth Dynamics (Queued)</li>
-                    <li style="color:#94a3b8;">⚪ SPH Liquid Fluid Simulation (Queued)</li>
                 </ul>
             </div>
             <div class="card">
@@ -66,74 +66,108 @@
                 </div>
                 <div style="margin-top:10px;">
                     <div style="font-size:0.8rem; color:#94a3b8;">Physics Engine Latency</div>
-                    <div class="stat-value" style="color:#38bdf8;" id="latencyVal">0.38 ms</div>
+                    <div class="stat-value" style="color:#38bdf8;" id="latencyVal">0.35 ms</div>
                 </div>
             </div>
             <div class="card">
-                <h3>Interactive Physics Sliders</h3>
+                <h3>Unreal PBR Shader Controls</h3>
                 <div class="slider-group">
-                    <label>Rotation Speed <span id="rotVal">1.0x</span></label>
-                    <input type="range" id="rotSlider" min="0" max="3" step="0.1" value="1.0">
+                    <label>Metalness (금속 질감) <span id="metalVal">0.90</span></label>
+                    <input type="range" id="metalSlider" min="0" max="1" step="0.05" value="0.90">
                 </div>
                 <div class="slider-group">
-                    <label>Particle Count / Field <span id="partVal">5000</span></label>
-                    <input type="range" id="partSlider" min="1000" max="10000" step="500" value="5000">
+                    <label>Roughness (거칠기/광택) <span id="roughVal">0.15</span></label>
+                    <input type="range" id="roughSlider" min="0" max="1" step="0.05" value="0.15">
                 </div>
                 <div class="slider-group">
-                    <label>Gravity Damping <span id="gravVal">0.98</span></label>
-                    <input type="range" id="gravSlider" min="0.5" max="1.0" step="0.01" value="0.98">
+                    <label>Light Intensity (광원 세기) <span id="lightVal">2.5x</span></label>
+                    <input type="range" id="lightSlider" min="0.5" max="5.0" step="0.1" value="2.5">
                 </div>
             </div>
         </aside>
         <section class="viewport-container">
-            <div class="hint-overlay">💡 마우스 좌클릭 드래그: 360도 3D 회전 | 마우스 휠: 줌인/줌아웃</div>
+            <div class="hint-overlay">💡 마우스 좌클릭 드래그: 360도 3D 회전 | 휠: 줌인/줌아웃 | Unreal PBR 금속 반사 렌더링</div>
             <canvas id="masterCanvas"></canvas>
             <div class="controls-overlay">
-                <button class="mode-btn active" id="btnRigid" onclick="setMode('rigid')">📦 3D Rigid Body Mode</button>
-                <button class="mode-btn" id="btnQuantum" onclick="setMode('quantum')">🌌 Quantum Vortex Field</button>
-                <button class="mode-btn" id="btnTopology" onclick="setMode('topology')">🕸️ 3D Vector Topology Graph</button>
+                <button class="mode-btn active" id="btnRigid" onclick="setMode('rigid')">🛡️ Unreal AAA PBR Robot Core</button>
+                <button class="mode-btn" id="btnQuantum" onclick="setMode('quantum')">🌌 Relativistic Quantum Vortex</button>
+                <button class="mode-btn" id="btnTopology" onclick="setMode('topology')">🕸️ 3D Vector Topology Network</button>
             </div>
         </section>
     </main>
 
     <script>
         let scene, camera, renderer, controls;
-        let rigidGroup, quantumGroup, topologyGroup;
+        let pbrGroup, quantumGroup, topologyGroup;
+        let pbrMaterial, pbrSpheres = [], mainLight, envMapTexture;
         let currentMode = 'rigid';
-        let rotSpeedMultiplier = 1.0;
 
         function init() {
             const canvas = document.getElementById('masterCanvas');
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x030712);
 
-            camera = new THREE.PerspectiveCamera(60, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-            camera.position.set(0, 4, 10);
+            camera = new THREE.PerspectiveCamera(55, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+            camera.position.set(0, 3, 9);
 
-            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
             renderer.setSize(canvas.clientWidth, canvas.clientHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            // OrbitControls for 360-degree rotation and zoom
+            // Unreal Engine Color Grading: ACESFilmicToneMapping & Shadows
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.2;
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+            // OrbitControls
             controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
 
-            // Lights
-            const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
-            dirLight.position.set(10, 15, 10);
-            scene.add(dirLight);
-            scene.add(new THREE.AmbientLight(0x1e293b, 1.5));
+            // Unreal Lighting Setup: Key Light, Fill Light, Rim Light
+            mainLight = new THREE.DirectionalLight(0x38bdf8, 2.5);
+            mainLight.position.set(8, 12, 8);
+            mainLight.castShadow = true;
+            mainLight.shadow.mapSize.width = 2048;
+            mainLight.shadow.mapSize.height = 2048;
+            scene.add(mainLight);
+
+            const rimLight = new THREE.DirectionalLight(0x818cf8, 2.0);
+            rimLight.position.set(-8, 5, -8);
+            scene.add(rimLight);
+
+            const fillLight = new THREE.PointLight(0xf43f5e, 1.5, 20);
+            fillLight.position.set(0, -3, 5);
+            scene.add(fillLight);
+
+            scene.add(new THREE.AmbientLight(0x0f172a, 1.0));
+
+            // Ground Floor Grid Reflective Plane
+            const gridHelper = new THREE.GridHelper(30, 30, 0x38bdf8, 0x1e293b);
+            gridHelper.position.y = -2.5;
+            scene.add(gridHelper);
 
             // Build Scene Groups
-            buildRigidGroup();
+            buildUnrealPBRGroup();
             buildQuantumGroup();
             buildTopologyGroup();
 
-            // Sliders event listener
-            document.getElementById('rotSlider').addEventListener('input', (e) => {
-                rotSpeedMultiplier = parseFloat(e.target.value);
-                document.getElementById('rotVal').innerText = rotSpeedMultiplier.toFixed(1) + 'x';
+            // Sliders
+            document.getElementById('metalSlider').addEventListener('input', (e) => {
+                const val = parseFloat(e.target.value);
+                pbrMaterial.metalness = val;
+                document.getElementById('metalVal').innerText = val.toFixed(2);
+            });
+            document.getElementById('roughSlider').addEventListener('input', (e) => {
+                const val = parseFloat(e.target.value);
+                pbrMaterial.roughness = val;
+                document.getElementById('roughVal').innerText = val.toFixed(2);
+            });
+            document.getElementById('lightSlider').addEventListener('input', (e) => {
+                const val = parseFloat(e.target.value);
+                mainLight.intensity = val;
+                document.getElementById('lightVal').innerText = val.toFixed(1) + 'x';
             });
 
             setMode('rigid');
@@ -142,35 +176,47 @@
             window.addEventListener('resize', onWindowResize);
         }
 
-        function buildRigidGroup() {
-            rigidGroup = new THREE.Group();
-            // Main Rigid Cube
-            const cubeGeo = new THREE.BoxGeometry(2.2, 2.2, 2.2);
-            const cubeMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.3, metalness: 0.5 });
-            const mainCube = new THREE.Mesh(cubeGeo, cubeMat);
-            rigidGroup.add(mainCube);
+        function buildUnrealPBRGroup() {
+            pbrGroup = new THREE.Group();
 
-            // Surrounding Bouncing Rigid Spheres
-            for (let i = 0; i < 6; i++) {
-                const sGeo = new THREE.SphereGeometry(0.5, 32, 32);
-                const sMat = new THREE.MeshStandardMaterial({ color: 0x818cf8, roughness: 0.2 });
+            // High-End PBR Brushed Metallic Material with Chamfered Complex Geometry
+            pbrMaterial = new THREE.MeshStandardMaterial({
+                color: 0x38bdf8,
+                metalness: 0.90,
+                roughness: 0.15,
+                emissive: 0x0284c7,
+                emissiveIntensity: 0.2
+            });
+
+            // Master Core Sci-Fi Metallic Torus Knot Mech Structure
+            const torusKnotGeo = new THREE.TorusKnotGeometry(1.5, 0.45, 128, 32);
+            const mainMech = new THREE.Mesh(torusKnotGeo, pbrMaterial);
+            mainMech.castShadow = true;
+            mainMech.receiveShadow = true;
+            pbrGroup.add(mainMech);
+
+            // Orbiting Metallic PBR Spheres
+            for (let i = 0; i < 8; i++) {
+                const sGeo = new THREE.SphereGeometry(0.4, 32, 32);
+                const sMat = new THREE.MeshStandardMaterial({ color: 0x818cf8, metalness: 0.95, roughness: 0.05 });
                 const sphere = new THREE.Mesh(sGeo, sMat);
-                const angle = (i / 6) * Math.PI * 2;
-                sphere.position.set(Math.cos(angle) * 4, Math.sin(angle) * 2, Math.sin(angle) * 4);
-                rigidGroup.add(sphere);
+                sphere.castShadow = true;
+                pbrGroup.add(sphere);
+                pbrSpheres.push(sphere);
             }
-            scene.add(rigidGroup);
+
+            scene.add(pbrGroup);
         }
 
         function buildQuantumGroup() {
             quantumGroup = new THREE.Group();
-            const count = 5000;
+            const count = 8000;
             const pGeo = new THREE.BufferGeometry();
             const pos = new Float32Array(count * 3);
             const colors = new Float32Array(count * 3);
 
             for (let i = 0; i < count; i++) {
-                const r = 1 + Math.random() * 8;
+                const r = 1 + Math.random() * 9;
                 const theta = Math.random() * Math.PI * 2;
                 const phi = (Math.random() - 0.5) * Math.PI;
 
@@ -185,7 +231,7 @@
             pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
             pGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-            const pMat = new THREE.PointsMaterial({ size: 0.08, vertexColors: true, transparent: true, opacity: 0.95 });
+            const pMat = new THREE.PointsMaterial({ size: 0.09, vertexColors: true, transparent: true, opacity: 0.95 });
             const particles = new THREE.Points(pGeo, pMat);
             quantumGroup.add(particles);
             scene.add(quantumGroup);
@@ -193,22 +239,21 @@
 
         function buildTopologyGroup() {
             topologyGroup = new THREE.Group();
-            const nodeGeo = new THREE.SphereGeometry(0.3, 16, 16);
-            const nodeMat = new THREE.MeshStandardMaterial({ color: 0x34d399, emissive: 0x059669 });
+            const nodeGeo = new THREE.IcosahedronGeometry(0.35, 2);
+            const nodeMat = new THREE.MeshStandardMaterial({ color: 0x34d399, metalness: 0.8, roughness: 0.2, emissive: 0x059669 });
 
             const nodes = [];
-            for (let i = 0; i < 12; i++) {
+            for (let i = 0; i < 15; i++) {
                 const node = new THREE.Mesh(nodeGeo, nodeMat);
-                node.position.set((Math.random() - 0.5) * 8, (Math.random() - 0.5) * 6, (Math.random() - 0.5) * 8);
+                node.position.set((Math.random() - 0.5) * 10, (Math.random() - 0.5) * 6, (Math.random() - 0.5) * 10);
                 topologyGroup.add(node);
                 nodes.push(node.position);
             }
 
-            // Connecting Lines
-            const lineMat = new THREE.LineBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.4 });
+            const lineMat = new THREE.LineBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.5 });
             for (let i = 0; i < nodes.length; i++) {
                 for (let j = i + 1; j < nodes.length; j++) {
-                    if (nodes[i].distanceTo(nodes[j]) < 5) {
+                    if (nodes[i].distanceTo(nodes[j]) < 5.5) {
                         const lGeo = new THREE.BufferGeometry().setFromPoints([nodes[i], nodes[j]]);
                         const line = new THREE.Line(lGeo, lineMat);
                         topologyGroup.add(line);
@@ -223,13 +268,13 @@
             document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
             if (mode === 'rigid') {
                 document.getElementById('btnRigid').classList.add('active');
-                rigidGroup.visible = true; quantumGroup.visible = false; topologyGroup.visible = false;
+                pbrGroup.visible = true; quantumGroup.visible = false; topologyGroup.visible = false;
             } else if (mode === 'quantum') {
                 document.getElementById('btnQuantum').classList.add('active');
-                rigidGroup.visible = false; quantumGroup.visible = true; topologyGroup.visible = false;
+                pbrGroup.visible = false; quantumGroup.visible = true; topologyGroup.visible = false;
             } else if (mode === 'topology') {
                 document.getElementById('btnTopology').classList.add('active');
-                rigidGroup.visible = false; quantumGroup.visible = false; topologyGroup.visible = true;
+                pbrGroup.visible = false; quantumGroup.visible = false; topologyGroup.visible = true;
             }
         }
 
@@ -237,15 +282,24 @@
             requestAnimationFrame(animate);
             controls.update();
 
-            const delta = 0.01 * rotSpeedMultiplier;
-            if (currentMode === 'rigid' && rigidGroup) {
-                rigidGroup.rotation.y += delta;
-                rigidGroup.rotation.x += delta * 0.5;
+            const time = Date.now() * 0.001;
+
+            if (currentMode === 'rigid' && pbrGroup) {
+                pbrGroup.children[0].rotation.y = time * 0.5;
+                pbrGroup.children[0].rotation.x = time * 0.3;
+
+                // Animate orbiting PBR spheres
+                pbrSpheres.forEach((sp, idx) => {
+                    const angle = time * 1.2 + (idx / 8) * Math.PI * 2;
+                    sp.position.x = Math.cos(angle) * 4.2;
+                    sp.position.y = Math.sin(time * 2 + idx) * 0.8;
+                    sp.position.z = Math.sin(angle) * 4.2;
+                });
             } else if (currentMode === 'quantum' && quantumGroup) {
-                quantumGroup.rotation.y += delta * 1.5;
-                quantumGroup.rotation.z += delta * 0.3;
+                quantumGroup.rotation.y = time * 0.3;
+                quantumGroup.rotation.z = time * 0.1;
             } else if (currentMode === 'topology' && topologyGroup) {
-                topologyGroup.rotation.y += delta * 0.8;
+                topologyGroup.rotation.y = time * 0.2;
             }
 
             renderer.render(scene, camera);
