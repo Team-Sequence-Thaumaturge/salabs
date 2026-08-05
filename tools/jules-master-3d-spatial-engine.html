@@ -312,12 +312,12 @@
       const physics = new PhysicsCore();
 
       // --- 4. Three.js Unified Interlocked Scene ---
-      let scene, camera, renderer, controls, mainLight;
+      let scene, camera, renderer, controls, mainLight, canvas;
       let bouncingSphere, quantumParticles, topologyNodes = [], topologyLinesGroup, audioMesh;
       let lastTime = Date.now();
 
       function init() {
-        const canvas = document.getElementById("webgl-canvas");
+        canvas = document.getElementById("webgl-canvas");
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0x0f172a);
 
