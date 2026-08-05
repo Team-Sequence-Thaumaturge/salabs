@@ -32,6 +32,7 @@
 - [Audio Ring Modulator Studio](https://salabs.quanxs.com/tools/audio-ring-modulator-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial Panning Visualizer](https://salabs.quanxs.com/tools/audio-spatial-panning-visualizer.html): 100% Client-side pure JS utility tool.
 - [Audio Spectral Noise Gate Studio](https://salabs.quanxs.com/tools/audio-spectral-noise-gate-studio.html): 100% Client-side pure JS utility tool.
+- [Audio Spectral Pitch Tracker](https://salabs.quanxs.com/tools/audio-spectral-pitch-tracker.html): 100% Client-side pure JS utility tool.
 - [Audio Spectral Subtraction Denoiser](https://salabs.quanxs.com/tools/audio-spectral-subtraction-denoiser.html): 100% Client-side pure JS utility tool.
 - [Audio Spectral Vocoder Studio](https://salabs.quanxs.com/tools/audio-spectral-vocoder-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Spectral Vocoder Synthesizer](https://salabs.quanxs.com/tools/audio-spectral-vocoder-synthesizer.html): 100% Client-side pure JS utility tool.
@@ -81,6 +82,7 @@
 - [Crypto Hkdf Sha256 Expander](https://salabs.quanxs.com/tools/crypto-hkdf-sha256-expander.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha384 Derivation Studio](https://salabs.quanxs.com/tools/crypto-hkdf-sha384-derivation-studio.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha512 Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-sha512-derivation.html): 100% Client-side pure JS utility tool.
+- [Crypto Hkdf Sha512 Key Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-sha512-key-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha1 Validator](https://salabs.quanxs.com/tools/crypto-hmac-sha1-validator.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha3 Tester](https://salabs.quanxs.com/tools/crypto-hmac-sha3-tester.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha384 Validator](https://salabs.quanxs.com/tools/crypto-hmac-sha384-validator.html): 100% Client-side pure JS utility tool.
@@ -164,6 +166,7 @@
 - [Html Canvas Ascii Donut](https://salabs.quanxs.com/tools/html-canvas-ascii-donut.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Face Art](https://salabs.quanxs.com/tools/html-canvas-ascii-face-art.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Flower Matrix](https://salabs.quanxs.com/tools/html-canvas-ascii-flower-matrix.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii Fluid Sim](https://salabs.quanxs.com/tools/html-canvas-ascii-fluid-sim.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Landscape Generator](https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Matrix Rain](https://salabs.quanxs.com/tools/html-canvas-ascii-matrix-rain.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Pyramid 3D](https://salabs.quanxs.com/tools/html-canvas-ascii-pyramid-3d.html): 100% Client-side pure JS utility tool.
