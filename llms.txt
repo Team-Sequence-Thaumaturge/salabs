@@ -19,6 +19,7 @@
 - [Audio Envelope Adsr Studio](https://salabs.quanxs.com/tools/audio-envelope-adsr-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Envelope Shaper Studio](https://salabs.quanxs.com/tools/audio-envelope-shaper-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Equalizer Studio](https://salabs.quanxs.com/tools/audio-equalizer-studio.html): 100% Client-side pure JS utility tool.
+- [Audio Formant Vocal Filter Studio](https://salabs.quanxs.com/tools/audio-formant-vocal-filter-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Shifter](https://salabs.quanxs.com/tools/audio-formant-vowel-shifter.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Synthesizer](https://salabs.quanxs.com/tools/audio-formant-vowel-synthesizer.html): 100% Client-side pure JS utility tool.
 - [Audio Frequency Analyzer](https://salabs.quanxs.com/tools/audio-frequency-analyzer.html): 100% Client-side pure JS utility tool.
@@ -102,6 +103,7 @@
 - [Crypto Hkdf Sha256 Key Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-sha256-key-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha256 Streaming Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-sha256-streaming-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha384 Derivation Studio](https://salabs.quanxs.com/tools/crypto-hkdf-sha384-derivation-studio.html): 100% Client-side pure JS utility tool.
+- [Crypto Hkdf Sha384 Key Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-sha384-key-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha512 Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-sha512-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha512 Key Derivation Studio](https://salabs.quanxs.com/tools/crypto-hkdf-sha512-key-derivation-studio.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha512 Key Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-sha512-key-derivation.html): 100% Client-side pure JS utility tool.
@@ -185,6 +187,7 @@
 - [Html Canvas Ascii 3D Hypercube](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-hypercube.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Icosahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-icosahedron.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron Knot](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii 3D Octahedron Studio](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-studio.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron Wireframe](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-wireframe.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Pyramid Renderer](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-pyramid-renderer.html): 100% Client-side pure JS utility tool.
