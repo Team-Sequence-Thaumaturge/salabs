@@ -432,45 +432,32 @@
         });
 
 
-        // Module 5: Inverse Kinematics (IK) Skeletal Arm
-        const bones = [];
-        const baseBone = new THREE.Bone();
-        baseBone.position.set(-5, 0, 0);
-        const armBone = new THREE.Bone();
-        armBone.position.set(0, 2, 0);
-        const forearmBone = new THREE.Bone();
-        forearmBone.position.set(0, 2, 0);
-        baseBone.add(armBone);
-        armBone.add(forearmBone);
-        bones.push(baseBone, armBone, forearmBone);
+        // Module 5: Inverse Kinematics (IK) Robotic Arm (Robust Group Mesh)
+        const ikArmGroup = new THREE.Group();
+        ikArmGroup.position.set(-5, -2, 0);
 
-        const skeleton = new THREE.Skeleton(bones);
-        const armGeo = new THREE.CylinderGeometry(0.3, 0.5, 4, 16, 2);
-        // Bind skin indices/weights for a simple 2-segment arm
-        const position = armGeo.attributes.position;
-        const skinIndices = [];
-        const skinWeights = [];
-        for (let i = 0; i < position.count; i++) {
-          const y = position.getY(i);
-          if (y > 0) {
-            skinIndices.push(2, 1, 0, 0);
-            skinWeights.push(0.8, 0.2, 0, 0);
-          } else {
-            skinIndices.push(1, 0, 0, 0);
-            skinWeights.push(0.8, 0.2, 0, 0);
-          }
-        }
-        armGeo.setAttribute('skinIndex', new THREE.Uint16BufferAttribute(skinIndices, 4));
-        armGeo.setAttribute('skinWeight', new THREE.Float32BufferAttribute(skinWeights, 4));
-        const armMat = new THREE.MeshStandardMaterial({ color: 0x8b5cf6, wireframe: true });
-        window.ikArm = new THREE.SkinnedMesh(armGeo, armMat);
-        window.ikArm.add(baseBone);
-        window.ikArm.bind(skeleton);
-        scene.add(window.ikArm);
+        const baseMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.8, 0.6, 16), new THREE.MeshStandardMaterial({ color: 0x64748b }));
+        ikArmGroup.add(baseMesh);
 
-        // Store bones globally for the analytic IK solver
-        window.armBone = armBone;
-        window.forearmBone = forearmBone;
+        const armBoneGroup = new THREE.Group();
+        armBoneGroup.position.set(0, 0.3, 0);
+        const upperArmMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.3, 2.5, 16), new THREE.MeshStandardMaterial({ color: 0x8b5cf6, wireframe: true }));
+        upperArmMesh.position.y = 1.25;
+        armBoneGroup.add(upperArmMesh);
+        ikArmGroup.add(armBoneGroup);
+
+        const forearmBoneGroup = new THREE.Group();
+        forearmBoneGroup.position.set(0, 2.5, 0);
+        const lowerArmMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.25, 2.2, 16), new THREE.MeshStandardMaterial({ color: 0xa78bfa, wireframe: true }));
+        lowerArmMesh.position.y = 1.1;
+        forearmBoneGroup.add(lowerArmMesh);
+        armBoneGroup.add(forearmBoneGroup);
+
+        scene.add(ikArmGroup);
+
+        window.ikArm = ikArmGroup;
+        window.armBone = armBoneGroup;
+        window.forearmBone = forearmBoneGroup;
 
         // Module 6: Soft-Body Deformation Mesh
         const softGeo = new THREE.PlaneGeometry(12, 12, 32, 32);
