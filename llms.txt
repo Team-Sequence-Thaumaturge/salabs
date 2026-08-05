@@ -31,6 +31,7 @@
 - [Audio Formant Vowel Filter V18](https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v18.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Filter V19](https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v19.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Filter V20](https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v20.html): 100% Client-side pure JS utility tool.
+- [Audio Formant Vowel Filter V25](https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v25.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Filter V4](https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v4.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Filter V6](https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v6.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Filter](https://salabs.quanxs.com/tools/audio-formant-vowel-filter.html): 100% Client-side pure JS utility tool.
@@ -172,6 +173,7 @@
 - [Crypto Secp256K1 Schnorr V12](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v12.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr V15](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v15.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr V2](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v2.html): 100% Client-side pure JS utility tool.
+- [Crypto Secp256K1 Schnorr V20](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v20.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr V3](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v3.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr V4](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v4.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr V5](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v5.html): 100% Client-side pure JS utility tool.
@@ -251,6 +253,7 @@
 - [Html Canvas Ascii 3D Octahedron Knot V12](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v12.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron Knot V15](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v15.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron Knot V2](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v2.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii 3D Octahedron Knot V20](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v20.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron Knot V3](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v3.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron Knot V4](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v4.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron Knot V5](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v5.html): 100% Client-side pure JS utility tool.
@@ -359,7 +362,9 @@
 - [Json Schema Validator](https://salabs.quanxs.com/tools/json-schema-validator.html): 100% Client-side pure JS utility tool.
 - [Json To Csv Exporter](https://salabs.quanxs.com/tools/json-to-csv-exporter.html): 100% Client-side pure JS utility tool.
 - [Json Yaml Formatter](https://salabs.quanxs.com/tools/json-yaml-formatter.html): 100% Client-side pure JS utility tool.
+- [Jules Agentic Commerce Dashboard](https://salabs.quanxs.com/tools/jules-agentic-commerce-dashboard.html): 100% Client-side pure JS utility tool.
 - [Jules Json Tree Visualizer](https://salabs.quanxs.com/tools/jules-json-tree-visualizer.html): 100% Client-side pure JS utility tool.
+- [Jules Master 3D Spatial Engine](https://salabs.quanxs.com/tools/jules-master-3d-spatial-engine.html): 100% Client-side pure JS utility tool.
 - [Jwt Debugger Verifier](https://salabs.quanxs.com/tools/jwt-debugger-verifier.html): 100% Client-side pure JS utility tool.
 - [Jwt Payload Editor](https://salabs.quanxs.com/tools/jwt-payload-editor.html): 100% Client-side pure JS utility tool.
 - [Jwt Rs256 Key Generator](https://salabs.quanxs.com/tools/jwt-rs256-key-generator.html): 100% Client-side pure JS utility tool.
@@ -386,6 +391,7 @@
 - [Regex Tester](https://salabs.quanxs.com/tools/regex-tester.html): 100% Client-side pure JS utility tool.
 - [Regex Visualizer](https://salabs.quanxs.com/tools/regex-visualizer.html): 100% Client-side pure JS utility tool.
 - [Sacm Coder Middleware Studio](https://salabs.quanxs.com/tools/sacm-coder-middleware-studio.html): 100% Client-side pure JS utility tool.
+- [Salabs Flagship 3D Spatial Workbench](https://salabs.quanxs.com/tools/salabs-flagship-3d-spatial-workbench.html): 100% Client-side pure JS utility tool.
 - [Screen Resolution Dpi Checker](https://salabs.quanxs.com/tools/screen-resolution-dpi-checker.html): 100% Client-side pure JS utility tool.
 - [Sha256 Hash Calculator](https://salabs.quanxs.com/tools/sha256-hash-calculator.html): 100% Client-side pure JS utility tool.
 - [Sql Formatter](https://salabs.quanxs.com/tools/sql-formatter.html): 100% Client-side pure JS utility tool.
