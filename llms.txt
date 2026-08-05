@@ -21,6 +21,7 @@
 - [Audio Equalizer Studio](https://salabs.quanxs.com/tools/audio-equalizer-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Pitch Tracker](https://salabs.quanxs.com/tools/audio-formant-pitch-tracker.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vocal Filter Studio](https://salabs.quanxs.com/tools/audio-formant-vocal-filter-studio.html): 100% Client-side pure JS utility tool.
+- [Audio Formant Vowel Filter V4](https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v4.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Filter](https://salabs.quanxs.com/tools/audio-formant-vowel-filter.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Shaper V2](https://salabs.quanxs.com/tools/audio-formant-vowel-shaper-v2.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Shaper V3](https://salabs.quanxs.com/tools/audio-formant-vowel-shaper-v3.html): 100% Client-side pure JS utility tool.
@@ -96,6 +97,7 @@
 - [Crypto Bip39 Mnemonic Validator](https://salabs.quanxs.com/tools/crypto-bip39-mnemonic-validator.html): 100% Client-side pure JS utility tool.
 - [Crypto Chacha20 Poly1305 Authenticated Cipher](https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-authenticated-cipher.html): 100% Client-side pure JS utility tool.
 - [Crypto Chacha20 Poly1305 Key Derivation](https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-key-derivation.html): 100% Client-side pure JS utility tool.
+- [Crypto Chacha20 Poly1305 Key Exchange V2](https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-key-exchange-v2.html): 100% Client-side pure JS utility tool.
 - [Crypto Chacha20 Poly1305 Key Generator](https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-key-generator.html): 100% Client-side pure JS utility tool.
 - [Crypto Chacha20 Poly1305 Session Cipher](https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-session-cipher.html): 100% Client-side pure JS utility tool.
 - [Crypto Chacha20 Poly1305 Tester](https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-tester.html): 100% Client-side pure JS utility tool.
@@ -198,6 +200,7 @@
 - [Hex Hexdump Viewer](https://salabs.quanxs.com/tools/hex-hexdump-viewer.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Cube Renderer](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube-renderer.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Cube](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii 3D Dodecahedron Knot V2](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-dodecahedron-knot-v2.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Dodecahedron Knot](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-dodecahedron-knot.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Dodecahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-dodecahedron.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Hypercube](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-hypercube.html): 100% Client-side pure JS utility tool.
