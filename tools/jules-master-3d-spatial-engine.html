@@ -325,7 +325,9 @@
         camera.position.set(0, 5, 12);
 
         renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        const initW = Math.max(300, window.innerWidth || canvas.clientWidth || 800);
+        const initH = Math.max(300, window.innerHeight || canvas.clientHeight || 600);
+        renderer.setSize(initW, initH);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.xr.enabled = true;
         renderer.shadowMap.enabled = true;
@@ -589,6 +591,17 @@
 
 
       function animate() {
+        // Dynamic iframe canvas size check to prevent 0x0 pixel black screen
+        if (renderer && camera && canvas) {
+          const targetW = canvas.parentElement ? canvas.parentElement.clientWidth : window.innerWidth;
+          const targetH = canvas.parentElement ? canvas.parentElement.clientHeight : window.innerHeight;
+          if (targetW > 50 && targetH > 50 && (canvas.width !== targetW || canvas.height !== targetH)) {
+            camera.aspect = targetW / targetH;
+            camera.updateProjectionMatrix();
+            renderer.setSize(targetW, targetH, false);
+          }
+        }
+
         controls.update();
 
         const now = Date.now();
@@ -748,7 +761,9 @@
       function onWindowResize() {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        const initW = Math.max(300, window.innerWidth || canvas.clientWidth || 800);
+        const initH = Math.max(300, window.innerHeight || canvas.clientHeight || 600);
+        renderer.setSize(initW, initH);
       }
 
             // Fail-Safe Immediate & Event-Based 3D Engine Initialization Hook
