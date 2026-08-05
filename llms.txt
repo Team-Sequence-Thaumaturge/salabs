@@ -23,6 +23,7 @@
 - [Audio Granular Synth Studio](https://salabs.quanxs.com/tools/audio-granular-synth-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Lowpass Highpass Filter Studio](https://salabs.quanxs.com/tools/audio-lowpass-highpass-filter-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Noise Generator](https://salabs.quanxs.com/tools/audio-noise-generator.html): 100% Client-side pure JS utility tool.
+- [Audio Noise Suppression Studio](https://salabs.quanxs.com/tools/audio-noise-suppression-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Overdrive Fuzz Studio](https://salabs.quanxs.com/tools/audio-overdrive-fuzz-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Phaser Flanger Studio](https://salabs.quanxs.com/tools/audio-phaser-flanger-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Phaser Stereo Panner](https://salabs.quanxs.com/tools/audio-phaser-stereo-panner.html): 100% Client-side pure JS utility tool.
@@ -88,6 +89,7 @@
 - [Crypto Hkdf Sha256 Expander](https://salabs.quanxs.com/tools/crypto-hkdf-sha256-expander.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha384 Derivation Studio](https://salabs.quanxs.com/tools/crypto-hkdf-sha384-derivation-studio.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha512 Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-sha512-derivation.html): 100% Client-side pure JS utility tool.
+- [Crypto Hkdf Sha512 Key Derivation Studio](https://salabs.quanxs.com/tools/crypto-hkdf-sha512-key-derivation-studio.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha512 Key Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-sha512-key-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha1 Validator](https://salabs.quanxs.com/tools/crypto-hmac-sha1-validator.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha256 Streaming Verifier](https://salabs.quanxs.com/tools/crypto-hmac-sha256-streaming-verifier.html): 100% Client-side pure JS utility tool.
@@ -205,6 +207,7 @@
 - [Html Canvas Signature Generator](https://salabs.quanxs.com/tools/html-canvas-signature-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Signature Pad](https://salabs.quanxs.com/tools/html-canvas-signature-pad.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Sobel Edge Detector](https://salabs.quanxs.com/tools/html-canvas-sobel-edge-detector.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Sobel Edge Studio](https://salabs.quanxs.com/tools/html-canvas-sobel-edge-studio.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Sprite Sheet Animator](https://salabs.quanxs.com/tools/html-canvas-sprite-sheet-animator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Threshold Binarizer](https://salabs.quanxs.com/tools/html-canvas-threshold-binarizer.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Watermark Studio](https://salabs.quanxs.com/tools/html-canvas-watermark-studio.html): 100% Client-side pure JS utility tool.
