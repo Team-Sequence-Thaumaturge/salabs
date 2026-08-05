@@ -39,6 +39,7 @@
 - [Audio Pink Brown Noise Generator](https://salabs.quanxs.com/tools/audio-pink-brown-noise-generator.html): 100% Client-side pure JS utility tool.
 - [Audio Pink Noise Generator](https://salabs.quanxs.com/tools/audio-pink-noise-generator.html): 100% Client-side pure JS utility tool.
 - [Audio Reverb Convolver Studio](https://salabs.quanxs.com/tools/audio-reverb-convolver-studio.html): 100% Client-side pure JS utility tool.
+- [Audio Reverb Impulse Response Studio](https://salabs.quanxs.com/tools/audio-reverb-impulse-response-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Ring Modulator Studio](https://salabs.quanxs.com/tools/audio-ring-modulator-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Ring Modulator Synth](https://salabs.quanxs.com/tools/audio-ring-modulator-synth.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial 3D Audio Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-audio-panner.html): 100% Client-side pure JS utility tool.
@@ -140,6 +141,7 @@
 - [Crypto Shamir Secret Sharing Studio](https://salabs.quanxs.com/tools/crypto-shamir-secret-sharing-studio.html): 100% Client-side pure JS utility tool.
 - [Crypto Subtle Aes Ctr Cipher](https://salabs.quanxs.com/tools/crypto-subtle-aes-ctr-cipher.html): 100% Client-side pure JS utility tool.
 - [Crypto Subtle Digest Calculator](https://salabs.quanxs.com/tools/crypto-subtle-digest-calculator.html): 100% Client-side pure JS utility tool.
+- [Crypto Subtle Ecdsa Secp256K1 Signer](https://salabs.quanxs.com/tools/crypto-subtle-ecdsa-secp256k1-signer.html): 100% Client-side pure JS utility tool.
 - [Crypto Subtle Pbkdf2 Hmac Sha512](https://salabs.quanxs.com/tools/crypto-subtle-pbkdf2-hmac-sha512.html): 100% Client-side pure JS utility tool.
 - [Crypto Subtle Rsa Oaep Cipher](https://salabs.quanxs.com/tools/crypto-subtle-rsa-oaep-cipher.html): 100% Client-side pure JS utility tool.
 - [Crypto Subtle Rsa Pss Signature Validator](https://salabs.quanxs.com/tools/crypto-subtle-rsa-pss-signature-validator.html): 100% Client-side pure JS utility tool.
@@ -209,6 +211,7 @@
 - [Html Canvas Ascii 3D Tetrahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-tetrahedron.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Torus Knot Renderer](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot-renderer.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Torus Knot V3](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot-v3.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii 3D Torus Knot V4](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot-v4.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Torus Knot](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Torus V2](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-v2.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Torus](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus.html): 100% Client-side pure JS utility tool.
