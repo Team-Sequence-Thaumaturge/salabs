@@ -167,6 +167,22 @@
           <input type="range" id="audio-slider" min="100" max="1000" step="10" value="440" />
         </div>
 
+        <!-- Real Web Audio API Microphone & Tone Buttons (Visible HUD Controls) -->
+        <div class="slider-container" style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid rgba(51, 65, 85, 0.8);">
+          <div class="slider-label" style="margin-bottom: 0.5rem;">
+            <span style="color: #00f2fe; font-weight: 600;">Web Audio API Live Mic & Spectrum</span>
+            <span id="val-freq" style="color: #a7f3d0;">440 Hz</span>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button id="btn-mic-start" onclick="toggleMicrophone()" style="flex: 1; padding: 6px 12px; background: rgba(0, 242, 254, 0.15); border: 1px solid #00f2fe; color: #00f2fe; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.75rem; display: flex; items-center; justify-content: center; gap: 4px;">
+              🎤 <span id="mic-status-text">Enable Mic (LIVE)</span>
+            </button>
+            <button id="btn-tone-gen" onclick="toggleToneGenerator()" style="flex: 1; padding: 6px 12px; background: rgba(139, 92, 246, 0.15); border: 1px solid #8b5cf6; color: #a78bfa; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.75rem; display: flex; items-center; justify-content: center; gap: 4px;">
+              🎵 <span id="tone-status-text">Test Tone (440Hz)</span>
+            </button>
+          </div>
+        </div>
+
         <div class="mt-4 pt-3 border-t border-slate-700">
           <div class="text-xs font-semibold text-cyan-accent mb-2">Synthesized 11 Subsystem Modules:</div>
           <ul class="text-xs text-slate-300 space-y-1">
