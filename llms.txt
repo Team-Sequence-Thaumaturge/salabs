@@ -47,6 +47,7 @@
 - [Audio Ring Modulator Synth](https://salabs.quanxs.com/tools/audio-ring-modulator-synth.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial 3D Audio Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-audio-panner.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial 3D Audio Reverb](https://salabs.quanxs.com/tools/audio-spatial-3d-audio-reverb.html): 100% Client-side pure JS utility tool.
+- [Audio Spatial 3D Binaural Beat Studio](https://salabs.quanxs.com/tools/audio-spatial-3d-binaural-beat-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial 3D Binaural Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-binaural-panner.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial 3D Environment Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-environment-panner.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial 3D Headphone Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-headphone-panner.html): 100% Client-side pure JS utility tool.
@@ -143,6 +144,7 @@
 - [Crypto Schnorr Secp256K1 Verifier](https://salabs.quanxs.com/tools/crypto-schnorr-secp256k1-verifier.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Ecdsa Signer](https://salabs.quanxs.com/tools/crypto-secp256k1-ecdsa-signer.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Keypair Generator](https://salabs.quanxs.com/tools/crypto-secp256k1-keypair-generator.html): 100% Client-side pure JS utility tool.
+- [Crypto Secp256K1 Keypair Studio](https://salabs.quanxs.com/tools/crypto-secp256k1-keypair-studio.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr Bip340 Verifier](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-bip340-verifier.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr Signature](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-signature.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Signature Inspector](https://salabs.quanxs.com/tools/crypto-secp256k1-signature-inspector.html): 100% Client-side pure JS utility tool.
@@ -204,6 +206,7 @@
 - [Hex Hexdump Viewer](https://salabs.quanxs.com/tools/hex-hexdump-viewer.html): 100% Client-side pure JS utility tool.
 - [Html Canvas 3D Wireframe Cube](https://salabs.quanxs.com/tools/html-canvas-3d-wireframe-cube.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Cube Renderer](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube-renderer.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii 3D Cube Rotation](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube-rotation.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Cube](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Dodecahedron Knot V2](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-dodecahedron-knot-v2.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Dodecahedron Knot](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-dodecahedron-knot.html): 100% Client-side pure JS utility tool.
