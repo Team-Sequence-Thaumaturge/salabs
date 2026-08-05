@@ -457,12 +457,91 @@
         }
       }
 
+      
+      // --- 8. Web Audio API Real-Time Microphone & FFT Analyzer Engine ---
+      let audioCtx = null;
+      let analyserNode = null;
+      let micStream = null;
+      let toneOscillator = null;
+      let isMicActive = false;
+      let isToneActive = false;
+      let fftDataArray = new Uint8Array(64);
+
+      window.toggleMicrophone = async function() {
+        const btnText = document.getElementById("mic-status-text");
+        if (!isMicActive) {
+          try {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') await audioCtx.resume();
+
+            micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+            const source = audioCtx.createMediaStreamSource(micStream);
+            analyserNode = audioCtx.createAnalyser();
+            analyserNode.fftSize = 128;
+            source.connect(analyserNode);
+
+            isMicActive = true;
+            if (btnText) btnText.innerText = "Mic Active (LIVE)";
+          } catch (err) {
+            alert("Microphone Access Error: " + err.message);
+          }
+        } else {
+          if (micStream) {
+            micStream.getTracks().forEach(track => track.stop());
+          }
+          isMicActive = false;
+          if (btnText) btnText.innerText = "Enable Mic";
+        }
+      };
+
+      window.toggleToneGenerator = function() {
+        const btnText = document.getElementById("tone-status-text");
+        if (!isToneActive) {
+          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          if (audioCtx.state === 'suspended') audioCtx.resume();
+
+          toneOscillator = audioCtx.createOscillator();
+          const gainNode = audioCtx.createGain();
+          analyserNode = audioCtx.createAnalyser();
+          analyserNode.fftSize = 128;
+
+          toneOscillator.type = 'sine';
+          toneOscillator.frequency.setValueAtTime(440, audioCtx.currentTime); // 440 Hz A4
+          gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+
+          toneOscillator.connect(gainNode);
+          gainNode.connect(analyserNode);
+          analyserNode.connect(audioCtx.destination);
+
+          toneOscillator.start();
+          isToneActive = true;
+          if (btnText) btnText.innerText = "Stop Tone (440Hz)";
+        } else {
+          if (toneOscillator) toneOscillator.stop();
+          isToneActive = false;
+          if (btnText) btnText.innerText = "Test Tone";
+        }
+      };
+
+
       function animate() {
         controls.update();
 
         const now = Date.now();
         const time = now * 0.001;
         const dt = Math.min((now - lastTime) * 0.001, 0.1);
+
+        // Fetch Live Web Audio FFT Spectrum Frequency
+        if (analyserNode) {
+          analyserNode.getByteFrequencyData(fftDataArray);
+          let sum = 0;
+          for (let i = 0; i < fftDataArray.length; i++) sum += fftDataArray[i];
+          const avgFreq = sum / fftDataArray.length;
+          GlobalState.audioFrequency = Math.max(100, Math.min(2000, avgFreq * 15));
+          const freqValEl = document.getElementById("val-freq");
+          if (freqValEl) freqValEl.innerText = Math.round(GlobalState.audioFrequency) + " Hz";
+        }
+
         lastTime = now;
 
         // 1. C++ Gravity Bouncing Simulation (Rigid Body Physics)
