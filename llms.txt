@@ -17,6 +17,7 @@
 - [Audio Distortion Bitcrusher Studio](https://salabs.quanxs.com/tools/audio-distortion-bitcrusher-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Distortion Overdrive Studio](https://salabs.quanxs.com/tools/audio-distortion-overdrive-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Envelope Adsr Studio](https://salabs.quanxs.com/tools/audio-envelope-adsr-studio.html): 100% Client-side pure JS utility tool.
+- [Audio Envelope Generator Studio](https://salabs.quanxs.com/tools/audio-envelope-generator-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Envelope Shaper Studio](https://salabs.quanxs.com/tools/audio-envelope-shaper-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Equalizer Studio](https://salabs.quanxs.com/tools/audio-equalizer-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Pitch Tracker](https://salabs.quanxs.com/tools/audio-formant-pitch-tracker.html): 100% Client-side pure JS utility tool.
@@ -167,6 +168,7 @@
 - [Crypto Secp256K1 Schnorr V5](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v5.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr V6](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v6.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr V7](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v7.html): 100% Client-side pure JS utility tool.
+- [Crypto Secp256K1 Schnorr V8](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v8.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Signature Inspector](https://salabs.quanxs.com/tools/crypto-secp256k1-signature-inspector.html): 100% Client-side pure JS utility tool.
 - [Crypto Shamir Secret Sharing Studio](https://salabs.quanxs.com/tools/crypto-shamir-secret-sharing-studio.html): 100% Client-side pure JS utility tool.
 - [Crypto Subtle Aes Ctr Cipher](https://salabs.quanxs.com/tools/crypto-subtle-aes-ctr-cipher.html): 100% Client-side pure JS utility tool.
@@ -258,6 +260,7 @@
 - [Html Canvas Ascii 3D Torus Knot V3](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot-v3.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Torus Knot V4](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot-v4.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Torus Knot V5](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot-v5.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii 3D Torus Knot V6](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot-v6.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Torus Knot](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Torus V2](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-v2.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Torus](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus.html): 100% Client-side pure JS utility tool.
