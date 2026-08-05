@@ -34,17 +34,9 @@
       };
     </script>
 
-    <!-- Three.js & OrbitControls via Robust Universal CDN Script & Import Map Fallback -->
+    <!-- Three.js & OrbitControls Global Standalone CDN Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-        }
-      }
-    </script>
 
     <style>
       body {
@@ -212,10 +204,8 @@
       </div>
     </div>
 
-    <script type="module">
-      import * as THREE from 'three';
-      import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-      import { ARButton } from 'three/addons/webxr/ARButton.js';
+    <script>
+      const OrbitControls = THREE.OrbitControls;
 
       // --- 1. Global Engine Dynamic State Bus ---
       const GlobalState = {
@@ -324,7 +314,7 @@
         renderer.xr.enabled = true;
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        document.body.appendChild(ARButton.createButton(renderer));
+        // ARButton optional
 
         controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
@@ -735,7 +725,13 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
       }
 
-      window.addEventListener("load", init);
+            // Fail-Safe Immediate & Event-Based 3D Engine Initialization Hook
+      if (document.readyState === "complete" || document.readyState === "interactive") {
+        setTimeout(init, 10);
+      } else {
+        window.addEventListener("DOMContentLoaded", init);
+        window.addEventListener("load", init);
+      }
     </script>
   </body>
 </html>
