@@ -31,6 +31,7 @@
 - [Audio Reverb Convolver Studio](https://salabs.quanxs.com/tools/audio-reverb-convolver-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Ring Modulator Studio](https://salabs.quanxs.com/tools/audio-ring-modulator-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial 3D Audio Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-audio-panner.html): 100% Client-side pure JS utility tool.
+- [Audio Spatial 3D Reverb Studio](https://salabs.quanxs.com/tools/audio-spatial-3d-reverb-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial Panning Visualizer](https://salabs.quanxs.com/tools/audio-spatial-panning-visualizer.html): 100% Client-side pure JS utility tool.
 - [Audio Spectral Noise Gate Studio](https://salabs.quanxs.com/tools/audio-spectral-noise-gate-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Spectral Pitch Tracker](https://salabs.quanxs.com/tools/audio-spectral-pitch-tracker.html): 100% Client-side pure JS utility tool.
@@ -86,6 +87,7 @@
 - [Crypto Hkdf Sha512 Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-sha512-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha512 Key Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-sha512-key-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha1 Validator](https://salabs.quanxs.com/tools/crypto-hmac-sha1-validator.html): 100% Client-side pure JS utility tool.
+- [Crypto Hmac Sha3 512 Validator](https://salabs.quanxs.com/tools/crypto-hmac-sha3-512-validator.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha3 Tester](https://salabs.quanxs.com/tools/crypto-hmac-sha3-tester.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha384 Validator](https://salabs.quanxs.com/tools/crypto-hmac-sha384-validator.html): 100% Client-side pure JS utility tool.
 - [Crypto Hmac Sha384 Verifier](https://salabs.quanxs.com/tools/crypto-hmac-sha384-verifier.html): 100% Client-side pure JS utility tool.
@@ -153,6 +155,7 @@
 - [Html Canvas Ascii 3D Cube Renderer](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube-renderer.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Cube](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Dodecahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-dodecahedron.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii 3D Hypercube](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-hypercube.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Icosahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-icosahedron.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron Knot](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron.html): 100% Client-side pure JS utility tool.
