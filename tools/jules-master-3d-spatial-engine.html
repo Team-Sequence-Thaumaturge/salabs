@@ -572,20 +572,27 @@
         const time = now * 0.001;
         const dt = Math.min((now - lastTime) * 0.001, 0.1);
 
-        // Fetch Live Web Audio FFT Spectrum Frequency with Smooth Gain Scaling
+        // Fetch Live Web Audio FFT Spectrum Frequency with Noise Gate & Scale Pulse
+        let currentAmp = 0.0;
         if (analyserNode && isMicActive) {
           analyserNode.getByteFrequencyData(fftDataArray);
           let sum = 0;
           for (let i = 0; i < fftDataArray.length; i++) sum += fftDataArray[i];
           const rawAvg = sum / fftDataArray.length; // Range 0 ~ 255
-          const normalizedAmp = rawAvg / 255.0; // Range 0.0 ~ 1.0
-          GlobalState.audioFrequency = 100 + normalizedAmp * 900; // Smooth 100Hz ~ 1000Hz range
-          const freqValEl = document.getElementById("val-freq");
-          if (freqValEl) freqValEl.innerText = Math.round(GlobalState.audioFrequency) + " Hz";
-          const audioValEl = document.getElementById("audio-val");
-          if (audioValEl) audioValEl.innerText = Math.round(GlobalState.audioFrequency) + " Hz";
-          const sliderEl = document.getElementById("audio-slider");
-          if (sliderEl) sliderEl.value = GlobalState.audioFrequency;
+          
+          // Noise Gate Threshold (Ignore background room noise below 10)
+          if (rawAvg > 8) {
+            currentAmp = (rawAvg - 8) / 247.0; // 0.0 ~ 1.0
+            GlobalState.audioFrequency = 100 + currentAmp * 900;
+            const freqValEl = document.getElementById("val-freq");
+            if (freqValEl) freqValEl.innerText = Math.round(GlobalState.audioFrequency) + " Hz";
+            const audioValEl = document.getElementById("audio-val");
+            if (audioValEl) audioValEl.innerText = Math.round(GlobalState.audioFrequency) + " Hz";
+            const sliderEl = document.getElementById("audio-slider");
+            if (sliderEl) sliderEl.value = GlobalState.audioFrequency;
+          } else {
+            currentAmp = 0.0;
+          }
         }
 
         lastTime = now;
@@ -599,9 +606,16 @@
         // Update position
         bouncingSphere.position.addScaledVector(rb.velocity, dt);
 
-        // 2. Solar Angle Thermal Expansion Scaling
-        const scale = physics.applyThermalExpansion(GlobalState.solarAngle, 1.0);
-        bouncingSphere.scale.set(scale, scale, scale);
+        // 2. Solar Angle Thermal Expansion + Audio Scale Pulse ("팡팡 부풀어오름")
+        const thermalScale = physics.applyThermalExpansion(GlobalState.solarAngle, 1.0);
+        const pulseBoost = isMicActive ? (currentAmp * 1.5) : ((GlobalState.audioFrequency - 100) / 900 * 0.5);
+        const finalScale = thermalScale + pulseBoost;
+        bouncingSphere.scale.set(finalScale, finalScale, finalScale);
+
+        if (quantumParticles) {
+          const particlePulse = 1.0 + pulseBoost * 0.8;
+          quantumParticles.scale.set(particlePulse, particlePulse, particlePulse);
+        }
 
         // AABB Collision with floor
         const currentRadius = rb.radius * scale;
