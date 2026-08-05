@@ -34,7 +34,9 @@
       };
     </script>
 
-    <!-- Three.js & OrbitControls via CDN (Import Map) -->
+    <!-- Three.js & OrbitControls via Robust Universal CDN Script & Import Map Fallback -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script type="importmap">
       {
         "imports": {
@@ -74,16 +76,18 @@
         box-sizing: border-box;
       }
       .panel {
-        background: rgba(15, 23, 42, 0.88);
+        background: rgba(15, 23, 42, 0.82);
         border: 1px solid rgba(0, 242, 254, 0.35);
         backdrop-filter: blur(14px);
         pointer-events: auto;
         border-radius: 0.85rem;
-        padding: 1.5rem;
+        padding: 1.25rem;
         box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
-        width: 360px;
-        max-height: 100%;
+        width: 290px;
+        max-width: 32vw;
+        max-height: calc(100vh - 3rem);
         overflow-y: auto;
+        z-index: 20;
       }
       .slider-container {
         margin-bottom: 1.25rem;
