@@ -33,6 +33,7 @@
 - [Audio Ring Modulator Studio](https://salabs.quanxs.com/tools/audio-ring-modulator-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial 3D Audio Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-audio-panner.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial 3D Binaural Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-binaural-panner.html): 100% Client-side pure JS utility tool.
+- [Audio Spatial 3D Environment Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-environment-panner.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial 3D Headphone Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-headphone-panner.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial 3D Reverb Studio](https://salabs.quanxs.com/tools/audio-spatial-3d-reverb-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial 3D Reverberator](https://salabs.quanxs.com/tools/audio-spatial-3d-reverberator.html): 100% Client-side pure JS utility tool.
@@ -90,6 +91,7 @@
 - [Crypto Hkdf Expand Extract Studio](https://salabs.quanxs.com/tools/crypto-hkdf-expand-extract-studio.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Key Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-key-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha256 Expander](https://salabs.quanxs.com/tools/crypto-hkdf-sha256-expander.html): 100% Client-side pure JS utility tool.
+- [Crypto Hkdf Sha256 Key Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-sha256-key-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha384 Derivation Studio](https://salabs.quanxs.com/tools/crypto-hkdf-sha384-derivation-studio.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha512 Derivation](https://salabs.quanxs.com/tools/crypto-hkdf-sha512-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Hkdf Sha512 Key Derivation Studio](https://salabs.quanxs.com/tools/crypto-hkdf-sha512-key-derivation-studio.html): 100% Client-side pure JS utility tool.
@@ -190,6 +192,7 @@
 - [Html Canvas Ascii Fluid Sim](https://salabs.quanxs.com/tools/html-canvas-ascii-fluid-sim.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Landscape 3D V2](https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-3d-v2.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Landscape 3D V3](https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-3d-v3.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii Landscape 3D V4](https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-3d-v4.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Landscape 3D](https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-3d.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Landscape Generator](https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Landscape Studio](https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-studio.html): 100% Client-side pure JS utility tool.
