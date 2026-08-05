@@ -47,6 +47,7 @@
 - [Audio Tone Frequency Generator](https://salabs.quanxs.com/tools/audio-tone-frequency-generator.html): 100% Client-side pure JS utility tool.
 - [Audio Tremolo Vibrato Studio](https://salabs.quanxs.com/tools/audio-tremolo-vibrato-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Vocoder Synthesis Studio](https://salabs.quanxs.com/tools/audio-vocoder-synthesis-studio.html): 100% Client-side pure JS utility tool.
+- [Audio Voice Pitch Detector](https://salabs.quanxs.com/tools/audio-voice-pitch-detector.html): 100% Client-side pure JS utility tool.
 - [Audio Voice Pitch Shifter](https://salabs.quanxs.com/tools/audio-voice-pitch-shifter.html): 100% Client-side pure JS utility tool.
 - [Audio Voice Recorder](https://salabs.quanxs.com/tools/audio-voice-recorder.html): 100% Client-side pure JS utility tool.
 - [Audio Waveform Analyzer](https://salabs.quanxs.com/tools/audio-waveform-analyzer.html): 100% Client-side pure JS utility tool.
@@ -172,6 +173,7 @@
 - [Html Canvas Ascii Pyramid 3D](https://salabs.quanxs.com/tools/html-canvas-ascii-pyramid-3d.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Raycaster](https://salabs.quanxs.com/tools/html-canvas-ascii-raycaster.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Video Player](https://salabs.quanxs.com/tools/html-canvas-ascii-video-player.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii Waveform](https://salabs.quanxs.com/tools/html-canvas-ascii-waveform.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Chart Generator](https://salabs.quanxs.com/tools/html-canvas-chart-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Color Palette Extractor](https://salabs.quanxs.com/tools/html-canvas-color-palette-extractor.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Color Picker](https://salabs.quanxs.com/tools/html-canvas-color-picker.html): 100% Client-side pure JS utility tool.
