@@ -28,6 +28,7 @@
 - [Audio Formant Vowel Shaper V3](https://salabs.quanxs.com/tools/audio-formant-vowel-shaper-v3.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Shaper V5](https://salabs.quanxs.com/tools/audio-formant-vowel-shaper-v5.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Shaper V7](https://salabs.quanxs.com/tools/audio-formant-vowel-shaper-v7.html): 100% Client-side pure JS utility tool.
+- [Audio Formant Vowel Shaper V8](https://salabs.quanxs.com/tools/audio-formant-vowel-shaper-v8.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Shaper](https://salabs.quanxs.com/tools/audio-formant-vowel-shaper.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Shifter](https://salabs.quanxs.com/tools/audio-formant-vowel-shifter.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Synthesizer](https://salabs.quanxs.com/tools/audio-formant-vowel-synthesizer.html): 100% Client-side pure JS utility tool.
@@ -110,6 +111,7 @@
 - [Crypto Chacha20 Poly1305 Vault V3](https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-vault-v3.html): 100% Client-side pure JS utility tool.
 - [Crypto Chacha20 Poly1305 Vault V4](https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-vault-v4.html): 100% Client-side pure JS utility tool.
 - [Crypto Chacha20 Poly1305 Vault V5](https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-vault-v5.html): 100% Client-side pure JS utility tool.
+- [Crypto Chacha20 Poly1305 Vault V6](https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-vault-v6.html): 100% Client-side pure JS utility tool.
 - [Crypto Chacha20 Poly1305 Vault](https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-vault.html): 100% Client-side pure JS utility tool.
 - [Crypto Ecc Secp256K1 Key Generator](https://salabs.quanxs.com/tools/crypto-ecc-secp256k1-key-generator.html): 100% Client-side pure JS utility tool.
 - [Crypto Ecdsa P256 Signer](https://salabs.quanxs.com/tools/crypto-ecdsa-p256-signer.html): 100% Client-side pure JS utility tool.
@@ -223,6 +225,7 @@
 - [Html Canvas Ascii 3D Octahedron Spin](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-spin.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron Studio](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-studio.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron V2](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-v2.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii 3D Octahedron V3](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-v3.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron Wireframe](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-wireframe.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Pyramid Renderer](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-pyramid-renderer.html): 100% Client-side pure JS utility tool.
