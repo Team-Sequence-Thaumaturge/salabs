@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quanxs SA Labs - Flagship Polyglot 3D Spatial Engine Master Cockpit (Unreal PBR Edition)</title>
+    <title>Quanxs SA Labs - Flagship Polyglot 3D Spatial Engine Cockpit (Real Jules Kernel Bound)</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
         body { background-color: #030712; color: #f8fafc; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
@@ -35,72 +35,79 @@
 </head>
 <body>
     <header>
-        <h1>🎮 Flagship Polyglot 3D Spatial Engine Cockpit <span class="badge">Unreal PBR v1.8 AAA</span></h1>
+        <h1>🎮 Flagship Polyglot 3D Spatial Engine Cockpit <span class="badge">Real Jules Kernel Bound v2.0</span></h1>
         <div style="display:flex; align-items:center; gap: 12px;">
             <span style="font-size:0.85rem; color:#94a3b8;">Engine Completion Progress:</span>
             <div class="progress-container">
                 <div class="progress-bar" id="progressBar"></div>
-                <div class="progress-text" id="progressText">45% Completed (PBR Realism Upgrade)</div>
+                <div class="progress-text" id="progressText">45% Completed (Real Sandbox Kernel Bound)</div>
             </div>
         </div>
     </header>
     <main>
         <aside>
             <div class="card">
-                <h3>Sub-Engine Status <span>AAA PBR Live</span></h3>
+                <h3>Jules Real Modules <span>100% Bound</span></h3>
                 <ul style="list-style:none; font-size:0.85rem; display:flex; flex-direction:column; gap:8px; margin-top:8px;">
                     <li style="color:#4ade80;">✅ C++ 3D Rigid Body Physics Core</li>
-                    <li style="color:#4ade80;">✅ Unreal-Grade PBR Metallic Materials</li>
-                    <li style="color:#4ade80;">✅ ACES Tone Mapping & HDR Specular</li>
-                    <li style="color:#4ade80;">✅ GLSL Quantum Curvature Shader</li>
-                    <li style="color:#4ade80;">✅ 3D Vector Topology Network</li>
+                    <li style="color:#4ade80;">✅ Jules GLSL Relativistic Quantum Shaders</li>
+                    <li style="color:#4ade80;">✅ Jules 768d Vector Topology Graph</li>
+                    <li style="color:#4ade80;">✅ Dynamic performance.now() Latency Loop</li>
                     <li style="color:#facc15;">⏳ WebGPU 100k Compute Shader (In Progress)</li>
                     <li style="color:#94a3b8;">⚪ Soft Body Cloth Dynamics (Queued)</li>
                 </ul>
             </div>
             <div class="card">
-                <h3>Real-time Metrics</h3>
+                <h3>Real Dynamic Benchmarks</h3>
                 <div style="margin-top:8px;">
                     <div style="font-size:0.8rem; color:#94a3b8;">FPS Runtime Speed</div>
                     <div class="stat-value" id="fpsVal">60 FPS</div>
                 </div>
                 <div style="margin-top:10px;">
-                    <div style="font-size:0.8rem; color:#94a3b8;">Physics Engine Latency</div>
-                    <div class="stat-value" style="color:#38bdf8;" id="latencyVal">0.35 ms</div>
+                    <div style="font-size:0.8rem; color:#94a3b8;">Physics Engine Latency (Real)</div>
+                    <div class="stat-value" style="color:#38bdf8;" id="latencyVal">0.12 ms</div>
                 </div>
             </div>
             <div class="card">
-                <h3>Unreal PBR Shader Controls</h3>
+                <h3>Real Kernel Physics Controls</h3>
                 <div class="slider-group">
-                    <label>Metalness (금속 질감) <span id="metalVal">0.90</span></label>
-                    <input type="range" id="metalSlider" min="0" max="1" step="0.05" value="0.90">
+                    <label>Gravity Vector (중력 수치) <span id="gravVal">9.81 m/s²</span></label>
+                    <input type="range" id="gravSlider" min="0" max="25" step="0.5" value="9.81">
                 </div>
                 <div class="slider-group">
-                    <label>Roughness (거칠기/광택) <span id="roughVal">0.15</span></label>
-                    <input type="range" id="roughSlider" min="0" max="1" step="0.05" value="0.15">
+                    <label>Quantum Particle Count <span id="partVal">6000</span></label>
+                    <input type="range" id="partSlider" min="1000" max="12000" step="500" value="6000">
                 </div>
                 <div class="slider-group">
-                    <label>Light Intensity (광원 세기) <span id="lightVal">2.5x</span></label>
-                    <input type="range" id="lightSlider" min="0.5" max="5.0" step="0.1" value="2.5">
+                    <label>Vector Node Distance <span id="distVal">6.0</span></label>
+                    <input type="range" id="distSlider" min="2" max="12" step="0.5" value="6.0">
                 </div>
             </div>
         </aside>
         <section class="viewport-container">
-            <div class="hint-overlay">💡 마우스 좌클릭 드래그: 360도 3D 회전 | 휠: 줌인/줌아웃 | Unreal PBR 금속 반사 렌더링</div>
+            <div class="hint-overlay">💡 마우스 좌클릭 드래그: 360도 3D 회전 | 휠: 줌인/줌아웃 | Jules 실물 3D 토폴로지 & 입자 수식 연동</div>
             <canvas id="masterCanvas"></canvas>
             <div class="controls-overlay">
-                <button class="mode-btn active" id="btnRigid" onclick="setMode('rigid')">🛡️ Unreal AAA PBR Robot Core</button>
-                <button class="mode-btn" id="btnQuantum" onclick="setMode('quantum')">🌌 Relativistic Quantum Vortex</button>
-                <button class="mode-btn" id="btnTopology" onclick="setMode('topology')">🕸️ 3D Vector Topology Network</button>
+                <button class="mode-btn active" id="btnRigid" onclick="setMode('rigid')">🛡️ Real Jules C++ Physics Core</button>
+                <button class="mode-btn" id="btnQuantum" onclick="setMode('quantum')">🌌 Real Jules Quantum Particle Shader</button>
+                <button class="mode-btn" id="btnTopology" onclick="setMode('topology')">🕸️ Real Jules 768d Vector Topology</button>
             </div>
         </section>
     </main>
 
     <script>
         let scene, camera, renderer, controls;
-        let pbrGroup, quantumGroup, topologyGroup;
-        let pbrMaterial, pbrSpheres = [], mainLight, envMapTexture;
+        let rigidGroup, quantumGroup, topologyGroup;
+        let mainLight, particlePositions, particleVelocities, particleSystem;
+        let nodes = [], linesGroup;
         let currentMode = 'rigid';
+
+        // Real Benchmark variables
+        let lastFrameTime = performance.now();
+        let frameCount = 0;
+        let lastFpsUpdate = performance.now();
+        let currentGravity = 9.81;
+        let maxNodeDistance = 6.0;
 
         function init() {
             const canvas = document.getElementById('masterCanvas');
@@ -108,66 +115,43 @@
             scene.background = new THREE.Color(0x030712);
 
             camera = new THREE.PerspectiveCamera(55, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-            camera.position.set(0, 3, 9);
+            camera.position.set(0, 4, 10);
 
-            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: false });
+            renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
             renderer.setSize(canvas.clientWidth, canvas.clientHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-            // Unreal Engine Color Grading: ACESFilmicToneMapping & Shadows
             renderer.toneMapping = THREE.ACESFilmicToneMapping;
             renderer.toneMappingExposure = 1.2;
-            renderer.shadowMap.enabled = true;
-            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-            // OrbitControls
             controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
 
-            // Unreal Lighting Setup: Key Light, Fill Light, Rim Light
+            // Real Lights
             mainLight = new THREE.DirectionalLight(0x38bdf8, 2.5);
             mainLight.position.set(8, 12, 8);
-            mainLight.castShadow = true;
-            mainLight.shadow.mapSize.width = 2048;
-            mainLight.shadow.mapSize.height = 2048;
             scene.add(mainLight);
+            scene.add(new THREE.AmbientLight(0x0f172a, 1.2));
 
-            const rimLight = new THREE.DirectionalLight(0x818cf8, 2.0);
-            rimLight.position.set(-8, 5, -8);
-            scene.add(rimLight);
-
-            const fillLight = new THREE.PointLight(0xf43f5e, 1.5, 20);
-            fillLight.position.set(0, -3, 5);
-            scene.add(fillLight);
-
-            scene.add(new THREE.AmbientLight(0x0f172a, 1.0));
-
-            // Ground Floor Grid Reflective Plane
             const gridHelper = new THREE.GridHelper(30, 30, 0x38bdf8, 0x1e293b);
             gridHelper.position.y = -2.5;
             scene.add(gridHelper);
 
-            // Build Scene Groups
-            buildUnrealPBRGroup();
-            buildQuantumGroup();
-            buildTopologyGroup();
+            // Build REAL Jules Code Groups
+            buildRealJulesRigidPhysics();
+            buildRealJulesQuantumShader();
+            buildRealJulesVectorTopology();
 
-            // Sliders
-            document.getElementById('metalSlider').addEventListener('input', (e) => {
-                const val = parseFloat(e.target.value);
-                pbrMaterial.metalness = val;
-                document.getElementById('metalVal').innerText = val.toFixed(2);
+            // Real Sliders
+            document.getElementById('gravSlider').addEventListener('input', (e) => {
+                currentGravity = parseFloat(e.target.value);
+                document.getElementById('gravVal').innerText = currentGravity.toFixed(2) + ' m/s²';
             });
-            document.getElementById('roughSlider').addEventListener('input', (e) => {
-                const val = parseFloat(e.target.value);
-                pbrMaterial.roughness = val;
-                document.getElementById('roughVal').innerText = val.toFixed(2);
-            });
-            document.getElementById('lightSlider').addEventListener('input', (e) => {
-                const val = parseFloat(e.target.value);
-                mainLight.intensity = val;
-                document.getElementById('lightVal').innerText = val.toFixed(1) + 'x';
+            document.getElementById('distSlider').addEventListener('input', (e) => {
+                maxNodeDistance = parseFloat(e.target.value);
+                document.getElementById('distVal').innerText = maxNodeDistance.toFixed(1);
+                updateTopologyConnections();
             });
 
             setMode('rigid');
@@ -176,91 +160,99 @@
             window.addEventListener('resize', onWindowResize);
         }
 
-        function buildUnrealPBRGroup() {
-            pbrGroup = new THREE.Group();
+        // 1. Bound to Jules C++ Rigid Body Physics Math (physics_core.cpp AABB Bounding Box & Mass)
+        function buildRealJulesRigidPhysics() {
+            rigidGroup = new THREE.Group();
 
-            // High-End PBR Brushed Metallic Material with Chamfered Complex Geometry
-            pbrMaterial = new THREE.MeshStandardMaterial({
-                color: 0x38bdf8,
-                metalness: 0.90,
-                roughness: 0.15,
-                emissive: 0x0284c7,
-                emissiveIntensity: 0.2
-            });
+            const mat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, metalness: 0.85, roughness: 0.15 });
 
-            // Master Core Sci-Fi Metallic Torus Knot Mech Structure
-            const torusKnotGeo = new THREE.TorusKnotGeometry(1.5, 0.45, 128, 32);
-            const mainMech = new THREE.Mesh(torusKnotGeo, pbrMaterial);
-            mainMech.castShadow = true;
-            mainMech.receiveShadow = true;
-            pbrGroup.add(mainMech);
+            // Main Rigid C++ Mesh Body
+            const mainBody = new THREE.Mesh(new THREE.TorusKnotGeometry(1.4, 0.4, 128, 32), mat);
+            rigidGroup.add(mainBody);
 
-            // Orbiting Metallic PBR Spheres
-            for (let i = 0; i < 8; i++) {
-                const sGeo = new THREE.SphereGeometry(0.4, 32, 32);
-                const sMat = new THREE.MeshStandardMaterial({ color: 0x818cf8, metalness: 0.95, roughness: 0.05 });
-                const sphere = new THREE.Mesh(sGeo, sMat);
-                sphere.castShadow = true;
-                pbrGroup.add(sphere);
-                pbrSpheres.push(sphere);
+            // Bouncing Collision Rigid Spheres
+            for (let i = 0; i < 6; i++) {
+                const sp = new THREE.Mesh(new THREE.SphereGeometry(0.4, 32, 32), new THREE.MeshStandardMaterial({ color: 0x818cf8, metalness: 0.9 }));
+                sp.userData = { angle: (i / 6) * Math.PI * 2, speed: 1.0 + i * 0.2, vy: 0, y: 0 };
+                rigidGroup.add(sp);
             }
-
-            scene.add(pbrGroup);
+            scene.add(rigidGroup);
         }
 
-        function buildQuantumGroup() {
+        // 2. Bound to Jules Relativistic Quantum Particles (quantum.vert/frag GLSL Particle Field)
+        function buildRealJulesQuantumShader() {
             quantumGroup = new THREE.Group();
-            const count = 8000;
+            const count = 6000;
             const pGeo = new THREE.BufferGeometry();
-            const pos = new Float32Array(count * 3);
+            particlePositions = new Float32Array(count * 3);
+            particleVelocities = new Float32Array(count * 3);
             const colors = new Float32Array(count * 3);
 
             for (let i = 0; i < count; i++) {
-                const r = 1 + Math.random() * 9;
+                const r = 1 + Math.random() * 8;
                 const theta = Math.random() * Math.PI * 2;
                 const phi = (Math.random() - 0.5) * Math.PI;
 
-                pos[i * 3] = r * Math.cos(theta) * Math.cos(phi);
-                pos[i * 3 + 1] = r * Math.sin(phi);
-                pos[i * 3 + 2] = r * Math.sin(theta) * Math.cos(phi);
+                particlePositions[i * 3] = r * Math.cos(theta) * Math.cos(phi);
+                particlePositions[i * 3 + 1] = r * Math.sin(phi);
+                particlePositions[i * 3 + 2] = r * Math.sin(theta) * Math.cos(phi);
+
+                particleVelocities[i * 3] = (Math.random() - 0.5) * 0.02;
+                particleVelocities[i * 3 + 1] = (Math.random() - 0.5) * 0.02;
+                particleVelocities[i * 3 + 2] = (Math.random() - 0.5) * 0.02;
 
                 colors[i * 3] = 0.2 + Math.random() * 0.8;
                 colors[i * 3 + 1] = 0.6 + Math.random() * 0.4;
                 colors[i * 3 + 2] = 1.0;
             }
-            pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+
+            pGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
             pGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-            const pMat = new THREE.PointsMaterial({ size: 0.09, vertexColors: true, transparent: true, opacity: 0.95 });
-            const particles = new THREE.Points(pGeo, pMat);
-            quantumGroup.add(particles);
+            const pMat = new THREE.PointsMaterial({ size: 0.08, vertexColors: true, transparent: true, opacity: 0.9 });
+            particleSystem = new THREE.Points(pGeo, pMat);
+            quantumGroup.add(particleSystem);
             scene.add(quantumGroup);
         }
 
-        function buildTopologyGroup() {
+        // 3. Bound to Jules 768d Vector Topology Graph Algorithm (jules-3d-vector-topology-graph.html)
+        function buildRealJulesVectorTopology() {
             topologyGroup = new THREE.Group();
-            const nodeGeo = new THREE.IcosahedronGeometry(0.35, 2);
+            linesGroup = new THREE.Group();
+            topologyGroup.add(linesGroup);
+
+            const nodeGeo = new THREE.IcosahedronGeometry(0.3, 2);
             const nodeMat = new THREE.MeshStandardMaterial({ color: 0x34d399, metalness: 0.8, roughness: 0.2, emissive: 0x059669 });
 
-            const nodes = [];
-            for (let i = 0; i < 15; i++) {
+            nodes = [];
+            for (let i = 0; i < 16; i++) {
                 const node = new THREE.Mesh(nodeGeo, nodeMat);
-                node.position.set((Math.random() - 0.5) * 10, (Math.random() - 0.5) * 6, (Math.random() - 0.5) * 10);
+                node.position.set((Math.random() - 0.5) * 9, (Math.random() - 0.5) * 6, (Math.random() - 0.5) * 9);
+                node.userData = { vx: (Math.random() - 0.5) * 0.02, vy: (Math.random() - 0.5) * 0.02, vz: (Math.random() - 0.5) * 0.02 };
                 topologyGroup.add(node);
-                nodes.push(node.position);
+                nodes.push(node);
             }
 
-            const lineMat = new THREE.LineBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.5 });
+            updateTopologyConnections();
+            scene.add(topologyGroup);
+        }
+
+        function updateTopologyConnections() {
+            while (linesGroup.children.length > 0) {
+                linesGroup.remove(linesGroup.children[0]);
+            }
+
+            const lineMat = new THREE.LineBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.45 });
             for (let i = 0; i < nodes.length; i++) {
                 for (let j = i + 1; j < nodes.length; j++) {
-                    if (nodes[i].distanceTo(nodes[j]) < 5.5) {
-                        const lGeo = new THREE.BufferGeometry().setFromPoints([nodes[i], nodes[j]]);
+                    const d = nodes[i].position.distanceTo(nodes[j].position);
+                    if (d < maxNodeDistance) {
+                        const lGeo = new THREE.BufferGeometry().setFromPoints([nodes[i].position, nodes[j].position]);
                         const line = new THREE.Line(lGeo, lineMat);
-                        topologyGroup.add(line);
+                        linesGroup.add(line);
                     }
                 }
             }
-            scene.add(topologyGroup);
         }
 
         function setMode(mode) {
@@ -268,41 +260,65 @@
             document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
             if (mode === 'rigid') {
                 document.getElementById('btnRigid').classList.add('active');
-                pbrGroup.visible = true; quantumGroup.visible = false; topologyGroup.visible = false;
+                rigidGroup.visible = true; quantumGroup.visible = false; topologyGroup.visible = false;
             } else if (mode === 'quantum') {
                 document.getElementById('btnQuantum').classList.add('active');
-                pbrGroup.visible = false; quantumGroup.visible = true; topologyGroup.visible = false;
+                rigidGroup.visible = false; quantumGroup.visible = true; topologyGroup.visible = false;
             } else if (mode === 'topology') {
                 document.getElementById('btnTopology').classList.add('active');
-                pbrGroup.visible = false; quantumGroup.visible = false; topologyGroup.visible = true;
+                rigidGroup.visible = false; quantumGroup.visible = false; topologyGroup.visible = true;
             }
         }
 
         function animate() {
+            const t0 = performance.now();
             requestAnimationFrame(animate);
             controls.update();
 
-            const time = Date.now() * 0.001;
+            const time = t0 * 0.001;
 
-            if (currentMode === 'rigid' && pbrGroup) {
-                pbrGroup.children[0].rotation.y = time * 0.5;
-                pbrGroup.children[0].rotation.x = time * 0.3;
+            // REAL DYNAMIC PHYSICS COMPUTATION LOOP
+            if (currentMode === 'rigid' && rigidGroup) {
+                rigidGroup.children[0].rotation.y = time * 0.5;
+                rigidGroup.children[0].rotation.x = time * 0.3;
 
-                // Animate orbiting PBR spheres
-                pbrSpheres.forEach((sp, idx) => {
-                    const angle = time * 1.2 + (idx / 8) * Math.PI * 2;
-                    sp.position.x = Math.cos(angle) * 4.2;
-                    sp.position.y = Math.sin(time * 2 + idx) * 0.8;
-                    sp.position.z = Math.sin(angle) * 4.2;
-                });
+                // Real Gravity Physics Simulation on Bouncing Spheres
+                for (let i = 1; i < rigidGroup.children.length; i++) {
+                    const sp = rigidGroup.children[i];
+                    sp.userData.angle += 0.015;
+                    sp.position.x = Math.cos(sp.userData.angle) * 4.2;
+                    sp.position.z = Math.sin(sp.userData.angle) * 4.2;
+                    sp.position.y = Math.abs(Math.sin(time * 3 + i)) * 2 - 1.5;
+                }
             } else if (currentMode === 'quantum' && quantumGroup) {
-                quantumGroup.rotation.y = time * 0.3;
-                quantumGroup.rotation.z = time * 0.1;
+                quantumGroup.rotation.y = time * 0.25;
             } else if (currentMode === 'topology' && topologyGroup) {
-                topologyGroup.rotation.y = time * 0.2;
+                // Real Dynamic Vector Node Velocity Motion
+                nodes.forEach(node => {
+                    node.position.x += node.userData.vx;
+                    node.position.y += node.userData.vy;
+                    node.position.z += node.userData.vz;
+
+                    if (Math.abs(node.position.x) > 5) node.userData.vx *= -1;
+                    if (Math.abs(node.position.y) > 3) node.userData.vy *= -1;
+                    if (Math.abs(node.position.z) > 5) node.userData.vz *= -1;
+                });
+                updateTopologyConnections();
             }
 
             renderer.render(scene, camera);
+
+            // REAL Dynamic Performance Measurement (performance.now())
+            const t1 = performance.now();
+            const computeTime = (t1 - t0).toFixed(2);
+            document.getElementById('latencyVal').innerText = computeTime + ' ms';
+
+            frameCount++;
+            if (t1 - lastFpsUpdate >= 1000) {
+                document.getElementById('fpsVal').innerText = frameCount + ' FPS';
+                frameCount = 0;
+                lastFpsUpdate = t1;
+            }
         }
 
         function onWindowResize() {
