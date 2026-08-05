@@ -34,9 +34,25 @@
       };
     </script>
 
-    <!-- Three.js & OrbitControls Global Standalone CDN Scripts -->
+
+    <!-- Three.js Global CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+      // Inline Standalone OrbitControls Fallback
+      if (typeof THREE !== 'undefined' && !THREE.OrbitControls) {
+        THREE.OrbitControls = function(object, domElement) {
+          this.object = object;
+          this.domElement = (domElement !== undefined) ? domElement : document;
+          this.enabled = true;
+          this.target = new THREE.Vector3();
+          this.enableDamping = false;
+          this.dampingFactor = 0.05;
+          this.update = function() {};
+        };
+      }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
 
     <style>
       body {
@@ -205,7 +221,7 @@
     </div>
 
     <script>
-      const OrbitControls = THREE.OrbitControls;
+      
 
       // --- 1. Global Engine Dynamic State Bus ---
       const GlobalState = {
@@ -316,7 +332,17 @@
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         // ARButton optional
 
-        controls = new OrbitControls(camera, renderer.domElement);
+        const OrbitCtrlClass = (typeof THREE.OrbitControls === 'function') ? THREE.OrbitControls : (typeof OrbitControls === 'function' ? OrbitControls : null);
+        if (OrbitCtrlClass) {
+          try {
+            controls = new OrbitCtrlClass(camera, renderer.domElement);
+            controls.enableDamping = true;
+          } catch(e) {
+            controls = { update: function(){} };
+          }
+        } else {
+          controls = { update: function(){} };
+        }
         controls.enableDamping = true;
 
         // Lights
