@@ -41,6 +41,7 @@
 - [Audio Formant Vowel Filter V4](https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v4.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Filter V400](https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v400.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Filter V50](https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v50.html): 100% Client-side pure JS utility tool.
+- [Audio Formant Vowel Filter V500](https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v500.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Filter V6](https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v6.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Filter](https://salabs.quanxs.com/tools/audio-formant-vowel-filter.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Shaper V10](https://salabs.quanxs.com/tools/audio-formant-vowel-shaper-v10.html): 100% Client-side pure JS utility tool.
@@ -193,6 +194,7 @@
 - [Crypto Secp256K1 Schnorr V400](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v400.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr V5](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v5.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr V50](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v50.html): 100% Client-side pure JS utility tool.
+- [Crypto Secp256K1 Schnorr V500](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v500.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr V6](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v6.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr V7](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v7.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr V8](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v8.html): 100% Client-side pure JS utility tool.
@@ -280,6 +282,7 @@
 - [Html Canvas Ascii 3D Octahedron Knot V400](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v400.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron Knot V5](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v5.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron Knot V50](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v50.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii 3D Octahedron Knot V500](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v500.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron Knot V6](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v6.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron Knot V7](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v7.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii 3D Octahedron Knot V8](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v8.html): 100% Client-side pure JS utility tool.
