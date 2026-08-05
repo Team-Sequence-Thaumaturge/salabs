@@ -531,8 +531,11 @@
           analyserNode.fftSize = 128;
 
           toneOscillator.type = 'sine';
-          toneOscillator.frequency.setValueAtTime(440, audioCtx.currentTime); // 440 Hz A4
-          gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+          const initFreq = GlobalState.audioFrequency || 440;
+          toneOscillator.frequency.setValueAtTime(initFreq, audioCtx.currentTime);
+          gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); // Soft pleasant volume
+          window.toneGainNode = gainNode;
+          window.toneOscillatorNode = toneOscillator;
 
           toneOscillator.connect(gainNode);
           gainNode.connect(analyserNode);
@@ -569,15 +572,20 @@
         const time = now * 0.001;
         const dt = Math.min((now - lastTime) * 0.001, 0.1);
 
-        // Fetch Live Web Audio FFT Spectrum Frequency
-        if (analyserNode) {
+        // Fetch Live Web Audio FFT Spectrum Frequency with Smooth Gain Scaling
+        if (analyserNode && isMicActive) {
           analyserNode.getByteFrequencyData(fftDataArray);
           let sum = 0;
           for (let i = 0; i < fftDataArray.length; i++) sum += fftDataArray[i];
-          const avgFreq = sum / fftDataArray.length;
-          GlobalState.audioFrequency = Math.max(100, Math.min(2000, avgFreq * 15));
+          const rawAvg = sum / fftDataArray.length; // Range 0 ~ 255
+          const normalizedAmp = rawAvg / 255.0; // Range 0.0 ~ 1.0
+          GlobalState.audioFrequency = 100 + normalizedAmp * 900; // Smooth 100Hz ~ 1000Hz range
           const freqValEl = document.getElementById("val-freq");
           if (freqValEl) freqValEl.innerText = Math.round(GlobalState.audioFrequency) + " Hz";
+          const audioValEl = document.getElementById("audio-val");
+          if (audioValEl) audioValEl.innerText = Math.round(GlobalState.audioFrequency) + " Hz";
+          const sliderEl = document.getElementById("audio-slider");
+          if (sliderEl) sliderEl.value = GlobalState.audioFrequency;
         }
 
         lastTime = now;
