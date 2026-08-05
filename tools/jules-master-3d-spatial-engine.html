@@ -635,7 +635,7 @@
         }
 
         // AABB Collision with floor
-        const currentRadius = rb.radius * scale;
+        const currentRadius = rb.radius * finalScale;
         if (window.floorMesh && bouncingSphere.position.y - currentRadius <= window.floorMesh.position.y) {
             bouncingSphere.position.y = window.floorMesh.position.y + currentRadius;
             rb.velocity.y = Math.abs(rb.velocity.y) * rb.restitution;
