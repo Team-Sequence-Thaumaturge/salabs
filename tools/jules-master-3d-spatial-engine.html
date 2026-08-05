@@ -440,6 +440,15 @@
         scene.add(window.softBodyMesh);
 
         renderJSONState();
+        
+        // Module 7 Sub-Feature: Spacetime Curvature Grid Mesh
+        const gridGeo = new THREE.PlaneGeometry(40, 40, 40, 40);
+        gridGeo.rotateX(-Math.PI / 2);
+        const gridMat = new THREE.MeshBasicMaterial({ color: 0x00f2fe, wireframe: true, transparent: true, opacity: 0.25 });
+        window.spacetimeGrid = new THREE.Mesh(gridGeo, gridMat);
+        window.spacetimeGrid.position.y = -2.4;
+        scene.add(window.spacetimeGrid);
+
         renderer.setAnimationLoop(animate);
         window.addEventListener("resize", onWindowResize);
       }
@@ -521,6 +530,19 @@
           isToneActive = false;
           if (btnText) btnText.innerText = "Test Tone";
         }
+      };
+
+
+      
+      // --- 9. 768-dim Vector Cosine Similarity Engine ---
+      window.cosineSim = function(vecA, vecB) {
+        let dot = 0.0, normA = 0.0, normB = 0.0;
+        for (let i = 0; i < vecA.length; i++) {
+          dot += vecA[i] * vecB[i];
+          normA += vecA[i] * vecA[i];
+          normB += vecB[i] * vecB[i];
+        }
+        return dot / (Math.sqrt(normA) * Math.sqrt(normB) + 1e-9);
       };
 
 
@@ -637,6 +659,24 @@
             pos.setY(i, vy);
           }
           pos.needsUpdate = true;
+        }
+
+        
+        // Update Spacetime Curvature Grid Bending based on gravity & sphere position
+        if (window.spacetimeGrid && bouncingSphere) {
+          const gridPos = window.spacetimeGrid.geometry.attributes.position;
+          const sphereX = bouncingSphere.position.x;
+          const sphereZ = bouncingSphere.position.z;
+          const massImpact = (GlobalState.gravity / 9.81) * 2.5;
+
+          for (let i = 0; i < gridPos.count; i++) {
+            const x = gridPos.getX(i);
+            const z = gridPos.getZ(i);
+            const dist = Math.sqrt((x - sphereX)**2 + (z - sphereZ)**2);
+            const bendY = -massImpact / (1.0 + dist * 0.8);
+            gridPos.setY(i, bendY);
+          }
+          gridPos.needsUpdate = true;
         }
 
         updateTopologyLines();
