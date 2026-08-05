@@ -35,6 +35,7 @@
 - [Audio Spatial Panning Visualizer](https://salabs.quanxs.com/tools/audio-spatial-panning-visualizer.html): 100% Client-side pure JS utility tool.
 - [Audio Spectral Noise Gate Studio](https://salabs.quanxs.com/tools/audio-spectral-noise-gate-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Spectral Pitch Tracker](https://salabs.quanxs.com/tools/audio-spectral-pitch-tracker.html): 100% Client-side pure JS utility tool.
+- [Audio Spectral Subbass Fuzzer](https://salabs.quanxs.com/tools/audio-spectral-subbass-fuzzer.html): 100% Client-side pure JS utility tool.
 - [Audio Spectral Subtraction Denoiser](https://salabs.quanxs.com/tools/audio-spectral-subtraction-denoiser.html): 100% Client-side pure JS utility tool.
 - [Audio Spectral Vocoder Studio](https://salabs.quanxs.com/tools/audio-spectral-vocoder-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Spectral Vocoder Synthesizer](https://salabs.quanxs.com/tools/audio-spectral-vocoder-synthesizer.html): 100% Client-side pure JS utility tool.
@@ -105,6 +106,7 @@
 - [Crypto Secp256K1 Ecdsa Signer](https://salabs.quanxs.com/tools/crypto-secp256k1-ecdsa-signer.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Keypair Generator](https://salabs.quanxs.com/tools/crypto-secp256k1-keypair-generator.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr Signature](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-signature.html): 100% Client-side pure JS utility tool.
+- [Crypto Secp256K1 Signature Inspector](https://salabs.quanxs.com/tools/crypto-secp256k1-signature-inspector.html): 100% Client-side pure JS utility tool.
 - [Crypto Subtle Digest Calculator](https://salabs.quanxs.com/tools/crypto-subtle-digest-calculator.html): 100% Client-side pure JS utility tool.
 - [Crypto Subtle Rsa Oaep Cipher](https://salabs.quanxs.com/tools/crypto-subtle-rsa-oaep-cipher.html): 100% Client-side pure JS utility tool.
 - [Crypto X25519 Key Exchange](https://salabs.quanxs.com/tools/crypto-x25519-key-exchange.html): 100% Client-side pure JS utility tool.
@@ -175,6 +177,7 @@
 - [Html Canvas Ascii Fluid Sim](https://salabs.quanxs.com/tools/html-canvas-ascii-fluid-sim.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Landscape 3D](https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-3d.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Landscape Generator](https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-generator.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii Landscape Studio](https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-studio.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Matrix Rain](https://salabs.quanxs.com/tools/html-canvas-ascii-matrix-rain.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Pyramid 3D](https://salabs.quanxs.com/tools/html-canvas-ascii-pyramid-3d.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Raycaster](https://salabs.quanxs.com/tools/html-canvas-ascii-raycaster.html): 100% Client-side pure JS utility tool.
