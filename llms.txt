@@ -105,6 +105,7 @@
 - [Audio Tremolo Vibrato Studio](https://salabs.quanxs.com/tools/audio-tremolo-vibrato-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Vocoder Synthesis Studio](https://salabs.quanxs.com/tools/audio-vocoder-synthesis-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Voice Pitch Detector](https://salabs.quanxs.com/tools/audio-voice-pitch-detector.html): 100% Client-side pure JS utility tool.
+- [Audio Voice Pitch Shifter V20](https://salabs.quanxs.com/tools/audio-voice-pitch-shifter-v20.html): 100% Client-side pure JS utility tool.
 - [Audio Voice Pitch Shifter](https://salabs.quanxs.com/tools/audio-voice-pitch-shifter.html): 100% Client-side pure JS utility tool.
 - [Audio Voice Recorder](https://salabs.quanxs.com/tools/audio-voice-recorder.html): 100% Client-side pure JS utility tool.
 - [Audio Waveform Analyzer](https://salabs.quanxs.com/tools/audio-waveform-analyzer.html): 100% Client-side pure JS utility tool.
