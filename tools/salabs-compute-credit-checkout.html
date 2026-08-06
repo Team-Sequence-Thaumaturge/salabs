@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SA Labs - Compute Credit Checkout</title>
+    <meta name="description" content="SA Labs Official Checkout Page">
+    <!-- PortOne V2 Browser SDK -->
+    <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0c;
+            --surface-dark: #121217;
+            --surface-light: #1a1a21;
+            --accent-cyan: #00f3ff;
+            --accent-purple: #9d4edd;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --border-color: #2a2a35;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: radial-gradient(circle at top right, rgba(0, 243, 255, 0.05), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(157, 78, 221, 0.05), transparent 40%);
+        }
+
+        .checkout-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--surface-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 
+                        0 0 20px rgba(0, 243, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Glassmorphism reflection */
+        .checkout-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.03), transparent);
+            transform: skewX(-20deg);
+            animation: shine 6s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .product-card {
+            background: var(--surface-light);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .product-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-name {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .divider {
+            height: 1px;
+            background-color: var(--border-color);
+            width: 100%;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .total-label {
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        .total-amount {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+        }
+
+        .method-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .method-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .method-btn {
+            background: var(--surface-light);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .method-btn:hover {
+            border-color: var(--text-secondary);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .method-btn.active {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.15) inset;
+        }
+
+        .pay-btn {
+            width: 100%;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            color: #000;
+            border: none;
+            padding: 18px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 20px rgba(0, 243, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pay-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(0, 243, 255, 0.3);
+        }
+
+        .pay-btn:active {
+            transform: translateY(1px);
+        }
+
+        .pay-btn.loading {
+            pointer-events: none;
+            opacity: 0.8;
+            color: transparent;
+        }
+
+        .pay-btn.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0,0,0,0.3);
+            border-top-color: #000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Status Toast Message */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--surface-light);
+            border: 1px solid var(--border-color);
+            padding: 16px 24px;
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .toast.success { border-color: #00ff88; }
+        .toast.error { border-color: #ff3366; }
+    </style>
+</head>
+<body>
+
+    <div class="checkout-container">
+        <div class="header">
+            <div class="logo">SA LABS</div>
+            <div class="subtitle">Secure Compute Infrastructure Checkout</div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-info">
+                <span class="product-name">10,000 Compute Credits</span>
+                <span class="product-price">10,000 원</span>
+            </div>
+            <div class="divider"></div>
+            <div class="total-row">
+                <span class="total-label">Total Amount</span>
+                <span class="total-amount">10,000 KRW</span>
+            </div>
+        </div>
+
+        <div class="method-section">
+            <div class="section-title">Payment Method</div>
+            <div class="method-grid">
+                <button class="method-btn active" data-method="CARD">신용카드</button>
+                <button class="method-btn" data-method="TRANSFER">계좌이체</button>
+                <button class="method-btn" data-method="VIRTUAL_ACCOUNT">가상계좌</button>
+                <button class="method-btn" data-method="MOBILE">휴대폰 결제</button>
+            </div>
+        </div>
+
+        <button id="btnPay" class="pay-btn">10,000원 결제하기</button>
+    </div>
+
+    <div id="toast" class="toast">
+        <span id="toastIcon">ℹ️</span>
+        <span id="toastMessage">Message</span>
+    </div>
+
+    <script>
+        // --- REAL PORTONE SDK INTEGRATION ---
+        
+        // Architect's Live Credentials (Hardcoded for Production Page)
+        const STORE_ID = "store-aa3c2d82-6743-4a7b-9098-411b60435561";
+        const CHANNEL_KEY = "channel-key-69ee9c3d-af15-4a7b-8bea-91046a9cfa6e"; 
+
+        // State
+        let selectedMethod = "CARD";
+        
+        // Elements
+        const methodBtns = document.querySelectorAll('.method-btn');
+        const btnPay = document.getElementById('btnPay');
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toastMessage');
+
+        // Payment Method Selection
+        methodBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                methodBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedMethod = btn.dataset.method;
+            });
+        });
+
+        function showToast(message, type = 'info') {
+            toastMessage.textContent = message;
+            toast.className = `toast show ${type}`;
+            if(type === 'success') document.getElementById('toastIcon').textContent = '✅';
+            if(type === 'error') document.getElementById('toastIcon').textContent = '❌';
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 5000);
+        }
+
+        function generateOrderId() {
+            const prefix = "sa-labs-ord-";
+            const randomId = Math.random().toString(36).substring(2, 10);
+            return prefix + randomId;
+        }
+
+        // Trigger Real PortOne V2 SDK
+        btnPay.addEventListener('click', async () => {
+            if(btnPay.classList.contains('loading')) return;
+            
+            btnPay.classList.add('loading');
+            
+            try {
+                // PortOne.requestPayment triggers the actual Toss/Kakao/Inicis Modal Popup
+                const paymentId = generateOrderId();
+                
+                const response = await PortOne.requestPayment({
+                    storeId: STORE_ID,
+                    channelKey: CHANNEL_KEY,
+                    paymentId: paymentId,
+                    orderName: "10,000 Compute Credits",
+                    totalAmount: 10000,
+                    currency: "CURRENCY_KRW",
+                    payMethod: selectedMethod,
+                    customer: {
+                        fullName: "SA Labs Guest User"
+                    }
+                });
+
+                if (response.code != null) {
+                    // PortOne SDK returned an error code
+                    showToast(`결제 실패: ${response.message}`, 'error');
+                } else {
+                    // Payment succeeded!
+                    showToast(`결제 완료! Payment ID: ${response.paymentId}`, 'success');
+                }
+            } catch (err) {
+                console.error("PortOne SDK Error:", err);
+                showToast("결제 요청 중 알 수 없는 오류가 발생했습니다.", 'error');
+            } finally {
+                btnPay.classList.remove('loading');
+            }
+        });
+    </script>
+</body>
+</html>
