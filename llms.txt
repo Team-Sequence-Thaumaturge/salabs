@@ -85,6 +85,7 @@
 - [Browser Performance Timer](https://salabs.quanxs.com/tools/browser-performance-timer.html): 100% Client-side pure JS utility tool.
 - [Btoa Atob Converter](https://salabs.quanxs.com/tools/btoa-atob-converter.html): 100% Client-side pure JS utility tool.
 - [Chmod Calculator](https://salabs.quanxs.com/tools/chmod-calculator.html): 100% Client-side pure JS utility tool.
+- [Client Side Utility Engine](https://salabs.quanxs.com/tools/client-side-utility-engine.html): 100% Client-side pure JS utility tool.
 - [Color Contrast Accessibility Checker](https://salabs.quanxs.com/tools/color-contrast-accessibility-checker.html): 100% Client-side pure JS utility tool.
 - [Color Converter Contrast](https://salabs.quanxs.com/tools/color-converter-contrast.html): 100% Client-side pure JS utility tool.
 - [Color Converter](https://salabs.quanxs.com/tools/color-converter.html): 100% Client-side pure JS utility tool.
