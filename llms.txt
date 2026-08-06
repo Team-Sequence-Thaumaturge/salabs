@@ -329,8 +329,10 @@
 - [Markdown Toc Generator](https://salabs.quanxs.com/tools/markdown-toc-generator.html): 100% Client-side pure JS utility tool.
 - [Meta Tag Generator](https://salabs.quanxs.com/tools/meta-tag-generator.html): 100% Client-side pure JS utility tool.
 - [Micro Perf Schema Engine](https://salabs.quanxs.com/tools/micro-perf-schema-engine.html): 100% Client-side pure JS utility tool.
+- [Micro Performance Optimizer](https://salabs.quanxs.com/tools/micro-performance-optimizer.html): 100% Client-side pure JS utility tool.
 - [Micro Performance Schema Engine](https://salabs.quanxs.com/tools/micro-performance-schema-engine.html): 100% Client-side pure JS utility tool.
 - [Next Gen Client Utility Engine](https://salabs.quanxs.com/tools/next-gen-client-utility-engine.html): 100% Client-side pure JS utility tool.
+- [Next Gen Client Utility](https://salabs.quanxs.com/tools/next-gen-client-utility.html): 100% Client-side pure JS utility tool.
 - [Next Gen Utility Engine](https://salabs.quanxs.com/tools/next-gen-utility-engine.html): 100% Client-side pure JS utility tool.
 - [Number Base Converter](https://salabs.quanxs.com/tools/number-base-converter.html): 100% Client-side pure JS utility tool.
 - [Polyglot Code Graph Analyzer](https://salabs.quanxs.com/tools/polyglot-code-graph-analyzer.html): 100% Client-side pure JS utility tool.
