@@ -34,25 +34,35 @@
       };
     </script>
 
-
     <!-- Three.js Global CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module">
+      import { ARButton } from "three/addons/webxr/ARButton.js";
+      window.ARButton = ARButton;
+    </script>
     <script>
       // Inline Standalone OrbitControls Fallback
-      if (typeof THREE !== 'undefined' && !THREE.OrbitControls) {
-        THREE.OrbitControls = function(object, domElement) {
+      if (typeof THREE !== "undefined" && !THREE.OrbitControls) {
+        THREE.OrbitControls = function (object, domElement) {
           this.object = object;
-          this.domElement = (domElement !== undefined) ? domElement : document;
+          this.domElement = domElement !== undefined ? domElement : document;
           this.enabled = true;
           this.target = new THREE.Vector3();
           this.enableDamping = false;
           this.dampingFactor = 0.05;
-          this.update = function() {};
+          this.update = function () {};
         };
       }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-
 
     <style>
       body {
@@ -60,7 +70,10 @@
         overflow: hidden;
         background-color: #0f172a;
         color: #e2e8f0;
-        font-family: 'Inter', -apple-system, sans-serif;
+        font-family:
+          "Inter",
+          -apple-system,
+          sans-serif;
       }
       #webgl-canvas {
         position: absolute;
@@ -113,22 +126,77 @@
         accent-color: #00f2fe;
         cursor: pointer;
       }
-      .tree-ul { list-style-type: none; padding-left: 18px; margin: 0; }
-      .tree-root > .tree-ul { padding-left: 0; }
-      .tree-li { margin: 3px 0; font-size: 0.82rem; }
-      .tree-key { color: #7dd3fc; font-weight: 600; }
-      .tree-string { color: #a7f3d0; }
-      .tree-number { color: #fca5a5; }
-      .tree-boolean { color: #fdba74; }
-      .tree-null { color: #94a3b8; font-style: italic; }
-      .tree-toggle { cursor: pointer; color: #94a3b8; margin-right: 6px; user-select: none; display: inline-block; width: 14px; text-align: center; }
-      .tree-toggle:hover { color: #00f2fe; }
-      .collapsed > ul { display: none; }
-      .collapsed > .tree-toggle::before { content: "▶"; font-size: 9px; }
-      .expanded > .tree-toggle::before { content: "▼"; font-size: 9px; }
-      .empty-toggle { display: inline-block; width: 14px; margin-right: 6px; }
-      #json-container { font-family: monospace; font-size: 0.82rem; line-height: 1.4; color: #cbd5e1; }
-      .badge-synthesized { background: linear-gradient(135deg, #00f2fe, #4facfe); color: #0f172a; font-weight: 800; padding: 3px 8px; border-radius: 9999px; font-size: 0.7rem; }
+      .tree-ul {
+        list-style-type: none;
+        padding-left: 18px;
+        margin: 0;
+      }
+      .tree-root > .tree-ul {
+        padding-left: 0;
+      }
+      .tree-li {
+        margin: 3px 0;
+        font-size: 0.82rem;
+      }
+      .tree-key {
+        color: #7dd3fc;
+        font-weight: 600;
+      }
+      .tree-string {
+        color: #a7f3d0;
+      }
+      .tree-number {
+        color: #fca5a5;
+      }
+      .tree-boolean {
+        color: #fdba74;
+      }
+      .tree-null {
+        color: #94a3b8;
+        font-style: italic;
+      }
+      .tree-toggle {
+        cursor: pointer;
+        color: #94a3b8;
+        margin-right: 6px;
+        user-select: none;
+        display: inline-block;
+        width: 14px;
+        text-align: center;
+      }
+      .tree-toggle:hover {
+        color: #00f2fe;
+      }
+      .collapsed > ul {
+        display: none;
+      }
+      .collapsed > .tree-toggle::before {
+        content: "▶";
+        font-size: 9px;
+      }
+      .expanded > .tree-toggle::before {
+        content: "▼";
+        font-size: 9px;
+      }
+      .empty-toggle {
+        display: inline-block;
+        width: 14px;
+        margin-right: 6px;
+      }
+      #json-container {
+        font-family: monospace;
+        font-size: 0.82rem;
+        line-height: 1.4;
+        color: #cbd5e1;
+      }
+      .badge-synthesized {
+        background: linear-gradient(135deg, #00f2fe, #4facfe);
+        color: #0f172a;
+        font-weight: 800;
+        padding: 3px 8px;
+        border-radius: 9999px;
+        font-size: 0.7rem;
+      }
     </style>
   </head>
   <body>
@@ -137,11 +205,15 @@
     <div id="ui-layer">
       <!-- Left Panel: Central Dynamic State Bus Controls -->
       <div class="panel">
-        <h1 class="text-xl font-bold text-cyan-accent mb-1 flex items-center justify-between">
+        <h1
+          class="text-xl font-bold text-cyan-accent mb-1 flex items-center justify-between"
+        >
           Jules Master 3D Engine
           <span class="badge-synthesized">11 Modules Bound</span>
         </h1>
-        <p class="text-xs text-slate-400 mb-4">Unified Dynamic State Bus Interlock</p>
+        <p class="text-xs text-slate-400 mb-4">
+          Unified Dynamic State Bus Interlock
+        </p>
 
         <!-- Slider 1: Gravity & C++ Rigid Body Physics -->
         <div class="slider-container">
@@ -149,7 +221,14 @@
             <span>Gravity Acceleration (중력 수치)</span>
             <span id="gravity-val">9.81 m/s²</span>
           </div>
-          <input type="range" id="gravity-slider" min="0" max="25" step="0.5" value="9.81" />
+          <input
+            type="range"
+            id="gravity-slider"
+            min="0"
+            max="25"
+            step="0.5"
+            value="9.81"
+          />
         </div>
 
         <!-- Slider 2: Solar Angle & Thermal Expansion -->
@@ -158,7 +237,14 @@
             <span>24h Solar Angle (태양각 / 열팽창)</span>
             <span id="solar-val">12:00 (Noon)</span>
           </div>
-          <input type="range" id="solar-slider" min="0" max="24" step="0.5" value="12" />
+          <input
+            type="range"
+            id="solar-slider"
+            min="0"
+            max="24"
+            step="0.5"
+            value="12"
+          />
         </div>
 
         <!-- Slider 3: Vector Topology Connection Distance -->
@@ -167,7 +253,14 @@
             <span>768d Vector Density</span>
             <span id="vector-val">6.0</span>
           </div>
-          <input type="range" id="vector-slider" min="2" max="12" step="0.5" value="6" />
+          <input
+            type="range"
+            id="vector-slider"
+            min="2"
+            max="12"
+            step="0.5"
+            value="6"
+          />
         </div>
 
         <!-- Slider 4: Audio Spectrum FFT Frequency Pulse -->
@@ -176,53 +269,112 @@
             <span>Audio Spectrum FFT Pulse</span>
             <span id="audio-val">440 Hz</span>
           </div>
-          <input type="range" id="audio-slider" min="100" max="1000" step="10" value="440" />
+          <input
+            type="range"
+            id="audio-slider"
+            min="100"
+            max="1000"
+            step="10"
+            value="440"
+          />
         </div>
 
         <!-- Real Web Audio API Microphone & Tone Buttons (Visible HUD Controls) -->
-        <div class="slider-container" style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid rgba(51, 65, 85, 0.8);">
-          <div class="slider-label" style="margin-bottom: 0.5rem;">
-            <span style="color: #00f2fe; font-weight: 600;">Web Audio API Live Mic & Spectrum</span>
-            <span id="val-freq" style="color: #a7f3d0;">440 Hz</span>
+        <div
+          class="slider-container"
+          style="
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(51, 65, 85, 0.8);
+          "
+        >
+          <div class="slider-label" style="margin-bottom: 0.5rem">
+            <span style="color: #00f2fe; font-weight: 600"
+              >Web Audio API Live Mic & Spectrum</span
+            >
+            <span id="val-freq" style="color: #a7f3d0">440 Hz</span>
           </div>
-          <div style="display: flex; gap: 8px;">
-            <button id="btn-mic-start" onclick="toggleMicrophone()" style="flex: 1; padding: 6px 12px; background: rgba(0, 242, 254, 0.15); border: 1px solid #00f2fe; color: #00f2fe; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.75rem; display: flex; items-center; justify-content: center; gap: 4px;">
+          <div style="display: flex; gap: 8px">
+            <button
+              id="btn-mic-start"
+              onclick="toggleMicrophone()"
+              style="flex: 1; padding: 6px 12px; background: rgba(0, 242, 254, 0.15); border: 1px solid #00f2fe; color: #00f2fe; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.75rem; display: flex; items-center; justify-content: center; gap: 4px;"
+            >
               🎤 <span id="mic-status-text">Enable Mic (LIVE)</span>
             </button>
-            <button id="btn-tone-gen" onclick="toggleToneGenerator()" style="flex: 1; padding: 6px 12px; background: rgba(139, 92, 246, 0.15); border: 1px solid #8b5cf6; color: #a78bfa; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.75rem; display: flex; items-center; justify-content: center; gap: 4px;">
+            <button
+              id="btn-tone-gen"
+              onclick="toggleToneGenerator()"
+              style="flex: 1; padding: 6px 12px; background: rgba(139, 92, 246, 0.15); border: 1px solid #8b5cf6; color: #a78bfa; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.75rem; display: flex; items-center; justify-content: center; gap: 4px;"
+            >
               🎵 <span id="tone-status-text">Test Tone (440Hz)</span>
             </button>
           </div>
         </div>
 
         <div class="mt-4 pt-3 border-t border-slate-700">
-          <div class="text-xs font-semibold text-cyan-accent mb-2">Synthesized 11 Subsystem Modules:</div>
+          <div class="text-xs font-semibold text-cyan-accent mb-2">
+            Synthesized 11 Subsystem Modules:
+          </div>
           <ul class="text-xs text-slate-300 space-y-1">
-            <li class="flex justify-between"><span>1. physics_core.cpp (C++ AABB Rigid Body)</span><span class="text-emerald-400">ONLINE</span></li>
-            <li class="flex justify-between"><span>2. quantum.vert/frag (GLSL Shaders)</span><span class="text-emerald-400">ONLINE</span></li>
-            <li class="flex justify-between"><span>3. 3D Vector Topology 768d Graph</span><span class="text-emerald-400">ONLINE</span></li>
-            <li class="flex justify-between"><span>4. 3D Audio FFT Spectrum Wave</span><span class="text-emerald-400">ONLINE</span></li>
-            <li class="flex justify-between"><span>5. Solar Thermal Expansion Physics</span><span class="text-emerald-400">ONLINE</span></li>
-            <li class="flex justify-between"><span>6. Collapsible AST JSON Tree</span><span class="text-emerald-400">ONLINE</span></li>
-            <li class="flex justify-between"><span>7. Quantum Relativity Curvature</span><span class="text-emerald-400">ONLINE</span></li>
-            <li class="flex justify-between"><span>8. OrbitControls 360 Drag/Zoom</span><span class="text-emerald-400">ONLINE</span></li>
-            <li class="flex justify-between"><span>9. Inverse Kinematics (IK Skinned Arm)</span><span class="text-emerald-400">ONLINE</span></li>
-            <li class="flex justify-between"><span>10. Soft-Body Physics Mesh</span><span class="text-emerald-400">ONLINE</span></li>
-            <li class="flex justify-between"><span>11. WebXR AR Overlays & ARButton</span><span class="text-emerald-400">ONLINE</span></li>
+            <li class="flex justify-between">
+              <span>1. physics_core.cpp (C++ AABB Rigid Body)</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>2. quantum.vert/frag (GLSL Shaders)</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>3. 3D Vector Topology 768d Graph</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>4. 3D Audio FFT Spectrum Wave</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>5. Solar Thermal Expansion Physics</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>6. Collapsible AST JSON Tree</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>7. Quantum Relativity Curvature</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>8. OrbitControls 360 Drag/Zoom</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>9. Inverse Kinematics (IK Skinned Arm)</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>10. Soft-Body Physics Mesh</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>11. WebXR AR Overlays & ARButton</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
           </ul>
         </div>
       </div>
 
       <!-- Right Panel: AST & Telemetry Tree Inspector -->
       <div class="panel">
-        <h2 class="text-base font-bold text-cyan-accent mb-2">Interactive AST & State Tree</h2>
+        <h2 class="text-base font-bold text-cyan-accent mb-2">
+          Interactive AST & State Tree
+        </h2>
         <div id="json-container"></div>
       </div>
     </div>
 
     <script>
-      
-
       // --- 1. Global Engine Dynamic State Bus ---
       const GlobalState = {
         gravity: 9.81,
@@ -276,12 +428,25 @@
           li.appendChild(closing);
         } else {
           const valSpan = document.createElement("span");
-          if (typeof value === "string") { valSpan.className = "tree-string"; valSpan.textContent = `"${value}"`; }
-          else if (typeof value === "number") { valSpan.className = "tree-number"; valSpan.textContent = value.toFixed(2); }
-          else if (typeof value === "boolean") { valSpan.className = "tree-boolean"; valSpan.textContent = value; }
-          else if (value === null) { valSpan.className = "tree-null"; valSpan.textContent = "null"; }
+          if (typeof value === "string") {
+            valSpan.className = "tree-string";
+            valSpan.textContent = `"${value}"`;
+          } else if (typeof value === "number") {
+            valSpan.className = "tree-number";
+            valSpan.textContent = value.toFixed(2);
+          } else if (typeof value === "boolean") {
+            valSpan.className = "tree-boolean";
+            valSpan.textContent = value;
+          } else if (value === null) {
+            valSpan.className = "tree-null";
+            valSpan.textContent = "null";
+          }
           li.appendChild(valSpan);
-          if (!isLast) { const comma = document.createElement("span"); comma.textContent = ","; li.appendChild(comma); }
+          if (!isLast) {
+            const comma = document.createElement("span");
+            comma.textContent = ",";
+            li.appendChild(comma);
+          }
         }
         return li;
       }
@@ -293,7 +458,14 @@
           engine_status: "SYNTHESIZED_ONLINE",
           version: "2.0.0-ALL-11-MODULES-BOUND",
           dynamic_state: GlobalState,
-          active_modules: ["C++ Physics", "GLSL Quantum", "Vector Topology", "Audio FFT", "Thermal Expansion", "AST Tree"],
+          active_modules: [
+            "C++ Physics",
+            "GLSL Quantum",
+            "Vector Topology",
+            "Audio FFT",
+            "Thermal Expansion",
+            "AST Tree",
+          ],
         };
         const rootUl = document.createElement("ul");
         rootUl.className = "tree-ul tree-root";
@@ -313,7 +485,11 @@
 
       // --- 4. Three.js Unified Interlocked Scene ---
       let scene, camera, renderer, controls, mainLight, canvas;
-      let bouncingSphere, quantumParticles, topologyNodes = [], topologyLinesGroup, audioMesh;
+      let bouncingSphere,
+        quantumParticles,
+        topologyNodes = [],
+        topologyLinesGroup,
+        audioMesh;
       let lastTime = Date.now();
 
       function init() {
@@ -321,29 +497,51 @@
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0x0f172a);
 
-        camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera = new THREE.PerspectiveCamera(
+          60,
+          window.innerWidth / window.innerHeight,
+          0.1,
+          1000,
+        );
         camera.position.set(0, 5, 12);
 
         renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
-        const initW = Math.max(300, window.innerWidth || canvas.clientWidth || 800);
-        const initH = Math.max(300, window.innerHeight || canvas.clientHeight || 600);
+        const initW = Math.max(
+          300,
+          window.innerWidth || canvas.clientWidth || 800,
+        );
+        const initH = Math.max(
+          300,
+          window.innerHeight || canvas.clientHeight || 600,
+        );
         renderer.setSize(initW, initH);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.xr.enabled = true;
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        // ARButton optional
 
-        const OrbitCtrlClass = (typeof THREE.OrbitControls === 'function') ? THREE.OrbitControls : (typeof OrbitControls === 'function' ? OrbitControls : null);
+        // Module 11: WebXR AR Overlays & ARButton
+        setTimeout(() => {
+          if (window.ARButton) {
+            document.body.appendChild(window.ARButton.createButton(renderer));
+          }
+        }, 100);
+
+        const OrbitCtrlClass =
+          typeof THREE.OrbitControls === "function"
+            ? THREE.OrbitControls
+            : typeof OrbitControls === "function"
+              ? OrbitControls
+              : null;
         if (OrbitCtrlClass) {
           try {
             controls = new OrbitCtrlClass(camera, renderer.domElement);
             controls.enableDamping = true;
-          } catch(e) {
-            controls = { update: function(){} };
+          } catch (e) {
+            controls = { update: function () {} };
           }
         } else {
-          controls = { update: function(){} };
+          controls = { update: function () {} };
         }
         controls.enableDamping = true;
 
@@ -360,13 +558,65 @@
         scene.add(mainLight);
         scene.add(new THREE.AmbientLight(0x1e293b, 1.5));
 
-        const gridHelper = new THREE.GridHelper(30, 30, 0x00f2fe, 0x1e293b);
-        gridHelper.position.y = -2.5;
-        scene.add(gridHelper);
+        // Module 7: Quantum Relativity Curvature Grid
+        const gridGeo = new THREE.PlaneGeometry(30, 30, 64, 64);
+        gridGeo.rotateX(-Math.PI / 2);
+
+        window.quantumGridMaterial = new THREE.ShaderMaterial({
+          uniforms: {
+            time: { value: 0.0 },
+            gravity: { value: GlobalState.gravity },
+            solarAngle: { value: GlobalState.solarAngle },
+          },
+          vertexShader: `
+            uniform float time;
+            uniform float gravity;
+            uniform float solarAngle;
+            varying vec2 vUv;
+            void main() {
+              vUv = uv;
+              vec3 pos = position;
+              // Simulate spacetime curvature
+              float dist = length(pos.xz);
+              float curvature = (gravity - 9.81) * 0.1;
+              pos.y += sin(dist * 0.5 - time * 2.0) * curvature;
+              // Add solar thermal wave
+              float solarRad = (solarAngle / 24.0) * 3.14159 * 2.0;
+              pos.y += cos(pos.x * 0.5 + time + solarRad) * 0.2;
+
+              gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+            }
+          `,
+          fragmentShader: `
+            uniform float time;
+            varying vec2 vUv;
+            void main() {
+              // Grid pattern
+              vec2 grid = abs(fract(vUv * 30.0 - 0.5) - 0.5) / fwidth(vUv * 30.0);
+              float line = min(grid.x, grid.y);
+              float color = 1.0 - min(line, 1.0);
+              if (color < 0.1) discard;
+
+              vec3 baseColor = vec3(0.0, 0.949, 0.996); // 0x00f2fe
+              gl_FragColor = vec4(baseColor, color * 0.5);
+            }
+          `,
+          transparent: true,
+          wireframe: false,
+          side: THREE.DoubleSide,
+        });
+
+        const quantumGrid = new THREE.Mesh(gridGeo, window.quantumGridMaterial);
+        quantumGrid.position.y = -2.49; // Slightly above floor
+        scene.add(quantumGrid);
 
         // Floor for shadows and collision
         const floorGeo = new THREE.PlaneGeometry(30, 30);
-        const floorMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.8, metalness: 0.2 });
+        const floorMat = new THREE.MeshStandardMaterial({
+          color: 0x1e293b,
+          roughness: 0.8,
+          metalness: 0.2,
+        });
         const floor = new THREE.Mesh(floorGeo, floorMat);
         floor.rotation.x = -Math.PI / 2;
         floor.position.y = -2.5;
@@ -375,10 +625,22 @@
         window.floorMesh = floor;
 
         // Module 1: C++ Bouncing Rigid Sphere with Thermal Expansion
-        const sphereMat = new THREE.MeshStandardMaterial({ color: 0x00f2fe, metalness: 0.8, roughness: 0.2 });
-        bouncingSphere = new THREE.Mesh(new THREE.SphereGeometry(1.2, 32, 32), sphereMat);
+        const sphereMat = new THREE.MeshStandardMaterial({
+          color: 0x00f2fe,
+          metalness: 0.8,
+          roughness: 0.2,
+        });
+        bouncingSphere = new THREE.Mesh(
+          new THREE.SphereGeometry(1.2, 32, 32),
+          sphereMat,
+        );
         bouncingSphere.castShadow = true;
-        bouncingSphere.userData = { velocity: new THREE.Vector3(0, 0, 0), radius: 1.2, mass: 1.0, restitution: 0.8 };
+        bouncingSphere.userData = {
+          velocity: new THREE.Vector3(0, 0, 0),
+          radius: 1.2,
+          mass: 1.0,
+          restitution: 0.8,
+        };
         bouncingSphere.position.y = 5;
         scene.add(bouncingSphere);
 
@@ -386,69 +648,104 @@
         const count = 5000;
         const pGeo = new THREE.BufferGeometry();
         const pos = new Float32Array(count * 3);
-        for(let i=0; i<count*3; i++) pos[i] = (Math.random() - 0.5) * 16;
-        pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-        const pMat = new THREE.PointsMaterial({ size: 0.08, color: 0x4facfe, transparent: true, opacity: 0.85 });
+        for (let i = 0; i < count * 3; i++) pos[i] = (Math.random() - 0.5) * 16;
+        pGeo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+        const pMat = new THREE.PointsMaterial({
+          size: 0.08,
+          color: 0x4facfe,
+          transparent: true,
+          opacity: 0.85,
+        });
         quantumParticles = new THREE.Points(pGeo, pMat);
         scene.add(quantumParticles);
 
         // Module 3: 768d Vector Topology Graph
         topologyLinesGroup = new THREE.Group();
         scene.add(topologyLinesGroup);
-        const nodeMat = new THREE.MeshStandardMaterial({ color: 0x34d399, emissive: 0x059669 });
-        for(let i=0; i<14; i++) {
-          const n = new THREE.Mesh(new THREE.SphereGeometry(0.3, 16, 16), nodeMat);
-          n.position.set((Math.random() - 0.5) * 10, (Math.random() - 0.5) * 6, (Math.random() - 0.5) * 10);
+        const nodeMat = new THREE.MeshStandardMaterial({
+          color: 0x34d399,
+          emissive: 0x059669,
+        });
+        for (let i = 0; i < 14; i++) {
+          const n = new THREE.Mesh(
+            new THREE.SphereGeometry(0.3, 16, 16),
+            nodeMat,
+          );
+          n.position.set(
+            (Math.random() - 0.5) * 10,
+            (Math.random() - 0.5) * 6,
+            (Math.random() - 0.5) * 10,
+          );
           n.userData = { baseY: n.position.y };
           topologyNodes.push(n);
           scene.add(n);
         }
 
         // Setup Sliders & Listeners
-        document.getElementById("gravity-slider").addEventListener("input", (e) => {
-          GlobalState.gravity = parseFloat(e.target.value);
-          document.getElementById("gravity-val").textContent = GlobalState.gravity.toFixed(2) + " m/s²";
-          renderJSONState();
-        });
+        document
+          .getElementById("gravity-slider")
+          .addEventListener("input", (e) => {
+            GlobalState.gravity = parseFloat(e.target.value);
+            document.getElementById("gravity-val").textContent =
+              GlobalState.gravity.toFixed(2) + " m/s²";
+            renderJSONState();
+          });
 
-        document.getElementById("solar-slider").addEventListener("input", (e) => {
-          GlobalState.solarAngle = parseFloat(e.target.value);
-          const hrs = Math.floor(GlobalState.solarAngle);
-          const mins = Math.floor((GlobalState.solarAngle - hrs) * 60);
-          document.getElementById("solar-val").textContent = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}`;
-          renderJSONState();
-        });
+        document
+          .getElementById("solar-slider")
+          .addEventListener("input", (e) => {
+            GlobalState.solarAngle = parseFloat(e.target.value);
+            const hrs = Math.floor(GlobalState.solarAngle);
+            const mins = Math.floor((GlobalState.solarAngle - hrs) * 60);
+            document.getElementById("solar-val").textContent =
+              `${hrs.toString().padStart(2, "0")}:${mins.toString().padStart(2, "0")}`;
+            renderJSONState();
+          });
 
-        document.getElementById("vector-slider").addEventListener("input", (e) => {
-          GlobalState.vectorDensity = parseFloat(e.target.value);
-          document.getElementById("vector-val").textContent = GlobalState.vectorDensity.toFixed(1);
-          renderJSONState();
-        });
+        document
+          .getElementById("vector-slider")
+          .addEventListener("input", (e) => {
+            GlobalState.vectorDensity = parseFloat(e.target.value);
+            document.getElementById("vector-val").textContent =
+              GlobalState.vectorDensity.toFixed(1);
+            renderJSONState();
+          });
 
-        document.getElementById("audio-slider").addEventListener("input", (e) => {
-          GlobalState.audioFrequency = parseInt(e.target.value);
-          document.getElementById("audio-val").textContent = GlobalState.audioFrequency + " Hz";
-          renderJSONState();
-        });
-
+        document
+          .getElementById("audio-slider")
+          .addEventListener("input", (e) => {
+            GlobalState.audioFrequency = parseInt(e.target.value);
+            document.getElementById("audio-val").textContent =
+              GlobalState.audioFrequency + " Hz";
+            renderJSONState();
+          });
 
         // Module 5: Inverse Kinematics (IK) Robotic Arm (Robust Group Mesh)
         const ikArmGroup = new THREE.Group();
         ikArmGroup.position.set(-5, -2, 0);
 
-        const baseMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.6, 0.8, 0.6, 16), new THREE.MeshStandardMaterial({ color: 0x64748b }));
+        const baseMesh = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.6, 0.8, 0.6, 16),
+          new THREE.MeshStandardMaterial({ color: 0x64748b }),
+        );
         ikArmGroup.add(baseMesh);
 
         const armBoneGroup = new THREE.Group();
         armBoneGroup.position.set(0, 0.3, 0);
-        const upperArmMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.3, 2.5, 16), new THREE.MeshStandardMaterial({ color: 0x8b5cf6, wireframe: true }));
+        const upperArmMesh = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.25, 0.3, 2.5, 16),
+          new THREE.MeshStandardMaterial({ color: 0x8b5cf6, wireframe: true }),
+        );
         upperArmMesh.position.y = 1.25;
         armBoneGroup.add(upperArmMesh);
         ikArmGroup.add(armBoneGroup);
 
         const forearmBoneGroup = new THREE.Group();
         forearmBoneGroup.position.set(0, 2.5, 0);
-        const lowerArmMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.25, 2.2, 16), new THREE.MeshStandardMaterial({ color: 0xa78bfa, wireframe: true }));
+        const lowerArmMesh = new THREE.Mesh(
+          new THREE.CylinderGeometry(0.18, 0.25, 2.2, 16),
+          new THREE.MeshStandardMaterial({ color: 0xa78bfa, wireframe: true }),
+        );
         lowerArmMesh.position.y = 1.1;
         forearmBoneGroup.add(lowerArmMesh);
         armBoneGroup.add(forearmBoneGroup);
@@ -462,33 +759,48 @@
         // Module 6: Soft-Body Deformation Mesh
         const softGeo = new THREE.PlaneGeometry(12, 12, 32, 32);
         softGeo.rotateX(-Math.PI / 2);
-        const softMat = new THREE.MeshStandardMaterial({ color: 0xf43f5e, wireframe: true, side: THREE.DoubleSide });
+        const softMat = new THREE.MeshStandardMaterial({
+          color: 0xf43f5e,
+          wireframe: true,
+          side: THREE.DoubleSide,
+        });
         window.softBodyMesh = new THREE.Mesh(softGeo, softMat);
         window.softBodyMesh.position.y = -3;
         scene.add(window.softBodyMesh);
 
         renderJSONState();
-        
-
 
         renderer.setAnimationLoop(animate);
         window.addEventListener("resize", onWindowResize);
       }
 
       function updateTopologyLines() {
-        while(topologyLinesGroup.children.length > 0) topologyLinesGroup.remove(topologyLinesGroup.children[0]);
-        const lineMat = new THREE.LineBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.1 + (GlobalState.vectorDensity * 0.02) + (GlobalState.audioFrequency / 1000) * 0.2 });
-        for(let i=0; i<topologyNodes.length; i++) {
-          for(let j=i+1; j<topologyNodes.length; j++) {
-            if(topologyNodes[i].position.distanceTo(topologyNodes[j].position) < GlobalState.vectorDensity) {
-              const lGeo = new THREE.BufferGeometry().setFromPoints([topologyNodes[i].position, topologyNodes[j].position]);
+        while (topologyLinesGroup.children.length > 0)
+          topologyLinesGroup.remove(topologyLinesGroup.children[0]);
+        const lineMat = new THREE.LineBasicMaterial({
+          color: 0x10b981,
+          transparent: true,
+          opacity:
+            0.1 +
+            GlobalState.vectorDensity * 0.02 +
+            (GlobalState.audioFrequency / 1000) * 0.2,
+        });
+        for (let i = 0; i < topologyNodes.length; i++) {
+          for (let j = i + 1; j < topologyNodes.length; j++) {
+            if (
+              topologyNodes[i].position.distanceTo(topologyNodes[j].position) <
+              GlobalState.vectorDensity
+            ) {
+              const lGeo = new THREE.BufferGeometry().setFromPoints([
+                topologyNodes[i].position,
+                topologyNodes[j].position,
+              ]);
               topologyLinesGroup.add(new THREE.Line(lGeo, lineMat));
             }
           }
         }
       }
 
-      
       // --- 8. Web Audio API Real-Time Microphone & FFT Analyzer Engine ---
       let audioCtx = null;
       let analyserNode = null;
@@ -498,14 +810,20 @@
       let isToneActive = false;
       let fftDataArray = new Uint8Array(64);
 
-      window.toggleMicrophone = async function() {
+      window.toggleMicrophone = async function () {
         const btnText = document.getElementById("mic-status-text");
         if (!isMicActive) {
           try {
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            if (audioCtx.state === 'suspended') await audioCtx.resume();
+            if (!audioCtx)
+              audioCtx = new (
+                window.AudioContext || window.webkitAudioContext
+              )();
+            if (audioCtx.state === "suspended") await audioCtx.resume();
 
-            micStream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+            micStream = await navigator.mediaDevices.getUserMedia({
+              audio: true,
+              video: false,
+            });
             const source = audioCtx.createMediaStreamSource(micStream);
             analyserNode = audioCtx.createAnalyser();
             analyserNode.fftSize = 128;
@@ -518,27 +836,31 @@
           }
         } else {
           if (micStream) {
-            micStream.getTracks().forEach(track => track.stop());
+            micStream.getTracks().forEach((track) => track.stop());
           }
           isMicActive = false;
           if (btnText) btnText.innerText = "Enable Mic";
         }
       };
 
-      window.toggleToneGenerator = function() {
+      window.toggleToneGenerator = function () {
         const btnText = document.getElementById("tone-status-text");
         if (!isToneActive) {
-          if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-          if (audioCtx.state === 'suspended') audioCtx.resume();
+          if (!audioCtx)
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          if (audioCtx.state === "suspended") audioCtx.resume();
 
           toneOscillator = audioCtx.createOscillator();
           const gainNode = audioCtx.createGain();
           analyserNode = audioCtx.createAnalyser();
           analyserNode.fftSize = 128;
 
-          toneOscillator.type = 'sine';
+          toneOscillator.type = "sine";
           const initFreq = GlobalState.audioFrequency || 440;
-          toneOscillator.frequency.setValueAtTime(initFreq, audioCtx.currentTime);
+          toneOscillator.frequency.setValueAtTime(
+            initFreq,
+            audioCtx.currentTime,
+          );
           gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime); // Soft pleasant volume
           window.toneGainNode = gainNode;
           window.toneOscillatorNode = toneOscillator;
@@ -557,11 +879,11 @@
         }
       };
 
-
-      
       // --- 9. 768-dim Vector Cosine Similarity Engine ---
-      window.cosineSim = function(vecA, vecB) {
-        let dot = 0.0, normA = 0.0, normB = 0.0;
+      window.cosineSim = function (vecA, vecB) {
+        let dot = 0.0,
+          normA = 0.0,
+          normB = 0.0;
         for (let i = 0; i < vecA.length; i++) {
           dot += vecA[i] * vecB[i];
           normA += vecA[i] * vecA[i];
@@ -570,13 +892,20 @@
         return dot / (Math.sqrt(normA) * Math.sqrt(normB) + 1e-9);
       };
 
-
       function animate() {
         // Dynamic iframe canvas size check to prevent 0x0 pixel black screen
         if (renderer && camera && canvas) {
-          const targetW = canvas.parentElement ? canvas.parentElement.clientWidth : window.innerWidth;
-          const targetH = canvas.parentElement ? canvas.parentElement.clientHeight : window.innerHeight;
-          if (targetW > 50 && targetH > 50 && (canvas.width !== targetW || canvas.height !== targetH)) {
+          const targetW = canvas.parentElement
+            ? canvas.parentElement.clientWidth
+            : window.innerWidth;
+          const targetH = canvas.parentElement
+            ? canvas.parentElement.clientHeight
+            : window.innerHeight;
+          if (
+            targetW > 50 &&
+            targetH > 50 &&
+            (canvas.width !== targetW || canvas.height !== targetH)
+          ) {
             camera.aspect = targetW / targetH;
             camera.updateProjectionMatrix();
             renderer.setSize(targetW, targetH, false);
@@ -596,15 +925,19 @@
           let sum = 0;
           for (let i = 0; i < fftDataArray.length; i++) sum += fftDataArray[i];
           const rawAvg = sum / fftDataArray.length; // Range 0 ~ 255
-          
+
           // Noise Gate Threshold (Ignore background room noise below 10)
           if (rawAvg > 8) {
             currentAmp = (rawAvg - 8) / 247.0; // 0.0 ~ 1.0
             GlobalState.audioFrequency = 100 + currentAmp * 900;
             const freqValEl = document.getElementById("val-freq");
-            if (freqValEl) freqValEl.innerText = Math.round(GlobalState.audioFrequency) + " Hz";
+            if (freqValEl)
+              freqValEl.innerText =
+                Math.round(GlobalState.audioFrequency) + " Hz";
             const audioValEl = document.getElementById("audio-val");
-            if (audioValEl) audioValEl.innerText = Math.round(GlobalState.audioFrequency) + " Hz";
+            if (audioValEl)
+              audioValEl.innerText =
+                Math.round(GlobalState.audioFrequency) + " Hz";
             const sliderEl = document.getElementById("audio-slider");
             if (sliderEl) sliderEl.value = GlobalState.audioFrequency;
           } else {
@@ -615,6 +948,14 @@
         lastTime = now;
 
         // 1. C++ Gravity Bouncing Simulation (Rigid Body Physics)
+        if (window.quantumGridMaterial) {
+          window.quantumGridMaterial.uniforms.time.value = time;
+          window.quantumGridMaterial.uniforms.gravity.value =
+            GlobalState.gravity;
+          window.quantumGridMaterial.uniforms.solarAngle.value =
+            GlobalState.solarAngle;
+        }
+
         const rb = bouncingSphere.userData;
 
         // Apply gravity
@@ -624,39 +965,71 @@
         bouncingSphere.position.addScaledVector(rb.velocity, dt);
 
         // 2. Solar Angle Thermal Expansion + Audio Scale Pulse ("팡팡 부풀어오름")
-        const thermalScale = physics.applyThermalExpansion(GlobalState.solarAngle, 1.0);
-        const pulseBoost = isMicActive ? (currentAmp * 1.5) : ((GlobalState.audioFrequency - 100) / 900 * 0.5);
+        const thermalScale = physics.applyThermalExpansion(
+          GlobalState.solarAngle,
+          1.0,
+        );
+        const pulseBoost = isMicActive
+          ? currentAmp * 1.5
+          : ((GlobalState.audioFrequency - 100) / 900) * 0.5;
         const finalScale = thermalScale + pulseBoost;
         bouncingSphere.scale.set(finalScale, finalScale, finalScale);
 
         if (quantumParticles) {
           const particlePulse = 1.0 + pulseBoost * 0.8;
-          quantumParticles.scale.set(particlePulse, particlePulse, particlePulse);
+          quantumParticles.scale.set(
+            particlePulse,
+            particlePulse,
+            particlePulse,
+          );
         }
 
         // AABB Collision with floor
         const currentRadius = rb.radius * finalScale;
-        if (window.floorMesh && bouncingSphere.position.y - currentRadius <= window.floorMesh.position.y) {
-            bouncingSphere.position.y = window.floorMesh.position.y + currentRadius;
-            rb.velocity.y = Math.abs(rb.velocity.y) * rb.restitution;
+        if (
+          window.floorMesh &&
+          bouncingSphere.position.y - currentRadius <=
+            window.floorMesh.position.y
+        ) {
+          bouncingSphere.position.y =
+            window.floorMesh.position.y + currentRadius;
+          rb.velocity.y = Math.abs(rb.velocity.y) * rb.restitution;
         }
 
         const solarRad = (GlobalState.solarAngle / 24.0) * Math.PI * 2;
         if (mainLight) {
-          mainLight.position.set(Math.cos(solarRad) * 15, Math.sin(solarRad) * 15, 10);
+          mainLight.position.set(
+            Math.cos(solarRad) * 15,
+            Math.sin(solarRad) * 15,
+            10,
+          );
         }
 
         // 3. Quantum Particles Vortices
-        if(quantumParticles) {
-          quantumParticles.rotation.y = time * 0.2 * (GlobalState.audioFrequency / 440) * (9.81 / Math.max(GlobalState.gravity, 0.1));
-          quantumParticles.scale.setScalar(1.0 + (GlobalState.gravity - 9.81) * 0.05);
+        if (quantumParticles) {
+          quantumParticles.rotation.y =
+            time *
+            0.2 *
+            (GlobalState.audioFrequency / 440) *
+            (9.81 / Math.max(GlobalState.gravity, 0.1));
+          quantumParticles.scale.setScalar(
+            1.0 + (GlobalState.gravity - 9.81) * 0.05,
+          );
           if (quantumParticles.material) {
-            quantumParticles.material.color.setHSL((GlobalState.solarAngle / 24.0 + 0.5) % 1.0, 1.0, 0.5);
+            quantumParticles.material.color.setHSL(
+              (GlobalState.solarAngle / 24.0 + 0.5) % 1.0,
+              1.0,
+              0.5,
+            );
           }
         }
 
         // 4. Vector Topology Update
-        topologyNodes.forEach(n => n.position.y = n.userData.baseY + (9.81 - GlobalState.gravity) * 0.2);
+        topologyNodes.forEach(
+          (n) =>
+            (n.position.y =
+              n.userData.baseY + (9.81 - GlobalState.gravity) * 0.2),
+        );
         if (topologyLinesGroup) {
           topologyLinesGroup.position.y = (9.81 - GlobalState.gravity) * 0.2;
         }
@@ -664,7 +1037,9 @@
         // Analytic Inverse Kinematics for the 2-bone arm
         if (window.ikArm && window.armBone && window.forearmBone) {
           // Target position relative to the base bone
-          const targetPos = bouncingSphere.position.clone().sub(window.ikArm.position);
+          const targetPos = bouncingSphere.position
+            .clone()
+            .sub(window.ikArm.position);
 
           // lengths of the bones
           const l1 = 2; // armBone length
@@ -675,9 +1050,9 @@
           const z = targetPos.z;
 
           // distance to target projected on xz plane
-          const distXZ = Math.sqrt(x*x + z*z);
+          const distXZ = Math.sqrt(x * x + z * z);
           // distance to target in 3d
-          const dist3D = Math.sqrt(distXZ*distXZ + y*y);
+          const dist3D = Math.sqrt(distXZ * distXZ + y * y);
 
           // Base rotation (Y-axis)
           window.ikArm.rotation.y = Math.atan2(x, z);
@@ -690,13 +1065,13 @@
           const targetAngle = Math.atan2(y, distXZ);
 
           // angle of the arm using law of cosines
-          const cosAngle1 = (l1*l1 + dist*dist - l2*l2) / (2 * l1 * dist);
+          const cosAngle1 = (l1 * l1 + dist * dist - l2 * l2) / (2 * l1 * dist);
           const angle1 = Math.acos(Math.max(-1, Math.min(1, cosAngle1)));
 
           window.armBone.rotation.x = targetAngle - angle1;
 
           // angle of the forearm
-          const cosAngle2 = (l1*l1 + l2*l2 - dist*dist) / (2 * l1 * l2);
+          const cosAngle2 = (l1 * l1 + l2 * l2 - dist * dist) / (2 * l1 * l2);
           const angle2 = Math.acos(Math.max(-1, Math.min(1, cosAngle2)));
 
           window.forearmBone.rotation.x = Math.PI - angle2;
@@ -710,14 +1085,15 @@
             const vz = pos.getZ(i);
             const freq = GlobalState.audioFrequency / 1000;
             const amp = GlobalState.gravity / 9.81;
-            const vy = Math.sin(vx * 0.5 + time * 2) * Math.cos(vz * 0.5 + time * 2) * freq * amp;
+            const vy =
+              Math.sin(vx * 0.5 + time * 2) *
+              Math.cos(vz * 0.5 + time * 2) *
+              freq *
+              amp;
             pos.setY(i, vy);
           }
           pos.needsUpdate = true;
         }
-
-        
-
 
         updateTopologyLines();
 
@@ -727,13 +1103,22 @@
       function onWindowResize() {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
-        const initW = Math.max(300, window.innerWidth || canvas.clientWidth || 800);
-        const initH = Math.max(300, window.innerHeight || canvas.clientHeight || 600);
+        const initW = Math.max(
+          300,
+          window.innerWidth || canvas.clientWidth || 800,
+        );
+        const initH = Math.max(
+          300,
+          window.innerHeight || canvas.clientHeight || 600,
+        );
         renderer.setSize(initW, initH);
       }
 
-            // Fail-Safe Immediate & Event-Based 3D Engine Initialization Hook
-      if (document.readyState === "complete" || document.readyState === "interactive") {
+      // Fail-Safe Immediate & Event-Based 3D Engine Initialization Hook
+      if (
+        document.readyState === "complete" ||
+        document.readyState === "interactive"
+      ) {
         setTimeout(init, 10);
       } else {
         window.addEventListener("DOMContentLoaded", init);
