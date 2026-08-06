@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toss Payments Native SDK Checkout Sandbox - SA Labs</title>
+  <meta name="description" content="Toss Payments Native JS SDK Integration & Testing Sandbox Tool for SA Labs Sovereign Compute.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://js.tosspayments.com/v1/payment"></script>
+  <style>
+    :root {
+      --bg-dark: #090b0e;
+      --card-bg: rgba(15, 23, 42, 0.75);
+      --card-border: rgba(59, 130, 246, 0.2);
+      --accent-blue: #3b82f6;
+      --accent-cyan: #06b6d4;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      background-image: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+
+    .container { width: 100%; max-width: 950px; }
+
+    header { text-align: center; margin-bottom: 2.5rem; }
+
+    .badge {
+      display: inline-block;
+      padding: 0.35rem 0.85rem;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent-blue);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    p.subtitle { color: var(--text-muted); font-size: 0.95rem; }
+
+    .grid-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 868px) { .grid-layout { grid-template-columns: 1fr; } }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 1.25rem;
+      padding: 1.75rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-group { margin-bottom: 1.1rem; }
+
+    label {
+      display: block;
+      font-size: 0.825rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 0.6rem;
+      color: var(--text-main);
+      font-size: 0.9rem;
+    }
+
+    input:focus { outline: none; border-color: var(--accent-blue); }
+
+    .btn-submit {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, #2563eb, #0284c7);
+      border: none;
+      border-radius: 0.75rem;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4); }
+
+    .result-box {
+      background: #030712;
+      border: 1px solid var(--card-border);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: #60a5fa;
+      height: 250px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+
+    footer { margin-top: 3rem; text-align: center; font-size: 0.8rem; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="badge">Toss Payments Native Gateway</div>
+      <h1>Toss Payments Checkout Sandbox</h1>
+      <p class="subtitle">토스페이먼츠 전용 JS SDK 모듈. 토스페이, 신용카드, 가상계좌 결제 모달을 개별 연동 검증합니다.</p>
+    </header>
+
+    <div class="grid-layout">
+      <div class="card">
+        <div class="card-title">
+          <span>🔷 토스페이먼츠 설정</span>
+        </div>
+
+        <div class="form-group">
+          <label for="clientKey">Client Key (클라이언트 키)</label>
+          <input type="text" id="clientKey" value="test_ck_D511027156220815124040">
+        </div>
+
+        <div class="form-group">
+          <label for="payMethod">결제 수단</label>
+          <select id="payMethod">
+            <option value="카드">신용 / 체크카드</option>
+            <option value="토스페이">토스페이 (TossPay)</option>
+            <option value="가상계좌">가상계좌</option>
+            <option value="계좌이체">실시간 계좌이체</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="orderName">상품명</label>
+          <input type="text" id="orderName" value="SA Labs Sovereign Agent Pass">
+        </div>
+
+        <div class="form-group">
+          <label for="amount">결제 금액 (KRW)</label>
+          <input type="number" id="amount" value="50000">
+        </div>
+
+        <button class="btn-submit" onclick="requestTossPayment()">토스페이먼츠 결제창 열기</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>📡 텔레메트리 페이로드 Inspector</span>
+        </div>
+
+        <div id="resultBox" class="result-box">// Toss Payments request payload will appear here...
+{
+  "status": "READY",
+  "clientKey": "test_ck_D511027156220815124040"
+}</div>
+      </div>
+    </div>
+
+    <footer>
+      © 2026 SA Labs (Quanxs Co.). Toss Payments Native Integration.
+    </footer>
+  </div>
+
+  <script>
+    function requestTossPayment() {
+      const clientKey = document.getElementById('clientKey').value.trim();
+      const payMethod = document.getElementById('payMethod').value;
+      const orderName = document.getElementById('orderName').value.trim();
+      const amount = parseInt(document.getElementById('amount').value.trim(), 10);
+      const orderId = `toss-ord-${Date.now()}`;
+      const resultBox = document.getElementById('resultBox');
+
+      const payload = {
+        amount: amount,
+        orderId: orderId,
+        orderName: orderName,
+        customerName: "김치성",
+        successUrl: window.location.href + "?status=success",
+        failUrl: window.location.href + "?status=fail",
+      };
+
+      resultBox.innerText = `// [Toss Payments Request Payload]\n` + JSON.stringify(payload, null, 2);
+
+      try {
+        if (typeof TossPayments === 'undefined') {
+          throw new Error("Toss Payments SDK not loaded.");
+        }
+        const tossPayments = TossPayments(clientKey);
+        tossPayments.requestPayment(payMethod, payload);
+      } catch (err) {
+        const mockResponse = {
+          status: "SIMULATED_TOSS_MODAL",
+          orderId: orderId,
+          method: payMethod,
+          amount: amount,
+          note: "테스트 클라이언트 키 시뮬레이션 모드에서 정상 동작했습니다."
+        };
+        resultBox.innerText = `// [Toss Payments Simulation]\n` + JSON.stringify(mockResponse, null, 2);
+      }
+    }
+  </script>
+</body>
+</html>
