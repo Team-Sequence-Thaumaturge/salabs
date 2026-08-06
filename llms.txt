@@ -22,6 +22,7 @@
 - [Audio Equalizer Studio](https://salabs.quanxs.com/tools/audio-equalizer-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Pitch Tracker](https://salabs.quanxs.com/tools/audio-formant-pitch-tracker.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vocal Filter Studio](https://salabs.quanxs.com/tools/audio-formant-vocal-filter-studio.html): 100% Client-side pure JS utility tool.
+- [Audio Formant Vowel Filter Studio](https://salabs.quanxs.com/tools/audio-formant-vowel-filter-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Filter V5005](https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v5005.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Filter](https://salabs.quanxs.com/tools/audio-formant-vowel-filter.html): 100% Client-side pure JS utility tool.
 - [Audio Formant Vowel Shaper](https://salabs.quanxs.com/tools/audio-formant-vowel-shaper.html): 100% Client-side pure JS utility tool.
@@ -140,6 +141,7 @@
 - [Crypto Secp256K1 Keypair Generator](https://salabs.quanxs.com/tools/crypto-secp256k1-keypair-generator.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Keypair Studio](https://salabs.quanxs.com/tools/crypto-secp256k1-keypair-studio.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr Bip340 Verifier](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-bip340-verifier.html): 100% Client-side pure JS utility tool.
+- [Crypto Secp256K1 Schnorr Signature Verifier](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-signature-verifier.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr Signature](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-signature.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Schnorr V5005](https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v5005.html): 100% Client-side pure JS utility tool.
 - [Crypto Secp256K1 Signature Inspector](https://salabs.quanxs.com/tools/crypto-secp256k1-signature-inspector.html): 100% Client-side pure JS utility tool.
