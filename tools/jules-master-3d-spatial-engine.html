@@ -220,6 +220,22 @@
           <div class="slider-label">
             <span>Gravity Acceleration (중력 수치)</span>
             <span id="gravity-val">9.81 m/s²</span>
+
+            <div class="mt-4 pt-3 border-t border-slate-700">
+              <div class="text-xs font-semibold text-slate-400 mb-2 tracking-wider">TOPOLOGICAL COGNITION TENSORS</div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-slate-300 text-[11px]">Curvature ∇Φ</span>
+                <span id="cog-curvature" class="font-mono text-cyan-400 text-xs font-bold">0.000</span>
+              </div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-slate-300 text-[11px]">Density ρ</span>
+                <span id="cog-density" class="font-mono text-blue-400 text-xs font-bold">0.000</span>
+              </div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-slate-300 text-[11px]">Distortion J</span>
+                <span id="cog-distortion" class="font-mono text-purple-400 text-xs font-bold">0.000</span>
+              </div>
+            </div>
           </div>
           <input
             type="range"
@@ -376,6 +392,39 @@
 
     <script>
       // --- 1. Global Engine Dynamic State Bus ---
+      
+      // --- Module 12: Topological Cognition Core (Native Chaos Tensor Engine) ---
+      class TopologicalCognitionCore {
+        constructor() {
+          this.curvature = 0.0;
+          this.density = 0.0;
+          this.distortion = 0.0;
+          // Lorenz Attractor for Autonomous Chaos Math
+          this.sigma = 10.0;
+          this.rho = 28.0;
+          this.beta = 8.0 / 3.0;
+          this.x = 0.1;
+          this.y = 0.0;
+          this.z = 0.0;
+        }
+        update(dt) {
+          // Calculate Lorenz Attractor differentials
+          const dx = (this.sigma * (this.y - this.x)) * dt;
+          const dy = (this.x * (this.rho - this.z) - this.y) * dt;
+          const dz = (this.x * this.y - this.beta * this.z) * dt;
+          
+          this.x += dx * 0.5; // Scaled down for smoothness
+          this.y += dy * 0.5;
+          this.z += dz * 0.5;
+
+          // Map Lorenz space to Tensor parameters
+          this.curvature = (this.z / 30.0) * 1.5; // Deep gravity wells
+          this.density = Math.abs(this.x / 15.0); // Concentration of knowledge
+          this.distortion = (this.y / 20.0);      // Topological dissonance
+        }
+      }
+      const CognitionCore = new TopologicalCognitionCore();
+      
       const GlobalState = {
         gravity: 9.81,
         solarAngle: 12.0,
@@ -567,20 +616,63 @@
             time: { value: 0.0 },
             gravity: { value: GlobalState.gravity },
             solarAngle: { value: GlobalState.solarAngle },
+            cogCurvature: { value: 0.0 },
+            cogDensity: { value: 0.0 },
+            cogDistortion: { value: 0.0 }
           },
           vertexShader: `
             uniform float time;
             uniform float gravity;
             uniform float solarAngle;
+            uniform float cogCurvature;
+            uniform float cogDensity;
+            uniform float cogDistortion;
             varying vec2 vUv;
+            
+            // Simplex noise function for topological distortion
+            vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+            vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+            vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+            float snoise(vec2 v) {
+              const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+              vec2 i  = floor(v + dot(v, C.yy) );
+              vec2 x0 = v -   i + dot(i, C.xx);
+              vec2 i1; i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+              vec4 x12 = x0.xyxy + C.xxzz;
+              x12.xy -= i1;
+              i = mod289(i);
+              vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 )) + i.x + vec3(0.0, i1.x, 1.0 ));
+              vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+              m = m*m ; m = m*m ;
+              vec3 x = 2.0 * fract(p * C.www) - 1.0;
+              vec3 h = abs(x) - 0.5;
+              vec3 ox = floor(x + 0.5);
+              vec3 a0 = x - ox;
+              m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+              vec3 g;
+              g.x  = a0.x  * x0.x  + h.x  * x0.y;
+              g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+              return 130.0 * dot(m, g);
+            }
+
             void main() {
               vUv = uv;
               vec3 pos = position;
-              // Simulate spacetime curvature
+              
               float dist = length(pos.xz);
-              float curvature = (gravity - 9.81) * 0.1;
-              pos.y += sin(dist * 0.5 - time * 2.0) * curvature;
-              // Add solar thermal wave
+              
+              // 1. Density Contraction (Pulls grid towards center)
+              pos.xz *= 1.0 - (cogDensity * 0.2 * exp(-dist * 0.1));
+              
+              // 2. Curvature (Deep Riemannian Gravity Wells)
+              float curveDepth = (gravity - 9.81) * 0.05 + cogCurvature;
+              pos.y -= curveDepth * exp(-dist * 0.2) * 5.0; // Gravity well shape
+              
+              // 3. Distortion (Topological noise / dissonance)
+              float noise = snoise(pos.xz * 0.2 + time) * cogDistortion;
+              pos.y += noise * 2.0;
+
+              // Solar thermal wave
               float solarRad = (solarAngle / 24.0) * 3.14159 * 2.0;
               pos.y += cos(pos.x * 0.5 + time + solarRad) * 0.2;
 
@@ -589,16 +681,20 @@
           `,
           fragmentShader: `
             uniform float time;
+            uniform float cogDistortion;
             varying vec2 vUv;
             void main() {
-              // Grid pattern
               vec2 grid = abs(fract(vUv * 30.0 - 0.5) - 0.5) / fwidth(vUv * 30.0);
               float line = min(grid.x, grid.y);
               float color = 1.0 - min(line, 1.0);
               if (color < 0.1) discard;
 
+              // Dynamic color based on Distortion (Chaos)
               vec3 baseColor = vec3(0.0, 0.949, 0.996); // 0x00f2fe
-              gl_FragColor = vec4(baseColor, color * 0.5);
+              vec3 chaosColor = vec3(0.615, 0.305, 0.866); // Purple distortion
+              vec3 finalColor = mix(baseColor, chaosColor, abs(cogDistortion) * 0.5);
+              
+              gl_FragColor = vec4(finalColor, color * 0.5);
             }
           `,
           transparent: true,
@@ -948,13 +1044,26 @@
         lastTime = now;
 
         // 1. C++ Gravity Bouncing Simulation (Rigid Body Physics)
+        // TICK: Topological Cognition Core (Autonomous Chaos Math)
+        CognitionCore.update(dt);
+        
+        // Feed Tensors to Shader Uniforms
         if (window.quantumGridMaterial) {
           window.quantumGridMaterial.uniforms.time.value = time;
-          window.quantumGridMaterial.uniforms.gravity.value =
-            GlobalState.gravity;
-          window.quantumGridMaterial.uniforms.solarAngle.value =
-            GlobalState.solarAngle;
+          window.quantumGridMaterial.uniforms.gravity.value = GlobalState.gravity;
+          window.quantumGridMaterial.uniforms.solarAngle.value = GlobalState.solarAngle;
+          window.quantumGridMaterial.uniforms.cogCurvature.value = CognitionCore.curvature;
+          window.quantumGridMaterial.uniforms.cogDensity.value = CognitionCore.density;
+          window.quantumGridMaterial.uniforms.cogDistortion.value = CognitionCore.distortion;
         }
+
+        // Update Cognitive UI HUD
+        const curEl = document.getElementById('cog-curvature');
+        if (curEl) curEl.innerText = CognitionCore.curvature.toFixed(3);
+        const denEl = document.getElementById('cog-density');
+        if (denEl) denEl.innerText = CognitionCore.density.toFixed(3);
+        const distEl = document.getElementById('cog-distortion');
+        if (distEl) distEl.innerText = CognitionCore.distortion.toFixed(3);
 
         const rb = bouncingSphere.userData;
 
