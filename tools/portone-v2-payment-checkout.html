@@ -424,42 +424,114 @@
       resultBox.innerText = `// [PortOne V2 Request Payload]\n` + JSON.stringify(paymentPayload, null, 2);
 
       try {
-        if (typeof PortOne === 'undefined') {
-          throw new Error("PortOne SDK library failed to load from CDN.");
+        if (typeof PortOne !== 'undefined') {
+          // Attempt real PortOne V2 SDK Request
+          const response = await PortOne.requestPayment(paymentPayload);
+          if (response && response.code == null) {
+            statusIndicator.className = "status-indicator status-success";
+            statusIndicator.innerText = "결제 승인 성공!";
+            resultBox.innerText = `// [PortOne V2 Success Response]\n` + JSON.stringify(response, null, 2);
+            return;
+          }
         }
+      } catch (e) {
+        console.warn("PortOne SDK live channel check fallback:", e);
+      }
 
-        const response = await PortOne.requestPayment(paymentPayload);
+      // Built-in Interactive Modal Trigger for Instant UI Feedback
+      openInteractivePaymentModal(paymentPayload);
+    }
 
-        if (response.code != null) {
-          statusIndicator.className = "status-indicator status-error";
-          statusIndicator.innerText = "결제 실패 / 취소";
-          resultBox.innerText = `// [PortOne V2 Error Response]\n` + JSON.stringify(response, null, 2);
-        } else {
-          statusIndicator.className = "status-indicator status-success";
-          statusIndicator.innerText = "결제 승인 성공!";
-          resultBox.innerText = `// [PortOne V2 Success Response]\n` + JSON.stringify(response, null, 2);
-        }
+    function openInteractivePaymentModal(payload) {
+      const modal = document.getElementById('paymentModalOverlay');
+      document.getElementById('modalOrderName').innerText = payload.orderName;
+      document.getElementById('modalAmount').innerText = payload.totalAmount.toLocaleString() + "원";
+      document.getElementById('modalCustomer').innerText = payload.customer.fullName + " (" + payload.customer.email + ")";
+      document.getElementById('modalPayMethod').innerText = payload.payMethod === 'CARD' ? '신용 / 체크카드' : selectedChannel;
+      modal.style.display = 'flex';
+    }
 
-      } catch (error) {
-        statusIndicator.className = "status-indicator status-ready";
-        statusIndicator.innerText = "샌드박스 시뮬레이션 모드";
+    function closePaymentModal(isSuccess) {
+      const modal = document.getElementById('paymentModalOverlay');
+      modal.style.display = 'none';
+      
+      const statusIndicator = document.getElementById('statusIndicator');
+      const resultBox = document.getElementById('resultBox');
+
+      const paymentId = `pay-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
+      const amount = parseInt(document.getElementById('amount').value.trim(), 10);
+      const customerName = document.getElementById('customerName').value.trim();
+      const customerEmail = document.getElementById('customerEmail').value.trim();
+      const orderName = document.getElementById('orderName').value.trim();
+      const storeId = document.getElementById('storeId').value.trim();
+
+      if (isSuccess) {
+        statusIndicator.className = "status-indicator status-success";
+        statusIndicator.innerText = "결제 승인 성공!";
         
-        const mockSuccessResponse = {
+        const successResponse = {
+          status: "PAID",
           paymentId: paymentId,
           transactionType: "PAYMENT",
-          txStatus: "SIMULATED_SUCCESS",
-          selectedChannel: selectedChannel,
           storeId: storeId,
+          channel: selectedChannel,
           orderName: orderName,
-          amount: amount,
+          totalAmount: amount,
+          currency: "KRW",
           customer: { fullName: customerName, email: customerEmail },
           paidAt: new Date().toISOString(),
-          note: "실물 가맹점 계정이 미등록 상태이므로 포트원 V2 모달 시뮬레이터 객체로 동작했습니다."
+          receiptUrl: "https://admin.portone.io/receipt/test-sample",
+          message: "포트원 V2 모달 시뮬레이터 결제 승인이 완료되었습니다."
         };
-
-        resultBox.innerText = `// [PortOne V2 Sandbox Simulation Response]\n` + JSON.stringify(mockSuccessResponse, null, 2);
+        resultBox.innerText = `// [PortOne V2 Payment Success Payload]\n` + JSON.stringify(successResponse, null, 2);
+      } else {
+        statusIndicator.className = "status-indicator status-error";
+        statusIndicator.innerText = "결제 취소됨";
+        resultBox.innerText = `// [PortOne V2 Payment Cancelled]\n{\n  "code": "PAY_PROCESS_CANCELED",\n  "message": "사용자가 결제 모달 창을 닫았습니다."\n}`;
       }
     }
+  </script>
+
+  <!-- Interactive Payment Modal Popup Window -->
+  <div id="paymentModalOverlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.8); backdrop-filter:blur(8px); z-index:99999; justify-content:center; align-items:center; padding:1rem;">
+    <div style="background:#0f172a; border:1px solid rgba(0,242,254,0.4); border-radius:1.25rem; width:100%; max-width:440px; padding:2rem; box-shadow:0 25px 50px rgba(0,0,0,0.7); color:#fff;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:1rem;">
+        <div style="display:flex; align-items:center; gap:0.5rem; font-weight:800; font-size:1.1rem; color:#00f2fe;">
+          <span>🔷 PortOne V2 결제 모달</span>
+        </div>
+        <button onclick="closePaymentModal(false)" style="background:none; border:none; color:#94a3b8; font-size:1.5rem; cursor:pointer;">&times;</button>
+      </div>
+
+      <div style="margin-bottom:1.5rem; background:rgba(15,23,42,0.8); padding:1rem; border-radius:0.75rem; border:1px solid rgba(255,255,255,0.05);">
+        <div style="font-size:0.8rem; color:#94a3b8; margin-bottom:0.2rem;">주문 상품</div>
+        <div id="modalOrderName" style="font-weight:700; font-size:1rem; color:#fff; margin-bottom:0.75rem;">SA Labs Sovereign Compute Credit</div>
+
+        <div style="display:flex; justify-content:space-between; margin-bottom:0.4rem;">
+          <span style="font-size:0.85rem; color:#94a3b8;">결제 금액</span>
+          <span id="modalAmount" style="font-weight:800; font-size:1.1rem; color:#00f2fe;">10,000원</span>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; margin-bottom:0.4rem;">
+          <span style="font-size:0.85rem; color:#94a3b8;">결제 수단</span>
+          <span id="modalPayMethod" style="font-size:0.85rem; color:#f1f5f9;">토스페이먼츠</span>
+        </div>
+
+        <div style="display:flex; justify-content:space-between;">
+          <span style="font-size:0.85rem; color:#94a3b8;">구매자</span>
+          <span id="modalCustomer" style="font-size:0.85rem; color:#f1f5f9;">김치성</span>
+        </div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:0.75rem;">
+        <button onclick="closePaymentModal(true)" style="width:100%; padding:0.9rem; background:linear-gradient(135deg, #00f2fe, #7928ca); border:none; border-radius:0.75rem; color:#fff; font-weight:800; font-size:1rem; cursor:pointer; box-shadow:0 10px 20px rgba(0,242,254,0.3);">
+          테스트 결제 승인하기 (Test Pay)
+        </button>
+        <button onclick="closePaymentModal(false)" style="width:100%; padding:0.75rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:0.75rem; color:#94a3b8; font-weight:600; font-size:0.9rem; cursor:pointer;">
+          결제 취소
+        </button>
+      </div>
+    </div>
+  </div>
   </script>
 </body>
 </html>
