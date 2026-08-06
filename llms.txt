@@ -294,6 +294,7 @@
 - [Js Localstorage Session Manager](https://salabs.quanxs.com/tools/js-localstorage-session-manager.html): 100% Client-side pure JS utility tool.
 - [Js Minifier Formatter](https://salabs.quanxs.com/tools/js-minifier-formatter.html): 100% Client-side pure JS utility tool.
 - [Js Object Diff Checker](https://salabs.quanxs.com/tools/js-object-diff-checker.html): 100% Client-side pure JS utility tool.
+- [Js Performance Profiler Studio](https://salabs.quanxs.com/tools/js-performance-profiler-studio.html): 100% Client-side pure JS utility tool.
 - [Js Promise Async Visualizer](https://salabs.quanxs.com/tools/js-promise-async-visualizer.html): 100% Client-side pure JS utility tool.
 - [Js Regex Code Generator](https://salabs.quanxs.com/tools/js-regex-code-generator.html): 100% Client-side pure JS utility tool.
 - [Js Regex Escape Tool](https://salabs.quanxs.com/tools/js-regex-escape-tool.html): 100% Client-side pure JS utility tool.
@@ -347,6 +348,7 @@
 - [Sacm Coder Middleware Studio](https://salabs.quanxs.com/tools/sacm-coder-middleware-studio.html): 100% Client-side pure JS utility tool.
 - [Salabs Compute Credit Checkout](https://salabs.quanxs.com/tools/salabs-compute-credit-checkout.html): 100% Client-side pure JS utility tool.
 - [Salabs Flagship 3D Spatial Workbench](https://salabs.quanxs.com/tools/salabs-flagship-3d-spatial-workbench.html): 100% Client-side pure JS utility tool.
+- [Schema Jsonld Validator Studio](https://salabs.quanxs.com/tools/schema-jsonld-validator-studio.html): 100% Client-side pure JS utility tool.
 - [Schema Micro Optimizer](https://salabs.quanxs.com/tools/schema-micro-optimizer.html): 100% Client-side pure JS utility tool.
 - [Screen Resolution Dpi Checker](https://salabs.quanxs.com/tools/screen-resolution-dpi-checker.html): 100% Client-side pure JS utility tool.
 - [Sha256 Hash Calculator](https://salabs.quanxs.com/tools/sha256-hash-calculator.html): 100% Client-side pure JS utility tool.
