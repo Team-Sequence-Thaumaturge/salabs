@@ -301,9 +301,11 @@
 - [Json To Csv Exporter](https://salabs.quanxs.com/tools/json-to-csv-exporter.html): 100% Client-side pure JS utility tool.
 - [Json Yaml Formatter](https://salabs.quanxs.com/tools/json-yaml-formatter.html): 100% Client-side pure JS utility tool.
 - [Jules Agentic Commerce Dashboard](https://salabs.quanxs.com/tools/jules-agentic-commerce-dashboard.html): 100% Client-side pure JS utility tool.
+- [Jules Flagship 3D Engine Dashboard](https://salabs.quanxs.com/tools/jules-flagship-3d-engine-dashboard.html): 100% Client-side pure JS utility tool.
 - [Jules Json Tree Visualizer](https://salabs.quanxs.com/tools/jules-json-tree-visualizer.html): 100% Client-side pure JS utility tool.
 - [Jules Master 3D Spatial Engine V1 2](https://salabs.quanxs.com/tools/jules-master-3d-spatial-engine-v1-2.html): 100% Client-side pure JS utility tool.
 - [Jules Master 3D Spatial Engine](https://salabs.quanxs.com/tools/jules-master-3d-spatial-engine.html): 100% Client-side pure JS utility tool.
+- [Jules Quantum Relativity 3D Studio](https://salabs.quanxs.com/tools/jules-quantum-relativity-3d-studio.html): 100% Client-side pure JS utility tool.
 - [Jwt Debugger Verifier](https://salabs.quanxs.com/tools/jwt-debugger-verifier.html): 100% Client-side pure JS utility tool.
 - [Jwt Payload Editor](https://salabs.quanxs.com/tools/jwt-payload-editor.html): 100% Client-side pure JS utility tool.
 - [Jwt Rs256 Key Generator](https://salabs.quanxs.com/tools/jwt-rs256-key-generator.html): 100% Client-side pure JS utility tool.
@@ -321,6 +323,7 @@
 - [Markdown To Pdf Exporter](https://salabs.quanxs.com/tools/markdown-to-pdf-exporter.html): 100% Client-side pure JS utility tool.
 - [Markdown Toc Generator](https://salabs.quanxs.com/tools/markdown-toc-generator.html): 100% Client-side pure JS utility tool.
 - [Meta Tag Generator](https://salabs.quanxs.com/tools/meta-tag-generator.html): 100% Client-side pure JS utility tool.
+- [Micro Perf Schema Engine](https://salabs.quanxs.com/tools/micro-perf-schema-engine.html): 100% Client-side pure JS utility tool.
 - [Micro Performance Schema Engine](https://salabs.quanxs.com/tools/micro-performance-schema-engine.html): 100% Client-side pure JS utility tool.
 - [Next Gen Client Utility Engine](https://salabs.quanxs.com/tools/next-gen-client-utility-engine.html): 100% Client-side pure JS utility tool.
 - [Next Gen Utility Engine](https://salabs.quanxs.com/tools/next-gen-utility-engine.html): 100% Client-side pure JS utility tool.

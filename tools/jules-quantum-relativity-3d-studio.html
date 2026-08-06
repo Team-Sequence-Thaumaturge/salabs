@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jules Quantum Relativity 3D Studio</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Jules Quantum Relativity 3D Studio",
+        "description": "Interactive 3D WebGL particle space curvature field with 24-hour solar angle lighting slider and live semantic color matrix inspector.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Any"
+      }
+    </script>
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              slate: { 900: "#0f172a" },
+              cyan: { 400: "#00f2fe" },
+              blue: { 400: "#4facfe" },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: #0f172a;
+        color: white;
+        font-family: sans-serif;
+      }
+      #canvas-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+      #ui-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        pointer-events: none;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .panel {
+        pointer-events: auto;
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 242, 254, 0.3);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      }
+      input[type="range"] {
+        accent-color: #00f2fe;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  </head>
+  <body>
+    <div id="canvas-container"></div>
+    <div id="ui-container">
+      <div class="panel max-w-md">
+        <h1
+          class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-400 mb-2"
+        >
+          Quantum Relativity 3D Studio
+        </h1>
+        <p class="text-sm text-gray-300 mb-4">
+          Interactive WebGL Particle Space Curvature Field
+        </p>
+        <div class="mb-4">
+          <label class="block text-sm font-medium mb-1"
+            >Time (24-Hour Solar Angle):
+            <span id="time-display" class="text-cyan-400">12:00</span></label
+          >
+          <input
+            type="range"
+            id="time-slider"
+            min="0"
+            max="23"
+            value="12"
+            class="w-full"
+          />
+          <div
+            id="solar-matrix-data"
+            class="text-xs mt-2 text-gray-400 font-mono"
+          ></div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1"
+            >Semantic Color Inspector</label
+          >
+          <input
+            type="color"
+            id="color-picker"
+            value="#ff007f"
+            class="w-full h-10 border-0 rounded bg-transparent cursor-pointer"
+          />
+          <div class="mt-2 text-sm">
+            Detected:
+            <span id="semantic-name" class="font-bold text-cyan-400"
+              >cyberpunk neon pink</span
+            >
+          </div>
+          <div class="mt-1 text-sm">
+            Complementary:
+            <span id="comp-name" class="font-bold text-blue-400"
+              >bright neon green</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const SemanticColorDictionary = [
+          { hex: "#ff0000", name: "vivid crimson red" }, { hex: "#00ff00", name: "bright neon green" },
+          { hex: "#0000ff", name: "deep electric blue" }, { hex: "#ff00ff", name: "vivid magenta pink" },
+          { hex: "#00ffff", name: "bright cyan glowing" }, { hex: "#ffff00", name: "bright lemon yellow" },
+          { hex: "#ffffff", name: "pure platinum white" }, { hex: "#000000", name: "obsidian black" },
+          { hex: "#808080", name: "ash slate gray" }, { hex: "#ff8c00", name: "dark orange sunset" },
+          { hex: "#4b0082", name: "deep indigo violet" }, { hex: "#ffc0cb", name: "soft pastel pink" },
+          { hex: "#ff007f", name: "cyberpunk neon pink" }
+      ];
+
+      function hexToRgb(hex) { return [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16)]; }
+
+      function getSemanticColorName(hex) {
+          let targetRgb = hexToRgb(hex);
+          let closestName = "custom dyed";
+          let minDistance = Infinity;
+          for (let c of SemanticColorDictionary) {
+              let dictRgb = hexToRgb(c.hex);
+              let dist = Math.pow(targetRgb[0] - dictRgb[0], 2) + Math.pow(targetRgb[1] - dictRgb[1], 2) + Math.pow(targetRgb[2] - dictRgb[2], 2);
+              if (dist < minDistance) { minDistance = dist; closestName = c.name; }
+          }
+          return closestName;
+      }
+
+      function hexToHsl(hex) {
+          let [r, g, b] = hexToRgb(hex).map(v => v / 255);
+          let max = Math.max(r, g, b), min = Math.min(r, g, b);
+          let h, s, l = (max + min) / 2;
+          if (max === min) { h = s = 0; }
+          else {
+              let d = max - min;
+              s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+              switch (max) {
+                  case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                  case g: h = (b - r) / d + 2; break;
+                  case b: h = (r - g) / d + 4; break;
+              }
+              h /= 6;
+          }
+          return [h * 360, s, l];
+      }
+
+      function hslToHex(h, s, l) {
+          let r, g, b;
+          h /= 360;
+          if (s === 0) { r = g = b = l; }
+          else {
+              const hue2rgb = (p, q, t) => {
+                  if (t < 0) t += 1;
+                  if (t > 1) t -= 1;
+                  if (t < 1 / 6) return p + (q - p) * 6 * t;
+                  if (t < 1 / 2) return q;
+                  if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+                  return p;
+              };
+              let q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+              let p = 2 * l - q;
+              r = hue2rgb(p, q, h + 1 / 3);
+              g = hue2rgb(p, q, h);
+              b = hue2rgb(p, q, h - 1 / 3);
+          }
+          const toHex = x => { const hex = Math.round(x * 255).toString(16); return hex.length === 1 ? '0' + hex : hex; };
+          return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+      }
+
+      function calculateSolarMatrix(locToken, monthToken, timeToken, spaceToken = "") {
+          let hour = parseInt(timeToken);
+          if (isNaN(hour)) hour = 12;
+          let tau = (hour % 24) / 24.0;
+          const geo = {lat: 37.5, alt: 38, alb: 0.15};
+          let detectedAnchor = "STANDARD_DEFAULT (SEOUL)";
+          let dayOfYear = 180;
+          let distance = 1 - 0.0167 * Math.cos(2 * Math.PI * (dayOfYear - 4) / 365);
+          let flux = 1 / (distance * distance);
+          let declination = 23.44 * Math.sin((360 / 365) * (dayOfYear - 81) * (Math.PI / 180));
+          let H = (hour - 12) * 15;
+          let rad = Math.PI / 180;
+          let sinTheta = Math.sin(geo.lat*rad)*Math.sin(declination*rad) + Math.cos(geo.lat*rad)*Math.cos(declination*rad)*Math.cos(H*rad);
+          let theta = Math.asin(sinTheta) / rad;
+          let airMass = 1 / Math.sin(Math.max(0.05, theta * rad));
+          if (theta < 0) airMass = 40.0;
+          let pressureRatio = Math.exp(-geo.alt / 8400);
+          let thermal = (theta - 45) / 100 * flux;
+          let hemisphereFactor = (geo.lat >= 0) ? 1 : -1;
+          if (declination < 0) thermal -= (0.2 * hemisphereFactor);
+          if (declination > 0) thermal += (0.2 * hemisphereFactor);
+          let heatAccumulation = 0.0;
+          if (hour >= 13 && hour <= 18 && thermal > 0.05) { heatAccumulation = (hour - 12) * thermal * geo.alb * 10.0; }
+          return {
+              "Class": "Terrestrial_Simulation", "Semantic_Geo_Anchor": detectedAnchor,
+              "Diurnal_Phase_Tau": parseFloat(tau.toFixed(2)), "Keplerian_Flux": parseFloat(flux.toFixed(3)),
+              "Solar_Elevation_Theta": parseFloat(theta.toFixed(1)), "Air_Mass_AM": parseFloat(airMass.toFixed(2)),
+              "Pressure_Altitude_Ratio": parseFloat(pressureRatio.toFixed(2)), "Thermal_Offset": parseFloat(thermal.toFixed(2)),
+              "Heat_Accumulation_t_minus_1": parseFloat(heatAccumulation.toFixed(2))
+          };
+      }
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 40;
+        camera.position.y = 20;
+      camera.lookAt(0, 0, 0);
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setClearColor(0x0f172a, 1);
+      document.getElementById('canvas-container').appendChild(renderer.domElement);
+      const particleCount = 20000;
+      const geometry = new THREE.BufferGeometry();
+      const positions = new Float32Array(particleCount * 3);
+      const colors = new Float32Array(particleCount * 3);
+      const colorBase = new THREE.Color(0x00f2fe);
+      const colorAccent = new THREE.Color(0x4facfe);
+      for (let i = 0; i < particleCount; i++) {
+          const r = 40 * Math.sqrt(Math.random());
+          const theta = Math.random() * 2 * Math.PI;
+          positions[i * 3] = r * Math.cos(theta);
+          positions[i * 3 + 1] = (Math.random() - 0.5) * 2;
+          positions[i * 3 + 2] = r * Math.sin(theta);
+          const mixRatio = Math.random();
+          const mixedColor = colorBase.clone().lerp(colorAccent, mixRatio);
+          colors[i * 3] = mixedColor.r;
+          colors[i * 3 + 1] = mixedColor.g;
+          colors[i * 3 + 2] = mixedColor.b;
+      }
+      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+      const shaderMaterial = new THREE.ShaderMaterial({
+          uniforms: { time: { value: 0.0 }, curvature: { value: 1.0 }, solarTheta: { value: 1.0 } },
+            vertexShader: `
+              uniform float time;
+              uniform float curvature;
+              uniform float solarTheta;
+              varying vec3 vColor;
+              void main() {
+                  vec3 pos = position;
+                  float dist = length(pos.xz);
+                  pos.y += sin(dist * 0.5 - time * 2.0) * curvature * 2.0;
+                  pos.y += cos(pos.x * 0.2 + time) * 1.5;
+                  pos.y += sin(solarTheta * 0.1) * dist * 0.1;
+                  vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+                  gl_Position = projectionMatrix * mvPosition;
+                    gl_PointSize = max(4.0, 150.0 / -mvPosition.z);
+                  vColor = color;
+              }
+            `,
+            fragmentShader: `
+              varying vec3 vColor;
+              void main() {
+                  float dist = length(gl_PointCoord - vec2(0.5));
+                  if (dist > 0.5) discard;
+                  gl_FragColor = vec4(vColor, 1.0 - (dist * 2.0));
+              }
+            `,
+          transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
+      });
+      const particles = new THREE.Points(geometry, shaderMaterial);
+      scene.add(particles);
+      const clock = new THREE.Clock();
+      let currentCurvature = 1.0;
+      let targetCurvature = 1.0;
+      function animate() {
+          requestAnimationFrame(animate);
+          const elapsedTime = clock.getElapsedTime();
+          currentCurvature += (targetCurvature - currentCurvature) * 0.05;
+          shaderMaterial.uniforms.time.value = elapsedTime;
+          shaderMaterial.uniforms.curvature.value = currentCurvature;
+          particles.rotation.y = elapsedTime * 0.05;
+          renderer.render(scene, camera);
+      }
+      animate();
+      window.addEventListener('resize', () => {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+      const timeSlider = document.getElementById('time-slider');
+      const timeDisplay = document.getElementById('time-display');
+      const solarData = document.getElementById('solar-matrix-data');
+      function updateSolar() {
+          const timeVal = timeSlider.value;
+            timeDisplay.innerText = `${timeVal.padStart(2, '0')}:00`;
+          const matrix = calculateSolarMatrix('seoul', 'july', timeVal);
+            solarData.innerHTML = `Theta: ${matrix.Solar_Elevation_Theta}°<br>Air Mass: ${matrix.Air_Mass_AM}<br>Flux: ${matrix.Keplerian_Flux}`;
+          shaderMaterial.uniforms.solarTheta.value = matrix.Solar_Elevation_Theta;
+          targetCurvature = 1.0 + Math.sin(matrix.Solar_Elevation_Theta * Math.PI / 180) * 0.5;
+      }
+      timeSlider.addEventListener('input', updateSolar);
+      updateSolar();
+      const colorPicker = document.getElementById('color-picker');
+      const semanticName = document.getElementById('semantic-name');
+      const compName = document.getElementById('comp-name');
+      function updateColor() {
+          const hex = colorPicker.value;
+          semanticName.innerText = getSemanticColorName(hex);
+          const hsl = hexToHsl(hex);
+          const compHue = (hsl[0] + 180) % 360;
+          const compHex = hslToHex(compHue, hsl[1], hsl[2]);
+          compName.innerText = getSemanticColorName(compHex);
+          const rgb = hexToRgb(hex);
+          colorBase.setRGB(rgb[0]/255, rgb[1]/255, rgb[2]/255);
+          const compRgb = hexToRgb(compHex);
+          colorAccent.setRGB(compRgb[0]/255, compRgb[1]/255, compRgb[2]/255);
+          const colorsAttr = geometry.attributes.color;
+          for (let i = 0; i < particleCount; i++) {
+              const mixRatio = Math.random();
+              const mixedColor = colorBase.clone().lerp(colorAccent, mixRatio);
+              colorsAttr.setXYZ(i, mixedColor.r, mixedColor.g, mixedColor.b);
+          }
+          colorsAttr.needsUpdate = true;
+      }
+      colorPicker.addEventListener('input', updateColor);
+      updateColor();
+    </script>
+  </body>
+</html>
