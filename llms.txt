@@ -168,6 +168,7 @@
 - [Css Box Shadow Generator](https://salabs.quanxs.com/tools/css-box-shadow-generator.html): 100% Client-side pure JS utility tool.
 - [Css Box Shadow Inset Studio](https://salabs.quanxs.com/tools/css-box-shadow-inset-studio.html): 100% Client-side pure JS utility tool.
 - [Css Box Shadow Neumorphic Generator](https://salabs.quanxs.com/tools/css-box-shadow-neumorphic-generator.html): 100% Client-side pure JS utility tool.
+- [Css Box Shadow Studio](https://salabs.quanxs.com/tools/css-box-shadow-studio.html): 100% Client-side pure JS utility tool.
 - [Css Button Generator](https://salabs.quanxs.com/tools/css-button-generator.html): 100% Client-side pure JS utility tool.
 - [Css Clamp Calculator](https://salabs.quanxs.com/tools/css-clamp-calculator.html): 100% Client-side pure JS utility tool.
 - [Css Clip Path Generator](https://salabs.quanxs.com/tools/css-clip-path-generator.html): 100% Client-side pure JS utility tool.
@@ -289,11 +290,13 @@
 - [Js Promise Async Visualizer](https://salabs.quanxs.com/tools/js-promise-async-visualizer.html): 100% Client-side pure JS utility tool.
 - [Js Regex Code Generator](https://salabs.quanxs.com/tools/js-regex-code-generator.html): 100% Client-side pure JS utility tool.
 - [Js Regex Escape Tool](https://salabs.quanxs.com/tools/js-regex-escape-tool.html): 100% Client-side pure JS utility tool.
+- [Js Regexp Visualizer](https://salabs.quanxs.com/tools/js-regexp-visualizer.html): 100% Client-side pure JS utility tool.
 - [Js Web Worker Playground](https://salabs.quanxs.com/tools/js-web-worker-playground.html): 100% Client-side pure JS utility tool.
 - [Json Diff](https://salabs.quanxs.com/tools/json-diff.html): 100% Client-side pure JS utility tool.
 - [Json Escape Unescape](https://salabs.quanxs.com/tools/json-escape-unescape.html): 100% Client-side pure JS utility tool.
 - [Json Formatter Beautifier](https://salabs.quanxs.com/tools/json-formatter-beautifier.html): 100% Client-side pure JS utility tool.
 - [Json Path Finder](https://salabs.quanxs.com/tools/json-path-finder.html): 100% Client-side pure JS utility tool.
+- [Json Schema Generator](https://salabs.quanxs.com/tools/json-schema-generator.html): 100% Client-side pure JS utility tool.
 - [Json Schema Validator](https://salabs.quanxs.com/tools/json-schema-validator.html): 100% Client-side pure JS utility tool.
 - [Json To Csv Exporter](https://salabs.quanxs.com/tools/json-to-csv-exporter.html): 100% Client-side pure JS utility tool.
 - [Json Yaml Formatter](https://salabs.quanxs.com/tools/json-yaml-formatter.html): 100% Client-side pure JS utility tool.
