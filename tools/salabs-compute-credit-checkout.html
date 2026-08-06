@@ -91,46 +91,70 @@
             font-size: 14px;
         }
 
-        .product-card {
-            background: var(--surface-light);
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 30px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
+        .tier-grid {
+            display: grid;
+            grid-template-columns: 1fr;
             gap: 15px;
+            margin-bottom: 30px;
         }
 
-        .product-info {
+        .tier-card {
+            background: var(--surface-light);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .product-name {
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--text-primary);
+        .tier-card:hover {
+            border-color: var(--text-secondary);
+            background: rgba(255,255,255,0.05);
         }
 
-        .product-price {
-            font-size: 20px;
+        .tier-card.active {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 15px rgba(157, 78, 221, 0.2) inset;
+        }
+
+        .tier-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .tier-name {
+            font-size: 16px;
             font-weight: 700;
             color: var(--text-primary);
         }
 
-        .divider {
-            height: 1px;
-            background-color: var(--border-color);
-            width: 100%;
+        .tier-credits {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .tier-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+
+        .total-summary {
+            background: var(--surface-light);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
         }
 
         .total-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 5px;
         }
 
         .total-label {
@@ -274,15 +298,36 @@
             <div class="subtitle">Secure Compute Infrastructure Checkout</div>
         </div>
 
-        <div class="product-card">
-            <div class="product-info">
-                <span class="product-name">10,000 Compute Credits</span>
-                <span class="product-price">10,000 원</span>
+        <div class="tier-grid">
+            <div class="tier-card active" data-name="Starter Compute Tier" data-price="10000" data-credits="10,000">
+                <div class="tier-info">
+                    <span class="tier-name">Starter Tier</span>
+                    <span class="tier-credits">10,000 Credits</span>
+                </div>
+                <span class="tier-price">10,000원</span>
             </div>
-            <div class="divider"></div>
+            
+            <div class="tier-card" data-name="Pro Compute Tier" data-price="50000" data-credits="50,000">
+                <div class="tier-info">
+                    <span class="tier-name">Pro Tier</span>
+                    <span class="tier-credits">50,000 Credits</span>
+                </div>
+                <span class="tier-price">50,000원</span>
+            </div>
+
+            <div class="tier-card" data-name="Enterprise Compute Tier" data-price="200000" data-credits="200,000">
+                <div class="tier-info">
+                    <span class="tier-name">Enterprise Tier</span>
+                    <span class="tier-credits">200,000 Credits</span>
+                </div>
+                <span class="tier-price">200,000원</span>
+            </div>
+        </div>
+
+        <div class="total-summary">
             <div class="total-row">
                 <span class="total-label">Total Amount</span>
-                <span class="total-amount">10,000 KRW</span>
+                <span class="total-amount" id="displayTotalAmount">10,000 KRW</span>
             </div>
         </div>
 
@@ -313,12 +358,32 @@
 
         // State
         let selectedMethod = "CARD";
+        let currentTier = {
+            name: "Starter Compute Tier",
+            price: 10000
+        };
         
         // Elements
         const methodBtns = document.querySelectorAll('.method-btn');
+        const tierCards = document.querySelectorAll('.tier-card');
+        const displayTotalAmount = document.getElementById('displayTotalAmount');
         const btnPay = document.getElementById('btnPay');
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toastMessage');
+
+        // Tier Selection
+        tierCards.forEach(card => {
+            card.addEventListener('click', () => {
+                tierCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                
+                currentTier.name = card.dataset.name;
+                currentTier.price = parseInt(card.dataset.price);
+                
+                displayTotalAmount.textContent = currentTier.price.toLocaleString() + " KRW";
+                btnPay.textContent = `${currentTier.price.toLocaleString()}원 결제하기`;
+            });
+        });
 
         // Payment Method Selection
         methodBtns.forEach(btn => {
@@ -360,8 +425,8 @@
                     storeId: STORE_ID,
                     channelKey: CHANNEL_KEY,
                     paymentId: paymentId,
-                    orderName: "10,000 Compute Credits",
-                    totalAmount: 10000,
+                    orderName: currentTier.name,
+                    totalAmount: currentTier.price,
                     currency: "CURRENCY_KRW",
                     payMethod: selectedMethod,
                     customer: {

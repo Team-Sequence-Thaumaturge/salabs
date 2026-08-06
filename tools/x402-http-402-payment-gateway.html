@@ -1,1 +1,346 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>x402 HTTP 402 Web3 Micro-Payment Gateway - Quanxs SA Labs</title><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"x402 HTTP 402 Web3 Micro-Payment Gateway","url":"https://salabs.quanxs.com/tools/x402-http-402-payment-gateway.html"}</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script><style>body{font-family:sans-serif;background:#0f172a;color:#f8fafc;padding:2rem;}.container{max-width:1000px;margin:0 auto;background:#1e293b;padding:2rem;border-radius:12px;}textarea,input{width:100%;background:#0f172a;color:#f8fafc;border:1px solid #334155;border-radius:8px;padding:1rem;margin-bottom:1rem;box-sizing:border-box;font-family:monospace;}button{background:#38bdf8;color:#0f172a;border:none;padding:0.8rem 1.5rem;border-radius:6px;font-weight:bold;cursor:pointer;}.card{background:#0f172a;border-radius:8px;padding:1rem;border:1px solid #334155;margin-top:1rem;}</style></head><body><header><h1 style="color:#38bdf8;text-align:center;">x402 Protocol HTTP 402 Micro-Payment Gateway</h1></header><main class="container"><label>Merchant EVM Wallet Address</label><input type="text" id="wallet-addr" value="0xA3f82161A877d94B4E38b3E2dB064379e4dB4831"><label>Micro-Payment Amount (USDC)</label><input type="number" id="pay-amt" value="0.05" step="0.01"><button onclick="generatex402Header()">Generate HTTP 402 x402 Payment Challenge</button><div class="card"><h3>HTTP 402 Response Header</h3><textarea id="header-out" rows="4" readonly></textarea></div></main><script>function generatex402Header(){let addr=document.getElementById('wallet-addr').value;let amt=document.getElementById('pay-amt').value;let challenge={protocol:"x402-v1",network:"EVM-Polygon",asset:"USDC",amount:amt,recipient:addr,nonce:"nonce_"+Math.random().toString(36).substring(2,10),expires_at:new Date(Date.now()+300000).toISOString()};document.getElementById('header-out').value=`HTTP/1.1 402 Payment Required\nX-402-Challenge: ${btoa(JSON.stringify(challenge))}\nContent-Type: application/json`;}generatex402Header();</script></body></html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>x402 Web3 M2M Gateway - Quanxs SA Labs</title>
+    <meta name="description" content="x402 HTTP 402 Web3 Micro-Payment Gateway for AI Agents">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "x402 HTTP 402 Web3 Micro-Payment Gateway",
+        "url": "https://salabs.quanxs.com/tools/x402-http-402-payment-gateway.html"
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #09090b;
+            --surface: #18181b;
+            --surface-hover: #27272a;
+            --border: #3f3f46;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            
+            --neon-blue: #00f0ff;
+            --neon-purple: #bd00ff;
+            --neon-green: #39ff14;
+            --neon-orange: #ff6b00;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background-image: 
+                linear-gradient(45deg, rgba(189, 0, 255, 0.05) 0%, transparent 40%),
+                linear-gradient(-45deg, rgba(0, 240, 255, 0.05) 0%, transparent 40%);
+        }
+
+        .dashboard {
+            width: 100%;
+            max-width: 900px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05) inset;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+        }
+
+        .sidebar {
+            background: rgba(0,0,0,0.3);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+        }
+
+        .main-content {
+            padding: 2.5rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 2.5rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo::before {
+            content: '';
+            display: block;
+            width: 12px;
+            height: 12px;
+            background: var(--neon-blue);
+            box-shadow: 0 0 10px var(--neon-blue);
+            border-radius: 2px;
+        }
+
+        .network-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .network-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: left;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .network-btn:hover {
+            background: var(--surface-hover);
+            color: var(--text-main);
+        }
+
+        .network-btn.active {
+            background: rgba(0, 240, 255, 0.1);
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+            box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.1);
+        }
+
+        /* Network specific colors */
+        .network-btn[data-id="evm"].active { border-color: #627eea; color: #627eea; background: rgba(98, 126, 234, 0.1); box-shadow: inset 0 0 10px rgba(98, 126, 234, 0.1); }
+        .network-btn[data-id="sol"].active { border-color: #14f195; color: #14f195; background: rgba(20, 241, 149, 0.1); box-shadow: inset 0 0 10px rgba(20, 241, 149, 0.1); }
+        .network-btn[data-id="trx"].active { border-color: #ff0606; color: #ff0606; background: rgba(255, 6, 6, 0.1); box-shadow: inset 0 0 10px rgba(255, 6, 6, 0.1); }
+        .network-btn[data-id="btc"].active { border-color: #f7931a; color: #f7931a; background: rgba(247, 147, 26, 0.1); box-shadow: inset 0 0 10px rgba(247, 147, 26, 0.1); }
+
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+        }
+
+        input[readonly] {
+            color: var(--text-muted);
+        }
+
+        .generate-btn {
+            width: 100%;
+            background: var(--text-main);
+            color: var(--bg);
+            border: none;
+            padding: 1.25rem;
+            font-weight: 800;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255,255,255,0.1);
+        }
+
+        .terminal {
+            background: #000;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: #111;
+            border-bottom: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            display: flex;
+            gap: 6px;
+        }
+
+        .mac-btn { width: 12px; height: 12px; border-radius: 50%; }
+        .mac-btn.close { background: #ff5f56; }
+        .mac-btn.min { background: #ffbd2e; }
+        .mac-btn.max { background: #27c93f; }
+
+        .terminal-body {
+            padding: 1.5rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: var(--neon-green);
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-all;
+            height: 200px;
+            overflow-y: auto;
+        }
+
+        .terminal-body .key { color: var(--neon-blue); }
+        .terminal-body .string { color: var(--neon-orange); }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <aside class="sidebar">
+            <div class="logo">x402 GATEWAY</div>
+            
+            <div class="network-list">
+                <button class="network-btn active" data-id="evm">Ethereum / EVM</button>
+                <button class="network-btn" data-id="sol">Solana</button>
+                <button class="network-btn" data-id="trx">Tron</button>
+                <button class="network-btn" data-id="btc">Bitcoin</button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            
+            <div class="form-group">
+                <label>Merchant Wallet Address (Auto-mapped)</label>
+                <input type="text" id="walletAddr" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>M2M AI Micro-Payment Amount ($USD)</label>
+                <input type="number" id="payAmt" value="0.05" step="0.01" min="0.01">
+            </div>
+
+            <button class="generate-btn" id="generateBtn">Generate HTTP 402 Challenge</button>
+
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="mac-btn close"></div>
+                    <div class="mac-btn min"></div>
+                    <div class="mac-btn max"></div>
+                </div>
+                <div class="terminal-body" id="terminalOut">
+// Awaiting generation...
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        const NETWORKS = {
+            evm: { name: "EVM-ERC20", address: "0xA3f65F1C005528507e9E0E2E17cCC946f671c9d2", asset: "USDC" },
+            sol: { name: "Solana-SPL", address: "DkyioiU3ugjhvoDBTwb1MTkmceETCg4nstuPPf6PGBZV", asset: "USDC" },
+            trx: { name: "Tron-TRC20", address: "TLTMGNy42FBWCzo1TyhxhuGaD2atThvBE3", asset: "USDT" },
+            btc: { name: "Bitcoin-Native", address: "bc1qu2f5w02y2qz6m42yv3u3dpkyp2xd0j2hkh7rlz", asset: "BTC-USD" }
+        };
+
+        let currentNetwork = 'evm';
+
+        const buttons = document.querySelectorAll('.network-btn');
+        const walletInput = document.getElementById('walletAddr');
+        const payAmtInput = document.getElementById('payAmt');
+        const generateBtn = document.getElementById('generateBtn');
+        const terminalOut = document.getElementById('terminalOut');
+
+        function setNetwork(id) {
+            currentNetwork = id;
+            walletInput.value = NETWORKS[id].address;
+            
+            buttons.forEach(b => b.classList.remove('active'));
+            document.querySelector(`.network-btn[data-id="${id}"]`).classList.add('active');
+        }
+
+        buttons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                setNetwork(e.currentTarget.dataset.id);
+            });
+        });
+
+        generateBtn.addEventListener('click', () => {
+            const net = NETWORKS[currentNetwork];
+            const amt = payAmtInput.value;
+            
+            const challenge = {
+                protocol: "x402-v2",
+                network: net.name,
+                asset: net.asset,
+                amount: amt,
+                recipient: net.address,
+                nonce: "req_" + Math.random().toString(36).substring(2, 12),
+                timestamp: new Date().toISOString()
+            };
+
+            const token = btoa(JSON.stringify(challenge));
+            
+            const output = `HTTP/1.1 <span class="key">402 Payment Required</span>
+X-402-Challenge: <span class="string">${token}</span>
+Content-Type: application/json
+
+<span class="key">/* cURL Testing Snippet */</span>
+curl -X GET https://api.quanxs.com/v1/ai/compute \\
+  -H "Authorization: x402 ${token}" \\
+  -H "Content-Type: application/json"`;
+            
+            terminalOut.innerHTML = output;
+        });
+
+        // Initialize
+        setNetwork('evm');
+        generateBtn.click();
+    </script>
+</body>
+</html>
