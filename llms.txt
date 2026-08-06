@@ -255,6 +255,7 @@
 - [Html Canvas Histogram Analyzer](https://salabs.quanxs.com/tools/html-canvas-histogram-analyzer.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Image Filters](https://salabs.quanxs.com/tools/html-canvas-image-filters.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Particle Generator](https://salabs.quanxs.com/tools/html-canvas-particle-generator.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Performance Fps Meter](https://salabs.quanxs.com/tools/html-canvas-performance-fps-meter.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Pixel Art Editor](https://salabs.quanxs.com/tools/html-canvas-pixel-art-editor.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Retro Crt Shader](https://salabs.quanxs.com/tools/html-canvas-retro-crt-shader.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Signature Generator](https://salabs.quanxs.com/tools/html-canvas-signature-generator.html): 100% Client-side pure JS utility tool.
@@ -276,6 +277,7 @@
 - [Image Resizer Cropper](https://salabs.quanxs.com/tools/image-resizer-cropper.html): 100% Client-side pure JS utility tool.
 - [Ip Geolocation Lookup](https://salabs.quanxs.com/tools/ip-geolocation-lookup.html): 100% Client-side pure JS utility tool.
 - [Js Array Flat Dedupe](https://salabs.quanxs.com/tools/js-array-flat-dedupe.html): 100% Client-side pure JS utility tool.
+- [Js Ast Code Complexity Analyzer](https://salabs.quanxs.com/tools/js-ast-code-complexity-analyzer.html): 100% Client-side pure JS utility tool.
 - [Js Ast Parser Studio](https://salabs.quanxs.com/tools/js-ast-parser-studio.html): 100% Client-side pure JS utility tool.
 - [Js Base64 Url Safe Encoder](https://salabs.quanxs.com/tools/js-base64-url-safe-encoder.html): 100% Client-side pure JS utility tool.
 - [Js Benchmarking Timer](https://salabs.quanxs.com/tools/js-benchmarking-timer.html): 100% Client-side pure JS utility tool.
