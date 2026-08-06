@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Billing & Credits Center - Quanxs SA Labs</title>
+  <meta name="description" content="SA Labs Unified Billing Center. Compute Credits, Subscriptions, and x402 AI Agent Web3 Micropayments.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0c10;
+      --card-bg: rgba(18, 22, 31, 0.75);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --accent-cyan: #00f2fe;
+      --accent-purple: #7928ca;
+      --accent-pink: #ff0080;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(121, 40, 202, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(0, 242, 254, 0.15) 0%, transparent 40%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 3rem 1.5rem;
+    }
+    .container {
+      width: 100%;
+      max-width: 1100px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      background: linear-gradient(135deg, rgba(0,242,254,0.1), rgba(121,40,202,0.1));
+      border: 1px solid rgba(0,242,254,0.3);
+      border-radius: 9999px;
+      color: var(--accent-cyan);
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.subtitle {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    
+    .nav-back {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--accent-cyan); }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255,255,255,0.25);
+    }
+    
+    .card.premium:hover { box-shadow: 0 10px 40px rgba(121, 40, 202, 0.3); border-color: var(--accent-purple); }
+    .card.ai:hover { box-shadow: 0 10px 40px rgba(0, 242, 254, 0.3); border-color: var(--accent-cyan); }
+    .card.fiat:hover { box-shadow: 0 10px 40px rgba(255, 0, 128, 0.3); border-color: var(--accent-pink); }
+    .card.toss:hover { box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3); border-color: #10b981; }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+    }
+    .card.premium::before { background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink)); }
+    .card.ai::before { background: linear-gradient(90deg, var(--accent-cyan), #3b82f6); }
+    .card.fiat::before { background: linear-gradient(90deg, var(--accent-pink), #f59e0b); }
+    .card.toss::before { background: linear-gradient(90deg, #10b981, #059669); }
+
+    .card h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: #fff; }
+    .card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem; flex-grow: 1; }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 1rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .card.premium .btn { background: var(--accent-purple); border: none; }
+    .card.premium .btn:hover { background: #6b21a8; }
+    .card.ai .btn { background: rgba(0,242,254,0.1); color: var(--accent-cyan); border-color: var(--accent-cyan); }
+    .card.ai .btn:hover { background: rgba(0,242,254,0.2); }
+    .card.fiat .btn:hover { background: rgba(255,255,255,0.1); }
+    
+    .pill {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      font-size: 0.75rem; font-weight: 700;
+      padding: 0.25rem 0.75rem; border-radius: 99px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .pill.b2c { background: rgba(255,0,128,0.2); color: var(--accent-pink); border: 1px solid var(--accent-pink); }
+    .pill.b2b { background: rgba(121,40,202,0.2); color: #c084fc; border: 1px solid var(--accent-purple); }
+    .pill.m2m { background: rgba(0,242,254,0.2); color: var(--accent-cyan); border: 1px solid var(--accent-cyan); }
+  </style>
+</head>
+<body>
+
+  <a href="./index.html" class="nav-back">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+    Back to Main Portal
+  </a>
+
+  <div class="container">
+    <header>
+      <div class="badge">SA Labs Global Settlement</div>
+      <h1>Billing & Credits Center</h1>
+      <p class="subtitle">Fuel your compute workloads. From human B2C credit top-ups to autonomous Web3 M2M micro-transactions for AI Agents.</p>
+    </header>
+
+    <div class="grid">
+      <!-- Card 1: Compute Credit -->
+      <a href="./tools/salabs-compute-credit-checkout.html" class="card premium">
+        <div class="pill b2c">B2C / B2B</div>
+        <h2>Compute Credit Top-Up</h2>
+        <p>Purchase compute credits to unlock heavy AI models, 3D rendering nodes, and enterprise-grade data lake pipelines. Supports Tiered Pricing (Starter, Pro, Enterprise).</p>
+        <div class="btn">View Pricing Tiers</div>
+      </a>
+
+      <!-- Card 2: PortOne V2 -->
+      <a href="./tools/portone-v2-payment-checkout.html" class="card fiat">
+        <div class="pill b2c">Fiat KRW</div>
+        <h2>PortOne Unified Checkout</h2>
+        <p>1-Click checkout utilizing PortOne V2 Browser SDK. Supports domestic Korean credit cards, KakaoPay, NaverPay, and direct bank transfers.</p>
+        <div class="btn">Open PG Checkout</div>
+      </a>
+
+      <!-- Card 3: Toss Payments -->
+      <a href="./tools/toss-payments-checkout.html" class="card toss">
+        <div class="pill b2b">Subscriptions</div>
+        <h2>Toss Payments Billing</h2>
+        <p>Toss Payments dedicated widget for seamless recurring subscriptions and fast B2B/B2C checkout experiences. Native UI integration.</p>
+        <div class="btn">Launch Toss Widget</div>
+      </a>
+
+      <!-- Card 4: x402 Web3 M2M -->
+      <a href="./tools/x402-http-402-payment-gateway.html" class="card ai">
+        <div class="pill m2m">AI Agent M2M</div>
+        <h2>x402 Web3 AI Gateway</h2>
+        <p>HTTP 402 Payment Required enforcement for autonomous AI Agents. Supports 0.001 USDC cryptographic micro-settlements on Base & Solana networks.</p>
+        <div class="btn">Access M2M Gateway</div>
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>
