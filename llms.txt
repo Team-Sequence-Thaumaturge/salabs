@@ -150,6 +150,7 @@
 - [Crypto Subtle Hkdf Sha512 Derivation](https://salabs.quanxs.com/tools/crypto-subtle-hkdf-sha512-derivation.html): 100% Client-side pure JS utility tool.
 - [Crypto Subtle Pbkdf2 Hmac Sha512](https://salabs.quanxs.com/tools/crypto-subtle-pbkdf2-hmac-sha512.html): 100% Client-side pure JS utility tool.
 - [Crypto Subtle Rsa Oaep Cipher](https://salabs.quanxs.com/tools/crypto-subtle-rsa-oaep-cipher.html): 100% Client-side pure JS utility tool.
+- [Crypto Subtle Rsa Oaep Encryptor](https://salabs.quanxs.com/tools/crypto-subtle-rsa-oaep-encryptor.html): 100% Client-side pure JS utility tool.
 - [Crypto Subtle Rsa Pss Signature Validator](https://salabs.quanxs.com/tools/crypto-subtle-rsa-pss-signature-validator.html): 100% Client-side pure JS utility tool.
 - [Crypto Subtle Rsa Pss Signer](https://salabs.quanxs.com/tools/crypto-subtle-rsa-pss-signer.html): 100% Client-side pure JS utility tool.
 - [Crypto X25519 Ecdh Exchange](https://salabs.quanxs.com/tools/crypto-x25519-ecdh-exchange.html): 100% Client-side pure JS utility tool.
@@ -182,6 +183,7 @@
 - [Css Keyframe Animator](https://salabs.quanxs.com/tools/css-keyframe-animator.html): 100% Client-side pure JS utility tool.
 - [Css Neomorphic Button Generator](https://salabs.quanxs.com/tools/css-neomorphic-button-generator.html): 100% Client-side pure JS utility tool.
 - [Css Scrollbar Customizer](https://salabs.quanxs.com/tools/css-scrollbar-customizer.html): 100% Client-side pure JS utility tool.
+- [Css Scrollbar Design Studio](https://salabs.quanxs.com/tools/css-scrollbar-design-studio.html): 100% Client-side pure JS utility tool.
 - [Css Text Shadow Generator](https://salabs.quanxs.com/tools/css-text-shadow-generator.html): 100% Client-side pure JS utility tool.
 - [Csv Delimiter Converter](https://salabs.quanxs.com/tools/csv-delimiter-converter.html): 100% Client-side pure JS utility tool.
 - [Csv Excel Viewer](https://salabs.quanxs.com/tools/csv-excel-viewer.html): 100% Client-side pure JS utility tool.
@@ -281,6 +283,7 @@
 - [Js Ast Parser Studio](https://salabs.quanxs.com/tools/js-ast-parser-studio.html): 100% Client-side pure JS utility tool.
 - [Js Base64 Url Safe Encoder](https://salabs.quanxs.com/tools/js-base64-url-safe-encoder.html): 100% Client-side pure JS utility tool.
 - [Js Benchmarking Timer](https://salabs.quanxs.com/tools/js-benchmarking-timer.html): 100% Client-side pure JS utility tool.
+- [Js Canvas Gradient Studio](https://salabs.quanxs.com/tools/js-canvas-gradient-studio.html): 100% Client-side pure JS utility tool.
 - [Js Data Structure Visualizer](https://salabs.quanxs.com/tools/js-data-structure-visualizer.html): 100% Client-side pure JS utility tool.
 - [Js Event Emitter Playground](https://salabs.quanxs.com/tools/js-event-emitter-playground.html): 100% Client-side pure JS utility tool.
 - [Js Event Key Code](https://salabs.quanxs.com/tools/js-event-key-code.html): 100% Client-side pure JS utility tool.
