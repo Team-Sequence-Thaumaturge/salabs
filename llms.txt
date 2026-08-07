@@ -310,6 +310,8 @@
 - [Json Schema Validator](https://salabs.quanxs.com/tools/json-schema-validator.html): 100% Client-side pure JS utility tool.
 - [Json To Csv Exporter](https://salabs.quanxs.com/tools/json-to-csv-exporter.html): 100% Client-side pure JS utility tool.
 - [Json Yaml Formatter](https://salabs.quanxs.com/tools/json-yaml-formatter.html): 100% Client-side pure JS utility tool.
+- [Jules 3D Master Studio](https://salabs.quanxs.com/tools/jules-3d-master-studio.html): 100% Client-side pure JS utility tool.
+- [Jules 3D Vector Topology Graph](https://salabs.quanxs.com/tools/jules-3d-vector-topology-graph.html): 100% Client-side pure JS utility tool.
 - [Jules Agentic Commerce Dashboard](https://salabs.quanxs.com/tools/jules-agentic-commerce-dashboard.html): 100% Client-side pure JS utility tool.
 - [Jules Flagship 3D Engine Dashboard](https://salabs.quanxs.com/tools/jules-flagship-3d-engine-dashboard.html): 100% Client-side pure JS utility tool.
 - [Jules Json Tree Visualizer](https://salabs.quanxs.com/tools/jules-json-tree-visualizer.html): 100% Client-side pure JS utility tool.

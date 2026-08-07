@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jules 3D Vector Topology Graph v2.0</title>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Jules 3D Vector Topology Graph v2.0",
+        "description": "Interactive 3D WebGL Vector Embedding Topology Graph visualizer with force-directed clustering.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All"
+      }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              slate: {
+                900: "#0f172a",
+              },
+              cyan: {
+                accent: "#00f2fe",
+              },
+              blue: {
+                accent: "#4facfe",
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <script src="https://unpkg.com/3d-force-graph"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #0f172a;
+        overflow: hidden;
+        font-family: sans-serif;
+      }
+      #graph-container {
+        width: 100vw;
+        height: 100vh;
+      }
+      #overlay {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 10;
+        pointer-events: auto;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-900 text-white">
+    <div
+      id="overlay"
+      class="p-4 bg-slate-900/80 rounded-xl border border-blue-accent/30 shadow-lg shadow-cyan-accent/20 backdrop-blur-sm max-w-sm"
+    >
+      <h1
+        class="text-xl font-bold bg-gradient-to-r from-cyan-accent to-blue-accent bg-clip-text text-transparent mb-2"
+      >
+        3D Vector Topology Graph
+      </h1>
+      <p class="text-sm text-gray-300 mb-4">
+        Semantic node search and visualization
+      </p>
+
+      <div class="mb-4">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search by Record ID or Tool ID..."
+          class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-cyan-accent focus:ring-1 focus:ring-cyan-accent placeholder-gray-500 transition-colors"
+        />
+      </div>
+
+      <div class="text-xs text-gray-400">
+        Nodes: <span id="node-count" class="text-cyan-accent">0</span><br />
+        Links: <span id="link-count" class="text-cyan-accent">0</span>
+      </div>
+    </div>
+
+    <div id="graph-container"></div>
+
+    <script>
+      // Data structures
+      let graphData = { nodes: [], links: [] };
+      let Graph;
+
+      // Helper: Cosine similarity between two vectors
+      function cosineSimilarity(vecA, vecB) {
+        let dotProduct = 0;
+        let normA = 0;
+        let normB = 0;
+        for (let i = 0; i < vecA.length; i++) {
+          dotProduct += vecA[i] * vecB[i];
+          normA += vecA[i] * vecA[i];
+          normB += vecB[i] * vecB[i];
+        }
+        if (normA === 0 || normB === 0) return 0;
+        return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+      }
+
+      async function loadData() {
+        try {
+          const response = await fetch(
+            "../datasets/salabs_vector_embeddings_v1.json",
+          );
+          const data = await response.json();
+
+          const records = data.vector_records;
+          const nodes = records.map((record) => ({
+            id: record.record_id,
+            name: record.record_id,
+            tool_id: record.tool_id,
+            vector: record.vector_768d,
+            val: 1,
+          }));
+
+          document.getElementById("node-count").textContent = nodes.length;
+
+          // Compute KNN links (k=3 for decent clustering)
+          const links = [];
+          const K = 3;
+
+          for (let i = 0; i < nodes.length; i++) {
+            const similarities = [];
+            for (let j = 0; j < nodes.length; j++) {
+              if (i !== j) {
+                const sim = cosineSimilarity(nodes[i].vector, nodes[j].vector);
+                similarities.push({ index: j, sim: sim });
+              }
+            }
+            // Sort descending by similarity
+            similarities.sort((a, b) => b.sim - a.sim);
+
+            // Connect to top K nearest neighbors
+            for (let k = 0; k < Math.min(K, similarities.length); k++) {
+              const targetNode = similarities[k].index;
+              const sim = similarities[k].sim;
+              links.push({
+                source: nodes[i].id,
+                target: nodes[targetNode].id,
+                similarity: sim,
+              });
+            }
+          }
+
+          document.getElementById("link-count").textContent = links.length;
+
+          graphData = { nodes, links };
+          initGraph();
+        } catch (error) {
+          console.error("Error loading data:", error);
+          document.getElementById("node-count").textContent =
+            "Error loading data";
+        }
+      }
+
+      let highlightNodes = new Set();
+      let highlightLinks = new Set();
+      let hoverNode = null;
+      let searchQuery = "";
+
+      function initGraph() {
+        const container = document.getElementById("graph-container");
+
+        Graph = ForceGraph3D()(container)
+          .graphData(graphData)
+          .nodeLabel(
+            (
+              node,
+            ) => `<div class="bg-slate-900/90 border border-cyan-accent p-2 rounded text-sm text-white font-mono shadow-lg shadow-cyan-accent/50 backdrop-blur-sm">
+            <strong>ID:</strong> ${node.name}<br>
+            <strong>Tool:</strong> ${node.tool_id}
+          </div>`,
+          )
+          .nodeColor((node) => {
+            if (hoverNode === node) return "#ffffff";
+            if (highlightNodes.has(node)) return "#00f2fe";
+
+            // If search is active, dim non-matching nodes
+            if (searchQuery) {
+              const matches =
+                node.name.toLowerCase().includes(searchQuery) ||
+                (node.tool_id &&
+                  node.tool_id.toLowerCase().includes(searchQuery));
+              if (matches) return "#00f2fe";
+              return "#1e293b"; // dim
+            }
+
+            return "#4facfe"; // default blue
+          })
+          .nodeRelSize(5)
+          .linkColor((link) =>
+            highlightLinks.has(link) ? "#00f2fe" : "rgba(79, 172, 254, 0.2)",
+          )
+          .linkWidth((link) => (highlightLinks.has(link) ? 2 : 0.5))
+          .onNodeHover((node) => {
+            highlightNodes.clear();
+            highlightLinks.clear();
+
+            if (node) {
+              highlightNodes.add(node);
+              graphData.links.forEach((link) => {
+                if (link.source === node || link.target === node) {
+                  highlightLinks.add(link);
+                  highlightNodes.add(link.source);
+                  highlightNodes.add(link.target);
+                }
+              });
+            }
+
+            hoverNode = node || null;
+            updateGraph();
+          })
+          .onNodeClick((node) => {
+            // Aim at node from outside it
+            const distance = 100;
+            const distRatio =
+              1 +
+              distance /
+                Math.hypot(node.x || 0.001, node.y || 0.001, node.z || 0.001);
+
+            const newPos =
+              node.x || node.y || node.z
+                ? {
+                    x: node.x * distRatio,
+                    y: node.y * distRatio,
+                    z: node.z * distRatio,
+                  }
+                : { x: 0, y: 0, z: distance }; // special case if node is in (0,0,0)
+
+            Graph.cameraPosition(
+              newPos, // new position
+              node, // lookAt ({ x, y, z })
+              3000, // ms transition duration
+            );
+          })
+          .backgroundColor("#0f172a");
+
+        // Controls orbit
+        Graph.controls().autoRotate = true;
+        Graph.controls().autoRotateSpeed = 0.5;
+
+        // Handle search
+        const searchInput = document.getElementById("search-input");
+        searchInput.addEventListener("input", (e) => {
+          searchQuery = e.target.value.toLowerCase();
+          updateGraph();
+        });
+
+        // Stop rotation when user interacts
+        container.addEventListener("mousedown", () => {
+          Graph.controls().autoRotate = false;
+        });
+      }
+
+      function updateGraph() {
+        if (Graph) {
+          Graph.nodeColor(Graph.nodeColor())
+            .linkWidth(Graph.linkWidth())
+            .linkColor(Graph.linkColor());
+        }
+      }
+
+      // Auto-resize
+      window.addEventListener("resize", () => {
+        if (Graph) {
+          Graph.width(window.innerWidth);
+          Graph.height(window.innerHeight);
+        }
+      });
+
+      // Start loading
+      loadData();
+    </script>
+  </body>
+</html>
