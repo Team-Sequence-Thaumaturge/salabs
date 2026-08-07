@@ -59,29 +59,200 @@
       </header>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- x402 Micropayment Simulator -->
         <div class="panel">
           <h2 class="text-xl font-semibold text-cyan-400 mb-4 flex items-center">
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             x402 Micropayments
           </h2>
           <p class="text-sm text-slate-300 mb-4">Manage high-frequency, low-latency AI-to-AI transactions.</p>
-          <div class="bg-slate-800 rounded p-3 text-xs font-mono text-emerald-400">
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-slate-400 mb-1">Target Agent Wallet</label>
+            <input type="text" id="target-wallet" value="0x8920...3aB9" class="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500" readonly>
+          </div>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-slate-400 mb-1">Stream Amount (Credits)</label>
+            <input type="number" id="stream-amount" value="50" class="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan-500">
+          </div>
+          <button id="btn-start-stream" class="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold py-2 px-4 rounded transition-colors">
+            Start Payment Stream
+          </button>
+          <button id="btn-stop-stream" class="w-full mt-2 border border-slate-600 hover:bg-slate-700 text-slate-300 font-semibold py-2 px-4 rounded transition-colors hidden">
+            Stop Stream
+          </button>
+          <div id="x402-status" class="mt-4 bg-slate-800 rounded p-3 text-xs font-mono text-emerald-400 hidden">
             Status: Initializing gateway...
           </div>
         </div>
 
-        <div class="panel">
-          <h2 class="text-xl font-semibold text-blue-400 mb-4 flex items-center">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-            ZK-Identity Vault
-          </h2>
-          <p class="text-sm text-slate-300 mb-4">Zero-Knowledge proof verification for autonomous agents.</p>
-          <div class="bg-slate-800 rounded p-3 text-xs font-mono text-slate-400">
-            Awaiting cryptographic proof...
+        <!-- ZK-Identity Vault & dTAO AMM -->
+        <div class="flex flex-col gap-6">
+          <div class="panel">
+            <h2 class="text-xl font-semibold text-blue-400 mb-4 flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+              ZK-Identity Vault
+            </h2>
+            <p class="text-sm text-slate-300 mb-4">Zero-Knowledge proof verification for autonomous agents.</p>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-slate-400 mb-1">Identity Hash</label>
+              <input type="text" id="identity-hash" value="did:jules:a1b2c3d4" class="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500">
+            </div>
+            <button id="btn-generate-proof" class="w-full border border-blue-500 hover:bg-blue-900/50 text-blue-400 font-semibold py-2 px-4 rounded transition-colors">
+              Generate Cryptographic Proof
+            </button>
+            <div id="zk-status" class="mt-4 bg-slate-800 rounded p-3 text-xs font-mono text-slate-400 hidden">
+              Awaiting cryptographic proof...
+            </div>
           </div>
+
+          <div class="panel">
+            <h2 class="text-xl font-semibold text-emerald-400 mb-4 flex items-center">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+              dTAO AMM Liquidity
+            </h2>
+            <p class="text-sm text-slate-300 mb-4">Decentralized token swap for agent resources.</p>
+            <div class="flex items-center gap-2 mb-4">
+               <input type="number" id="swap-amount" value="10" class="w-full bg-slate-800 border border-slate-600 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500">
+               <span class="text-slate-400">dTAO</span>
+            </div>
+            <button id="btn-swap-dtao" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-2 px-4 rounded transition-colors">
+              Execute Swap
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Log Stream -->
+      <div class="mt-8 panel">
+        <h2 class="text-lg font-semibold text-slate-300 mb-4">Live Transaction Log</h2>
+        <div id="log-stream" class="h-48 overflow-y-auto bg-slate-900 rounded p-4 text-xs font-mono text-slate-400 border border-slate-700">
+          <div>[System] Initializing Agentic Commerce Kernel...</div>
         </div>
       </div>
     </div>
     <!-- External logic to be loaded here -->
+    <script type="module">
+      import {
+        parse402Header,
+        generateSignature,
+        generateZKProof,
+        simulateSettlementStream
+      } from '../modules/x402_agent_payment_gate.js';
+
+      const logStream = document.getElementById('log-stream');
+
+      function log(message, color = 'text-slate-400') {
+        const div = document.createElement('div');
+        const timestamp = new Date().toISOString().split('T')[1].substring(0, 12);
+        div.className = color;
+        div.textContent = `[${timestamp}] ${message}`;
+        logStream.appendChild(div);
+        logStream.scrollTop = logStream.scrollHeight;
+      }
+
+      // x402 Micropayment Simulator
+      const btnStartStream = document.getElementById('btn-start-stream');
+      const btnStopStream = document.getElementById('btn-stop-stream');
+      const streamAmountInput = document.getElementById('stream-amount');
+      const targetWalletInput = document.getElementById('target-wallet');
+      const x402Status = document.getElementById('x402-status');
+
+      let currentStreamStopFn = null;
+
+      btnStartStream.addEventListener('click', async () => {
+        const totalAmount = parseInt(streamAmountInput.value, 10);
+        if (isNaN(totalAmount) || totalAmount <= 0) {
+          log('Invalid stream amount.', 'text-red-400');
+          return;
+        }
+
+        btnStartStream.classList.add('hidden');
+        btnStopStream.classList.remove('hidden');
+        x402Status.classList.remove('hidden');
+        x402Status.textContent = 'Status: Negotiating L402 Header...';
+
+        log(`Initiating HTTP 402 handshake with ${targetWalletInput.value}...`, 'text-cyan-400');
+
+        // Simulate receiving a 402 header
+        setTimeout(async () => {
+          const simulatedHeader = 'L402 macaroon="mac_abcdef12345", invoice="lnbc_...98765"';
+          const parsed = parse402Header(simulatedHeader);
+          if (parsed) {
+            log(`Parsed L402 Macaroon: ${parsed.macaroon}`, 'text-emerald-400');
+            log(`Generating HMAC signature for token...`, 'text-slate-300');
+
+            const sig = await generateSignature(parsed.macaroon, 'secret-agent-key');
+            log(`Signature valid: ${sig.substring(0, 16)}...`, 'text-emerald-400');
+
+            log(`Starting continuous settlement stream (${totalAmount} credits)...`, 'text-cyan-400');
+            x402Status.textContent = 'Status: Streaming micro-transactions...';
+
+            currentStreamStopFn = simulateSettlementStream(totalAmount, Math.ceil(totalAmount/10), (res) => {
+              log(`Settled: ${res.settled} / Remaining: ${res.remaining} [${res.status}]`, 'text-blue-300');
+              if (res.status === 'completed' || res.status === 'stopped') {
+                btnStopStream.classList.add('hidden');
+                btnStartStream.classList.remove('hidden');
+                x402Status.textContent = `Status: Stream ${res.status}.`;
+                currentStreamStopFn = null;
+              }
+            });
+          }
+        }, 800);
+      });
+
+      btnStopStream.addEventListener('click', () => {
+        if (currentStreamStopFn) {
+          log('User requested stream halt.', 'text-red-400');
+          currentStreamStopFn();
+        }
+      });
+
+      // ZK-Identity Vault
+      const btnGenerateProof = document.getElementById('btn-generate-proof');
+      const identityHashInput = document.getElementById('identity-hash');
+      const zkStatus = document.getElementById('zk-status');
+
+      btnGenerateProof.addEventListener('click', async () => {
+        const idHash = identityHashInput.value;
+        if (!idHash) return;
+
+        btnGenerateProof.disabled = true;
+        btnGenerateProof.classList.add('opacity-50', 'cursor-not-allowed');
+        zkStatus.classList.remove('hidden');
+        zkStatus.textContent = 'Generating proof...';
+        log(`Computing zero-knowledge proof for ${idHash}...`, 'text-blue-400');
+
+        // Slight delay for UI effect
+        setTimeout(async () => {
+           const proofData = await generateZKProof(idHash);
+           zkStatus.textContent = `Proof verified: ${proofData.proof.substring(0, 20)}...`;
+           log(`ZK Proof Verified. Hash: ${proofData.proof.substring(0, 32)}...`, 'text-emerald-400');
+           btnGenerateProof.disabled = false;
+           btnGenerateProof.classList.remove('opacity-50', 'cursor-not-allowed');
+        }, 600);
+      });
+
+      // dTAO AMM Swap
+      const btnSwapDtao = document.getElementById('btn-swap-dtao');
+      const swapAmountInput = document.getElementById('swap-amount');
+
+      btnSwapDtao.addEventListener('click', () => {
+        const amount = parseFloat(swapAmountInput.value);
+        if (isNaN(amount) || amount <= 0) return;
+
+        btnSwapDtao.disabled = true;
+        btnSwapDtao.classList.add('opacity-50', 'cursor-not-allowed');
+        log(`Routing ${amount} dTAO through AMM liquidity pools...`, 'text-emerald-400');
+
+        setTimeout(() => {
+           const rate = 1.05 + (Math.random() * 0.1); // ~1.1
+           const received = (amount * rate).toFixed(4);
+           log(`Swap executed successfully: ${amount} dTAO -> ${received} USDT.`, 'text-emerald-400');
+           btnSwapDtao.disabled = false;
+           btnSwapDtao.classList.remove('opacity-50', 'cursor-not-allowed');
+        }, 1200);
+      });
+
+    </script>
   </body>
 </html>
