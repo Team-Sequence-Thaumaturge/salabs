@@ -88,6 +88,7 @@
 - [Chmod Calculator](https://salabs.quanxs.com/tools/chmod-calculator.html): 100% Client-side pure JS utility tool.
 - [Client Side Utility Engine V2](https://salabs.quanxs.com/tools/client-side-utility-engine-v2.html): 100% Client-side pure JS utility tool.
 - [Client Side Utility Engine V3](https://salabs.quanxs.com/tools/client-side-utility-engine-v3.html): 100% Client-side pure JS utility tool.
+- [Client Side Utility Engine V4](https://salabs.quanxs.com/tools/client-side-utility-engine-v4.html): 100% Client-side pure JS utility tool.
 - [Client Side Utility Engine](https://salabs.quanxs.com/tools/client-side-utility-engine.html): 100% Client-side pure JS utility tool.
 - [Color Contrast Accessibility Checker](https://salabs.quanxs.com/tools/color-contrast-accessibility-checker.html): 100% Client-side pure JS utility tool.
 - [Color Converter Contrast](https://salabs.quanxs.com/tools/color-converter-contrast.html): 100% Client-side pure JS utility tool.
@@ -339,6 +340,7 @@
 - [Micro Performance Optimizer](https://salabs.quanxs.com/tools/micro-performance-optimizer.html): 100% Client-side pure JS utility tool.
 - [Micro Performance Schema Engine V2](https://salabs.quanxs.com/tools/micro-performance-schema-engine-v2.html): 100% Client-side pure JS utility tool.
 - [Micro Performance Schema Engine V3](https://salabs.quanxs.com/tools/micro-performance-schema-engine-v3.html): 100% Client-side pure JS utility tool.
+- [Micro Performance Schema Engine V4](https://salabs.quanxs.com/tools/micro-performance-schema-engine-v4.html): 100% Client-side pure JS utility tool.
 - [Micro Performance Schema Engine](https://salabs.quanxs.com/tools/micro-performance-schema-engine.html): 100% Client-side pure JS utility tool.
 - [Next Gen Client Utility Engine](https://salabs.quanxs.com/tools/next-gen-client-utility-engine.html): 100% Client-side pure JS utility tool.
 - [Next Gen Client Utility](https://salabs.quanxs.com/tools/next-gen-client-utility.html): 100% Client-side pure JS utility tool.
