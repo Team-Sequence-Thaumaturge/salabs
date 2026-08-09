@@ -63,9 +63,10 @@ if (window === window.top) {
         return results;
     };
 
-    // Slate.js Selection & Blinking Caret Activator (Forces editor.selection in Slate AST)
+    // Safe Slate.js Selection & Blinking Caret Activator (Protected against detached DOM nodes)
     const activateSlateCursor = (el) => {
         try {
+            if (!el || !document.contains(el)) return;
             if (window.focus) window.focus();
             el.focus();
 
@@ -73,6 +74,8 @@ if (window === window.top) {
                              el.querySelector('[data-slate-leaf="true"]') || 
                              el.querySelector('p[data-slate-node="element"]') || 
                              el;
+
+            if (!targetNode || !document.contains(targetNode)) return;
 
             let textNode = null;
             const findText = (node) => {
@@ -86,29 +89,36 @@ if (window === window.top) {
             };
             textNode = findText(targetNode);
 
-            if (!textNode) {
-                textNode = document.createTextNode('');
-                targetNode.appendChild(textNode);
+            if (!textNode && document.contains(targetNode)) {
+                try {
+                    textNode = document.createTextNode('');
+                    targetNode.appendChild(textNode);
+                } catch(e) {}
             }
 
-            const r = document.createRange();
-            r.setStart(textNode, textNode.length);
-            r.setEnd(textNode, textNode.length);
+            if (textNode && document.contains(textNode)) {
+                try {
+                    const r = document.createRange();
+                    r.setStart(textNode, textNode.length);
+                    r.setEnd(textNode, textNode.length);
 
-            const s = window.getSelection();
-            s.removeAllRanges();
-            s.addRange(r);
+                    const s = window.getSelection();
+                    s.removeAllRanges();
+                    s.addRange(r);
+                } catch(e) {}
+            }
 
-            // Force Slate's internal selectionchange & focus listeners to update editor.selection
-            document.dispatchEvent(new Event('selectionchange', { bubbles: true }));
-            el.dispatchEvent(new Event('focus', { bubbles: true }));
+            try {
+                document.dispatchEvent(new Event('selectionchange', { bubbles: true }));
+                el.dispatchEvent(new Event('focus', { bubbles: true }));
+            } catch(e) {}
         } catch(e) {}
     };
 
     // Precision Slate.js Text Injector (Commit 25b5c2a Crash-Free Proven Engine)
     const injectIntoSlate = (el, text) => {
         try {
-            // 1. Force Slate Caret Activation (Triggers blinking cursor)
+            // 1. Force Slate Caret Activation
             activateSlateCursor(el);
 
             // 2. Hide placeholder span if present
@@ -126,23 +136,29 @@ if (window === window.top) {
             let stringSpan = leaf.querySelector('[data-slate-string="true"]');
 
             if (!stringSpan) {
-                stringSpan = document.createElement('span');
-                stringSpan.setAttribute('data-slate-string', 'true');
-                leaf.appendChild(stringSpan);
+                try {
+                    stringSpan = document.createElement('span');
+                    stringSpan.setAttribute('data-slate-string', 'true');
+                    leaf.appendChild(stringSpan);
+                } catch(e) {
+                    stringSpan = leaf;
+                }
             }
 
             // 4. Fill textContent on data-slate-string span directly
             stringSpan.textContent = text;
 
             // 5. Position selection range at end of stringSpan text
-            try {
-                const r = document.createRange();
-                r.selectNodeContents(stringSpan);
-                r.collapse(false);
-                const s = window.getSelection();
-                s.removeAllRanges();
-                s.addRange(r);
-            } catch(e) {}
+            if (document.contains(stringSpan)) {
+                try {
+                    const r = document.createRange();
+                    r.selectNodeContents(stringSpan);
+                    r.collapse(false);
+                    const s = window.getSelection();
+                    s.removeAllRanges();
+                    s.addRange(r);
+                } catch(e) {}
+            }
 
             // 6. Native execCommand insertText into active blinking cursor
             try {
