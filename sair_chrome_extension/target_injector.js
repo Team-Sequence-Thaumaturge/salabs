@@ -63,7 +63,7 @@ if (window === window.top) {
         return results;
     };
 
-    // Safe Slate.js Selection & Blinking Caret Activator (Protected against detached DOM nodes)
+    // Safe Slate.js Selection & Blinking Caret Activator
     const activateSlateCursor = (el) => {
         try {
             if (!el || !document.contains(el)) return;
@@ -115,7 +115,7 @@ if (window === window.top) {
         } catch(e) {}
     };
 
-    // Precision Slate.js Text Injector (Commit 25b5c2a Crash-Free Proven Engine)
+    // Slate.js React AST Synchronizer & Button Activator
     const injectIntoSlate = (el, text) => {
         try {
             // 1. Force Slate Caret Activation
@@ -127,51 +127,76 @@ if (window === window.top) {
                 try { placeholder.style.display = 'none'; } catch(e) {}
             }
 
-            // 3. Locate or create native [data-slate-string="true"] span
+            // 3. Locate text paragraph and leaf node
             let textParagraph = el.querySelector('p[data-slate-node="element"]') || 
                                 el.querySelector('[data-slate-node="element"]:last-child') || 
                                 el;
 
-            let leaf = textParagraph.querySelector('[data-slate-leaf="true"]') || textParagraph;
-            let stringSpan = leaf.querySelector('[data-slate-string="true"]');
+            let leafSpan = textParagraph.querySelector('[data-slate-leaf="true"]') || 
+                           textParagraph.querySelector('[data-slate-string="true"]') || 
+                           textParagraph;
 
-            if (!stringSpan) {
-                try {
-                    stringSpan = document.createElement('span');
-                    stringSpan.setAttribute('data-slate-string', 'true');
-                    leaf.appendChild(stringSpan);
-                } catch(e) {
-                    stringSpan = leaf;
+            // 4. Find or create inner TextNode
+            let textNode = null;
+            const findText = (node) => {
+                if (node.nodeType === Node.TEXT_NODE) return node;
+                for (let child of node.childNodes) {
+                    if (child.nodeType === Node.TEXT_NODE) return child;
+                    const f = findText(child);
+                    if (f) return f;
                 }
+                return null;
+            };
+            textNode = findText(leafSpan);
+
+            if (!textNode) {
+                textNode = document.createTextNode('');
+                leafSpan.appendChild(textNode);
             }
 
-            // 4. Fill textContent on data-slate-string span directly
-            stringSpan.textContent = text;
+            // 5. Ensure textNode is empty first so browser treats execCommand as a real DOM change
+            textNode.nodeValue = '';
 
-            // 5. Position selection range at end of stringSpan text
-            if (document.contains(stringSpan)) {
+            // 6. Position Selection Range on empty textNode
+            if (document.contains(textNode)) {
                 try {
                     const r = document.createRange();
-                    r.selectNodeContents(stringSpan);
-                    r.collapse(false);
+                    r.setStart(textNode, 0);
+                    r.setEnd(textNode, 0);
                     const s = window.getSelection();
                     s.removeAllRanges();
                     s.addRange(r);
                 } catch(e) {}
             }
 
-            // 6. Native execCommand insertText into active blinking cursor
+            // 7. Native execCommand('paste') or execCommand('insertText') to trigger Slate's React onChange
+            let inserted = false;
             try {
-                document.execCommand('insertText', false, text);
+                inserted = document.execCommand('paste');
             } catch(e) {}
 
-            // 7. Safe event notification to enable submit button without triggering AST desync
+            if (!inserted) {
+                try {
+                    inserted = document.execCommand('insertText', false, text);
+                } catch(e) {}
+            }
+
+            // 8. Fallback: If browser didn't insert, mutate nodeValue and fire beforeinput carrying data: text
+            if (!inserted || textNode.nodeValue !== text) {
+                textNode.nodeValue = text;
+                try {
+                    el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, cancelable: true, inputType: 'insertText', data: text }));
+                    el.dispatchEvent(new InputEvent('input', { bubbles: true, cancelable: true, inputType: 'insertText', data: text }));
+                } catch(e) {}
+            }
+
+            // 9. Dispatch change & input events to notify submit button validator
             try {
                 el.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
                 el.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
             } catch(e) {}
 
-            // 8. Clipboard backup write
+            // 10. OS Clipboard backup write
             if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
                 try {
                     navigator.clipboard.writeText(text).then(() => {}).catch(() => {});
