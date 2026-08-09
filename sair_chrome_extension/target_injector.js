@@ -105,10 +105,10 @@ if (window === window.top) {
         } catch(e) {}
     };
 
-    // Precision Slate.js Text Injector & AST Synchronizer
+    // Precision Slate.js Text Injector (Commit 25b5c2a Crash-Free Proven Engine)
     const injectIntoSlate = (el, text) => {
         try {
-            // 1. Force Slate Caret Activation
+            // 1. Force Slate Caret Activation (Triggers blinking cursor)
             activateSlateCursor(el);
 
             // 2. Hide placeholder span if present
@@ -117,70 +117,40 @@ if (window === window.top) {
                 try { placeholder.style.display = 'none'; } catch(e) {}
             }
 
-            // 3. Locate text paragraph and leaf node
+            // 3. Locate or create native [data-slate-string="true"] span
             let textParagraph = el.querySelector('p[data-slate-node="element"]') || 
                                 el.querySelector('[data-slate-node="element"]:last-child') || 
                                 el;
 
-            let leafSpan = textParagraph.querySelector('[data-slate-leaf="true"]') || 
-                           textParagraph.querySelector('[data-slate-string="true"]') || 
-                           textParagraph;
+            let leaf = textParagraph.querySelector('[data-slate-leaf="true"]') || textParagraph;
+            let stringSpan = leaf.querySelector('[data-slate-string="true"]');
 
-            // 4. Find or create inner TextNode
-            let textNode = null;
-            const findText = (node) => {
-                if (node.nodeType === Node.TEXT_NODE) return node;
-                for (let child of node.childNodes) {
-                    if (child.nodeType === Node.TEXT_NODE) return child;
-                    const f = findText(child);
-                    if (f) return f;
-                }
-                return null;
-            };
-            textNode = findText(leafSpan);
-
-            if (!textNode) {
-                textNode = document.createTextNode('');
-                leafSpan.appendChild(textNode);
+            if (!stringSpan) {
+                stringSpan = document.createElement('span');
+                stringSpan.setAttribute('data-slate-string', 'true');
+                leaf.appendChild(stringSpan);
             }
 
-            // 5. Position Selection Range directly on textNode
+            // 4. Fill textContent on data-slate-string span directly
+            stringSpan.textContent = text;
+
+            // 5. Position selection range at end of stringSpan text
             try {
                 const r = document.createRange();
-                r.setStart(textNode, 0);
-                r.setEnd(textNode, textNode.length);
+                r.selectNodeContents(stringSpan);
+                r.collapse(false);
                 const s = window.getSelection();
                 s.removeAllRanges();
                 s.addRange(r);
             } catch(e) {}
 
-            // 6. Native execCommand insertText
-            let inserted = false;
+            // 6. Native execCommand insertText into active blinking cursor
             try {
-                inserted = document.execCommand('insertText', false, text);
+                document.execCommand('insertText', false, text);
             } catch(e) {}
 
-            if (!inserted || textNode.nodeValue !== text) {
-                textNode.nodeValue = text;
-            }
-
-            // 7. Dispatch beforeinput & input events carrying data: text
-            // Slate's onDOMBeforeInput listener catches event.data and updates Slate AST JSON tree natively!
+            // 7. Safe event notification to enable submit button without triggering AST desync
             try {
-                el.dispatchEvent(new InputEvent('beforeinput', { 
-                    bubbles: true, 
-                    cancelable: true, 
-                    inputType: 'insertText', 
-                    data: text 
-                }));
-
-                el.dispatchEvent(new InputEvent('input', { 
-                    bubbles: true, 
-                    cancelable: true, 
-                    inputType: 'insertText', 
-                    data: text 
-                }));
-
                 el.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
                 el.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
             } catch(e) {}
@@ -305,7 +275,7 @@ if (window === window.top) {
                     }
                 }
 
-                // STEP 2: Image Injection SECOND (100ms) + STEP 3: Re-enforce Text Injection (300ms)
+                // STEP 2: Image Injection SECOND (100ms)
                 setTimeout(() => {
                     if (hasImage) {
                         try {
@@ -354,21 +324,7 @@ if (window === window.top) {
                         }
                     }
 
-                    // Re-enforce Text Injection to guarantee text presence
-                    setTimeout(() => {
-                        if (primaryTargetEl && boxText) {
-                            try {
-                                const isSlate = primaryTargetEl.hasAttribute('data-slate-editor') || 
-                                                primaryTargetEl.querySelector('[data-slate-node]') || 
-                                                primaryTargetEl.closest('[data-slate-editor="true"]');
-                                if (isSlate) {
-                                    const slateEditor = primaryTargetEl.closest('[data-slate-editor="true"]') || primaryTargetEl;
-                                    injectIntoSlate(slateEditor, boxText);
-                                }
-                            } catch(e) {}
-                        }
-                        setTimeout(() => { injectionLock = false; }, 300);
-                    }, 200);
+                    setTimeout(() => { injectionLock = false; }, 300);
                 }, 100);
             };
 
