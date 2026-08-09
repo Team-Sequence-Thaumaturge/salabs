@@ -17,13 +17,13 @@ Building an injection engine for modern Web AI editors (especially rich-text fra
 
 ```mermaid
 flowchart TD
-    A[SAIR Cockpit User Click] --> B[Chrome Extension Message Listener]
+    A[SAIR Cockpit User Click & Synchronous OS Clipboard Write] --> B[Chrome Extension Bridge Message]
     B --> C[Single-Target Active Editor Isolation]
     C --> D[Stage 1: Slate Caret Activation & selectionchange Dispatch]
-    D --> E[Stage 2: TextNode Value Mutation & ClipboardEvent paste]
-    E --> F[Stage 3: Style Reference PNG Image Clipboard Paste]
-    F --> G[Stage 4: Double Text Integrity Guard Check 350ms]
-    G --> H[Submit Arrow Button Activated & Ready]
+    D --> E[Stage 2: Node Pre-Clear textNode.nodeValue = '']
+    E --> F[Stage 3: Native execCommand paste & insertText triggering Slate React onChange]
+    F --> G[Stage 4: Style Reference PNG Image Clipboard Paste]
+    G --> H[Submit Arrow Button BLUE Enabled & Ready for 1-Click Generation]
 ```
 
 ---
@@ -35,28 +35,36 @@ flowchart TD
 * **Engine Solution**: 
   - Strictly preserve existing DOM nodes. Never touch, replace, or destroy Slate DOM spans.
   - Locate the exact tracked `TextNode` inside `<span data-slate-string="true">` or `<span data-slate-leaf="true">`.
-  - Directly mutate `textNode.nodeValue = text` or update `stringSpan.textContent = text`. This preserves Slate's React `WeakMap` node mapping with zero DOM destruction, while immediately updating the visible string in the DOM.
+  - Mutate `textNode.nodeValue` directly without destroying node references, preserving Slate's React `WeakMap` mapping.
 
-#### 2. Document Unfocused Promise Rejection in Chrome Extensions
+#### 2. Slate React `onChange` & Grey (Disabled) Button Activation Breakthrough
+* **Problem**: Even when text was visually visible in the DOM, Google Flow's submit arrow button remained GREY (DISABLED). Clicking the button returned an empty prompt response ("No operations have been run yet..."). This occurred because Slate validates submit buttons against `editor.children` (its internal React state JSON tree). Directly populating `textContent` before `execCommand` caused the browser to suppress change events, so Slate's React `onChange` was never called, leaving Slate's internal React state empty (`children: [{ text: '' }]`).
+* **Engine Solution**: 
+  - Clear `textNode.nodeValue = ''` FIRST before executing `execCommand('paste')` or `execCommand('insertText')`.
+  - Because `textNode` is empty, the browser recognizes `execCommand` as a real DOM change and fires Slate's native `onDOMBeforeInput` / `onPaste` handler.
+  - Slate calls `Transforms.insertText(editor, text)` and updates `editor.children` in React state.
+  - Slate's React component re-renders, `isEditorEmpty` becomes `false`, AND THE SUBMIT ARROW BUTTON TURNS **BLUE (ENABLED)**!
+
+#### 3. Document Unfocused Promise Rejection in Chrome Extensions
 * **Problem**: Invoking `navigator.clipboard.writeText` when the active document lacked focus (e.g. when DevTools had focus or the tab was in the background) triggered an unhandled Promise Rejection (`NotAllowedError: Document is not focused`), logging error entries on `chrome://extensions`.
 * **Engine Solution**:
   - Guarded clipboard calls with `document.hasFocus()`.
   - Wrapped Promise chains with `.then(() => {}).catch(() => {})` to swallow background document unhandled rejections cleanly.
 
-#### 3. Native `execCommand('paste')` & Security Permission Integration
-* **Problem**: Synthetic `InputEvent` or `execCommand('insertText')` on empty Slate editors failed because Slate required `isTrusted: true` user activation or native clipboard events.
+#### 4. Synchronous OS Clipboard Write on User Click Event
+* **Problem**: When user triggered injection from `sair.quanxs.com`, background tabs on `labs.google` could not write to the OS Clipboard, resulting in empty clipboard errors ("There is no item to paste").
 * **Engine Solution**:
-  - Added `"clipboardRead"` and `"clipboardWrite"` permissions to `manifest.json`.
-  - Dispatched `ClipboardEvent('paste')` with `text/plain` for text payloads, and `ClipboardEvent('paste')` with PNG Blobs for image style-reference chips directly onto the editor target.
+  - Populated the OS Clipboard synchronously in `sair_bridge.js` right on `sair.quanxs.com` during the user's initial click event.
+  - Guaranteed that the OS Clipboard is 100% loaded with the prompt payload before the extension target script executes.
 
-#### 4. Sequential Focus & Image AST Re-Render Wipe
+#### 5. Sequential Focus & Image AST Re-Render Wipe
 * **Problem**: Injecting text FIRST and THEN pasting an image caused Slate's image chip node creation to re-render the entire editor AST, wiping out draft text back to the initial placeholder state (`무엇을 만들고 싶으신가요?`).
 * **Engine Solution**: **3-Stage Double Text Guard Pipeline**:
   - **Stage 1 (0ms)**: Text Injection FIRST.
   - **Stage 2 (150ms)**: Style Reference PNG Image paste.
-  - **Stage 3 (350ms)**: Double Text Integrity Guard — checks if text is still present in the editor AST (`primaryTargetEl.innerText`); if reset by image upload, re-inserts text seamlessly within 0.001s.
+  - **Stage 3 (350ms)**: Double Text Integrity Guard — checks if text is still present in the editor AST; if reset by image upload, re-inserts text seamlessly within 0.001s.
 
-#### 5. Slate Caret & Selection Activation (`selectionchange` & Leaf Target Node)
+#### 6. Slate Caret & Selection Activation (`selectionchange` & Leaf Target Node)
 * **Problem**: Slate editors in Google Flow remain in "Empty Placeholder" mode (`<span data-slate-placeholder="true">`) with `editor.selection = null` until user interaction. Clicking the outer container did not activate the blinking cursor ("딸깍").
 * **Engine Solution**:
   - Target `[data-slate-placeholder="true"]`, `[data-slate-leaf="true"]`, and `p[data-slate-node="element"]` directly with `PointerEvent` + `MouseEvent` click simulation.
