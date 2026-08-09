@@ -34,6 +34,15 @@ window.addEventListener('message', (event) => {
         lastInjectTime = now;
 
         const { specText, imageBase64, targetTabId } = event.data;
+
+        // Guaranteed OS Clipboard Population on User Click Event
+        if (specText && navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+            try {
+                navigator.clipboard.writeText(specText).then(() => {
+                    console.log("⚡ [SAIR Bridge] OS Clipboard populated with prompt specification!");
+                }).catch(() => {});
+            } catch(e) {}
+        }
         
         try {
             if (typeof chrome !== 'undefined' && chrome && chrome.runtime && typeof chrome.runtime.sendMessage === 'function') {
