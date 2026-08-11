@@ -10,6 +10,21 @@
   "@type": "WebSite",
   "name": "Quanxs SA Labs",
   "url": "https://salabs.quanxs.com/"
+</script>
+<script>
+function openModal(){ document.getElementById('feedback-modal').style.display='block'; }
+function closeModal(){ document.getElementById('feedback-modal').style.display='none'; }
+function submitFeedback(){
+  var textVal = document.getElementById('feedback-text').value;
+  if(textVal && textVal.trim()){
+    document.getElementById('feedback-text').value = '';
+    closeModal();
+    var toastNode = document.createElement('div');
+    toastNode.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#38bdf8;color:#0f172a;padding:1rem 1.5rem;border-radius:8px;font-weight:bold;z-index:9999;box-shadow:0 10px 15px -3px rgba(0,0,0,0.3);';
+    toastNode.innerHTML = '✅ Feedback Received! Antigravity AI Engine is parsing your report.';
+    document.body.appendChild(toastNode);
+    setTimeout(function() { toastNode.remove(); }, 4000);
+  }
 }
 </script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
@@ -1245,7 +1260,6 @@
   <p>© 2026 SA Labs (Sequence Architecture Laboratories). All rights reserved.</p>
 </footer>
 
-
 <!-- In-Page Feedback Popup Modal -->
 <div id="feedback-modal" class="modal">
   <div class="modal-content">
@@ -1259,22 +1273,6 @@
   </div>
 </div>
 
-<script>
-function openModal(){ document.getElementById('feedback-modal').style.display='block'; }
-function closeModal(){ document.getElementById('feedback-modal').style.display='none'; }
-function submitFeedback(){
-  let text = document.getElementById('feedback-text').value;
-  if(text.trim()){
-    document.getElementById('feedback-text').value = '';
-    closeModal();
-    let toast = document.createElement('div');
-    toast.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#38bdf8;color:#0f172a;padding:1rem 1.5rem;border-radius:8px;font-weight:bold;z-index:9999;box-shadow:0 10px 15px -3px rgba(0,0,0,0.3);';
-    toast.innerHTML = '✅ Feedback Received! Antigravity AI Engine is parsing your report.';
-    document.body.appendChild(toast);
-    setTimeout(() => { toast.remove(); }, 4000);
-  }
-}
-</script>
 <!-- Vercel Web Analytics & Speed Insights Integration (Vercel Pro) -->
 <script defer src="/_vercel/insights/script.js"></script>
 <script defer src="/_vercel/speed-insights/script.js"></script>
