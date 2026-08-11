@@ -14,7 +14,7 @@
     "operatingSystem": "All Browser"
   }
   </script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  
   <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
   <style>
@@ -52,7 +52,15 @@
     .result-box span { color: #64748b; font-weight: 500; }
   </style>
 <!-- SAPQ Hoisted Script Gate -->
+
+<!-- SAPQ v2.0 Hoisted Script Gate -->
+
+<!-- SAPQ v2.0 Hoisted Script Gate -->
 <script>
+
+
+
+
     let currentMode = 'qr';
 
     function switchMode(mode) {
@@ -61,25 +69,6 @@
       document.getElementById('tab-barcode').classList.toggle('active', mode === 'barcode');
       document.getElementById('qr-controls').style.display = mode === 'qr' ? 'grid' : 'none';
       document.getElementById('input-label').innerText = mode === 'qr' ? 'QR Content Text or URL' : 'Barcode Value (Alpha-numeric)';
-      generateOutput();
-    }
-
-    function onInputChanged() {
-      generateOutput();
-    }
-
-    function manualGenerate() {
-      generateOutput();
-      showToast('⚡ QR / Barcode Generated!');
-    }
-
-    function showToast(msg) {
-      const toast = document.getElementById('status-toast');
-      toast.innerText = msg;
-      toast.style.display = 'inline-block';
-      setTimeout(() => { toast.style.display = 'none'; }, 2000);
-    }
-
     function generateOutput() {
       const inputVal = document.getElementById('content-input').value.trim() || 'https://salabs.quanxs.com';
       const box = document.getElementById('output-box');
@@ -110,6 +99,25 @@
         }
       }
     }
+      generateOutput();
+    }
+
+    function onInputChanged() {
+      generateOutput();
+    }
+
+    function manualGenerate() {
+      generateOutput();
+    function showToast(msg) {
+      const toast = document.getElementById('status-toast');
+      toast.innerText = msg;
+      toast.style.display = 'inline-block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2000);
+    }
+      showToast('⚡ QR / Barcode Generated!');
+    }
+
+
 
     function downloadImage() {
       const box = document.getElementById('output-box');
@@ -147,7 +155,9 @@
 
     // Initial render
     generateOutput();
-  </script>
+  
+
+</script>
 </head>
 <body>
   <div class="container">

@@ -143,14 +143,20 @@
     footer { margin-top: 3rem; text-align: center; font-size: 0.8rem; color: var(--text-muted); }
   </style>
 <!-- SAPQ Hoisted Script Gate -->
+
+<!-- SAPQ v2.0 Hoisted Script Gate -->
+
+<!-- SAPQ v2.0 Hoisted Script Gate -->
 <script>
+
+
     function requestTossPayment() {
-      const clientKey = document.getElementById('clientKey').value.trim();
-      const payMethod = document.getElementById('payMethod').value;
-      const orderName = document.getElementById('orderName').value.trim();
+var clientKey = document.getElementById('clientKey').value.trim();
+var payMethod = document.getElementById('payMethod').value;
+var orderName = document.getElementById('orderName').value.trim();
       const amount = parseInt(document.getElementById('amount').value.trim(), 10);
       const orderId = `toss-ord-${Date.now()}`;
-      const resultBox = document.getElementById('resultBox');
+var resultBox = document.getElementById('resultBox');
 
       const payload = {
         amount: amount,
@@ -180,7 +186,9 @@
         resultBox.innerText = `// [Toss Payments Simulation]\n` + JSON.stringify(mockResponse, null, 2);
       }
     }
-  </script>
+  
+
+</script>
 </head>
 <body>
 

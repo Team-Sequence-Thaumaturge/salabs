@@ -15,7 +15,7 @@
     "operatingSystem": "All"
   }
   </script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -50,7 +50,15 @@
     footer { text-align: center; padding: 1rem; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border); background: var(--card-bg); }
   </style>
 <!-- SAPQ Hoisted Script Gate -->
+
+<!-- SAPQ v2.0 Hoisted Script Gate -->
+
+<!-- SAPQ v2.0 Hoisted Script Gate -->
 <script>
+
+
+
+
 // SAPQ Hoisted Function Declarations
 function calculateReductionRatio(originalSize, minifiedSize) {
   if (originalSize === 0) return 0;
@@ -79,15 +87,6 @@ header h1 {
 
     function init() {
       document.getElementById('input-text').value = sampleCSS;
-      minifyCode();
-    }
-
-    function updateStats() {
-      const val = document.getElementById('input-text').value;
-      const bytes = new TextEncoder().encode(val).length;
-      document.getElementById('input-status').textContent = `Input Size: ${val.length} chars (${bytes} bytes)`;
-    }
-
     function minifyCode() {
       const src = document.getElementById('input-text').value;
       if (!src) return;
@@ -108,6 +107,15 @@ header h1 {
 
       document.getElementById('output-status').textContent = `✓ Minified Size: ${minified.length} chars (${minB} bytes) — Saved ${saved}% bytes!`;
     }
+      minifyCode();
+    }
+
+    function updateStats() {
+      const val = document.getElementById('input-text').value;
+      const bytes = new TextEncoder().encode(val).length;
+      document.getElementById('input-status').textContent = `Input Size: ${val.length} chars (${bytes} bytes)`;
+    }
+
 
     function beautifyCode() {
       const src = document.getElementById('input-text').value;
@@ -132,7 +140,9 @@ header h1 {
     function copyOutput() { navigator.clipboard.writeText(document.getElementById('output-text').value).then(() => alert('📋 Output copied!')); }
 
     window.onload = init;
-  </script>
+  
+
+</script>
 </head>
 <body>
   <header>

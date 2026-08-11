@@ -19,49 +19,13 @@
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              slate: { 900: "#0f172a" },
-              cyan: { accent: "#00f2fe" },
-              blue: { accent: "#4facfe" },
-            },
-          },
-        },
-      };
-    </script>
+    
 
     <!-- Three.js Global CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
-          "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
-        }
-      }
-    </script>
-    <script type="module">
-      import { ARButton } from "three/addons/webxr/ARButton.js";
-      window.ARButton = ARButton;
-    </script>
-    <script>
-      // Inline Standalone OrbitControls Fallback
-      if (typeof THREE !== "undefined" && !THREE.OrbitControls) {
-        THREE.OrbitControls = function (object, domElement) {
-          this.object = object;
-          this.domElement = domElement !== undefined ? domElement : document;
-          this.enabled = true;
-          this.target = new THREE.Vector3();
-          this.enableDamping = false;
-          this.dampingFactor = 0.05;
-          this.update = function () {};
-        };
-      }
-    </script>
+    
+    
+    
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
     <style>
@@ -199,7 +163,57 @@
       }
     </style>
   <!-- SAPQ Hoisted Script Gate -->
+
+<!-- SAPQ v2.0 Hoisted Script Gate -->
+
+<!-- SAPQ v2.0 Hoisted Script Gate -->
 <script>
+
+
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              slate: { 900: "#0f172a" },
+              cyan: { accent: "#00f2fe" },
+              blue: { accent: "#4facfe" },
+            },
+          },
+        },
+      };
+    
+
+
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+        }
+      }
+    
+
+
+      import { ARButton } from "three/addons/webxr/ARButton.js";
+      window.ARButton = ARButton;
+    
+
+
+      // Inline Standalone OrbitControls Fallback
+      if (typeof THREE !== "undefined" && !THREE.OrbitControls) {
+        THREE.OrbitControls = function (object, domElement) {
+          this.object = object;
+          this.domElement = domElement !== undefined ? domElement : document;
+          this.enabled = true;
+          this.target = new THREE.Vector3();
+          this.enableDamping = false;
+          this.dampingFactor = 0.05;
+          this.update = function () {};
+        };
+      }
+    
+
+
       // --- 1. Global Engine Dynamic State Bus ---
       
       // --- Module 12: Topological Cognition Core (Native Chaos Tensor Engine) ---
@@ -1042,7 +1056,9 @@
         window.addEventListener("DOMContentLoaded", init);
         window.addEventListener("load", init);
       }
-    </script>
+    
+
+</script>
 </head>
   <body>
     <canvas id="webgl-canvas"></canvas>
