@@ -22,24 +22,8 @@
         .container { max-width: 1000px; margin: 0 auto; background: #1e293b; padding: 2rem; border-radius: 12px; border: 1px solid #334155; }
         textarea, input { width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; box-sizing: border-box; font-family: monospace; }
     </style>
-</head>
-<body>
-    <header>
-        <span class="badge">Pure Client-Side JS</span>
-        <h1>Regex Batch Replace &amp; Extractor</h1>
-        <p>Option AB: Extract Emails, URLs, IPs or Custom Patterns</p>
-    </header>
-    <main class="container">
-        <h3>1. Source Text Input</h3>
-        <textarea id="source-text" rows="6" placeholder="Paste source text containing emails, links, or IP addresses..." oninput="processRegex()"></textarea>
-
-        <h3>2. Custom Regex Pattern</h3>
-        <input type="text" id="custom-regex" placeholder="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" oninput="processRegex()">
-
-        <h3>3. Extracted Matching Items</h3>
-        <textarea id="extracted-output" rows="6" readonly placeholder="Extracted results will appear here..."></textarea>
-    </main>
-    <script>
+<!-- SAPQ Hoisted Script Gate -->
+<script>
         function processRegex() {
             let text = document.getElementById('source-text').value;
             let pat = document.getElementById('custom-regex').value;
@@ -57,5 +41,23 @@
             }
         }
     </script>
+</head>
+<body>
+    <header>
+        <span class="badge">Pure Client-Side JS</span>
+        <h1>Regex Batch Replace &amp; Extractor</h1>
+        <p>Option AB: Extract Emails, URLs, IPs or Custom Patterns</p>
+    </header>
+    <main class="container">
+        <h3>1. Source Text Input</h3>
+        <textarea id="source-text" rows="6" placeholder="Paste source text containing emails, links, or IP addresses..." oninput="processRegex()"></textarea>
+
+        <h3>2. Custom Regex Pattern</h3>
+        <input type="text" id="custom-regex" placeholder="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" oninput="processRegex()">
+
+        <h3>3. Extracted Matching Items</h3>
+        <textarea id="extracted-output" rows="6" readonly placeholder="Extracted results will appear here..."></textarea>
+    </main>
+    
 </body>
 </html>

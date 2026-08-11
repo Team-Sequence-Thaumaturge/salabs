@@ -198,199 +198,8 @@
         font-size: 0.7rem;
       }
     </style>
-  </head>
-  <body>
-    <canvas id="webgl-canvas"></canvas>
-
-    <div id="ui-layer">
-      <!-- Left Panel: Central Dynamic State Bus Controls -->
-      <div class="panel">
-        <h1
-          class="text-xl font-bold text-cyan-accent mb-1 flex items-center justify-between"
-        >
-          Jules Master 3D Engine
-          <span class="badge-synthesized">11 Modules Bound</span>
-        </h1>
-        <p class="text-xs text-slate-400 mb-4">
-          Unified Dynamic State Bus Interlock
-        </p>
-
-        <!-- Slider 1: Gravity & C++ Rigid Body Physics -->
-        <div class="slider-container">
-          <div class="slider-label">
-            <span>Gravity Acceleration (중력 수치)</span>
-            <span id="gravity-val">9.81 m/s²</span>
-
-            <div class="mt-4 pt-3 border-t border-slate-700">
-              <div class="text-xs font-semibold text-slate-400 mb-2 tracking-wider">TOPOLOGICAL COGNITION TENSORS</div>
-              <div class="flex justify-between items-center mb-1">
-                <span class="text-slate-300 text-[11px]">Curvature ∇Φ</span>
-                <span id="cog-curvature" class="font-mono text-cyan-400 text-xs font-bold">0.000</span>
-              </div>
-              <div class="flex justify-between items-center mb-1">
-                <span class="text-slate-300 text-[11px]">Density ρ</span>
-                <span id="cog-density" class="font-mono text-blue-400 text-xs font-bold">0.000</span>
-              </div>
-              <div class="flex justify-between items-center mb-1">
-                <span class="text-slate-300 text-[11px]">Distortion J</span>
-                <span id="cog-distortion" class="font-mono text-purple-400 text-xs font-bold">0.000</span>
-              </div>
-            </div>
-          </div>
-          <input
-            type="range"
-            id="gravity-slider"
-            min="0"
-            max="25"
-            step="0.5"
-            value="9.81"
-          />
-        </div>
-
-        <!-- Slider 2: Solar Angle & Thermal Expansion -->
-        <div class="slider-container">
-          <div class="slider-label">
-            <span>24h Solar Angle (태양각 / 열팽창)</span>
-            <span id="solar-val">12:00 (Noon)</span>
-          </div>
-          <input
-            type="range"
-            id="solar-slider"
-            min="0"
-            max="24"
-            step="0.5"
-            value="12"
-          />
-        </div>
-
-        <!-- Slider 3: Vector Topology Connection Distance -->
-        <div class="slider-container">
-          <div class="slider-label">
-            <span>768d Vector Density</span>
-            <span id="vector-val">6.0</span>
-          </div>
-          <input
-            type="range"
-            id="vector-slider"
-            min="2"
-            max="12"
-            step="0.5"
-            value="6"
-          />
-        </div>
-
-        <!-- Slider 4: Audio Spectrum FFT Frequency Pulse -->
-        <div class="slider-container">
-          <div class="slider-label">
-            <span>Audio Spectrum FFT Pulse</span>
-            <span id="audio-val">440 Hz</span>
-          </div>
-          <input
-            type="range"
-            id="audio-slider"
-            min="100"
-            max="1000"
-            step="10"
-            value="440"
-          />
-        </div>
-
-        <!-- Real Web Audio API Microphone & Tone Buttons (Visible HUD Controls) -->
-        <div
-          class="slider-container"
-          style="
-            margin-top: 1rem;
-            padding-top: 0.75rem;
-            border-top: 1px solid rgba(51, 65, 85, 0.8);
-          "
-        >
-          <div class="slider-label" style="margin-bottom: 0.5rem">
-            <span style="color: #00f2fe; font-weight: 600"
-              >Web Audio API Live Mic & Spectrum</span
-            >
-            <span id="val-freq" style="color: #a7f3d0">440 Hz</span>
-          </div>
-          <div style="display: flex; gap: 8px">
-            <button
-              id="btn-mic-start"
-              onclick="toggleMicrophone()"
-              style="flex: 1; padding: 6px 12px; background: rgba(0, 242, 254, 0.15); border: 1px solid #00f2fe; color: #00f2fe; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.75rem; display: flex; items-center; justify-content: center; gap: 4px;"
-            >
-              🎤 <span id="mic-status-text">Enable Mic (LIVE)</span>
-            </button>
-            <button
-              id="btn-tone-gen"
-              onclick="toggleToneGenerator()"
-              style="flex: 1; padding: 6px 12px; background: rgba(139, 92, 246, 0.15); border: 1px solid #8b5cf6; color: #a78bfa; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.75rem; display: flex; items-center; justify-content: center; gap: 4px;"
-            >
-              🎵 <span id="tone-status-text">Test Tone (440Hz)</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="mt-4 pt-3 border-t border-slate-700">
-          <div class="text-xs font-semibold text-cyan-accent mb-2">
-            Synthesized 11 Subsystem Modules:
-          </div>
-          <ul class="text-xs text-slate-300 space-y-1">
-            <li class="flex justify-between">
-              <span>1. physics_core.cpp (C++ AABB Rigid Body)</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>2. quantum.vert/frag (GLSL Shaders)</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>3. 3D Vector Topology 768d Graph</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>4. 3D Audio FFT Spectrum Wave</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>5. Solar Thermal Expansion Physics</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>6. Collapsible AST JSON Tree</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>7. Quantum Relativity Curvature</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>8. OrbitControls 360 Drag/Zoom</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>9. Inverse Kinematics (IK Skinned Arm)</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>10. Soft-Body Physics Mesh</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>11. WebXR AR Overlays & ARButton</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Right Panel: AST & Telemetry Tree Inspector -->
-      <div class="panel">
-        <h2 class="text-base font-bold text-cyan-accent mb-2">
-          Interactive AST & State Tree
-        </h2>
-        <div id="json-container"></div>
-      </div>
-    </div>
-
-    <script>
+  <!-- SAPQ Hoisted Script Gate -->
+<script>
       // --- 1. Global Engine Dynamic State Bus ---
       
       // --- Module 12: Topological Cognition Core (Native Chaos Tensor Engine) ---
@@ -1234,5 +1043,198 @@
         window.addEventListener("load", init);
       }
     </script>
+</head>
+  <body>
+    <canvas id="webgl-canvas"></canvas>
+
+    <div id="ui-layer">
+      <!-- Left Panel: Central Dynamic State Bus Controls -->
+      <div class="panel">
+        <h1
+          class="text-xl font-bold text-cyan-accent mb-1 flex items-center justify-between"
+        >
+          Jules Master 3D Engine
+          <span class="badge-synthesized">11 Modules Bound</span>
+        </h1>
+        <p class="text-xs text-slate-400 mb-4">
+          Unified Dynamic State Bus Interlock
+        </p>
+
+        <!-- Slider 1: Gravity & C++ Rigid Body Physics -->
+        <div class="slider-container">
+          <div class="slider-label">
+            <span>Gravity Acceleration (중력 수치)</span>
+            <span id="gravity-val">9.81 m/s²</span>
+
+            <div class="mt-4 pt-3 border-t border-slate-700">
+              <div class="text-xs font-semibold text-slate-400 mb-2 tracking-wider">TOPOLOGICAL COGNITION TENSORS</div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-slate-300 text-[11px]">Curvature ∇Φ</span>
+                <span id="cog-curvature" class="font-mono text-cyan-400 text-xs font-bold">0.000</span>
+              </div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-slate-300 text-[11px]">Density ρ</span>
+                <span id="cog-density" class="font-mono text-blue-400 text-xs font-bold">0.000</span>
+              </div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-slate-300 text-[11px]">Distortion J</span>
+                <span id="cog-distortion" class="font-mono text-purple-400 text-xs font-bold">0.000</span>
+              </div>
+            </div>
+          </div>
+          <input
+            type="range"
+            id="gravity-slider"
+            min="0"
+            max="25"
+            step="0.5"
+            value="9.81"
+          />
+        </div>
+
+        <!-- Slider 2: Solar Angle & Thermal Expansion -->
+        <div class="slider-container">
+          <div class="slider-label">
+            <span>24h Solar Angle (태양각 / 열팽창)</span>
+            <span id="solar-val">12:00 (Noon)</span>
+          </div>
+          <input
+            type="range"
+            id="solar-slider"
+            min="0"
+            max="24"
+            step="0.5"
+            value="12"
+          />
+        </div>
+
+        <!-- Slider 3: Vector Topology Connection Distance -->
+        <div class="slider-container">
+          <div class="slider-label">
+            <span>768d Vector Density</span>
+            <span id="vector-val">6.0</span>
+          </div>
+          <input
+            type="range"
+            id="vector-slider"
+            min="2"
+            max="12"
+            step="0.5"
+            value="6"
+          />
+        </div>
+
+        <!-- Slider 4: Audio Spectrum FFT Frequency Pulse -->
+        <div class="slider-container">
+          <div class="slider-label">
+            <span>Audio Spectrum FFT Pulse</span>
+            <span id="audio-val">440 Hz</span>
+          </div>
+          <input
+            type="range"
+            id="audio-slider"
+            min="100"
+            max="1000"
+            step="10"
+            value="440"
+          />
+        </div>
+
+        <!-- Real Web Audio API Microphone & Tone Buttons (Visible HUD Controls) -->
+        <div
+          class="slider-container"
+          style="
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(51, 65, 85, 0.8);
+          "
+        >
+          <div class="slider-label" style="margin-bottom: 0.5rem">
+            <span style="color: #00f2fe; font-weight: 600"
+              >Web Audio API Live Mic & Spectrum</span
+            >
+            <span id="val-freq" style="color: #a7f3d0">440 Hz</span>
+          </div>
+          <div style="display: flex; gap: 8px">
+            <button
+              id="btn-mic-start"
+              onclick="toggleMicrophone()"
+              style="flex: 1; padding: 6px 12px; background: rgba(0, 242, 254, 0.15); border: 1px solid #00f2fe; color: #00f2fe; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.75rem; display: flex; items-center; justify-content: center; gap: 4px;"
+            >
+              🎤 <span id="mic-status-text">Enable Mic (LIVE)</span>
+            </button>
+            <button
+              id="btn-tone-gen"
+              onclick="toggleToneGenerator()"
+              style="flex: 1; padding: 6px 12px; background: rgba(139, 92, 246, 0.15); border: 1px solid #8b5cf6; color: #a78bfa; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.75rem; display: flex; items-center; justify-content: center; gap: 4px;"
+            >
+              🎵 <span id="tone-status-text">Test Tone (440Hz)</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-slate-700">
+          <div class="text-xs font-semibold text-cyan-accent mb-2">
+            Synthesized 11 Subsystem Modules:
+          </div>
+          <ul class="text-xs text-slate-300 space-y-1">
+            <li class="flex justify-between">
+              <span>1. physics_core.cpp (C++ AABB Rigid Body)</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>2. quantum.vert/frag (GLSL Shaders)</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>3. 3D Vector Topology 768d Graph</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>4. 3D Audio FFT Spectrum Wave</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>5. Solar Thermal Expansion Physics</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>6. Collapsible AST JSON Tree</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>7. Quantum Relativity Curvature</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>8. OrbitControls 360 Drag/Zoom</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>9. Inverse Kinematics (IK Skinned Arm)</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>10. Soft-Body Physics Mesh</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>11. WebXR AR Overlays & ARButton</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Right Panel: AST & Telemetry Tree Inspector -->
+      <div class="panel">
+        <h2 class="text-base font-bold text-cyan-accent mb-2">
+          Interactive AST & State Tree
+        </h2>
+        <div id="json-container"></div>
+      </div>
+    </div>
+
+    
   </body>
 </html>

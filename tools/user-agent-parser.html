@@ -22,20 +22,8 @@
         .badge { display: inline-block; background: #0284c7; color: #fff; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; margin-bottom: 1rem; }
         .result-card { background: #0f172a; padding: 1rem; border-radius: 8px; border: 1px solid #334155; margin-top: 1rem; }
     </style>
-</head>
-<body>
-    <header>
-        <span class="badge">Pure Client-Side JS</span>
-        <h1>User Agent Parser & Device Detector</h1>
-        <p>Analyze Browser, OS, Engine, and Device Details Instantly</p>
-    </header>
-    <main class="container">
-        <h3>User Agent String</h3>
-        <textarea id="ua-input" rows="3" placeholder="User Agent String..." oninput="parseUA()"></textarea>
-        <h3>Parsed Breakdown</h3>
-        <div id="ua-output" class="result-card"></div>
-    </main>
-    <script>
+<!-- SAPQ Hoisted Script Gate -->
+<script>
         document.getElementById('ua-input').value = navigator.userAgent;
         function parseUA() {
             let ua = document.getElementById('ua-input').value;
@@ -57,5 +45,19 @@
         }
         parseUA();
     </script>
+</head>
+<body>
+    <header>
+        <span class="badge">Pure Client-Side JS</span>
+        <h1>User Agent Parser & Device Detector</h1>
+        <p>Analyze Browser, OS, Engine, and Device Details Instantly</p>
+    </header>
+    <main class="container">
+        <h3>User Agent String</h3>
+        <textarea id="ua-input" rows="3" placeholder="User Agent String..." oninput="parseUA()"></textarea>
+        <h3>Parsed Breakdown</h3>
+        <div id="ua-output" class="result-card"></div>
+    </main>
+    
 </body>
 </html>

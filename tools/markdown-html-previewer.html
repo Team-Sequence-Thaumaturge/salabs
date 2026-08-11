@@ -258,47 +258,16 @@
       background: var(--card-bg);
     }
   </style>
-</head>
-<body>
-  <header>
-    <h1>📝 Markdown to HTML Realtime Previewer</h1>
-    <nav>
-      <a href="../index.html">← Back to Portal Dashboard</a>
-    </nav>
-  </header>
+<!-- SAPQ Hoisted Script Gate -->
+<script>
+// SAPQ Hoisted Function Declarations
+function calculateSum(a, b) {
+  console.log("Calculating sum...");
+  return a + b;
+}
 
-  <main class="main-container">
-    <div class="editor-pane">
-      <div class="pane-header">
-        <span>MARKDOWN EDITOR</span>
-        <div class="toolbar">
-          <button class="btn" onclick="loadSampleMarkdown()">Sample Markdown</button>
-          <button class="btn" onclick="clearMarkdown()">Clear</button>
-        </div>
-      </div>
-      <textarea id="md-input" placeholder="# Type your Markdown here..." oninput="updatePreview()"></textarea>
-    </div>
+// SAPQ Sequential Execution
 
-    <div class="preview-pane">
-      <div class="pane-header">
-        <div>
-          <button class="btn btn-primary" id="btn-tab-preview" onclick="switchTab('preview')">Live Render Preview</button>
-          <button class="btn" id="btn-tab-code" onclick="switchTab('code')">Raw HTML Code</button>
-        </div>
-        <div class="toolbar">
-          <button class="btn btn-primary" onclick="copyHTMLOutput()">📋 Copy HTML</button>
-        </div>
-      </div>
-      <div class="tab-content markdown-body" id="rendered-preview"></div>
-      <pre id="raw-html-output"></pre>
-    </div>
-  </main>
-
-  <footer>
-    <p>© 2026 SA Labs (`salabs.quanxs.com`) - High Performance Client-Side Utilities</p>
-  </footer>
-
-  <script>
     const defaultSample = `# 🚀 Markdown to HTML Converter
 
 Welcome to **SA Labs** realtime Markdown previewer!
@@ -310,10 +279,7 @@ Welcome to **SA Labs** realtime Markdown previewer!
 
 ### Code Block Example
 \`\`\`javascript
-function calculateSum(a, b) {
-  console.log("Calculating sum...");
-  return a + b;
-}
+
 \`\`\`
 
 ### Task Checklist
@@ -380,5 +346,46 @@ function calculateSum(a, b) {
 
     window.onload = init;
   </script>
+</head>
+<body>
+  <header>
+    <h1>📝 Markdown to HTML Realtime Previewer</h1>
+    <nav>
+      <a href="../index.html">← Back to Portal Dashboard</a>
+    </nav>
+  </header>
+
+  <main class="main-container">
+    <div class="editor-pane">
+      <div class="pane-header">
+        <span>MARKDOWN EDITOR</span>
+        <div class="toolbar">
+          <button class="btn" onclick="loadSampleMarkdown()">Sample Markdown</button>
+          <button class="btn" onclick="clearMarkdown()">Clear</button>
+        </div>
+      </div>
+      <textarea id="md-input" placeholder="# Type your Markdown here..." oninput="updatePreview()"></textarea>
+    </div>
+
+    <div class="preview-pane">
+      <div class="pane-header">
+        <div>
+          <button class="btn btn-primary" id="btn-tab-preview" onclick="switchTab('preview')">Live Render Preview</button>
+          <button class="btn" id="btn-tab-code" onclick="switchTab('code')">Raw HTML Code</button>
+        </div>
+        <div class="toolbar">
+          <button class="btn btn-primary" onclick="copyHTMLOutput()">📋 Copy HTML</button>
+        </div>
+      </div>
+      <div class="tab-content markdown-body" id="rendered-preview"></div>
+      <pre id="raw-html-output"></pre>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 SA Labs (`salabs.quanxs.com`) - High Performance Client-Side Utilities</p>
+  </footer>
+
+  
 </body>
 </html>

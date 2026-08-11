@@ -14,6 +14,17 @@
     .glass-card { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(56, 189, 248, 0.15); }
     .code-block { background: #080c14; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 0.75rem; }
   </style>
+<!-- SAPQ Hoisted Script Gate -->
+<script>
+    function copyCode(elementId) {
+      const code = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        alert("Source code copied to clipboard!");
+      }).catch(err => {
+        console.error("Failed to copy: ", err);
+      });
+    }
+  </script>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-black">
   <!-- Header Nav -->
@@ -780,15 +791,6 @@ window.addEventListener('message', (event) => {
     </div>
   </footer>
 
-  <script>
-    function copyCode(elementId) {
-      const code = document.getElementById(elementId).innerText;
-      navigator.clipboard.writeText(code).then(() => {
-        alert("Source code copied to clipboard!");
-      }).catch(err => {
-        console.error("Failed to copy: ", err);
-      });
-    }
-  </script>
+  
 </body>
 </html>

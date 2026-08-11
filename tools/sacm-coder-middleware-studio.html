@@ -56,6 +56,32 @@
 }
 </script>
 
+<!-- SAPQ Hoisted Script Gate -->
+<script>
+    function processSACMCoder() {
+      const lang = document.getElementById('langSelect').value;
+      const input = document.getElementById('codeInput').value;
+      const output = document.getElementById('codeOutput');
+      const log = document.getElementById('logBox');
+
+      log.innerText += `\n\n[EXECUTE] Processing payload in mode: ${lang.toUpperCase()}...`;
+      log.innerText += `\n[AST FUZZER] Parsing input tokens... 0 syntax flaws found.`;
+      log.innerText += `\n[WAVE DYNAMICS] Applying Eigenfrequency noise cancellation...`;
+
+      let generatedCode = "";
+      if (lang === 'cpp') {
+        generatedCode = `// SACM C++ Optimized & Self-Healed Output\n#include "SACM bridge.hpp"\n#include <iostream>\n\nint main() {\n    SACM::PolyglotEngine engine("v6.0");\n    engine.initialize_vector_embeddings();\n    std::cout << "SACM C++ Native Execution Passed 100%" << std::endl;\n    return 0;\n}`;
+      } else if (lang === 'python') {
+        generatedCode = `# SACM Python Optimized Output\nimport json, hashlib\n\ndef sacm_execute(payload):\n    vector_768 = [round(((hashlib.sha256(f"SACM-{i}".encode()).hexdigest()[:8], 16) / 0xFFFFFFFF) * 2 - 1, 6) for i in range(768)]\n    return {"status": "SUCCESS", "vector_dim": 768}\n\nprint(sacm_execute("${input.slice(0, 30)}"))`;
+      } else {
+        generatedCode = `// SACM ${lang.toUpperCase()} Generated Payload\n// Synthesized cleanly via SACM Coder Middleware Feature Store.\n// Status: PASSED (0 Errors)`;
+      }
+
+      output.value = generatedCode;
+      log.innerText += `\n[SUCCESS] Code synthesized & self-healed in 12ms! Output ready.`;
+      log.scrollTop = log.scrollHeight;
+    }
+  </script>
 </head>
 <body>
   <div class="container">
@@ -110,30 +136,6 @@ int main() {
     </div>
   </div>
 
-  <script>
-    function processSACMCoder() {
-      const lang = document.getElementById('langSelect').value;
-      const input = document.getElementById('codeInput').value;
-      const output = document.getElementById('codeOutput');
-      const log = document.getElementById('logBox');
-
-      log.innerText += `\n\n[EXECUTE] Processing payload in mode: ${lang.toUpperCase()}...`;
-      log.innerText += `\n[AST FUZZER] Parsing input tokens... 0 syntax flaws found.`;
-      log.innerText += `\n[WAVE DYNAMICS] Applying Eigenfrequency noise cancellation...`;
-
-      let generatedCode = "";
-      if (lang === 'cpp') {
-        generatedCode = `// SACM C++ Optimized & Self-Healed Output\n#include "SACM bridge.hpp"\n#include <iostream>\n\nint main() {\n    SACM::PolyglotEngine engine("v6.0");\n    engine.initialize_vector_embeddings();\n    std::cout << "SACM C++ Native Execution Passed 100%" << std::endl;\n    return 0;\n}`;
-      } else if (lang === 'python') {
-        generatedCode = `# SACM Python Optimized Output\nimport json, hashlib\n\ndef sacm_execute(payload):\n    vector_768 = [round(((hashlib.sha256(f"SACM-{i}".encode()).hexdigest()[:8], 16) / 0xFFFFFFFF) * 2 - 1, 6) for i in range(768)]\n    return {"status": "SUCCESS", "vector_dim": 768}\n\nprint(sacm_execute("${input.slice(0, 30)}"))`;
-      } else {
-        generatedCode = `// SACM ${lang.toUpperCase()} Generated Payload\n// Synthesized cleanly via SACM Coder Middleware Feature Store.\n// Status: PASSED (0 Errors)`;
-      }
-
-      output.value = generatedCode;
-      log.innerText += `\n[SUCCESS] Code synthesized & self-healed in 12ms! Output ready.`;
-      log.scrollTop = log.scrollHeight;
-    }
-  </script>
+  
 </body>
 </html>

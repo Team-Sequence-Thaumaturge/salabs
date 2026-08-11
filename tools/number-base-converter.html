@@ -21,24 +21,8 @@
         input { width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; box-sizing: border-box; font-family: monospace; }
         .badge { display: inline-block; background: #0284c7; color: #fff; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; margin-bottom: 1rem; }
     </style>
-</head>
-<body>
-    <header>
-        <span class="badge">Pure Client-Side JS</span>
-        <h1>Number Base Converter</h1>
-        <p>Realtime Conversion Across Binary, Octal, Decimal, and Hexadecimal</p>
-    </header>
-    <main class="container">
-        <h3>Decimal (Base 10)</h3>
-        <input type="text" id="dec-in" placeholder="255" oninput="convert('dec')">
-        <h3>Binary (Base 2)</h3>
-        <input type="text" id="bin-in" placeholder="11111111" oninput="convert('bin')">
-        <h3>Hexadecimal (Base 16)</h3>
-        <input type="text" id="hex-in" placeholder="FF" oninput="convert('hex')">
-        <h3>Octal (Base 8)</h3>
-        <input type="text" id="oct-in" placeholder="377" oninput="convert('oct')">
-    </main>
-    <script>
+<!-- SAPQ Hoisted Script Gate -->
+<script>
         function convert(source) {
             let decEl = document.getElementById('dec-in');
             let binEl = document.getElementById('bin-in');
@@ -64,5 +48,23 @@
             if (source !== 'oct') octEl.value = num.toString(8);
         }
     </script>
+</head>
+<body>
+    <header>
+        <span class="badge">Pure Client-Side JS</span>
+        <h1>Number Base Converter</h1>
+        <p>Realtime Conversion Across Binary, Octal, Decimal, and Hexadecimal</p>
+    </header>
+    <main class="container">
+        <h3>Decimal (Base 10)</h3>
+        <input type="text" id="dec-in" placeholder="255" oninput="convert('dec')">
+        <h3>Binary (Base 2)</h3>
+        <input type="text" id="bin-in" placeholder="11111111" oninput="convert('bin')">
+        <h3>Hexadecimal (Base 16)</h3>
+        <input type="text" id="hex-in" placeholder="FF" oninput="convert('hex')">
+        <h3>Octal (Base 8)</h3>
+        <input type="text" id="oct-in" placeholder="377" oninput="convert('oct')">
+    </main>
+    
 </body>
 </html>

@@ -50,6 +50,24 @@
       border: none;
     }
   </style>
+<!-- SAPQ Hoisted Script Gate -->
+<script>
+    function switchTab(mode) {
+      const iframe = document.getElementById("workbench-iframe");
+      const btn3D = document.getElementById("btn-3d");
+      const btnCommerce = document.getElementById("btn-commerce");
+
+      if (mode === "3d") {
+        iframe.src = "jules-master-3d-spatial-engine-v1-2.html";
+        btn3D.className = "px-4 py-1.5 text-xs font-semibold rounded-md transition-all duration-200 bg-gradient-to-r from-cyan-500 to-blue-500 text-slate-950 shadow-lg shadow-cyan-500/20 flex items-center space-x-2";
+        btnCommerce.className = "px-4 py-1.5 text-xs font-semibold rounded-md transition-all duration-200 text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 flex items-center space-x-2";
+      } else {
+        iframe.src = "jules-agentic-commerce-dashboard.html";
+        btnCommerce.className = "px-4 py-1.5 text-xs font-semibold rounded-md transition-all duration-200 bg-gradient-to-r from-cyan-500 to-blue-500 text-slate-950 shadow-lg shadow-cyan-500/20 flex items-center space-x-2";
+        btn3D.className = "px-4 py-1.5 text-xs font-semibold rounded-md transition-all duration-200 text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 flex items-center space-x-2";
+      }
+    }
+  </script>
 </head>
 <body class="flex flex-col h-screen">
 
@@ -87,22 +105,6 @@
     <iframe id="workbench-iframe" src="jules-master-3d-spatial-engine-v1-2.html" class="iframe-container" title="Sovereign Workbench View"></iframe>
   </main>
 
-  <script>
-    function switchTab(mode) {
-      const iframe = document.getElementById("workbench-iframe");
-      const btn3D = document.getElementById("btn-3d");
-      const btnCommerce = document.getElementById("btn-commerce");
-
-      if (mode === "3d") {
-        iframe.src = "jules-master-3d-spatial-engine-v1-2.html";
-        btn3D.className = "px-4 py-1.5 text-xs font-semibold rounded-md transition-all duration-200 bg-gradient-to-r from-cyan-500 to-blue-500 text-slate-950 shadow-lg shadow-cyan-500/20 flex items-center space-x-2";
-        btnCommerce.className = "px-4 py-1.5 text-xs font-semibold rounded-md transition-all duration-200 text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 flex items-center space-x-2";
-      } else {
-        iframe.src = "jules-agentic-commerce-dashboard.html";
-        btnCommerce.className = "px-4 py-1.5 text-xs font-semibold rounded-md transition-all duration-200 bg-gradient-to-r from-cyan-500 to-blue-500 text-slate-950 shadow-lg shadow-cyan-500/20 flex items-center space-x-2";
-        btn3D.className = "px-4 py-1.5 text-xs font-semibold rounded-md transition-all duration-200 text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 flex items-center space-x-2";
-      }
-    }
-  </script>
+  
 </body>
 </html>

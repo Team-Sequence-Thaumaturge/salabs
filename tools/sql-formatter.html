@@ -51,34 +51,8 @@
 }
 </script>
 
-</head>
-<body>
-  <header>
-    <span class="badge">Option Q</span>
-    <h1>Client-Side SQL Formatter & Beautifier</h1>
-    <p class="sub">Format, uppercase keywords, and beautify SQL queries 100% locally in your browser</p>
-    <div style="margin-top:0.75rem;"><span class="sec-badge">🔒 100% Client-Side Engine (Zero Database Connection Required)</span></div>
-  </header>
-  <main class="grid">
-    <div class="card">
-      <label for="sqlInput">Unformatted SQL Query</label>
-      <textarea id="sqlInput" placeholder="select u.id, u.name, o.total_amount from users u join orders o on u.id = o.user_id where o.status = 'completed' and o.created_at >= '2026-01-01' group by u.id, u.name order by o.total_amount desc limit 50;"></textarea>
-    </div>
-    <div class="card">
-      <label>Formatted SQL Output 
-        <div class="btn-group">
-          <button class="action-btn" onclick="formatSQL()">Format</button>
-          <button class="action-btn" onclick="copySQL()">Copy</button>
-        </div>
-      </label>
-      <textarea id="sqlOutput" readonly placeholder="Formatted SQL query will appear here..."></textarea>
-    </div>
-  </main>
-  <footer>
-    <p>© 2026 Quanxs SA Labs (salabs.quanxs.com) - Client-Side Developer Utilities</p>
-  </footer>
-
-  <script>
+<!-- SAPQ Hoisted Script Gate -->
+<script>
     const KEYWORDS = [
       "SELECT", "FROM", "WHERE", "GROUP BY", "ORDER BY", "HAVING", "LIMIT",
       "JOIN", "LEFT JOIN", "RIGHT JOIN", "INNER JOIN", "OUTER JOIN", "ON",
@@ -122,5 +96,33 @@
 
     document.getElementById('sqlInput').addEventListener('input', formatSQL);
   </script>
+</head>
+<body>
+  <header>
+    <span class="badge">Option Q</span>
+    <h1>Client-Side SQL Formatter & Beautifier</h1>
+    <p class="sub">Format, uppercase keywords, and beautify SQL queries 100% locally in your browser</p>
+    <div style="margin-top:0.75rem;"><span class="sec-badge">🔒 100% Client-Side Engine (Zero Database Connection Required)</span></div>
+  </header>
+  <main class="grid">
+    <div class="card">
+      <label for="sqlInput">Unformatted SQL Query</label>
+      <textarea id="sqlInput" placeholder="select u.id, u.name, o.total_amount from users u join orders o on u.id = o.user_id where o.status = 'completed' and o.created_at >= '2026-01-01' group by u.id, u.name order by o.total_amount desc limit 50;"></textarea>
+    </div>
+    <div class="card">
+      <label>Formatted SQL Output 
+        <div class="btn-group">
+          <button class="action-btn" onclick="formatSQL()">Format</button>
+          <button class="action-btn" onclick="copySQL()">Copy</button>
+        </div>
+      </label>
+      <textarea id="sqlOutput" readonly placeholder="Formatted SQL query will appear here..."></textarea>
+    </div>
+  </main>
+  <footer>
+    <p>© 2026 Quanxs SA Labs (salabs.quanxs.com) - Client-Side Developer Utilities</p>
+  </footer>
+
+  
 </body>
 </html>

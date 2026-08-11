@@ -51,55 +51,8 @@
     .result-box img, .result-box svg { max-width: 100%; height: auto; }
     .result-box span { color: #64748b; font-weight: 500; }
   </style>
-</head>
-<body>
-  <div class="container">
-    <h1>QR Code & Barcode Generator</h1>
-    <p class="sub">100% Client-Side Pure JS High-Resolution QR & 1D Barcode Generator</p>
-
-    <div class="tabs">
-      <button class="tab-btn active" id="tab-qr" onclick="switchMode('qr')">📱 QR Code</button>
-      <button class="tab-btn" id="tab-barcode" onclick="switchMode('barcode')">🏷️ 1D Barcode (Code 128)</button>
-    </div>
-
-    <div class="input-section">
-      <label id="input-label">Content Text or URL</label>
-      <textarea id="content-input" rows="3" placeholder="Enter text, URL, or data..." oninput="onInputChanged()"></textarea>
-    </div>
-
-    <div class="controls-grid" id="qr-controls">
-      <div class="control-item">
-        <label>Cell Size</label>
-        <select id="cell-size" onchange="generateOutput()">
-          <option value="4">Small (4px)</option>
-          <option value="7" selected>Medium (7px)</option>
-          <option value="12">Large (12px)</option>
-          <option value="16">HD (16px)</option>
-        </select>
-      </div>
-      <div class="control-item">
-        <label>Error Correction</label>
-        <select id="ec-level" onchange="generateOutput()">
-          <option value="L">L (7% Recovery)</option>
-          <option value="M" selected>M (15% Recovery)</option>
-          <option value="Q">Q (25% Recovery)</option>
-          <option value="H">H (30% High Recovery)</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="btn-group">
-      <button class="btn" onclick="manualGenerate()">⚡ Generate Now</button>
-      <button class="btn btn-secondary" onclick="downloadImage()">💾 Download PNG</button>
-      <span class="toast" id="status-toast">✅ Generated Successfully!</span>
-    </div>
-
-    <div class="result-box" id="output-box">
-      <span>Preview Will Appear Here</span>
-    </div>
-  </div>
-
-  <script>
+<!-- SAPQ Hoisted Script Gate -->
+<script>
     let currentMode = 'qr';
 
     function switchMode(mode) {
@@ -195,5 +148,54 @@
     // Initial render
     generateOutput();
   </script>
+</head>
+<body>
+  <div class="container">
+    <h1>QR Code & Barcode Generator</h1>
+    <p class="sub">100% Client-Side Pure JS High-Resolution QR & 1D Barcode Generator</p>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tab-qr" onclick="switchMode('qr')">📱 QR Code</button>
+      <button class="tab-btn" id="tab-barcode" onclick="switchMode('barcode')">🏷️ 1D Barcode (Code 128)</button>
+    </div>
+
+    <div class="input-section">
+      <label id="input-label">Content Text or URL</label>
+      <textarea id="content-input" rows="3" placeholder="Enter text, URL, or data..." oninput="onInputChanged()"></textarea>
+    </div>
+
+    <div class="controls-grid" id="qr-controls">
+      <div class="control-item">
+        <label>Cell Size</label>
+        <select id="cell-size" onchange="generateOutput()">
+          <option value="4">Small (4px)</option>
+          <option value="7" selected>Medium (7px)</option>
+          <option value="12">Large (12px)</option>
+          <option value="16">HD (16px)</option>
+        </select>
+      </div>
+      <div class="control-item">
+        <label>Error Correction</label>
+        <select id="ec-level" onchange="generateOutput()">
+          <option value="L">L (7% Recovery)</option>
+          <option value="M" selected>M (15% Recovery)</option>
+          <option value="Q">Q (25% Recovery)</option>
+          <option value="H">H (30% High Recovery)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn" onclick="manualGenerate()">⚡ Generate Now</button>
+      <button class="btn btn-secondary" onclick="downloadImage()">💾 Download PNG</button>
+      <span class="toast" id="status-toast">✅ Generated Successfully!</span>
+    </div>
+
+    <div class="result-box" id="output-box">
+      <span>Preview Will Appear Here</span>
+    </div>
+  </div>
+
+  
 </body>
 </html>

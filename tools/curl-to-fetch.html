@@ -53,39 +53,8 @@
 }
 </script>
 
-</head>
-<body>
-  <header>
-    <span class="badge">Option P</span>
-    <h1>cURL to Fetch / Axios / Python Converter</h1>
-    <p class="sub">Parse cURL command-line calls and convert to JavaScript Fetch, Axios, and Python requests</p>
-    <div style="margin-top:0.75rem;"><span class="sec-badge">🔒 100% Client-Side Engine (Zero Server Logs)</span></div>
-  </header>
-  <main class="grid">
-    <div class="card">
-      <label for="curlInput">Input cURL Command</label>
-      <textarea id="curlInput" placeholder="curl -X POST https://api.example.com/data \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer token123' \
-  -d '{\"key\":\"value\"}'"></textarea>
-    </div>
-    <div class="card">
-      <div>
-        <div class="lang-tabs">
-          <button class="tab-btn active" onclick="setLang('fetch')">JS Fetch</button>
-          <button class="tab-btn" onclick="setLang('axios')">Axios</button>
-          <button class="tab-btn" onclick="setLang('python')">Python</button>
-        </div>
-        <label>Output Code <button class="copy-btn" onclick="copyCode()">Copy</button></label>
-      </div>
-      <textarea id="codeOutput" readonly placeholder="Target code will appear here..."></textarea>
-    </div>
-  </main>
-  <footer>
-    <p>© 2026 Quanxs SA Labs (salabs.quanxs.com) - Client-Side Developer Utilities</p>
-  </footer>
-
-  <script>
+<!-- SAPQ Hoisted Script Gate -->
+<script>
     let currentLang = 'fetch';
 
     function parseCurl(curlString) {
@@ -199,5 +168,38 @@
 
     document.getElementById('curlInput').addEventListener('input', generateCode);
   </script>
+</head>
+<body>
+  <header>
+    <span class="badge">Option P</span>
+    <h1>cURL to Fetch / Axios / Python Converter</h1>
+    <p class="sub">Parse cURL command-line calls and convert to JavaScript Fetch, Axios, and Python requests</p>
+    <div style="margin-top:0.75rem;"><span class="sec-badge">🔒 100% Client-Side Engine (Zero Server Logs)</span></div>
+  </header>
+  <main class="grid">
+    <div class="card">
+      <label for="curlInput">Input cURL Command</label>
+      <textarea id="curlInput" placeholder="curl -X POST https://api.example.com/data \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer token123' \
+  -d '{\"key\":\"value\"}'"></textarea>
+    </div>
+    <div class="card">
+      <div>
+        <div class="lang-tabs">
+          <button class="tab-btn active" onclick="setLang('fetch')">JS Fetch</button>
+          <button class="tab-btn" onclick="setLang('axios')">Axios</button>
+          <button class="tab-btn" onclick="setLang('python')">Python</button>
+        </div>
+        <label>Output Code <button class="copy-btn" onclick="copyCode()">Copy</button></label>
+      </div>
+      <textarea id="codeOutput" readonly placeholder="Target code will appear here..."></textarea>
+    </div>
+  </main>
+  <footer>
+    <p>© 2026 Quanxs SA Labs (salabs.quanxs.com) - Client-Side Developer Utilities</p>
+  </footer>
+
+  
 </body>
 </html>

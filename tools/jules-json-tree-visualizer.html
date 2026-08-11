@@ -170,30 +170,8 @@
         min-height: 20px;
       }
     </style>
-  </head>
-  <body>
-    <h1>JSON Tree Visualizer</h1>
-    <div class="container">
-      <div class="top-panel">
-        <textarea
-          id="json-input"
-          placeholder="Paste your JSON here..."
-          spellcheck="false"
-        ></textarea>
-        <input
-          type="text"
-          id="search-input"
-          placeholder="Search nodes (keys or values)..."
-          autocomplete="off"
-        />
-      </div>
-      <div id="error-msg" class="error"></div>
-      <div class="bottom-panel tree-root" id="tree-container">
-        <!-- Tree will be rendered here -->
-      </div>
-    </div>
-
-    <script>
+  <!-- SAPQ Hoisted Script Gate -->
+<script>
       const jsonInput = document.getElementById("json-input");
       const searchInput = document.getElementById("search-input");
       const treeContainer = document.getElementById("tree-container");
@@ -397,5 +375,29 @@
 
       updateTree();
     </script>
+</head>
+  <body>
+    <h1>JSON Tree Visualizer</h1>
+    <div class="container">
+      <div class="top-panel">
+        <textarea
+          id="json-input"
+          placeholder="Paste your JSON here..."
+          spellcheck="false"
+        ></textarea>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search nodes (keys or values)..."
+          autocomplete="off"
+        />
+      </div>
+      <div id="error-msg" class="error"></div>
+      <div class="bottom-panel tree-root" id="tree-container">
+        <!-- Tree will be rendered here -->
+      </div>
+    </div>
+
+    
   </body>
 </html>

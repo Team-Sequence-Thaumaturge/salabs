@@ -142,6 +142,45 @@
 
     footer { margin-top: 3rem; text-align: center; font-size: 0.8rem; color: var(--text-muted); }
   </style>
+<!-- SAPQ Hoisted Script Gate -->
+<script>
+    function requestTossPayment() {
+      const clientKey = document.getElementById('clientKey').value.trim();
+      const payMethod = document.getElementById('payMethod').value;
+      const orderName = document.getElementById('orderName').value.trim();
+      const amount = parseInt(document.getElementById('amount').value.trim(), 10);
+      const orderId = `toss-ord-${Date.now()}`;
+      const resultBox = document.getElementById('resultBox');
+
+      const payload = {
+        amount: amount,
+        orderId: orderId,
+        orderName: orderName,
+        customerName: "SA Labs Guest User",
+        successUrl: window.location.href + "?status=success",
+        failUrl: window.location.href + "?status=fail",
+      };
+
+      resultBox.innerText = `// [Toss Payments Request Payload]\n` + JSON.stringify(payload, null, 2);
+
+      try {
+        if (typeof TossPayments === 'undefined') {
+          throw new Error("Toss Payments SDK not loaded.");
+        }
+        const tossPayments = TossPayments(clientKey);
+        tossPayments.requestPayment(payMethod, payload);
+      } catch (err) {
+        const mockResponse = {
+          status: "SIMULATED_TOSS_MODAL",
+          orderId: orderId,
+          method: payMethod,
+          amount: amount,
+          note: "테스트 클라이언트 키 시뮬레이션 모드에서 정상 동작했습니다."
+        };
+        resultBox.innerText = `// [Toss Payments Simulation]\n` + JSON.stringify(mockResponse, null, 2);
+      }
+    }
+  </script>
 </head>
 <body>
 
@@ -204,43 +243,6 @@
     </footer>
   </div>
 
-  <script>
-    function requestTossPayment() {
-      const clientKey = document.getElementById('clientKey').value.trim();
-      const payMethod = document.getElementById('payMethod').value;
-      const orderName = document.getElementById('orderName').value.trim();
-      const amount = parseInt(document.getElementById('amount').value.trim(), 10);
-      const orderId = `toss-ord-${Date.now()}`;
-      const resultBox = document.getElementById('resultBox');
-
-      const payload = {
-        amount: amount,
-        orderId: orderId,
-        orderName: orderName,
-        customerName: "SA Labs Guest User",
-        successUrl: window.location.href + "?status=success",
-        failUrl: window.location.href + "?status=fail",
-      };
-
-      resultBox.innerText = `// [Toss Payments Request Payload]\n` + JSON.stringify(payload, null, 2);
-
-      try {
-        if (typeof TossPayments === 'undefined') {
-          throw new Error("Toss Payments SDK not loaded.");
-        }
-        const tossPayments = TossPayments(clientKey);
-        tossPayments.requestPayment(payMethod, payload);
-      } catch (err) {
-        const mockResponse = {
-          status: "SIMULATED_TOSS_MODAL",
-          orderId: orderId,
-          method: payMethod,
-          amount: amount,
-          note: "테스트 클라이언트 키 시뮬레이션 모드에서 정상 동작했습니다."
-        };
-        resultBox.innerText = `// [Toss Payments Simulation]\n` + JSON.stringify(mockResponse, null, 2);
-      }
-    }
-  </script>
+  
 </body>
 </html>

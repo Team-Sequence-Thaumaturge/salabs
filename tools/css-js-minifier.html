@@ -49,46 +49,18 @@
     .status-bar { padding: 0.5rem 1.25rem; font-size: 0.8rem; border-top: 1px solid var(--border); background: #090d16; color: var(--success); font-weight: 500; }
     footer { text-align: center; padding: 1rem; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border); background: var(--card-bg); }
   </style>
-</head>
-<body>
-  <header>
-    <h1>⚡ CSS & JS Code Minifier / Beautifier</h1>
-    <nav><a href="../index.html">← Back to Portal Dashboard</a></nav>
-  </header>
+<!-- SAPQ Hoisted Script Gate -->
+<script>
+// SAPQ Hoisted Function Declarations
+function calculateReductionRatio(originalSize, minifiedSize) {
+  if (originalSize === 0) return 0;
+  const savedBytes = originalSize - minifiedSize;
+  const percentage = (savedBytes / originalSize) * 100;
+  return percentage.toFixed(1);
+}
 
-  <main class="main-container">
-    <div class="pane">
-      <div class="pane-header">
-        <span>INPUT CODE (CSS or JS)</span>
-        <div class="toolbar">
-          <button class="btn" onclick="loadSampleCSS()">Sample CSS</button>
-          <button class="btn" onclick="loadSampleJS()">Sample JS</button>
-          <button class="btn" onclick="clearInput()">Clear</button>
-        </div>
-      </div>
-      <textarea id="input-text" placeholder="Paste CSS or JavaScript code here..." oninput="updateStats()"></textarea>
-      <div class="status-bar" id="input-status">Input Size: 0 Bytes</div>
-    </div>
+// SAPQ Sequential Execution
 
-    <div class="pane">
-      <div class="pane-header">
-        <span>PROCESSED OUTPUT</span>
-        <div class="toolbar">
-          <button class="btn btn-primary" onclick="minifyCode()">Minify Code</button>
-          <button class="btn btn-primary" onclick="beautifyCode()">Beautify Code</button>
-          <button class="btn" onclick="copyOutput()">📋 Copy Code</button>
-        </div>
-      </div>
-      <textarea id="output-text" readonly placeholder="Result will appear here..."></textarea>
-      <div class="status-bar" id="output-status">Output Size: 0 Bytes</div>
-    </div>
-  </main>
-
-  <footer>
-    <p>© 2026 SA Labs (`salabs.quanxs.com`) - High Performance Client-Side Utilities</p>
-  </footer>
-
-  <script>
     const sampleCSS = `/* Header Navigation Styles */
 header {
   background-color: rgba(21, 29, 48, 0.8);
@@ -103,12 +75,7 @@ header h1 {
 }`;
 
     const sampleJS = `// Calculate analytics ratio
-function calculateReductionRatio(originalSize, minifiedSize) {
-  if (originalSize === 0) return 0;
-  const savedBytes = originalSize - minifiedSize;
-  const percentage = (savedBytes / originalSize) * 100;
-  return percentage.toFixed(1);
-}`;
+`;
 
     function init() {
       document.getElementById('input-text').value = sampleCSS;
@@ -166,5 +133,45 @@ function calculateReductionRatio(originalSize, minifiedSize) {
 
     window.onload = init;
   </script>
+</head>
+<body>
+  <header>
+    <h1>⚡ CSS & JS Code Minifier / Beautifier</h1>
+    <nav><a href="../index.html">← Back to Portal Dashboard</a></nav>
+  </header>
+
+  <main class="main-container">
+    <div class="pane">
+      <div class="pane-header">
+        <span>INPUT CODE (CSS or JS)</span>
+        <div class="toolbar">
+          <button class="btn" onclick="loadSampleCSS()">Sample CSS</button>
+          <button class="btn" onclick="loadSampleJS()">Sample JS</button>
+          <button class="btn" onclick="clearInput()">Clear</button>
+        </div>
+      </div>
+      <textarea id="input-text" placeholder="Paste CSS or JavaScript code here..." oninput="updateStats()"></textarea>
+      <div class="status-bar" id="input-status">Input Size: 0 Bytes</div>
+    </div>
+
+    <div class="pane">
+      <div class="pane-header">
+        <span>PROCESSED OUTPUT</span>
+        <div class="toolbar">
+          <button class="btn btn-primary" onclick="minifyCode()">Minify Code</button>
+          <button class="btn btn-primary" onclick="beautifyCode()">Beautify Code</button>
+          <button class="btn" onclick="copyOutput()">📋 Copy Code</button>
+        </div>
+      </div>
+      <textarea id="output-text" readonly placeholder="Result will appear here..."></textarea>
+      <div class="status-bar" id="output-status">Output Size: 0 Bytes</div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 SA Labs (`salabs.quanxs.com`) - High Performance Client-Side Utilities</p>
+  </footer>
+
+  
 </body>
 </html>
