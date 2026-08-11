@@ -29,37 +29,8 @@
         button:hover { background: #047857; }
         .result-box { margin-top: 15px; padding: 12px; border-radius: 6px; background: #020617; border: 1px solid #334155; color: #10b981; font-family: monospace; word-break: break-all; }
     </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Crypto Secp256k1 Schnorr Signer Engine v2002</h1>
-        <p style="color: #94a3b8;">High-security client-side Secp256k1 Schnorr signature generation and verification engine. Uses Web Crypto SHA-256 and deterministic nonce.</p>
-        
-        <div class="control-group">
-            <label for="msgInput">Payload Message to Sign:</label>
-            <textarea id="msgInput" rows="3">{"event":"SPARK_SCHNORR_VERIFY_v2002","timestamp":"2026-08-12T08:54:00+09:00"}</textarea>
-        </div>
+<script>
 
-        <div class="control-group">
-            <button id="generateBtn">Generate Keypair & Sign Message</button>
-        </div>
-
-        <div class="control-group">
-            <label>Deterministic Private Key (Hex):</label>
-            <input type="text" id="privKeyHex" readonly>
-            <label style="margin-top: 10px;">Schnorr Public Key (X-Only Hex):</label>
-            <input type="text" id="pubKeyHex" readonly>
-            <label style="margin-top: 10px;">Schnorr Signature (64-byte Hex):</label>
-            <input type="text" id="sigHex" readonly>
-        </div>
-
-        <div class="control-group">
-            <button id="verifyBtn" style="background: #2563eb;">Verify Schnorr Signature</button>
-            <div id="verifyResult" class="result-box" style="display: none;"></div>
-        </div>
-    </div>
-
-    <script>
         async function sha256(msg) {
             const encoder = new TextEncoder();
             const data = encoder.encode(msg);
@@ -101,6 +72,38 @@
             resultBox.style.color = '#10b981';
             resultBox.innerText = 'SUCCESS: Schnorr Signature verified mathematically against Public Key ' + pubKey.substring(0, 16) + '...';
         });
-    </script>
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <h1>Crypto Secp256k1 Schnorr Signer Engine v2002</h1>
+        <p style="color: #94a3b8;">High-security client-side Secp256k1 Schnorr signature generation and verification engine. Uses Web Crypto SHA-256 and deterministic nonce.</p>
+        
+        <div class="control-group">
+            <label for="msgInput">Payload Message to Sign:</label>
+            <textarea id="msgInput" rows="3">{"event":"SPARK_SCHNORR_VERIFY_v2002","timestamp":"2026-08-12T08:54:00+09:00"}</textarea>
+        </div>
+
+        <div class="control-group">
+            <button id="generateBtn">Generate Keypair & Sign Message</button>
+        </div>
+
+        <div class="control-group">
+            <label>Deterministic Private Key (Hex):</label>
+            <input type="text" id="privKeyHex" readonly>
+            <label style="margin-top: 10px;">Schnorr Public Key (X-Only Hex):</label>
+            <input type="text" id="pubKeyHex" readonly>
+            <label style="margin-top: 10px;">Schnorr Signature (64-byte Hex):</label>
+            <input type="text" id="sigHex" readonly>
+        </div>
+
+        <div class="control-group">
+            <button id="verifyBtn" style="background: #2563eb;">Verify Schnorr Signature</button>
+            <div id="verifyResult" class="result-box" style="display: none;"></div>
+        </div>
+    </div>
+
+    
 </body>
 </html>
