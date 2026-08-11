@@ -1,8 +1,12 @@
 # Quanxs SA Labs (SALABS) - AI Agent & LLM Index
 > Autonomous Web Utility Tools & B2B Data Lake Infrastructure
 
-## 🌐 Live Utility Tools
+## 🌐 Featured Open Source & Flagship Platforms
+- [SAIR Chrome Extension Source Hub](https://salabs.quanxs.com/tools/sair-chrome-extension-source-hub.html): Official Manifest V3 Open Source Hub with WebCrypto & ShadowDOM Injection.
+- [SALabs Flagship 3D Spatial Workbench](https://salabs.quanxs.com/tools/salabs-flagship-3d-spatial-workbench.html): Flagship 3D Quantum Spatial Engine with 120 FPS WebGL InstancedMesh.
+- [Jules Agentic Commerce Dashboard](https://salabs.quanxs.com/tools/jules-agentic-commerce-dashboard.html): Agentic Commerce & x402 Micropayment Engine Studio.
 
+## 🌐 Live Utility Tools
 - [Api Mock Sandbox](https://salabs.quanxs.com/tools/api-mock-sandbox.html): 100% Client-side pure JS utility tool.
 - [Ascii Art Text Generator](https://salabs.quanxs.com/tools/ascii-art-text-generator.html): 100% Client-side pure JS utility tool.
 - [Audio Ambience Generator](https://salabs.quanxs.com/tools/audio-ambience-generator.html): 100% Client-side pure JS utility tool.
@@ -45,14 +49,14 @@
 - [Audio Reverb Impulse Response Studio](https://salabs.quanxs.com/tools/audio-reverb-impulse-response-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Ring Modulator Studio](https://salabs.quanxs.com/tools/audio-ring-modulator-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Ring Modulator Synth](https://salabs.quanxs.com/tools/audio-ring-modulator-synth.html): 100% Client-side pure JS utility tool.
-- [Audio Spatial 3D Audio Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-audio-panner.html): 100% Client-side pure JS utility tool.
-- [Audio Spatial 3D Audio Reverb](https://salabs.quanxs.com/tools/audio-spatial-3d-audio-reverb.html): 100% Client-side pure JS utility tool.
-- [Audio Spatial 3D Binaural Beat Studio](https://salabs.quanxs.com/tools/audio-spatial-3d-binaural-beat-studio.html): 100% Client-side pure JS utility tool.
-- [Audio Spatial 3D Binaural Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-binaural-panner.html): 100% Client-side pure JS utility tool.
-- [Audio Spatial 3D Environment Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-environment-panner.html): 100% Client-side pure JS utility tool.
-- [Audio Spatial 3D Headphone Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-headphone-panner.html): 100% Client-side pure JS utility tool.
-- [Audio Spatial 3D Reverb Studio](https://salabs.quanxs.com/tools/audio-spatial-3d-reverb-studio.html): 100% Client-side pure JS utility tool.
-- [Audio Spatial 3D Reverberator](https://salabs.quanxs.com/tools/audio-spatial-3d-reverberator.html): 100% Client-side pure JS utility tool.
+- [Audio Spatial 3D Audio Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-audio-panner.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Audio Spatial 3D Audio Reverb](https://salabs.quanxs.com/tools/audio-spatial-3d-audio-reverb.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Audio Spatial 3D Binaural Beat Studio](https://salabs.quanxs.com/tools/audio-spatial-3d-binaural-beat-studio.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Audio Spatial 3D Binaural Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-binaural-panner.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Audio Spatial 3D Environment Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-environment-panner.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Audio Spatial 3D Headphone Panner](https://salabs.quanxs.com/tools/audio-spatial-3d-headphone-panner.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Audio Spatial 3D Reverb Studio](https://salabs.quanxs.com/tools/audio-spatial-3d-reverb-studio.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Audio Spatial 3D Reverberator](https://salabs.quanxs.com/tools/audio-spatial-3d-reverberator.html): 100% Client-side 3D WebGL / Canvas utility studio.
 - [Audio Spatial Ambisonics Studio](https://salabs.quanxs.com/tools/audio-spatial-ambisonics-studio.html): 100% Client-side pure JS utility tool.
 - [Audio Spatial Panning Visualizer](https://salabs.quanxs.com/tools/audio-spatial-panning-visualizer.html): 100% Client-side pure JS utility tool.
 - [Audio Spectral Harmonizer Studio](https://salabs.quanxs.com/tools/audio-spectral-harmonizer-studio.html): 100% Client-side pure JS utility tool.
@@ -173,7 +177,7 @@
 - [Css Box Border Radius Studio](https://salabs.quanxs.com/tools/css-box-border-radius-studio.html): 100% Client-side pure JS utility tool.
 - [Css Box Filter Generator](https://salabs.quanxs.com/tools/css-box-filter-generator.html): 100% Client-side pure JS utility tool.
 - [Css Box Model Grid](https://salabs.quanxs.com/tools/css-box-model-grid.html): 100% Client-side pure JS utility tool.
-- [Css Box Shadow 3D](https://salabs.quanxs.com/tools/css-box-shadow-3d.html): 100% Client-side pure JS utility tool.
+- [Css Box Shadow 3D](https://salabs.quanxs.com/tools/css-box-shadow-3d.html): 100% Client-side 3D WebGL / Canvas utility studio.
 - [Css Box Shadow Generator](https://salabs.quanxs.com/tools/css-box-shadow-generator.html): 100% Client-side pure JS utility tool.
 - [Css Box Shadow Inset Studio](https://salabs.quanxs.com/tools/css-box-shadow-inset-studio.html): 100% Client-side pure JS utility tool.
 - [Css Box Shadow Neumorphic Generator](https://salabs.quanxs.com/tools/css-box-shadow-neumorphic-generator.html): 100% Client-side pure JS utility tool.
@@ -210,28 +214,28 @@
 - [Hash Hmac Generator](https://salabs.quanxs.com/tools/hash-hmac-generator.html): 100% Client-side pure JS utility tool.
 - [Hash Sha512 Keccak](https://salabs.quanxs.com/tools/hash-sha512-keccak.html): 100% Client-side pure JS utility tool.
 - [Hex Hexdump Viewer](https://salabs.quanxs.com/tools/hex-hexdump-viewer.html): 100% Client-side pure JS utility tool.
-- [Html Canvas 3D Wireframe Cube](https://salabs.quanxs.com/tools/html-canvas-3d-wireframe-cube.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Cube Renderer](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube-renderer.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Cube Rotation](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube-rotation.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Cube](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Dodecahedron Knot](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-dodecahedron-knot.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Dodecahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-dodecahedron.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Hypercube](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-hypercube.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Icosahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-icosahedron.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Mobius Strip](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-mobius-strip.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Octahedron Knot V5005](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v5005.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Octahedron Knot](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Octahedron Spin](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-spin.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Octahedron Studio](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-studio.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Octahedron Wireframe](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-wireframe.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Octahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Pyramid Renderer](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-pyramid-renderer.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Pyramid Wireframe](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-pyramid-wireframe.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Sphere](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-sphere.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Tetrahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-tetrahedron.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Torus Knot Renderer](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot-renderer.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Torus Knot](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii 3D Torus](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus.html): 100% Client-side pure JS utility tool.
+- [Html Canvas 3D Wireframe Cube](https://salabs.quanxs.com/tools/html-canvas-3d-wireframe-cube.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Cube Renderer](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube-renderer.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Cube Rotation](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube-rotation.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Cube](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Dodecahedron Knot](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-dodecahedron-knot.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Dodecahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-dodecahedron.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Hypercube](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-hypercube.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Icosahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-icosahedron.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Mobius Strip](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-mobius-strip.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Octahedron Knot V5005](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v5005.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Octahedron Knot](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Octahedron Spin](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-spin.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Octahedron Studio](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-studio.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Octahedron Wireframe](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-wireframe.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Octahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Pyramid Renderer](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-pyramid-renderer.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Pyramid Wireframe](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-pyramid-wireframe.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Sphere](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-sphere.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Tetrahedron](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-tetrahedron.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Torus Knot Renderer](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot-renderer.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Torus Knot](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Html Canvas Ascii 3D Torus](https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus.html): 100% Client-side 3D WebGL / Canvas utility studio.
 - [Html Canvas Ascii Art Editor](https://salabs.quanxs.com/tools/html-canvas-ascii-art-editor.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Avatar Generator](https://salabs.quanxs.com/tools/html-canvas-ascii-avatar-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Banner Studio](https://salabs.quanxs.com/tools/html-canvas-ascii-banner-studio.html): 100% Client-side pure JS utility tool.
@@ -241,11 +245,11 @@
 - [Html Canvas Ascii Face Art](https://salabs.quanxs.com/tools/html-canvas-ascii-face-art.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Flower Matrix](https://salabs.quanxs.com/tools/html-canvas-ascii-flower-matrix.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Fluid Sim](https://salabs.quanxs.com/tools/html-canvas-ascii-fluid-sim.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii Landscape 3D](https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-3d.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii Landscape 3D](https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-3d.html): 100% Client-side 3D WebGL / Canvas utility studio.
 - [Html Canvas Ascii Landscape Generator](https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-generator.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Landscape Studio](https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-studio.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Matrix Rain](https://salabs.quanxs.com/tools/html-canvas-ascii-matrix-rain.html): 100% Client-side pure JS utility tool.
-- [Html Canvas Ascii Pyramid 3D](https://salabs.quanxs.com/tools/html-canvas-ascii-pyramid-3d.html): 100% Client-side pure JS utility tool.
+- [Html Canvas Ascii Pyramid 3D](https://salabs.quanxs.com/tools/html-canvas-ascii-pyramid-3d.html): 100% Client-side 3D WebGL / Canvas utility studio.
 - [Html Canvas Ascii Radar Sweep](https://salabs.quanxs.com/tools/html-canvas-ascii-radar-sweep.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Raycaster](https://salabs.quanxs.com/tools/html-canvas-ascii-raycaster.html): 100% Client-side pure JS utility tool.
 - [Html Canvas Ascii Vector Field](https://salabs.quanxs.com/tools/html-canvas-ascii-vector-field.html): 100% Client-side pure JS utility tool.
@@ -314,11 +318,11 @@
 - [Json Schema Validator](https://salabs.quanxs.com/tools/json-schema-validator.html): 100% Client-side pure JS utility tool.
 - [Json To Csv Exporter](https://salabs.quanxs.com/tools/json-to-csv-exporter.html): 100% Client-side pure JS utility tool.
 - [Json Yaml Formatter](https://salabs.quanxs.com/tools/json-yaml-formatter.html): 100% Client-side pure JS utility tool.
-- [Jules 3D Master Studio](https://salabs.quanxs.com/tools/jules-3d-master-studio.html): 100% Client-side pure JS utility tool.
+- [Jules 3D Master Studio](https://salabs.quanxs.com/tools/jules-3d-master-studio.html): 100% Client-side 3D WebGL / Canvas utility studio.
 - [Jules Agentic Commerce Dashboard](https://salabs.quanxs.com/tools/jules-agentic-commerce-dashboard.html): 100% Client-side pure JS utility tool.
 - [Jules Json Tree Visualizer](https://salabs.quanxs.com/tools/jules-json-tree-visualizer.html): 100% Client-side pure JS utility tool.
-- [Jules Master 3D Spatial Engine V1 2](https://salabs.quanxs.com/tools/jules-master-3d-spatial-engine-v1-2.html): 100% Client-side pure JS utility tool.
-- [Jules Master 3D Spatial Engine](https://salabs.quanxs.com/tools/jules-master-3d-spatial-engine.html): 100% Client-side pure JS utility tool.
+- [Jules Master 3D Spatial Engine V1 2](https://salabs.quanxs.com/tools/jules-master-3d-spatial-engine-v1-2.html): 100% Client-side 3D WebGL / Canvas utility studio.
+- [Jules Master 3D Spatial Engine](https://salabs.quanxs.com/tools/jules-master-3d-spatial-engine.html): 100% Client-side 3D WebGL / Canvas utility studio.
 - [Jwt Debugger Verifier](https://salabs.quanxs.com/tools/jwt-debugger-verifier.html): 100% Client-side pure JS utility tool.
 - [Jwt Payload Editor](https://salabs.quanxs.com/tools/jwt-payload-editor.html): 100% Client-side pure JS utility tool.
 - [Jwt Rs256 Key Generator](https://salabs.quanxs.com/tools/jwt-rs256-key-generator.html): 100% Client-side pure JS utility tool.
@@ -354,8 +358,9 @@
 - [Regex Tester](https://salabs.quanxs.com/tools/regex-tester.html): 100% Client-side pure JS utility tool.
 - [Regex Visualizer](https://salabs.quanxs.com/tools/regex-visualizer.html): 100% Client-side pure JS utility tool.
 - [Sacm Coder Middleware Studio](https://salabs.quanxs.com/tools/sacm-coder-middleware-studio.html): 100% Client-side pure JS utility tool.
+- [Sair Chrome Extension Source Hub](https://salabs.quanxs.com/tools/sair-chrome-extension-source-hub.html): Official Manifest V3 Chrome Extension Open Source Hub.
 - [Salabs Compute Credit Checkout](https://salabs.quanxs.com/tools/salabs-compute-credit-checkout.html): 100% Client-side pure JS utility tool.
-- [Salabs Flagship 3D Spatial Workbench](https://salabs.quanxs.com/tools/salabs-flagship-3d-spatial-workbench.html): 100% Client-side pure JS utility tool.
+- [Salabs Flagship 3D Spatial Workbench](https://salabs.quanxs.com/tools/salabs-flagship-3d-spatial-workbench.html): 100% Client-side 3D WebGL / Canvas utility studio.
 - [Schema Jsonld Validator Studio](https://salabs.quanxs.com/tools/schema-jsonld-validator-studio.html): 100% Client-side pure JS utility tool.
 - [Schema Micro Optimizer](https://salabs.quanxs.com/tools/schema-micro-optimizer.html): 100% Client-side pure JS utility tool.
 - [Screen Resolution Dpi Checker](https://salabs.quanxs.com/tools/screen-resolution-dpi-checker.html): 100% Client-side pure JS utility tool.
