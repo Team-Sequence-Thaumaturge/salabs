@@ -167,50 +167,46 @@
 <!-- SAPQ v2.0 Hoisted Script Gate -->
 
 <!-- SAPQ v2.0 Hoisted Script Gate -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+import { ARButton } from "three/addons/webxr/ARButton.js";
+window.ARButton = ARButton;
+</script>
 <script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        slate: { 900: "#0f172a" },
+        cyan: { accent: "#00f2fe" },
+        blue: { accent: "#4facfe" },
+      },
+    },
+  },
+};
+</script>
+<script>
+// Inline Standalone OrbitControls Fallback
+if (typeof THREE !== "undefined" && !THREE.OrbitControls) {
+  THREE.OrbitControls = function (object, domElement) {
+    this.object = object;
+    this.domElement = domElement !== undefined ? domElement : document;
+    this.enabled = true;
+    this.target = new THREE.Vector3();
+    this.enableDamping = false;
+    this.dampingFactor = 0.05;
+    this.update = function () {};
+  };
+}
 
-
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              slate: { 900: "#0f172a" },
-              cyan: { accent: "#00f2fe" },
-              blue: { accent: "#4facfe" },
-            },
-          },
-        },
-      };
-    
-
-
-      {
-        "imports": {
-          "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
-          "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
-        }
-      }
-    
-
-
-      import { ARButton } from "three/addons/webxr/ARButton.js";
-      window.ARButton = ARButton;
-    
-
-
-      // Inline Standalone OrbitControls Fallback
-      if (typeof THREE !== "undefined" && !THREE.OrbitControls) {
-        THREE.OrbitControls = function (object, domElement) {
-          this.object = object;
-          this.domElement = domElement !== undefined ? domElement : document;
-          this.enabled = true;
-          this.target = new THREE.Vector3();
-          this.enableDamping = false;
-          this.dampingFactor = 0.05;
-          this.update = function () {};
-        };
-      }
     
 
 
