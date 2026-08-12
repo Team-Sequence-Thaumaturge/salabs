@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option NX: Micro-Performance Optimization & Structured Schema Engine v5 - Quanxs SA Labs</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Micro-Performance Schema Engine v5",
+  "url": "https://salabs.quanxs.com/tools/micro-performance-schema-engine-v5.html",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "All",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 20px; }
+.container { max-width: 900px; margin: 0 auto; background: #1e293b; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+h1 { color: #a855f7; text-align: center; margin-bottom: 20px; }
+.section { margin-bottom: 25px; padding: 15px; background: #0f172a; border-radius: 8px; border: 1px solid #334155; }
+label { display: block; margin-bottom: 8px; font-weight: bold; color: #94a3b8; }
+textarea { width: 100%; box-sizing: border-box; padding: 10px; border-radius: 6px; border: 1px solid #475569; background: #1e293b; color: #fff; margin-bottom: 10px; }
+button { background: #9333ea; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+button:hover { background: #7e22ce; }
+.metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 15px; }
+.card { background: #020617; padding: 15px; border-radius: 6px; text-align: center; border: 1px solid #1e293b; }
+.card .val { font-size: 20px; font-weight: bold; color: #c084fc; margin-top: 5px; }
+</style>
+<script>
+
+function runProfilerV5() {
+  const code = document.getElementById('codeSnippet').value;
+  const start = performance.now();
+  try {
+    eval(code);
+    const end = performance.now();
+    const duration = (end - start).toFixed(3);
+    document.getElementById('timeVal').innerText = duration + ' ms';
+    document.getElementById('opsVal').innerText = duration > 0 ? (1000 / duration).toFixed(0) : '∞';
+    if(performance.memory) {
+      document.getElementById('memVal').innerText = (performance.memory.usedJSHeapSize / 1024 / 1024).toFixed(2) + ' MB';
+    }
+  } catch(e) { alert('Execution error: ' + e.message); }
+}
+
+</script>
+</head>
+<body>
+<div class="container">
+<h1>Micro-Performance & Schema Engine v5</h1>
+<div class="section">
+<h3>⚡ Realtime High-Precision Execution Profiler</h3>
+<label>Javascript Snippet to Benchmark</label>
+<textarea id="codeSnippet" rows="4">let sum = 0; for(let i=0; i<1000000; i++) { sum += Math.sqrt(i); }</textarea>
+<button onclick="runProfilerV5()">Benchmark Execution</button>
+<div class="metrics">
+<div class="card"><div>Exec Time</div><div class="val" id="timeVal">0 ms</div></div>
+<div class="card"><div>Memory Allocated</div><div class="val" id="memVal">N/A</div></div>
+<div class="card"><div>Ops / Sec</div><div class="val" id="opsVal">0</div></div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

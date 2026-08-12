@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option NW: Next Generation Client-side Utility Engine v5 - Quanxs SA Labs</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Client-side Utility Engine v5",
+  "url": "https://salabs.quanxs.com/tools/client-side-utility-engine-v5.html",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "All",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 20px; }
+.container { max-width: 900px; margin: 0 auto; background: #1e293b; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+h1 { color: #38bdf8; text-align: center; margin-bottom: 20px; }
+.section { margin-bottom: 25px; padding: 15px; background: #0f172a; border-radius: 8px; border: 1px solid #334155; }
+label { display: block; margin-bottom: 8px; font-weight: bold; color: #94a3b8; }
+textarea, input { width: 100%; box-sizing: border-box; padding: 10px; border-radius: 6px; border: 1px solid #475569; background: #1e293b; color: #fff; margin-bottom: 10px; }
+button { background: #0284c7; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+button:hover { background: #0369a1; }
+.output { background: #020617; padding: 12px; border-radius: 6px; font-family: monospace; word-break: break-all; color: #4ade80; min-height: 40px; border: 1px solid #1e293b; }
+</style>
+<script>
+
+async function encryptV5() {
+  const text = document.getElementById('cipherInput').value;
+  const pass = document.getElementById('passKey').value || 'default_pass';
+  if(!text) return;
+  const enc = new TextEncoder();
+  const keyMaterial = await crypto.subtle.importKey('raw', enc.encode(pass), 'PBKDF2', false, ['deriveKey']);
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' }, keyMaterial, { name: 'AES-GCM', length: 256 }, false, ['encrypt']);
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const encrypted = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, enc.encode(text));
+  const result = { salt: Array.from(salt), iv: Array.from(iv), data: Array.from(new Uint8Array(encrypted)) };
+  document.getElementById('cipherResult').innerText = btoa(JSON.stringify(result));
+}
+async function decryptV5() {
+  try {
+    const b64 = document.getElementById('cipherInput').value;
+    const pass = document.getElementById('passKey').value || 'default_pass';
+    const parsed = JSON.parse(atob(b64));
+    const enc = new TextEncoder();
+    const keyMaterial = await crypto.subtle.importKey('raw', enc.encode(pass), 'PBKDF2', false, ['deriveKey']);
+    const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: new Uint8Array(parsed.salt), iterations: 100000, hash: 'SHA-256' }, keyMaterial, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+    const decrypted = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: new Uint8Array(parsed.iv) }, key, new Uint8Array(parsed.data));
+    document.getElementById('cipherResult').innerText = new TextDecoder().decode(decrypted);
+  } catch(e) { document.getElementById('cipherResult').innerText = 'Error: Decryption failed.'; }
+}
+function startAudioV5() {
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = 'sawtooth';
+  osc.frequency.setValueAtTime(440, ctx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.5);
+  gain.gain.setValueAtTime(0.3, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.start(); osc.stop(ctx.currentTime + 0.5);
+}
+
+</script>
+</head>
+<body>
+<div class="container">
+<h1>Client-Side Utility Engine v5</h1>
+<div class="section">
+<h3>🔒 Web Crypto AES-GCM / PBKDF2 Multi-Cipher</h3>
+<label>Plaintext / Password</label>
+<textarea id="cipherInput" rows="3" placeholder="Enter text to encrypt/decrypt..."></textarea>
+<input type="password" id="passKey" placeholder="Secret Passphrase...">
+<button onclick="encryptV5()">Encrypt (AES-GCM)</button>
+<button onclick="decryptV5()">Decrypt (AES-GCM)</button>
+<div class="output" id="cipherResult">Result will appear here...</div>
+</div>
+<div class="section">
+<h3>🎵 Audio Synthesizer & Spectrum Analyzer</h3>
+<button onclick="startAudioV5()">Play Audio Synth Pulse</button>
+<canvas id="audioCanvas" width="800" height="100" style="width:100%; background:#020617; border-radius:6px; margin-top:10px;"></canvas>
+</div>
+</div>
+
+</body>
+</html>
