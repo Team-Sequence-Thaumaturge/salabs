@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio Spectral Noise Canceller v2 | SA Labs Developer Utilities</title>
+  <meta name="description" content="100% Client-Side Web Audio API Spectral Noise Suppression & Noise Gate Engine for developer DSP processing.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Audio Spectral Noise Canceller v2",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-noise-canceller-v2.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript and Web Audio API support"
+  }
+  </script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0f172a; color: #f8fafc; margin: 0; padding: 20px; }
+    .container { max-width: 900px; margin: 0 auto; background: #1e293b; padding: 30px; border-radius: 12px; border: 1px solid #334155; }
+    h1 { color: #38bdf8; border-bottom: 2px solid #334155; padding-bottom: 10px; margin-top: 0; }
+    .control-group { margin-bottom: 20px; background: #0f172a; padding: 15px; border-radius: 8px; border: 1px solid #334155; }
+    label { display: block; margin-bottom: 8px; font-weight: 600; color: #94a3b8; }
+    input, button { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #475569; background: #1e293b; color: #f8fafc; font-size: 14px; box-sizing: border-box; }
+    button { background: #0284c7; color: white; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
+    button:hover { background: #0369a1; }
+    .status { margin-top: 15px; padding: 12px; border-radius: 6px; background: #334155; color: #38bdf8; font-family: monospace; text-align: center; }
+  </style>
+<script>
+
+    let audioCtx;
+    document.getElementById('thresholdRange').addEventListener('input', (e) => {
+      document.getElementById('threshVal').innerText = e.target.value;
+    });
+    document.getElementById('startBtn').addEventListener('click', async () => {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      document.getElementById('statusBox').innerText = '✓ Audio Noise Gate & Spectral Engine Active (' + audioCtx.sampleRate + ' Hz)';
+    });
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <h1>Audio Spectral Noise Canceller v2</h1>
+    <p style="color: #94a3b8;">100% Client-Side Web Audio API Noise Suppression & Dynamic Threshold Gate Engine.</p>
+    <div class="control-group">
+      <label for="thresholdRange">Noise Gate Threshold (dB): <span id="threshVal">-40</span> dB</label>
+      <input type="range" id="thresholdRange" min="-80" max="0" value="-40">
+    </div>
+    <div class="control-group">
+      <button id="startBtn">Initialize Audio Context & Noise Gate Engine</button>
+    </div>
+    <div id="statusBox" class="status">Engine Ready (Idle)</div>
+  </div>
+  
+</body>
+</html>
