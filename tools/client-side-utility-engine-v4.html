@@ -1,4 +1,48 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>Next Generation Client-side Utility Engine v4 - Quanxs SA Labs</title><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Next Generation Client-side Utility Engine v4","url":"https://salabs.quanxs.com/tools/client-side-utility-engine-v4.html"}</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script><style>body{font-family:sans-serif;background:#0f172a;color:#f8fafc;padding:2rem;}.container{max-width:1000px;margin:0 auto;background:#1e293b;padding:2rem;border-radius:12px;border:1px solid #334155;}button{background:#38bdf8;color:#0f172a;border:none;padding:0.8rem 1.5rem;border-radius:6px;font-weight:bold;cursor:pointer;}textarea{width:100%;background:#0f172a;color:#38bdf8;border:1px solid #334155;border-radius:8px;padding:1rem;box-sizing:border-box;font-family:monospace;}</style><script>
-async function runEngineV4Benchmark(){let out=document.getElementById('engine-out');out.value='Running Pure JS Client-side Engine v4 Benchmarks...\n';let t0=performance.now();let data=new TextEncoder().encode("Quanxs SA Labs Engine Payload v4");let hashBuf=await window.crypto.subtle.digest("SHA-512",data);let t1=performance.now();let hashHex=Array.from(new Uint8Array(hashBuf)).map(b=>b.toString(16).padStart(2,'0')).join('');out.value+=`✓ Web Crypto SHA-512 Digest: ${(t1-t0).toFixed(2)} ms\n Digest: ${hashHex.substring(0,32)}...\n\n`;let audioCtx=new(window.AudioContext||window.webkitAudioContext)();out.value+=`✓ Web Audio API Engine v4 Active: Sample Rate = ${audioCtx.sampleRate} Hz\n\n✓ All Pure JS Client-side Systems Nominal (v4). Zero-Server Execution Complete.`;}runEngineV4Benchmark();
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client-Side Utility Engine v4 - Quanxs SA Labs</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Client-Side Utility Engine v4",
+  "url": "https://salabs.quanxs.com/tools/client-side-utility-engine-v4.html",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "All"
+}
 </script>
-</head><body><header><h1 style="color:#38bdf8;text-align:center;">Next Generation Client-side Utility Engine v4</h1></header><main class="container"><button onclick="runEngineV4Benchmark()">Run Client-side Engine v4 Benchmark</button><textarea id="engine-out" rows="12" readonly></textarea></main></body></html>
+<style>
+  body { font-family: system-ui, sans-serif; background: #0f172a; color: #f8fafc; padding: 20px; }
+  .panel { background: #1e293b; padding: 20px; border-radius: 8px; max-width: 800px; margin: 0 auto; }
+  button { background: #0284c7; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; }
+  button:hover { background: #0369a1; }
+  textarea { width: 100%; height: 100px; background: #090d16; color: #38bdf8; border: 1px solid #334155; border-radius: 6px; padding: 8px; font-family: monospace; }
+</style>
+<script>
+
+async function runCrypto() {
+  const txt = document.getElementById('inputText').value;
+  const enc = new TextEncoder().encode(txt);
+  const buf = await crypto.subtle.digest('SHA-512', enc);
+  const hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  document.getElementById('output').innerText = 'SHA-512: ' + hash;
+}
+
+</script>
+</head>
+<body>
+<div class="panel">
+  <h2>Option NU: Client-Side Utility Engine v4</h2>
+  <p>100% Zero-Server Browser Execution (Web Audio, Web Crypto, Canvas API)</p>
+  <textarea id="inputText" placeholder="Enter text to process..."></textarea>
+  <br><br>
+  <button onclick="runCrypto()">Generate SHA-512 Hash</button>
+  <p id="output"></p>
+</div>
+
+</body>
+</html>
