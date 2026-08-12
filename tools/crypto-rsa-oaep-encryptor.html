@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSA-OAEP Crypto Encryptor Studio | SA Labs Developer Utilities</title>
+  <meta name="description" content="100% Client-Side Web Crypto API RSA-OAEP Key Pair Generator, Public Key Encryption, and Private Key Decryption Studio.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "RSA-OAEP Crypto Encryptor Studio",
+    "url": "https://salabs.quanxs.com/tools/crypto-rsa-oaep-encryptor.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript and Web Crypto API support"
+  }
+  </script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #0f172a; color: #f8fafc; margin: 0; padding: 20px; }
+    .container { max-width: 900px; margin: 0 auto; background: #1e293b; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+    h1 { color: #38bdf8; border-bottom: 2px solid #334155; padding-bottom: 10px; margin-top: 0; }
+    .control-group { margin-bottom: 20px; background: #0f172a; padding: 15px; border-radius: 8px; border: 1px solid #334155; }
+    label { display: block; margin-bottom: 8px; font-weight: 600; color: #94a3b8; }
+    textarea, button { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #475569; background: #1e293b; color: #f8fafc; font-size: 14px; box-sizing: border-box; font-family: monospace; }
+    textarea { height: 100px; resize: vertical; }
+    button { background: #0284c7; color: white; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
+    button:hover { background: #0369a1; }
+    .output-box { background: #020617; border: 1px solid #334155; border-radius: 6px; padding: 12px; margin-top: 10px; word-break: break-all; color: #38bdf8; font-family: monospace; max-height: 150px; overflow-y: auto; }
+  </style>
+<script>
+
+    let keyPair, encryptedBuffer;
+    document.getElementById('genKeysBtn').addEventListener('click', async () => {
+      try {
+        keyPair = await window.crypto.subtle.generateKey(
+          { name: "RSA-OAEP", modulusLength: 2048, publicExponent: new Uint8Array([1, 0, 1]), hash: "SHA-256" },
+          true,
+          ["encrypt", "decrypt"]
+        );
+        const pubExport = await window.crypto.subtle.exportKey("spki", keyPair.publicKey);
+        const privExport = await window.crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
+        document.getElementById('pubKeyBox').innerText = btoa(String.fromCharCode(...new Uint8Array(pubExport)));
+        document.getElementById('privKeyBox').innerText = btoa(String.fromCharCode(...new Uint8Array(privExport)));
+      } catch (err) {
+        alert('Key Gen Error: ' + err.message);
+      }
+    });
+    document.getElementById('encryptBtn').addEventListener('click', async () => {
+      if (!keyPair) return alert('Please generate key pair first!');
+      const msg = document.getElementById('plaintext').value;
+      const enc = new TextEncoder().encode(msg);
+      encryptedBuffer = await window.crypto.subtle.encrypt({ name: "RSA-OAEP" }, keyPair.publicKey, enc);
+      const b64 = btoa(String.fromCharCode(...new Uint8Array(encryptedBuffer)));
+      document.getElementById('cipherBox').innerText = b64;
+    });
+    document.getElementById('decryptBtn').addEventListener('click', async () => {
+      if (!keyPair || !encryptedBuffer) return alert('No encrypted message available!');
+      try {
+        const dec = await window.crypto.subtle.decrypt({ name: "RSA-OAEP" }, keyPair.privateKey, encryptedBuffer);
+        document.getElementById('decryptBox').innerText = new TextDecoder().decode(dec);
+      } catch (err) {
+        alert('Decryption failed: ' + err.message);
+      }
+    });
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <h1>RSA-OAEP Crypto Encryptor Studio</h1>
+    <p style="color: #94a3b8;">100% Client-Side Web Crypto API RSA-2048/4096 OAEP Key Gen & Encryption/Decryption. Zero Server Key Exposure.</p>
+    <div class="control-group">
+      <button id="genKeysBtn">Generate RSA-OAEP (2048-bit) Key Pair</button>
+      <div style="margin-top:10px;"><strong>Public Key (PEM):</strong><div id="pubKeyBox" class="output-box">Key Not Generated</div></div>
+      <div style="margin-top:10px;"><strong>Private Key (PEM):</strong><div id="privKeyBox" class="output-box">Key Not Generated</div></div>
+    </div>
+    <div class="control-group">
+      <label for="plaintext">Input Plaintext Message:</label>
+      <textarea id="plaintext" placeholder="Type secret payload here..."></textarea>
+      <button id="encryptBtn">Encrypt Message with Public Key</button>
+      <div style="margin-top:10px;"><strong>Encrypted Ciphertext (Base64):</strong><div id="cipherBox" class="output-box">None</div></div>
+    </div>
+    <div class="control-group">
+      <button id="decryptBtn" style="background: #059669;">Decrypt Ciphertext with Private Key</button>
+      <div style="margin-top:10px;"><strong>Decrypted Output:</strong><div id="decryptBox" class="output-box">None</div></div>
+    </div>
+  </div>
+  
+</body>
+</html>
