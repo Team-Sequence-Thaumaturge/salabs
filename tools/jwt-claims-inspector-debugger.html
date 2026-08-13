@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JWT Claims Inspector & Expiration Debugger - Quanxs SA Labs</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "JWT Claims Inspector & Expiration Debugger",
+  "url": "https://salabs.quanxs.com/tools/jwt-claims-inspector-debugger.html",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript. Requires HTML5.",
+  "author": {
+    "@type": "Organization",
+    "name": "Quanxs SA Labs"
+  }
+}
+</script>
+<style>
+:root {
+  --bg: #0f172a;
+  --panel: #1e293b;
+  --border: #334155;
+  --accent: #38bdf8;
+  --danger: #f43f5e;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --code-bg: #090d16;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); padding: 24px 16px; min-height: 100vh; }
+.container { max-width: 1000px; margin: 0 auto; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 28px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+h1 { font-size: 24px; color: var(--accent); margin-bottom: 8px; font-weight: 700; }
+p.desc { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+textarea { width: 100%; height: 110px; background: var(--code-bg); color: #e2e8f0; border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-family: ui-monospace, monospace; font-size: 13px; line-height: 1.4; margin-bottom: 16px; }
+.btn-group { display: flex; gap: 12px; margin-bottom: 20px; }
+.btn { background: var(--accent); color: #0f172a; font-weight: 600; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+.btn-sec { background: #334155; color: var(--text); }
+.status-badge { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-bottom: 16px; }
+.status-badge.valid { background: rgba(16, 185, 129, 0.15); color: var(--success); border: 1px solid var(--success); }
+.status-badge.expired { background: rgba(244, 63, 94, 0.15); color: var(--danger); border: 1px solid var(--danger); }
+.status-badge.invalid { background: rgba(245, 158, 11, 0.15); color: var(--warning); border: 1px solid var(--warning); }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+.card { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+.card h3 { font-size: 14px; color: var(--accent); margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+pre { font-family: ui-monospace, monospace; font-size: 12px; color: #cbd5e1; white-space: pre-wrap; word-break: break-all; line-height: 1.5; }
+.table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; }
+.table th, .table td { padding: 6px 8px; text-align: left; border-bottom: 1px solid var(--border); }
+.table th { color: var(--muted); }
+.table td b { color: var(--accent); }
+</style>
+<script>
+
+function base64UrlDecode(str) {
+  let base64 = str.replace(/-/g, '+').replace(/_/g, '/');
+  while (base64.length % 4) { base64 += '='; }
+  return decodeURIComponent(escape(atob(base64)));
+}
+
+function inspectJWT() {
+  const token = document.getElementById('jwtInput').value.trim();
+  const badge = document.getElementById('statusBadge');
+  if (!token) return;
+  const parts = token.split('.');
+  if (parts.length !== 3) {
+    badge.style.display = 'inline-flex';
+    badge.className = 'status-badge invalid';
+    badge.textContent = '❌ Invalid JWT format: Must have 3 parts separated by dots';
+    return;
+  }
+  try {
+    const headerObj = JSON.parse(base64UrlDecode(parts[0]));
+    const payloadObj = JSON.parse(base64UrlDecode(parts[1]));
+    document.getElementById('headerOutput').textContent = JSON.stringify(headerObj, null, 2);
+    document.getElementById('payloadOutput').textContent = JSON.stringify(payloadObj, null, 2);
+    
+    badge.style.display = 'inline-flex';
+    const now = Math.floor(Date.now() / 1000);
+    if (payloadObj.exp) {
+      if (now > payloadObj.exp) {
+        badge.className = 'status-badge expired';
+        badge.textContent = '⚠️ Token Expired (' + (now - payloadObj.exp) + 's ago)';
+      } else {
+        badge.className = 'status-badge valid';
+        badge.textContent = '✅ Token Valid (Expires in ' + (payloadObj.exp - now) + 's)';
+      }
+    } else {
+      badge.className = 'status-badge valid';
+      badge.textContent = '✅ Token Parsed (No Expiration claim)';
+    }
+
+    const tbody = document.getElementById('claimsTableBody');
+    tbody.innerHTML = '';
+    const stdClaims = [
+      { key: 'iss', label: 'Issuer' },
+      { key: 'sub', label: 'Subject' },
+      { key: 'aud', label: 'Audience' },
+      { key: 'exp', label: 'Expiration Time', isDate: true },
+      { key: 'nbf', label: 'Not Before', isDate: true },
+      { key: 'iat', label: 'Issued At', isDate: true },
+      { key: 'jti', label: 'JWT ID' }
+    ];
+    stdClaims.forEach(c => {
+      if (payloadObj[c.key] !== undefined) {
+        const val = payloadObj[c.key];
+        let parsed = '-';
+        if (c.isDate) {
+          const d = new Date(val * 1000);
+          parsed = d.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+        }
+        const row = document.createElement('tr');
+        row.innerHTML = '<td><b>' + c.key + '</b></td><td>' + c.label + '</td><td>' + val + '</td><td>' + parsed + '</td>';
+        tbody.appendChild(row);
+      }
+    });
+    if (tbody.children.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" style="color:var(--muted);text-align:center;">No standard claims found</td></tr>';
+    }
+  } catch (err) {
+    badge.style.display = 'inline-flex';
+    badge.className = 'status-badge invalid';
+    badge.textContent = '❌ JSON Parsing Error: ' + err.message;
+  }
+}
+
+function loadSample() {
+  const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).replace(/=/g, '');
+  const now = Math.floor(Date.now() / 1000);
+  const payload = btoa(JSON.stringify({
+    iss: 'https://quanxs.com',
+    sub: 'user_102948',
+    aud: 'https://salabs.quanxs.com',
+    iat: now,
+    exp: now + 3600,
+    role: 'admin',
+    scope: 'read write'
+  })).replace(/=/g, '');
+  const fakeSig = 'SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+  document.getElementById('jwtInput').value = header + '.' + payload + '.' + fakeSig;
+  inspectJWT();
+}
+
+</script>
+</head>
+<body>
+<div class="container">
+  <h1>⚡ JWT Claims Inspector & Expiration Debugger</h1>
+  <p class="desc">100% Client-Side Pure JavaScript JWT Decoder, Expiration Countdown & Claims Analyzer.</p>
+  <textarea id="jwtInput" placeholder="Paste JSON Web Token (e.g. eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...)"></textarea>
+  <div class="btn-group">
+    <button class="btn" onclick="inspectJWT()">Inspect JWT</button>
+    <button class="btn btn-sec" onclick="loadSample()">Load Sample Token</button>
+  </div>
+  <div id="statusBadge" class="status-badge invalid" style="display:none;"></div>
+  <div class="grid">
+    <div class="card">
+      <h3>Header (Decoded)</h3>
+      <pre id="headerOutput">No token inspected</pre>
+    </div>
+    <div class="card">
+      <h3>Payload Claims (Decoded)</h3>
+      <pre id="payloadOutput">No token inspected</pre>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px;">
+    <h3>Standard Claims Analysis</h3>
+    <table class="table">
+      <thead>
+        <tr><th>Claim</th><th>Meaning</th><th>Raw Value</th><th>Parsed Date / Status</th></tr>
+      </thead>
+      <tbody id="claimsTableBody">
+        <tr><td colspan="4" style="color:var(--muted);text-align:center;">Paste a token to view claim details</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>
