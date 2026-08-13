@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audio 3D Spectrogram & Waterfall Visualizer - Quanxs SA Labs</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Audio 3D Spectrogram & Waterfall Visualizer",
+  "url": "https://salabs.quanxs.com/tools/audio-spectrum-waterfall-visualizer.html",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "All",
+  "author": {
+    "@type": "Organization",
+    "name": "Quanxs SA Labs"
+  }
+}
+</script>
+<style>
+:root {
+  --bg-color: #0b0f19;
+  --card-bg: #111827;
+  --border-color: #1f2937;
+  --accent-cyan: #06b6d4;
+  --accent-green: #10b981;
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+body { background: var(--bg-color); color: var(--text-main); padding: 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+.container { width: 100%; max-width: 1000px; }
+header { margin-bottom: 24px; text-align: center; }
+header h1 { font-size: 1.8rem; color: #38bdf8; margin-bottom: 8px; }
+header p { color: var(--text-muted); font-size: 0.95rem; }
+.card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+.controls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px; }
+.control-item { display: flex; flex-direction: column; gap: 6px; }
+.control-item label { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+select, button, input[type="range"] { background: #1f2937; color: var(--text-main); border: 1px solid #374151; border-radius: 6px; padding: 8px 12px; font-size: 0.9rem; }
+button { background: #0284c7; color: white; border: none; font-weight: 600; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+button:hover { background: #0369a1; }
+button.active { background: #ef4444; }
+canvas { width: 100%; height: 380px; background: #000; border-radius: 8px; display: block; border: 1px solid var(--border-color); }
+.status-bar { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-top: 10px; font-family: monospace; }
+.badge { padding: 2px 8px; border-radius: 4px; background: #1f2937; color: #38bdf8; }
+</style>
+<script>
+
+let audioCtx = null;
+let analyser = null;
+let sourceNode = null;
+let oscNode = null;
+let isRunning = false;
+let isMic = false;
+const canvas = document.getElementById('waterfallCanvas');
+const ctx = canvas.getContext('2d');
+let tempCanvas = document.createElement('canvas');
+let tempCtx = tempCanvas.getContext('2d');
+tempCanvas.width = canvas.width;
+tempCanvas.height = canvas.height;
+
+const palettes = {
+  spectrogram: (val) => {
+    if (val < 64) return `rgb(0, 0, ${val * 4})`;
+    if (val < 128) return `rgb(0, ${(val - 64) * 4}, 255)`;
+    if (val < 192) return `rgb(${(val - 128) * 4}, 255, ${255 - (val - 128) * 4})`;
+    return `rgb(255, ${255 - (val - 192) * 4}, 0)`;
+  },
+  cyberpunk: (val) => {
+    return `rgb(${val}, ${Math.floor(val * 0.2)}, ${Math.floor(val * 1.5)})`;
+  },
+  thermal: (val) => {
+    return `rgb(${val * 2}, ${val}, ${val * 0.2})`;
+  },
+  matrix: (val) => {
+    return `rgb(${Math.floor(val * 0.1)}, ${val}, ${Math.floor(val * 0.2)})`;
+  },
+  ocean: (val) => {
+    return `rgb(0, ${Math.floor(val * 0.8)}, ${val})`;
+  }
+};
+
+function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = parseInt(document.getElementById('fftSize').value);
+    analyser.smoothingTimeConstant = 0.6;
+  }
+}
+
+document.getElementById('micBtn').addEventListener('click', async () => {
+  initAudio();
+  if (audioCtx.state === 'suspended') await audioCtx.resume();
+
+  if (isRunning && isMic) {
+    stopAudio();
+    return;
+  }
+  stopAudio();
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    sourceNode = audioCtx.createMediaStreamSource(stream);
+    sourceNode.connect(analyser);
+    isRunning = true;
+    isMic = true;
+    document.getElementById('micBtn').classList.add('active');
+    document.getElementById('micBtn').innerText = '⏹ Stop Mic';
+    document.getElementById('engineStatus').innerText = 'Microphone Live';
+    requestAnimationFrame(render);
+  } catch (err) {
+    alert('Microphone access error: ' + err.message);
+  }
+});
+
+document.getElementById('synthBtn').addEventListener('click', async () => {
+  initAudio();
+  if (audioCtx.state === 'suspended') await audioCtx.resume();
+
+  if (isRunning && !isMic) {
+    stopAudio();
+    return;
+  }
+  stopAudio();
+  oscNode = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  gain.gain.value = 0.15;
+  oscNode.type = 'sawtooth';
+  oscNode.frequency.setValueAtTime(220, audioCtx.currentTime);
+  oscNode.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 3);
+  oscNode.connect(gain);
+  gain.connect(analyser);
+  oscNode.start();
+  isRunning = true;
+  isMic = false;
+  document.getElementById('synthBtn').classList.add('active');
+  document.getElementById('synthBtn').innerText = '⚡ Synth Test';
+  document.getElementById('engineStatus').innerText = 'Synth Signal Generator';
+  requestAnimationFrame(render);
+});
+
+function stopAudio() {
+  if (sourceNode) { sourceNode.disconnect(); sourceNode = null; }
+  if (oscNode) { oscNode.stop(); oscNode.disconnect(); oscNode = null; }
+  isRunning = false;
+  document.getElementById('micBtn').classList.remove('active');
+  document.getElementById('micBtn').innerText = '🎤 Microphone';
+  document.getElementById('synthBtn').classList.remove('active');
+  document.getElementById('synthBtn').innerText = '⚡ Synth Test';
+  document.getElementById('engineStatus').innerText = 'Standby';
+}
+
+document.getElementById('fftSize').addEventListener('change', (e) => {
+  if (analyser) analyser.fftSize = parseInt(e.target.value);
+  document.getElementById('fftVal').innerText = e.target.value;
+});
+
+document.getElementById('speedSlider').addEventListener('input', (e) => {
+  document.getElementById('speedVal').innerText = e.target.value + 'x';
+});
+
+function render() {
+  if (!isRunning) return;
+  const bufferLength = analyser.frequencyBinCount;
+  const dataArray = new Uint8Array(bufferLength);
+  analyser.getByteFrequencyData(dataArray);
+
+  const speed = parseInt(document.getElementById('speedSlider').value);
+  const paletteName = document.getElementById('colorScheme').value;
+  const getColor = palettes[paletteName] || palettes.spectrogram;
+
+  // Scroll waterfall down
+  tempCtx.drawImage(canvas, 0, 0);
+  ctx.drawImage(tempCanvas, 0, speed);
+
+  // Render new top slice
+  const sliceHeight = speed;
+  const step = canvas.width / (bufferLength * 0.75);
+  for (let i = 0; i < bufferLength * 0.75; i++) {
+    const val = dataArray[i];
+    ctx.fillStyle = getColor(val);
+    ctx.fillRect(Math.floor(i * step), 0, Math.ceil(step), sliceHeight);
+  }
+
+  // Peak frequency & RMS calculation
+  let maxVal = 0;
+  let maxIdx = 0;
+  let sumSquares = 0;
+  for (let i = 0; i < bufferLength; i++) {
+    if (dataArray[i] > maxVal) {
+      maxVal = dataArray[i];
+      maxIdx = i;
+    }
+    const norm = dataArray[i] / 255;
+    sumSquares += norm * norm;
+  }
+  const peakFrequency = Math.round(maxIdx * audioCtx.sampleRate / analyser.fftSize);
+  const rms = Math.sqrt(sumSquares / bufferLength);
+  const db = rms > 0 ? (20 * Math.log10(rms)).toFixed(1) : '-inf';
+
+  document.getElementById('peakFreq').innerText = peakFrequency + ' Hz';
+  document.getElementById('rmsLevel').innerText = db + ' dB';
+
+  requestAnimationFrame(render);
+}
+
+</script>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>Audio 3D Spectrogram & Waterfall Visualizer</h1>
+    <p>100% Client-Side Pure JS Real-time Frequency Heatmap & Audio Spectrum Engine</p>
+  </header>
+
+  <div class="card">
+    <div class="controls-grid">
+      <div class="control-item">
+        <label>Audio Source</label>
+        <div style="display:flex;gap:8px;">
+          <button id="micBtn" style="flex:1;">🎤 Microphone</button>
+          <button id="synthBtn" style="flex:1;background:#4f46e5;">⚡ Synth Test</button>
+        </div>
+      </div>
+      <div class="control-item">
+        <label>Color Palette</label>
+        <select id="colorScheme">
+          <option value="spectrogram">Classic Spectrogram</option>
+          <option value="cyberpunk">Cyberpunk Neon</option>
+          <option value="thermal">Thermal Fire</option>
+          <option value="matrix">Matrix Green</option>
+          <option value="ocean">Deep Ocean</option>
+        </select>
+      </div>
+      <div class="control-item">
+        <label>FFT Resolution: <span id="fftVal" class="badge">1024</span></label>
+        <select id="fftSize">
+          <option value="256">256 (Fast / Low Res)</option>
+          <option value="512">512 (Standard)</option>
+          <option value="1024" selected>1024 (Detailed)</option>
+          <option value="2048">2048 (Ultra HD)</option>
+        </select>
+      </div>
+      <div class="control-item">
+        <label>Waterfall Speed: <span id="speedVal" class="badge">2x</span></label>
+        <input type="range" id="speedSlider" min="1" max="5" value="2">
+      </div>
+    </div>
+
+    <canvas id="waterfallCanvas" width="800" height="400"></canvas>
+
+    <div class="status-bar">
+      <div>Engine: <span id="engineStatus">Standby</span></div>
+      <div>Peak Frequency: <span id="peakFreq">0 Hz</span></div>
+      <div>RMS Level: <span id="rmsLevel">-inf dB</span></div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

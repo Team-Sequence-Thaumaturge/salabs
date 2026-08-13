@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASCII 3D Isometric City & Matrix Grid Renderer - Quanxs SA Labs</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ASCII 3D Isometric City & Matrix Grid Renderer",
+  "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-isometric-city-renderer.html",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "All",
+  "author": {
+    "@type": "Organization",
+    "name": "Quanxs SA Labs"
+  }
+}
+</script>
+<style>
+:root {
+  --bg-dark: #090d16;
+  --panel-bg: #111827;
+  --border-ui: #1f2937;
+  --accent-cyan: #38bdf8;
+  --text-light: #f3f4f6;
+  --text-dim: #9ca3af;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+body { background: var(--bg-dark); color: var(--text-light); padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+.container { width: 100%; max-width: 960px; }
+header { text-align: center; margin-bottom: 20px; }
+header h1 { color: var(--accent-cyan); font-size: 1.7rem; margin-bottom: 6px; }
+header p { color: var(--text-dim); font-size: 0.9rem; }
+.card { background: var(--panel-bg); border: 1px solid var(--border-ui); border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+.controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 16px; }
+.ctrl-group { display: flex; flex-direction: column; gap: 4px; }
+.ctrl-group label { font-size: 0.8rem; color: var(--text-dim); font-weight: 500; }
+select, button, input[type="range"] { background: #1f2937; color: var(--text-light); border: 1px solid #374151; border-radius: 6px; padding: 8px 12px; font-size: 0.85rem; }
+button { background: #0284c7; border: none; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+button:hover { background: #0369a1; }
+pre#asciiDisplay { background: #000; color: #38bdf8; border: 1px solid var(--border-ui); border-radius: 8px; padding: 12px; font-family: 'Courier New', Courier, monospace; font-size: 10px; line-height: 10px; letter-spacing: 2px; overflow: hidden; height: 420px; display: flex; justify-content: center; align-items: center; user-select: all; }
+.btn-row { display: flex; gap: 10px; margin-top: 12px; }
+</style>
+<script>
+
+let grid = [];
+let angle = 0;
+let isPaused = false;
+const rows = 40;
+const cols = 70;
+const asciiChars = ' .:-=+*#%@';
+
+function generateCity(size) {
+  grid = [];
+  for (let x = 0; x < size; x++) {
+    grid[x] = [];
+    for (let y = 0; y < size; y++) {
+      const dist = Math.sqrt((x - size/2)**2 + (y - size/2)**2);
+      const centerFactor = Math.max(0, 1 - dist / (size/1.5));
+      const rand = Math.random();
+      const height = Math.floor(rand * rand * 12 * centerFactor) + 1;
+      grid[x][y] = height;
+    }
+  }
+}
+
+function renderFrame() {
+  const size = grid.length;
+  const buffer = Array.from({ length: rows }, () => Array(cols).fill(' '));
+  const zBuffer = Array.from({ length: rows }, () => Array(cols).fill(-Infinity));
+
+  const cosA = Math.cos(angle);
+  const sinA = Math.sin(angle);
+  const isoScale = 2.2;
+
+  for (let x = 0; x < size; x++) {
+    for (let y = 0; y < size; y++) {
+      const h = grid[x][y];
+      const cx = x - size / 2;
+      const cy = y - size / 2;
+
+      // Rotate around Z
+      const rx = cx * cosA - cy * sinA;
+      const ry = cx * sinA + cy * cosA;
+
+      // Project Isometric
+      const px = Math.floor((rx - ry) * isoScale + cols / 2);
+      const py = Math.floor((rx + ry) * 0.6 * isoScale - h * 1.4 + rows / 2 + 6);
+      const depth = rx + ry + h;
+
+      for (let dz = 0; dz < h; dz++) {
+        const drawY = Math.floor((rx + ry) * 0.6 * isoScale - dz * 1.4 + rows / 2 + 6);
+        if (drawY >= 0 && drawY < rows && px >= 0 && px < cols) {
+          if (depth > zBuffer[drawY][px]) {
+            zBuffer[drawY][px] = depth;
+            const shadeIdx = Math.min(asciiChars.length - 1, Math.max(1, Math.floor((dz / 12) * (asciiChars.length - 1)) + 2));
+            buffer[drawY][px] = asciiChars[shadeIdx];
+          }
+        }
+      }
+    }
+  }
+
+  const asciiText = buffer.map(r => r.join('')).join('\n');
+  document.getElementById('asciiDisplay').innerText = asciiText;
+
+  if (!isPaused) {
+    const speed = parseFloat(document.getElementById('rotSpeed').value) * 0.008;
+    angle += speed;
+  }
+  requestAnimationFrame(renderFrame);
+}
+
+document.getElementById('gridSize').addEventListener('change', (e) => {
+  generateCity(parseInt(e.target.value));
+});
+
+document.getElementById('regenBtn').addEventListener('click', () => {
+  generateCity(parseInt(document.getElementById('gridSize').value));
+});
+
+document.getElementById('themeSelect').addEventListener('change', (e) => {
+  document.getElementById('asciiDisplay').style.color = e.target.value;
+});
+
+document.getElementById('pauseBtn').addEventListener('click', () => {
+  isPaused = !isPaused;
+  document.getElementById('pauseBtn').innerText = isPaused ? '▶ Resume Rotation' : '⏸ Pause Rotation';
+});
+
+document.getElementById('copyBtn').addEventListener('click', () => {
+  navigator.clipboard.writeText(document.getElementById('asciiDisplay').innerText).then(() => {
+    alert('ASCII Frame copied to clipboard!');
+  });
+});
+
+generateCity(14);
+requestAnimationFrame(renderFrame);
+
+</script>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>ASCII 3D Isometric City & Matrix Grid Renderer</h1>
+    <p>100% Client-Side Pure JS Procedural 3D Voxel Isometric Engine</p>
+  </header>
+
+  <div class="card">
+    <div class="controls">
+      <div class="ctrl-group">
+        <label>City Density / Grid Size</label>
+        <select id="gridSize">
+          <option value="10">10x10 Micro Grid</option>
+          <option value="14" selected>14x14 Metropolis</option>
+          <option value="18">18x18 Mega City</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label>Rotation Speed</label>
+        <input type="range" id="rotSpeed" min="0" max="10" value="3">
+      </div>
+      <div class="ctrl-group">
+        <label>Lighting Theme</label>
+        <select id="themeSelect">
+          <option value="#38bdf8">Cyberpunk Cyan</option>
+          <option value="#10b981">Matrix Green</option>
+          <option value="#f43f5e">Neon Sunset</option>
+          <option value="#facc15">Amber Terminal</option>
+          <option value="#ffffff">Monochrome Clean</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label>Regenerate City</label>
+        <button id="regenBtn">🎲 New Procedural Seed</button>
+      </div>
+    </div>
+
+    <pre id="asciiDisplay">Generating 3D Voxel Matrix...</pre>
+
+    <div class="btn-row">
+      <button id="copyBtn" style="background:#10b981;">📋 Copy ASCII Frame</button>
+      <button id="pauseBtn" style="background:#6366f1;">⏸ Pause Rotation</button>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
