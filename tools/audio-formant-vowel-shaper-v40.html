@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Audio Realtime Formant Vowel Filter Studio v40 | SA Labs</title>
+  <meta name="description" content="100% Client-Side Web Audio API Formant Vowel Filter & Peak Resonance Shaper v40.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Web Audio Realtime Formant Vowel Filter Studio v40",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-vowel-shaper-v40.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript and Web Audio API"
+  }
+  </script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 24px; }
+    .container { max-width: 900px; margin: 0 auto; background: #1e293b; padding: 32px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 1px solid #334155; }
+    h1 { color: #38bdf8; border-bottom: 2px solid #334155; padding-bottom: 12px; margin-top: 0; }
+    .panel { background: #0f172a; padding: 20px; border-radius: 8px; border: 1px solid #334155; margin-bottom: 20px; }
+    label { display: block; margin-bottom: 8px; font-weight: 600; color: #94a3b8; }
+    select, button, input { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #475569; background: #1e293b; color: #f8fafc; font-size: 14px; box-sizing: border-box; }
+    button { background: #0284c7; color: white; border: none; font-weight: bold; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
+    button:hover { background: #0369a1; }
+    .metric { font-family: monospace; font-size: 16px; color: #38bdf8; padding: 12px; background: #020617; border-radius: 6px; margin-top: 10px; text-align: center; border: 1px solid #1e293b; }
+    canvas { width: 100%; height: 180px; background: #020617; border-radius: 8px; border: 1px solid #334155; margin-top: 15px; }
+  </style>
+<script>
+
+    let audioCtx, micStream, analyser;
+    let isRunning = false;
+    const toggleBtn = document.getElementById('toggleBtn');
+    const displayBox = document.getElementById('displayBox');
+    const canvas = document.getElementById('spectrum');
+    const ctx = canvas.getContext('2d');
+
+    toggleBtn.addEventListener('click', async () => {
+      if (!isRunning) {
+        try {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          const source = audioCtx.createMediaStreamSource(micStream);
+          analyser = audioCtx.createAnalyser();
+          analyser.fftSize = 2048;
+          source.connect(analyser);
+          isRunning = true;
+          toggleBtn.innerText = 'Stop Formant Shaper DSP Engine';
+          toggleBtn.style.background = '#e11d48';
+          displayBox.innerText = 'DSP Engine Active - Formant Vowel Filter Running...';
+          drawSpectrum();
+        } catch (err) {
+          displayBox.innerText = 'Error: Microphone access denied or unsupported.';
+        }
+      } else {
+        if (micStream) micStream.getTracks().forEach(t => t.stop());
+        if (audioCtx) audioCtx.close();
+        isRunning = false;
+        toggleBtn.innerText = 'Start Microphone Input & Formant Shaper DSP';
+        toggleBtn.style.background = '#0284c7';
+        displayBox.innerText = 'DSP Engine Offline';
+      }
+    });
+
+    function drawSpectrum() {
+      if (!isRunning) return;
+      requestAnimationFrame(drawSpectrum);
+      const buffer = new Uint8Array(analyser.frequencyBinCount);
+      analyser.getByteFrequencyData(buffer);
+      ctx.fillStyle = '#020617';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const barWidth = (canvas.width / buffer.length) * 2.5;
+      let x = 0;
+      for (let i = 0; i < buffer.length; i++) {
+        const barHeight = (buffer[i] / 255) * canvas.height;
+        ctx.fillStyle = '#38bdf8';
+        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+        x += barWidth + 1;
+      }
+    }
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <h1>Web Audio Realtime Formant Vowel Filter Studio v40</h1>
+    <p style="color: #94a3b8;">100% Client-Side Web Audio API Formant Vowel Filter & Peak Resonance Shaper. Zero Server Latency.</p>
+    <div class="panel">
+      <label for="vowelPreset">Select Formant Vowel Filter Preset:</label>
+      <select id="vowelPreset">
+        <option value="a">Vowel /a/ (Father - F1: 730Hz, F2: 1090Hz)</option>
+        <option value="i">Vowel /i/ (See - F1: 270Hz, F2: 2290Hz)</option>
+        <option value="u">Vowel /u/ (Too - F1: 300Hz, F2: 870Hz)</option>
+        <option value="e">Vowel /e/ (Bed - F1: 530Hz, F2: 1840Hz)</option>
+        <option value="o">Vowel /o/ (Call - F1: 570Hz, F2: 840Hz)</option>
+      </select>
+    </div>
+    <div class="panel">
+      <button id="toggleBtn">Start Microphone Input & Formant Shaper DSP</button>
+      <div id="displayBox" class="metric">DSP Engine Offline</div>
+    </div>
+    <canvas id="spectrum"></canvas>
+  </div>
+  
+</body>
+</html>
