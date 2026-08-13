@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DNS SPF & DMARC Policy Syntax Analyzer - Quanxs SA Labs</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "DNS SPF & DMARC Policy Syntax Analyzer",
+  "url": "https://salabs.quanxs.com/tools/dns-spf-dmarc-analyzer.html",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript. Requires HTML5.",
+  "author": {
+    "@type": "Organization",
+    "name": "Quanxs SA Labs"
+  }
+}
+</script>
+<style>
+:root { --bg: #0f172a; --card: #1e293b; --border: #334155; --accent: #38bdf8; --text: #f8fafc; --text-muted: #94a3b8; --success: #4ade80; --warn: #fbbf24; --danger: #f87171; }
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+body { background: var(--bg); color: var(--text); padding: 24px 16px; min-height: 100vh; }
+.container { max-width: 960px; margin: 0 auto; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 28px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+h1 { color: var(--accent); font-size: 1.6rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+p.desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
+.tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+.tab-btn { background: transparent; color: var(--text-muted); border: 1px solid var(--border); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+.tab-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.form-group { margin-bottom: 16px; }
+label { display: block; font-weight: 600; margin-bottom: 6px; color: var(--text); font-size: 0.9rem; }
+textarea, input[type="text"] { width: 100%; background: #0b1120; border: 1px solid var(--border); border-radius: 6px; padding: 12px; color: var(--accent); font-family: monospace; font-size: 0.95rem; }
+textarea { height: 100px; resize: vertical; }
+.btn-row { display: flex; gap: 10px; margin-bottom: 20px; }
+.btn { background: var(--accent); color: var(--bg); border: none; padding: 10px 20px; border-radius: 6px; font-weight: 700; cursor: pointer; transition: opacity 0.2s; }
+.btn:hover { opacity: 0.9; }
+.btn-preset { background: #334155; color: var(--text); }
+.results { background: #0b1120; border: 1px solid var(--border); border-radius: 8px; padding: 18px; margin-top: 16px; }
+.result-item { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #1e293b; }
+.result-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-right: 6px; }
+.badge-pass { background: rgba(74, 222, 128, 0.2); color: var(--success); border: 1px solid var(--success); }
+.badge-warn { background: rgba(251, 191, 36, 0.2); color: var(--warn); border: 1px solid var(--warn); }
+.badge-fail { background: rgba(248, 113, 113, 0.2); color: var(--danger); border: 1px solid var(--danger); }
+.score-box { display: flex; align-items: center; justify-content: space-between; background: #1e293b; padding: 14px; border-radius: 6px; margin-bottom: 14px; }
+</style>
+<script>
+
+let currentMode = 'spf';
+
+function switchMode(mode) {
+  currentMode = mode;
+  document.getElementById('tab-spf').className = mode === 'spf' ? 'tab-btn active' : 'tab-btn';
+  document.getElementById('tab-dmarc').className = mode === 'dmarc' ? 'tab-btn active' : 'tab-btn';
+  document.getElementById('input-label').textContent = mode === 'spf' ? 'Enter SPF TXT Record String:' : 'Enter DMARC TXT Record String:';
+  document.getElementById('record-input').placeholder = mode === 'spf' ? 'v=spf1 include:_spf.google.com ~all' : 'v=DMARC1; p=reject; sp=reject; pct=100; rua=mailto:dmarc-reports@example.com';
+  document.getElementById('results-box').innerHTML = '<p style="color: var(--text-muted);">Enter a TXT record above and click Analyze.</p>';
+}
+
+function loadSample() {
+  if (currentMode === 'spf') {
+    document.getElementById('record-input').value = 'v=spf1 ip4:192.0.2.0/24 include:_spf.google.com include:mailgun.org ~all';
+  } else {
+    document.getElementById('record-input').value = 'v=DMARC1; p=reject; sp=quarantine; pct=100; rua=mailto:reports@example.com; ruf=mailto:forensics@example.com; fo=1; aspf=r; adkim=r';
+  }
+  analyzeRecord();
+}
+
+function analyzeRecord() {
+  const text = document.getElementById('record-input').value.trim();
+  const box = document.getElementById('results-box');
+  if (!text) {
+    box.innerHTML = '<p style="color: var(--danger);">Please enter a record string.</p>';
+    return;
+  }
+
+  if (currentMode === 'spf') {
+    analyzeSPF(text, box);
+  } else {
+    analyzeDMARC(text, box);
+  }
+}
+
+function analyzeSPF(spf, box) {
+  let score = 100;
+  let items = [];
+  const parts = spf.split(/\s+/);
+
+  if (parts[0] !== 'v=spf1') {
+    score -= 50;
+    items.push({ type: 'fail', msg: 'Missing mandatory version prefix "v=spf1" at start of record.' });
+  } else {
+    items.push({ type: 'pass', msg: 'Valid SPF version tag "v=spf1" detected.' });
+  }
+
+  let hasAll = false;
+  let lookupCount = 0;
+
+  for (let i = 1; i < parts.length; i++) {
+    const part = parts[i];
+    if (part.endsWith('all')) {
+      hasAll = true;
+      if (part === '-all') items.push({ type: 'pass', msg: 'Strict Hard Fail "-all" policy detected (Strongest protection).' });
+      else if (part === '~all') items.push({ type: 'pass', msg: 'Soft Fail "~all" policy detected (Recommended for transitional SPF).' });
+      else if (part === '?all') { score -= 20; items.push({ type: 'warn', msg: 'Neutral "?all" policy provides zero authentication enforcement.' }); }
+      else if (part === '+all') { score -= 80; items.push({ type: 'fail', msg: 'Permissive "+all" allows ALL mail senders. Extreme security vulnerability!' }); }
+    } else if (part.startsWith('include:') || part.startsWith('a') || part.startsWith('mx') || part.startsWith('ptr') || part.startsWith('exists:')) {
+      lookupCount++;
+      items.push({ type: 'pass', msg: `Mechanism "${part}" parsed (DNS Lookup #${lookupCount}).` });
+    } else if (part.startsWith('ip4:') || part.startsWith('ip6:')) {
+      items.push({ type: 'pass', msg: `Static IP mechanism "${part}" parsed (Zero DNS lookup cost).` });
+    } else if (part.startsWith('redirect=')) {
+      lookupCount++;
+      items.push({ type: 'warn', msg: `Redirect modifier "${part}" parsed.` });
+    } else {
+      score -= 10;
+      items.push({ type: 'warn', msg: `Unknown or malformed mechanism: "${part}".` });
+    }
+  }
+
+  if (!hasAll) {
+    score -= 30;
+    items.push({ type: 'fail', msg: 'Missing terminal "all" mechanism. Mail receivers cannot determine default action.' });
+  }
+
+  if (lookupCount > 10) {
+    score -= 40;
+    items.push({ type: 'fail', msg: `DNS lookup count is ${lookupCount}/10 (RFC 7208 Hard Limit Exceeded! SPF will fail with PermError).` });
+  } else {
+    items.push({ type: 'pass', msg: `DNS lookup cost is ${lookupCount}/10 (Within RFC 7208 safe limit).` });
+  }
+
+  renderScore(score, items, box);
+}
+
+function analyzeDMARC(dmarc, box) {
+  let score = 100;
+  let items = [];
+  const tags = dmarc.split(';').map(s => s.trim()).filter(Boolean);
+  const tagMap = {};
+
+  tags.forEach(t => {
+    const eq = t.indexOf('=');
+    if (eq !== -1) {
+      const k = t.substring(0, eq).trim().toLowerCase();
+      const v = t.substring(eq + 1).trim();
+      tagMap[k] = v;
+    }
+  });
+
+  if (tagMap['v'] !== 'DMARC1') {
+    score -= 50;
+    items.push({ type: 'fail', msg: 'Missing mandatory version tag "v=DMARC1" at the start.' });
+  } else {
+    items.push({ type: 'pass', msg: 'Valid DMARC version "v=DMARC1" tag identified.' });
+  }
+
+  if (!tagMap['p']) {
+    score -= 40;
+    items.push({ type: 'fail', msg: 'Missing mandatory policy tag "p=" (none, quarantine, reject).' });
+  } else {
+    const p = tagMap['p'].toLowerCase();
+    if (p === 'reject') items.push({ type: 'pass', msg: 'Policy "p=reject": Unauthorized emails will be rejected by receiver servers.' });
+    else if (p === 'quarantine') items.push({ type: 'pass', msg: 'Policy "p=quarantine": Unauthorized emails will be routed to spam/junk.' });
+    else if (p === 'none') { score -= 25; items.push({ type: 'warn', msg: 'Policy "p=none": Monitoring mode only. No delivery enforcement applied.' }); }
+    else { score -= 30; items.push({ type: 'fail', msg: `Invalid policy value "p=${p}".` }); }
+  }
+
+  if (tagMap['rua']) {
+    items.push({ type: 'pass', msg: `Aggregate feedback URI "rua=${tagMap['rua']}" configured.` });
+  } else {
+    score -= 20;
+    items.push({ type: 'warn', msg: 'No "rua=" reporting URI specified. You will not receive aggregate authentication failure reports.' });
+  }
+
+  if (tagMap['pct']) {
+    const pct = parseInt(tagMap['pct']);
+    if (pct < 100) {
+      items.push({ type: 'warn', msg: `Policy filter applies to only ${pct}% of messages.` });
+    } else {
+      items.push({ type: 'pass', msg: 'Policy applies to 100% of messages.' });
+    }
+  }
+
+  renderScore(score, items, box);
+}
+
+function renderScore(score, items, box) {
+  score = Math.max(0, Math.min(100, score));
+  let badgeClass = score >= 80 ? 'badge-pass' : (score >= 50 ? 'badge-warn' : 'badge-fail');
+  let statusText = score >= 80 ? 'EXCELLENT' : (score >= 50 ? 'WARNINGS DETECTED' : 'CRITICAL ISSUES');
+
+  let html = `
+    <div class="score-box">
+      <div><strong>Security & Syntax Score:</strong> <span style="font-size:1.3rem; font-weight:800; color:var(--accent);">${score}/100</span></div>
+      <span class="badge ${badgeClass}">${statusText}</span>
+    </div>
+  `;
+
+  items.forEach(item => {
+    let bClass = item.type === 'pass' ? 'badge-pass' : (item.type === 'warn' ? 'badge-warn' : 'badge-fail');
+    html += `
+      <div class="result-item">
+        <span class="badge ${bClass}">${item.type}</span>
+        <span>${item.msg}</span>
+      </div>
+    `;
+  });
+
+  box.innerHTML = html;
+}
+
+</script>
+</head>
+<body>
+<div class="container">
+  <h1>🛡️ DNS SPF & DMARC Policy Syntax Analyzer</h1>
+  <p class="desc">100% Client-Side Pure JS Email Security Record Validator. Zero server lookup required.</p>
+  
+  <div class="tabs">
+    <button class="tab-btn active" id="tab-spf" onclick="switchMode('spf')">SPF Record Validator</button>
+    <button class="tab-btn" id="tab-dmarc" onclick="switchMode('dmarc')">DMARC Policy Validator</button>
+  </div>
+
+  <div class="form-group">
+    <label id="input-label">Enter SPF TXT Record String:</label>
+    <textarea id="record-input" placeholder="v=spf1 include:_spf.google.com ~all"></textarea>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn" onclick="analyzeRecord()">Analyze Syntax & Policy</button>
+    <button class="btn btn-preset" onclick="loadSample()">Load Sample Record</button>
+  </div>
+
+  <div class="results" id="results-box">
+    <p style="color: var(--text-muted);">Enter a TXT record above and click Analyze.</p>
+  </div>
+</div>
+
+
+</body>
+</html>

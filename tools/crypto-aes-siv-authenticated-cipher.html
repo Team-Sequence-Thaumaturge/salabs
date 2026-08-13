@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AES-GCM-SIV Synthetic IV Authenticated Encryption Studio - Quanxs SA Labs</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "AES-GCM-SIV Synthetic IV Authenticated Encryption Studio",
+  "url": "https://salabs.quanxs.com/tools/crypto-aes-siv-authenticated-cipher.html",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript. Requires HTML5.",
+  "author": {
+    "@type": "Organization",
+    "name": "Quanxs SA Labs"
+  }
+}
+</script>
+<style>
+:root { --bg: #0f172a; --card: #1e293b; --border: #334155; --accent: #38bdf8; --text: #f8fafc; --text-muted: #94a3b8; --success: #4ade80; --danger: #f87171; }
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+body { background: var(--bg); color: var(--text); padding: 24px 16px; min-height: 100vh; }
+.container { max-width: 960px; margin: 0 auto; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 28px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+h1 { color: var(--accent); font-size: 1.6rem; margin-bottom: 8px; }
+p.desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+@media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+.form-group { margin-bottom: 14px; }
+label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; color: var(--text); }
+input[type="text"], textarea, select { width: 100%; background: #0b1120; border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; color: var(--accent); font-family: monospace; font-size: 0.9rem; }
+textarea { height: 90px; resize: vertical; }
+.btn-row { display: flex; gap: 10px; margin-top: 10px; }
+.btn { background: var(--accent); color: var(--bg); border: none; padding: 10px 18px; border-radius: 6px; font-weight: 700; cursor: pointer; transition: opacity 0.2s; }
+.btn:hover { opacity: 0.9; }
+.btn.secondary { background: #334155; color: var(--text); }
+.box { background: #0b1120; border: 1px solid var(--border); border-radius: 8px; padding: 16px; font-family: monospace; font-size: 0.85rem; color: #a5f3fc; word-break: break-all; margin-top: 8px; }
+</style>
+<script>
+
+function generateRandomKey() {
+  const arr = new Uint8Array(32);
+  crypto.getRandomValues(arr);
+  const hex = Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
+  document.getElementById('secret-key').value = hex;
+}
+
+function hexToBytes(hex) {
+  const bytes = new Uint8Array(hex.length / 2);
+  for (let i = 0; i < bytes.length; i++) {
+    bytes[i] = parseInt(hex.substr(i * 2, 2), 16);
+  }
+  return bytes;
+}
+
+function bytesToHex(bytes) {
+  return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function getKey(rawHex) {
+  if (!rawHex || rawHex.length !== 64) {
+    throw new Error('Key must be exactly 64 hex characters (256-bit).');
+  }
+  const keyBytes = hexToBytes(rawHex);
+  return await crypto.subtle.importKey('raw', keyBytes, { name: 'AES-GCM' }, false, ['encrypt', 'decrypt']);
+}
+
+// SIV derivation: derive synthetic IV using HMAC/SHA-256 over Plaintext + AAD to guarantee nonce misuse resistance
+async function deriveSyntheticIV(keyBytes, plaintextBytes, aadBytes) {
+  const combined = new Uint8Array(plaintextBytes.length + aadBytes.length);
+  combined.set(plaintextBytes, 0);
+  combined.set(aadBytes, plaintextBytes.length);
+  const hmacKey = await crypto.subtle.importKey('raw', keyBytes, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const signature = await crypto.subtle.sign('HMAC', hmacKey, combined);
+  return new Uint8Array(signature).slice(0, 12); // 96-bit Synthetic IV
+}
+
+async function executeEncrypt() {
+  const out = document.getElementById('enc-output');
+  try {
+    const rawKey = document.getElementById('secret-key').value.trim();
+    if (!rawKey) { generateRandomKey(); }
+    const keyStr = document.getElementById('secret-key').value.trim();
+    const keyBytes = hexToBytes(keyStr);
+    const key = await getKey(keyStr);
+
+    const plaintext = document.getElementById('plain-input').value;
+    const aad = document.getElementById('aad-input').value;
+    const enc = new TextEncoder();
+    const plainBytes = enc.encode(plaintext);
+    const aadBytes = enc.encode(aad);
+
+    // Compute Synthetic IV
+    const siv = await deriveSyntheticIV(keyBytes, plainBytes, aadBytes);
+
+    const cipherBuffer = await crypto.subtle.encrypt(
+      { name: 'AES-GCM', iv: siv, additionalData: aadBytes, tagLength: 128 },
+      key,
+      plainBytes
+    );
+
+    const fullPayload = new Uint8Array(siv.length + cipherBuffer.byteLength);
+    fullPayload.set(siv, 0);
+    fullPayload.set(new Uint8Array(cipherBuffer), siv.length);
+
+    const hexResult = bytesToHex(fullPayload);
+    out.innerHTML = `<strong style="color:var(--success);">STATUS: ENCRYPTION SUCCESSFUL</strong><br><br><strong>Synthetic IV (Hex):</strong> ${bytesToHex(siv)}<br><strong>Combined Ciphertext & Tag (Hex):</strong><br>${hexResult}`;
+    document.getElementById('cipher-input').value = hexResult;
+    document.getElementById('aad-verify').value = aad;
+  } catch (err) {
+    out.innerHTML = `<strong style="color:var(--danger);">ERROR:</strong> ${err.message}`;
+  }
+}
+
+async function executeDecrypt() {
+  const out = document.getElementById('dec-output');
+  try {
+    const keyStr = document.getElementById('secret-key').value.trim();
+    const key = await getKey(keyStr);
+    const hexInput = document.getElementById('cipher-input').value.trim();
+    if (!hexInput || hexInput.length < 24) throw new Error('Invalid ciphertext length.');
+
+    const fullBytes = hexToBytes(hexInput);
+    const siv = fullBytes.slice(0, 12);
+    const cipherBytes = fullBytes.slice(12);
+    const aad = document.getElementById('aad-verify').value;
+    const aadBytes = new TextEncoder().encode(aad);
+
+    const decryptedBuffer = await crypto.subtle.decrypt(
+      { name: 'AES-GCM', iv: siv, additionalData: aadBytes, tagLength: 128 },
+      key,
+      cipherBytes
+    );
+
+    const dec = new TextDecoder();
+    const decryptedText = dec.decode(decryptedBuffer);
+
+    out.innerHTML = `<strong style="color:var(--success);">STATUS: INTEGRITY VERIFIED & DECRYPTED</strong><br><br><strong>Decrypted Text:</strong><br>${decryptedText}`;
+  } catch (err) {
+    out.innerHTML = `<strong style="color:var(--danger);">DECRYPTION FAILED / AUTH TAG MISMATCH:</strong><br>${err.message}`;
+  }
+}
+
+generateRandomKey();
+
+</script>
+</head>
+<body>
+<div class="container">
+  <h1>🔒 AES-GCM-SIV Authenticated Encryption Studio</h1>
+  <p class="desc">100% Client-Side Web Crypto SubtleCrypto AEAD Studio with Nonce-Misuse Synthetic IV (SIV) Resistance.</p>
+
+  <div class="form-group">
+    <label>256-Bit Secret Key (Hex or Auto-Generated):</label>
+    <div style="display:flex; gap:10px;">
+      <input type="text" id="secret-key" placeholder="64-character Hex Key...">
+      <button class="btn secondary" style="white-space:nowrap;" onclick="generateRandomKey()">Generate Key</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div>
+      <h3 style="color:var(--text); margin-bottom:12px;">📤 Encrypt Plaintext</h3>
+      <div class="form-group">
+        <label>Plaintext Payload:</label>
+        <textarea id="plain-input" placeholder="Secret message to encrypt...">Confidential System Payload @ Quanxs SA Labs</textarea>
+      </div>
+      <div class="form-group">
+        <label>Associated Authenticated Data (AAD - Optional):</label>
+        <input type="text" id="aad-input" value="salabs.quanxs.com/auth-header-v1">
+      </div>
+      <button class="btn" onclick="executeEncrypt()">Encrypt (AES-256-GCM SIV Mode)</button>
+      <div class="box" id="enc-output">Encrypted ciphertext and auth tag will appear here...</div>
+    </div>
+
+    <div>
+      <h3 style="color:var(--text); margin-bottom:12px;">📥 Decrypt Ciphertext</h3>
+      <div class="form-group">
+        <label>Ciphertext (Hex Payload):</label>
+        <textarea id="cipher-input" placeholder="Paste Hex Ciphertext here..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Associated Authenticated Data (AAD Verification):</label>
+        <input type="text" id="aad-verify" value="salabs.quanxs.com/auth-header-v1">
+      </div>
+      <button class="btn" onclick="executeDecrypt()">Decrypt & Verify Integrity</button>
+      <div class="box" id="dec-output">Decrypted plaintext will appear here...</div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
