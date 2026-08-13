@@ -3,59 +3,91 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crypto RSA-PSS Signature & Verification Studio | SA Labs Developer Utilities</title>
-  <meta name="description" content="100% Client-Side Web Crypto SubtleCrypto RSA-PSS Signature Generation and Verification Studio for security engineers.">
+  <title>RSA-PSS Cryptographic Signature & Verification Studio | SA Labs</title>
+  <meta name="description" content="100% Client-Side Web Crypto SubtleCrypto RSA-PSS 2048/4096-bit Key Generator, Signer, and Signature Verifier.">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Crypto RSA-PSS Signature & Verification Studio",
+    "name": "RSA-PSS Cryptographic Signature Studio",
     "url": "https://salabs.quanxs.com/tools/crypto-rsa-pss-signature-studio.html",
     "applicationCategory": "DeveloperApplication",
     "operatingSystem": "All",
-    "browserRequirements": "Requires JavaScript and Web Crypto API support"
+    "browserRequirements": "Requires JavaScript and Web Crypto API"
   }
   </script>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0f172a; color: #f8fafc; margin: 0; padding: 20px; }
-    .container { max-width: 900px; margin: 0 auto; background: #1e293b; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-    h1 { color: #38bdf8; border-bottom: 2px solid #334155; padding-bottom: 10px; margin-top: 0; }
-    .control-group { margin-bottom: 20px; background: #0f172a; padding: 15px; border-radius: 8px; border: 1px solid #334155; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 24px; }
+    .container { max-width: 900px; margin: 0 auto; background: #1e293b; padding: 32px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border: 1px solid #334155; }
+    h1 { color: #38bdf8; border-bottom: 2px solid #334155; padding-bottom: 12px; margin-top: 0; }
+    .panel { background: #0f172a; padding: 20px; border-radius: 8px; border: 1px solid #334155; margin-bottom: 20px; }
     label { display: block; margin-bottom: 8px; font-weight: 600; color: #94a3b8; }
-    textarea, button { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #475569; background: #1e293b; color: #f8fafc; font-size: 14px; box-sizing: border-box; }
-    button { background: #0284c7; color: white; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
+    textarea, button { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #475569; background: #1e293b; color: #f8fafc; font-size: 13px; font-family: monospace; box-sizing: border-box; }
+    button { background: #0284c7; color: white; border: none; font-weight: bold; cursor: pointer; transition: background 0.2s; margin-top: 10px; font-family: sans-serif; }
     button:hover { background: #0369a1; }
-    .status { margin-top: 15px; padding: 12px; border-radius: 6px; background: #334155; color: #38bdf8; font-family: monospace; word-break: break-all; }
+    .status { padding: 12px; border-radius: 6px; background: #020617; color: #38bdf8; font-family: monospace; margin-top: 10px; border: 1px solid #334155; word-break: break-all; }
   </style>
 <script>
 
-    document.getElementById('genSignBtn').addEventListener('click', async () => {
-      const resBox = document.getElementById('sigResult');
-      resBox.innerText = 'Generating 2048-bit RSA-PSS keypair...';
+    let keyPair, currentSignature;
+
+    document.getElementById('genKeyBtn').addEventListener('click', async () => {
       try {
-        const keyPair = await window.crypto.subtle.generateKey(
-          { name: "RSA-PSS", modulusLength: 2048, publicExponent: new Uint8Array([1, 0, 1]), hash: "SHA-256" },
+        keyPair = await window.crypto.subtle.generateKey(
+          {
+            name: "RSA-PSS",
+            modulusLength: 2048,
+            publicExponent: new Uint8Array([1, 0, 1]),
+            hash: "SHA-256"
+          },
           true,
           ["sign", "verify"]
         );
+        document.getElementById('keyStatus').innerText = "✓ RSA-PSS 2048-bit Key Pair Generated Successfully in Local Browser Memory.";
+      } catch (e) {
+        document.getElementById('keyStatus').innerText = "✕ Key Gen Error: " + e.message;
+      }
+    });
+
+    document.getElementById('signBtn').addEventListener('click', async () => {
+      if (!keyPair) { alert('Please generate an RSA-PSS key pair first.'); return; }
+      try {
         const encoder = new TextEncoder();
         const data = encoder.encode(document.getElementById('msgInput').value);
-        const sig = await window.crypto.subtle.sign(
+        const sigBuf = await window.crypto.subtle.sign(
           { name: "RSA-PSS", saltLength: 32 },
           keyPair.privateKey,
           data
         );
-        const sigHex = Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('');
+        currentSignature = sigBuf;
+        const sigHex = Array.from(new Uint8Array(sigBuf)).map(b => b.toString(16).padStart(2, '0')).join('');
+        document.getElementById('sigBox').innerText = "Hex Signature:\n" + sigHex;
+      } catch (e) {
+        document.getElementById('sigBox').innerText = "✕ Signing Error: " + e.message;
+      }
+    });
+
+    document.getElementById('verifyBtn').addEventListener('click', async () => {
+      if (!keyPair || !currentSignature) { alert('Please generate a key pair and sign the message first.'); return; }
+      try {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(document.getElementById('msgInput').value);
         const isValid = await window.crypto.subtle.verify(
           { name: "RSA-PSS", saltLength: 32 },
           keyPair.publicKey,
-          sig,
+          currentSignature,
           data
         );
-        resBox.innerText = `✓ RSA-PSS Keypair Generated\n✓ Signature (HEX): ${sigHex.substring(0, 64)}...\n✓ Self-Verification Status: ${isValid ? 'VERIFIED_VALID' : 'FAILED'}`;
-      } catch (err) {
-        resBox.innerText = 'Error: ' + err.message;
+        if (isValid) {
+          document.getElementById('verifyStatus').style.color = '#34d399';
+          document.getElementById('verifyStatus').innerText = "✓ RSA-PSS Signature VALID (Message Integrity Verified)";
+        } else {
+          document.getElementById('verifyStatus').style.color = '#f87171';
+          document.getElementById('verifyStatus').innerText = "✕ RSA-PSS Signature INVALID";
+        }
+      } catch (e) {
+        document.getElementById('verifyStatus').innerText = "✕ Verification Error: " + e.message;
       }
     });
   
@@ -63,14 +95,26 @@
 </head>
 <body>
   <div class="container">
-    <h1>Crypto RSA-PSS Signature & Verification Studio</h1>
-    <p style="color: #94a3b8;">Web Crypto API RSA-PSS (2048-bit, SHA-256, Salt length 32) Signature Studio.</p>
-    <div class="control-group">
-      <label for="msgInput">Payload Message to Sign:</label>
-      <textarea id="msgInput" rows="4">Quanxs SA Labs RSA-PSS Security Payload</textarea>
-      <button id="genSignBtn">Generate RSA-PSS Keypair & Sign Message</button>
+    <h1>RSA-PSS Cryptographic Signature & Verification Studio</h1>
+    <p style="color: #94a3b8;">Web Crypto API RSA-PSS (SHA-256) Zero-Server Key Generation, Digital Signing & Verification.</p>
+    <div class="panel">
+      <button id="genKeyBtn">Generate RSA-PSS 2048-bit Key Pair</button>
+      <div id="keyStatus" class="status">Key Pair Status: Not Generated</div>
     </div>
-    <div class="status" id="sigResult">Awaiting generation...</div>
+    <div class="panel">
+      <label for="msgInput">Message Payload to Sign:</label>
+      <textarea id="msgInput" rows="4">{
+  "issuer": "Quanxs SA Labs",
+  "subject": "Autonomous Web Build Assertion",
+  "status": "VERIFIED"
+}</textarea>
+      <button id="signBtn">Sign Message with RSA-PSS</button>
+      <div id="sigBox" class="status">Signature: (Pending Signing)</div>
+    </div>
+    <div class="panel">
+      <button id="verifyBtn" style="background: #059669;">Verify RSA-PSS Signature</button>
+      <div id="verifyStatus" class="status">Verification Status: Untested</div>
+    </div>
   </div>
   
 </body>
