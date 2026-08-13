@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HKDF Key Derivation & Stream Cipher Studio - Quanxs SA Labs</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "HKDF Key Derivation & Stream Cipher Studio",
+  "url": "https://salabs.quanxs.com/tools/crypto-hkdf-stream-cipher.html",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript and Web Crypto API",
+  "author": {
+    "@type": "Organization",
+    "name": "Quanxs SA Labs"
+  }
+}
+</script>
+<style>
+:root { --bg: #0d1117; --panel: #161b22; --border: #30363d; --text: #c9d1d9; --accent: #58a6ff; --btn: #238636; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+.container { max-width: 900px; margin: 0 auto; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+h1 { color: var(--accent); margin-top: 0; font-size: 22px; text-align: center; }
+.desc { color: #8b949e; font-size: 14px; text-align: center; margin-bottom: 20px; }
+.form-group { margin-bottom: 14px; }
+label { display: block; font-size: 13px; margin-bottom: 6px; font-weight: 600; color: #58a6ff; }
+input, textarea { width: 100%; box-sizing: border-box; background: var(--bg); color: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 10px; font-family: monospace; font-size: 13px; }
+textarea { height: 90px; }
+button { width: 100%; background: var(--btn); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+button:hover { opacity: 0.9; }
+.output { margin-top: 20px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 15px; font-family: monospace; font-size: 12px; color: #7ee787; word-break: break-all; white-space: pre-wrap; }
+</style>
+<script>
+
+async function runHKDFCryption() {
+  const ikm = document.getElementById('ikm').value;
+  const salt = document.getElementById('salt').value;
+  const info = document.getElementById('info').value;
+  const payload = document.getElementById('payload').value;
+  const enc = new TextEncoder();
+  const baseKey = await crypto.subtle.importKey('raw', enc.encode(ikm), 'HKDF', false, ['deriveKey', 'deriveBits']);
+  const derivedKey = await crypto.subtle.deriveKey(
+    {
+      name: 'HKDF',
+      hash: 'SHA-256',
+      salt: enc.encode(salt),
+      info: enc.encode(info)
+    },
+    baseKey,
+    { name: 'AES-GCM', length: 256 },
+    true,
+    ['encrypt', 'decrypt']
+  );
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ciphertext = await crypto.subtle.encrypt(
+    { name: 'AES-GCM', iv: iv },
+    derivedKey,
+    enc.encode(payload)
+  );
+  const rawKey = await crypto.subtle.exportKey('raw', derivedKey);
+  const toHex = buf => Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  const out = `[HKDF 256-bit Derived Key]:\n${toHex(rawKey)}\n\n[AES-GCM IV (12 bytes)]:\n${toHex(iv)}\n\n[Ciphertext (Hex)]:\n${toHex(ciphertext)}\n\n[Status]: 100% Authenticated Encryption Complete (Zero Server Leaks)`;
+  document.getElementById('output').innerText = out;
+}
+
+</script>
+</head>
+<body>
+<div class="container">
+<h1>🔐 HKDF Key Derivation & Stream Cipher Studio</h1>
+<p class="desc">100% Local Web Crypto API HKDF (Extract & Expand) + AES-CTR / AES-GCM Cryptographic Engine</p>
+<div class="form-group">
+<label>Master Secret (IKM):</label>
+<input type="text" id="ikm" value="my-super-secure-master-secret-key-2026">
+</div>
+<div class="form-group">
+<label>Salt (Optional):</label>
+<input type="text" id="salt" value="quanxs-salt-001">
+</div>
+<div class="form-group">
+<label>Info / Context String:</label>
+<input type="text" id="info" value="encryption-auth-context">
+</div>
+<div class="form-group">
+<label>Plaintext Payload:</label>
+<textarea id="payload">Hello Quanxs SA Labs Autonomous Pipeline!</textarea>
+</div>
+<button onclick="runHKDFCryption()">Derive HKDF Key & Encrypt</button>
+<div class="output" id="output">Output results will appear here...</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Spatial Binaural Sound Synthesizer - Quanxs SA Labs</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "3D Spatial Binaural Sound Synthesizer",
+  "url": "https://salabs.quanxs.com/tools/audio-spatial-binaural-synthesizer.html",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript and Web Audio API",
+  "author": {
+    "@type": "Organization",
+    "name": "Quanxs SA Labs"
+  }
+}
+</script>
+<style>
+:root { --bg: #0d1117; --panel: #161b22; --border: #30363d; --text: #c9d1d9; --accent: #58a6ff; --btn: #238636; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+.container { max-width: 900px; margin: 0 auto; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+h1 { color: var(--accent); margin-top: 0; font-size: 22px; text-align: center; }
+.desc { color: #8b949e; font-size: 14px; text-align: center; margin-bottom: 20px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.control-group { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+label { display: block; font-size: 13px; margin-bottom: 6px; font-weight: 600; }
+input[type="range"] { width: 100%; }
+.btn-row { display: flex; gap: 10px; margin-top: 15px; }
+button { flex: 1; background: var(--btn); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+button.stop { background: #da3633; }
+button:hover { opacity: 0.9; }
+canvas { width: 100%; height: 160px; background: #000; border-radius: 8px; border: 1px solid var(--border); margin-top: 16px; }
+</style>
+<script>
+
+let ctx = null, oscL = null, oscR = null, panner = null, analyser = null, animId = null;
+function initAudio() {
+  if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+}
+function startSynth() {
+  initAudio();
+  if (ctx.state === 'suspended') ctx.resume();
+  stopSynth();
+  const base = parseFloat(document.getElementById('baseFreq').value);
+  const beat = parseFloat(document.getElementById('beatFreq').value);
+  const x = parseFloat(document.getElementById('posX').value);
+  const z = parseFloat(document.getElementById('posZ').value);
+  panner = ctx.createPanner();
+  panner.panningModel = 'HRTF';
+  panner.distanceModel = 'inverse';
+  panner.positionX.setValueAtTime(x, ctx.currentTime);
+  panner.positionY.setValueAtTime(0, ctx.currentTime);
+  panner.positionZ.setValueAtTime(z, ctx.currentTime);
+  const merger = ctx.createChannelMerger(2);
+  oscL = ctx.createOscillator();
+  oscL.type = 'sine';
+  oscL.frequency.setValueAtTime(base, ctx.currentTime);
+  oscR = ctx.createOscillator();
+  oscR.type = 'sine';
+  oscR.frequency.setValueAtTime(base + beat, ctx.currentTime);
+  oscL.connect(merger, 0, 0);
+  oscR.connect(merger, 0, 1);
+  analyser = ctx.createAnalyser();
+  analyser.fftSize = 256;
+  merger.connect(panner);
+  panner.connect(analyser);
+  analyser.connect(ctx.destination);
+  oscL.start();
+  oscR.start();
+  drawViz();
+}
+function stopSynth() {
+  if (oscL) { try { oscL.stop(); oscL.disconnect(); } catch(e){} oscL = null; }
+  if (oscR) { try { oscR.stop(); oscR.disconnect(); } catch(e){} oscR = null; }
+  if (animId) cancelAnimationFrame(animId);
+}
+function updateAudio() {
+  const base = parseFloat(document.getElementById('baseFreq').value);
+  const beat = parseFloat(document.getElementById('beatFreq').value);
+  const x = parseFloat(document.getElementById('posX').value);
+  const z = parseFloat(document.getElementById('posZ').value);
+  document.getElementById('baseVal').innerText = base;
+  document.getElementById('beatVal').innerText = beat.toFixed(1);
+  document.getElementById('posXVal').innerText = x.toFixed(1);
+  document.getElementById('posZVal').innerText = z.toFixed(1);
+  if (oscL && ctx) oscL.frequency.setValueAtTime(base, ctx.currentTime);
+  if (oscR && ctx) oscR.frequency.setValueAtTime(base + beat, ctx.currentTime);
+  if (panner && ctx) {
+    panner.positionX.setValueAtTime(x, ctx.currentTime);
+    panner.positionZ.setValueAtTime(z, ctx.currentTime);
+  }
+}
+function drawViz() {
+  const canvas = document.getElementById('viz');
+  const g = canvas.getContext('2d');
+  const buffer = new Uint8Array(analyser.frequencyBinCount);
+  function loop() {
+    animId = requestAnimationFrame(loop);
+    analyser.getByteTimeDomainData(buffer);
+    g.fillStyle = '#0d1117';
+    g.fillRect(0, 0, canvas.width, canvas.height);
+    g.lineWidth = 2;
+    g.strokeStyle = '#58a6ff';
+    g.beginPath();
+    const slice = canvas.width * 1.0 / buffer.length;
+    let px = 0;
+    for (let i = 0; i < buffer.length; i++) {
+      const v = buffer[i] / 128.0;
+      const py = v * canvas.height / 2;
+      if (i === 0) g.moveTo(px, py);
+      else g.lineTo(px, py);
+      px += slice;
+    }
+    g.stroke();
+  }
+  loop();
+}
+
+</script>
+</head>
+<body>
+<div class="container">
+<h1>🎧 3D Spatial Binaural Sound Synthesizer</h1>
+<p class="desc">100% Client-Side Web Audio API HRTF 3D Panner & Binaural Beat Waveform Synthesizer</p>
+<div class="grid">
+<div class="control-group">
+<label>Base Frequency (Hz): <span id="baseVal">220</span></label>
+<input type="range" id="baseFreq" min="60" max="600" value="220" oninput="updateAudio()">
+</div>
+<div class="control-group">
+<label>Binaural Beat Difference (Hz): <span id="beatVal">4.0</span> (Theta)</label>
+<input type="range" id="beatFreq" min="0.5" max="30" step="0.5" value="4.0" oninput="updateAudio()">
+</div>
+<div class="control-group">
+<label>Spatial Azimuth X: <span id="posXVal">0.0</span></label>
+<input type="range" id="posX" min="-5" max="5" step="0.1" value="0.0" oninput="updateAudio()">
+</div>
+<div class="control-group">
+<label>Spatial Distance Z: <span id="posZVal">-1.0</span></label>
+<input type="range" id="posZ" min="-5" max="5" step="0.1" value="-1.0" oninput="updateAudio()">
+</div>
+</div>
+<div class="btn-row">
+<button onclick="startSynth()">▶ Start 3D Synthesizer</button>
+<button class="stop" onclick="stopSynth()">⏹ Stop</button>
+</div>
+<canvas id="viz"></canvas>
+</div>
+
+</body>
+</html>

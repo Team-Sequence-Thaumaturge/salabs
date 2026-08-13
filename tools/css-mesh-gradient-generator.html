@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Mesh & Conic Gradient Studio - Quanxs SA Labs</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "CSS Mesh & Conic Gradient Studio",
+  "url": "https://salabs.quanxs.com/tools/css-mesh-gradient-generator.html",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript and HTML5 Canvas",
+  "author": {
+    "@type": "Organization",
+    "name": "Quanxs SA Labs"
+  }
+}
+</script>
+<style>
+:root { --bg: #0d1117; --panel: #161b22; --border: #30363d; --text: #c9d1d9; --accent: #58a6ff; --btn: #238636; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+.container { max-width: 900px; margin: 0 auto; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+h1 { color: var(--accent); margin-top: 0; font-size: 22px; text-align: center; }
+.desc { color: #8b949e; font-size: 14px; text-align: center; margin-bottom: 20px; }
+.preview { width: 100%; height: 260px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 20px; transition: background 0.3s; }
+.grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 15px; }
+.control-group { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+label { display: block; font-size: 12px; margin-bottom: 6px; font-weight: 600; color: #58a6ff; }
+input[type="color"] { width: 100%; height: 36px; border: none; border-radius: 4px; cursor: pointer; background: transparent; }
+input[type="range"] { width: 100%; }
+button { width: 100%; background: var(--btn); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+button:hover { opacity: 0.9; }
+textarea { width: 100%; box-sizing: border-box; height: 90px; background: var(--bg); color: #7ee787; border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-family: monospace; font-size: 12px; margin-top: 14px; }
+</style>
+<script>
+
+function updateGradient() {
+  const c1 = document.getElementById('c1').value;
+  const c2 = document.getElementById('c2').value;
+  const c3 = document.getElementById('c3').value;
+  const cBase = document.getElementById('cBase').value;
+  const blur = document.getElementById('blur').value;
+  const angle = document.getElementById('angle').value;
+  document.getElementById('blurVal').innerText = blur;
+  document.getElementById('angleVal').innerText = angle;
+  const css = `background-color: ${cBase};\nbackground-image: \n  radial-gradient(at 0% 0%, ${c1} 0px, transparent 50%),\n  radial-gradient(at 100% 0%, ${c2} 0px, transparent 50%),\n  radial-gradient(at 50% 100%, ${c3} 0px, transparent 50%),\n  conic-gradient(from ${angle}deg at 50% 50%, ${c1}, ${c2}, ${c3}, ${c1});\nfilter: blur(0px);`;
+  document.getElementById('preview').style.cssText = css;
+  document.getElementById('cssCode').value = css;
+}
+function randomize() {
+  const rnd = () => '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+  document.getElementById('c1').value = rnd();
+  document.getElementById('c2').value = rnd();
+  document.getElementById('c3').value = rnd();
+  updateGradient();
+}
+updateGradient();
+
+</script>
+</head>
+<body>
+<div class="container">
+<h1>🎨 CSS Mesh & Conic Gradient Studio</h1>
+<p class="desc">100% Client-Side Interactive CSS Mesh Radial & Conic Gradient Designer with Instant Code Export</p>
+<div class="preview" id="preview"></div>
+<div class="grid">
+<div class="control-group">
+<label>Color 1 (Top Left)</label>
+<input type="color" id="c1" value="#ff416c" onchange="updateGradient()">
+</div>
+<div class="control-group">
+<label>Color 2 (Top Right)</label>
+<input type="color" id="c2" value="#8a2387" onchange="updateGradient()">
+</div>
+<div class="control-group">
+<label>Color 3 (Bottom Center)</label>
+<input type="color" id="c3" value="#e94057" onchange="updateGradient()">
+</div>
+</div>
+<div class="grid">
+<div class="control-group">
+<label>Base Background</label>
+<input type="color" id="cBase" value="#0f172a" onchange="updateGradient()">
+</div>
+<div class="control-group">
+<label>Mesh Blur (px): <span id="blurVal">40</span></label>
+<input type="range" id="blur" min="10" max="80" value="40" oninput="updateGradient()">
+</div>
+<div class="control-group">
+<label>Mesh Angle (deg): <span id="angleVal">45</span></label>
+<input type="range" id="angle" min="0" max="360" value="45" oninput="updateGradient()">
+</div>
+</div>
+<button onclick="randomize()">🎲 Randomize Palette</button>
+<textarea id="cssCode" readonly></textarea>
+</div>
+
+</body>
+</html>
