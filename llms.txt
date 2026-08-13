@@ -5,6 +5,7 @@
 - [SAIR Chrome Extension Source Hub](https://salabs.quanxs.com/tools/sair-chrome-extension-source-hub.html): Official Manifest V3 Open Source Hub with WebCrypto & ShadowDOM Injection.
 - [SALabs Flagship 3D Spatial Workbench](https://salabs.quanxs.com/tools/salabs-flagship-3d-spatial-workbench.html): Flagship 3D Quantum Spatial Engine with 120 FPS WebGL InstancedMesh.
 - [Jules Agentic Commerce Dashboard](https://salabs.quanxs.com/tools/jules-agentic-commerce-dashboard.html): Agentic Commerce & x402 Micropayment Engine Studio.
+- [Jules AI QA & Cross-Parsing Auditor](https://salabs.quanxs.com/tools/jules-ai-qa-cross-parsing-auditor.html): Standalone 4-Phase Sequence Interleaved Trajectory Audit & AST Anti-Mockup Cockpit.
 
 ## 🌐 Live Utility Tools
 - [Api Mock Sandbox](https://salabs.quanxs.com/tools/api-mock-sandbox.html): 100% Client-side pure JS utility tool.
