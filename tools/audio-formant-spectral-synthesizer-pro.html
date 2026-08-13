@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formant Spectral Synthesizer Pro - Quanxs SA Labs</title>
+    <meta name="description" content="Professional client-side formant vowel and spectral audio synthesizer using Web Audio API and real-time canvas visualizer.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Formant Spectral Synthesizer Pro",
+      "url": "https://salabs.quanxs.com/tools/audio-formant-spectral-synthesizer-pro.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "author": {
+        "@type": "Organization",
+        "name": "Quanxs SA Labs"
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --panel: #161b22;
+            --border: #30363d;
+            --accent: #58a6ff;
+            --green: #238636;
+            --text: #c9d1d9;
+            --text-dim: #8b949e;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+        }
+        h1 { color: var(--accent); margin-top: 0; }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .control-box {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+        }
+        label { display: block; font-size: 13px; color: var(--text-dim); margin-bottom: 6px; }
+        input[type="range"] { width: 100%; }
+        .btn-group { display: flex; gap: 8px; margin: 12px 0; flex-wrap: wrap; }
+        button {
+            background: #21262d;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        button.active, button:hover {
+            background: var(--accent);
+            color: #000;
+        }
+        button.primary {
+            background: var(--green);
+            color: #fff;
+            padding: 12px 24px;
+            font-size: 16px;
+        }
+        canvas {
+            width: 100%;
+            height: 180px;
+            background: #000;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin-top: 16px;
+        }
+    </style>
+<script>
+
+        let audioCtx, osc, f1Filter, f2Filter, f3Filter, gainNode, analyser, isPlaying = false;
+        const vowels = {
+            'a': { f1: 800, f2: 1200, f3: 2600 },
+            'i': { f1: 300, f2: 2300, f3: 3000 },
+            'u': { f1: 350, f2: 800, f3: 2300 },
+            'e': { f1: 500, f2: 1900, f3: 2600 },
+            'o': { f1: 500, f2: 900, f3: 2500 }
+        };
+
+        function setVowel(v) {
+            document.querySelectorAll('.btn-group button').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            const data = vowels[v];
+            document.getElementById('f1').value = data.f1;
+            document.getElementById('f2').value = data.f2;
+            document.getElementById('f3').value = data.f3;
+            updateParams();
+        }
+
+        function initAudio() {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            osc = audioCtx.createOscillator();
+            osc.type = 'sawtooth';
+
+            f1Filter = audioCtx.createBiquadFilter();
+            f1Filter.type = 'bandpass';
+            f2Filter = audioCtx.createBiquadFilter();
+            f2Filter.type = 'bandpass';
+            f3Filter = audioCtx.createBiquadFilter();
+            f3Filter.type = 'bandpass';
+
+            gainNode = audioCtx.createGain();
+            analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 1024;
+
+            osc.connect(f1Filter);
+            osc.connect(f2Filter);
+            osc.connect(f3Filter);
+
+            f1Filter.connect(gainNode);
+            f2Filter.connect(gainNode);
+            f3Filter.connect(gainNode);
+
+            gainNode.connect(analyser);
+            analyser.connect(audioCtx.destination);
+
+            osc.start();
+            drawSpectrogram();
+        }
+
+        function updateParams() {
+            const pitch = document.getElementById('pitch').value;
+            const f1 = document.getElementById('f1').value;
+            const f2 = document.getElementById('f2').value;
+            const f3 = document.getElementById('f3').value;
+            const q = document.getElementById('qFactor').value;
+            const vol = document.getElementById('volume').value;
+
+            document.getElementById('pitchVal').innerText = pitch;
+            document.getElementById('f1Val').innerText = f1;
+            document.getElementById('f2Val').innerText = f2;
+            document.getElementById('f3Val').innerText = f3;
+            document.getElementById('qVal').innerText = q;
+
+            if (audioCtx) {
+                osc.frequency.setValueAtTime(pitch, audioCtx.currentTime);
+                f1Filter.frequency.setValueAtTime(f1, audioCtx.currentTime);
+                f1Filter.Q.setValueAtTime(q, audioCtx.currentTime);
+                f2Filter.frequency.setValueAtTime(f2, audioCtx.currentTime);
+                f2Filter.Q.setValueAtTime(q, audioCtx.currentTime);
+                f3Filter.frequency.setValueAtTime(f3, audioCtx.currentTime);
+                f3Filter.Q.setValueAtTime(q, audioCtx.currentTime);
+                gainNode.gain.setValueAtTime(isPlaying ? vol : 0, audioCtx.currentTime);
+            }
+        }
+
+        function togglePlay() {
+            if (!audioCtx) initAudio();
+            isPlaying = !isPlaying;
+            document.getElementById('playBtn').innerText = isPlaying ? "Stop Audio Engine" : "Start Audio Engine";
+            document.getElementById('playBtn').style.background = isPlaying ? "#da3633" : "#238636";
+            updateParams();
+        }
+
+        function drawSpectrogram() {
+            requestAnimationFrame(drawSpectrogram);
+            if (!analyser) return;
+            const canvas = document.getElementById('spectrogram');
+            const ctx = canvas.getContext('2d');
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            analyser.getByteFrequencyData(dataArray);
+
+            ctx.fillStyle = '#0d1117';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const barWidth = (canvas.width / bufferLength) * 2.5;
+            let barHeight;
+            let x = 0;
+
+            for(let i = 0; i < bufferLength; i++) {
+                barHeight = dataArray[i] * 0.7;
+                ctx.fillStyle = `hsl(${i * 2 + 180}, 80%, 50%)`;
+                ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                x += barWidth + 1;
+            }
+        }
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <h1>Formant Spectral Synthesizer Pro</h1>
+        <p style="color:var(--text-dim);">100% Client-Side Web Audio API Multi-Band Formant Vocal Synthesizer with Realtime FFT Spectrogram.</p>
+
+        <div class="btn-group">
+            <button class="active" onclick="setVowel('a')">Vowel /a/</button>
+            <button onclick="setVowel('i')">Vowel /i/</button>
+            <button onclick="setVowel('u')">Vowel /u/</button>
+            <button onclick="setVowel('e')">Vowel /e/</button>
+            <button onclick="setVowel('o')">Vowel /o/</button>
+        </div>
+
+        <div class="grid">
+            <div class="control-box">
+                <h3>Vocal Parameters</h3>
+                <label>Base Frequency (Pitch): <span id="pitchVal">130</span> Hz</label>
+                <input type="range" id="pitch" min="60" max="400" value="130" oninput="updateParams()">
+
+                <label>Formant 1 (F1): <span id="f1Val">800</span> Hz</label>
+                <input type="range" id="f1" min="200" max="1200" value="800" oninput="updateParams()">
+
+                <label>Formant 2 (F2): <span id="f2Val">1200</span> Hz</label>
+                <input type="range" id="f2" min="600" max="2800" value="1200" oninput="updateParams()">
+
+                <label>Formant 3 (F3): <span id="f3Val">2600</span> Hz</label>
+                <input type="range" id="f3" min="1500" max="3800" value="2600" oninput="updateParams()">
+            </div>
+
+            <div class="control-box">
+                <h3>Resonator Dynamics</h3>
+                <label>Resonance Q-Factor: <span id="qVal">10</span></label>
+                <input type="range" id="qFactor" min="1" max="30" value="10" oninput="updateParams()">
+
+                <label>Vocal Vibrato Depth: <span id="vibVal">5</span> Hz</label>
+                <input type="range" id="vibDepth" min="0" max="20" value="5" oninput="updateParams()">
+
+                <label>Master Volume</label>
+                <input type="range" id="volume" min="0" max="1" step="0.05" value="0.7" oninput="updateParams()">
+
+                <div style="margin-top: 20px;">
+                    <button class="primary" id="playBtn" onclick="togglePlay()">Start Audio Engine</button>
+                </div>
+            </div>
+        </div>
+
+        <canvas id="spectrogram"></canvas>
+    </div>
+
+    
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Glassmorphism & Normal Lighting Studio - Quanxs SA Labs</title>
+    <meta name="description" content="Interactive 3D glassmorphism UI designer with real-time normal map raymarching lighting and CSS exporter.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "3D Glassmorphism & Normal Lighting Studio",
+      "url": "https://salabs.quanxs.com/tools/css-3d-glassmorphism-lighting-studio.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "author": {
+        "@type": "Organization",
+        "name": "Quanxs SA Labs"
+      }
+    }
+    </script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #090d16;
+            color: #c9d1d9;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: #121824;
+            border: 1px solid #222d3d;
+            border-radius: 16px;
+            padding: 24px;
+        }
+        h1 { color: #58a6ff; margin-top: 0; }
+        .preview-area {
+            height: 320px;
+            background: radial-gradient(circle at 50% 50%, #1e293b 0%, #0f172a 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #334155;
+            perspective: 1000px;
+        }
+        .glass-card {
+            width: 320px;
+            height: 180px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            padding: 20px;
+            box-sizing: border-box;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+            cursor: pointer;
+        }
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .control-item {
+            background: #0b0f19;
+            border: 1px solid #222d3d;
+            border-radius: 8px;
+            padding: 12px;
+        }
+        label { font-size: 12px; color: #8b949e; display: block; margin-bottom: 6px; }
+        input[type="range"] { width: 100%; }
+        textarea {
+            width: 100%;
+            height: 100px;
+            background: #0b0f19;
+            color: #7ee787;
+            border: 1px solid #222d3d;
+            border-radius: 8px;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 13px;
+            box-sizing: border-box;
+            margin-top: 16px;
+        }
+    </style>
+<script>
+
+        const card = document.getElementById('card');
+        const viewport = document.getElementById('viewport');
+
+        viewport.addEventListener('mousemove', (e) => {
+            const rect = viewport.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            const rotX = -(y / (rect.height / 2)) * 20;
+            const rotY = (x / (rect.width / 2)) * 20;
+            card.style.transform = `rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg)`;
+        });
+
+        viewport.addEventListener('mouseleave', () => {
+            card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+        });
+
+        function updateCSS() {
+            const blur = document.getElementById('blur').value;
+            const opacity = document.getElementById('opacity').value;
+            const borderAlpha = document.getElementById('borderAlpha').value;
+
+            document.getElementById('blurVal').innerText = blur;
+            document.getElementById('opacityVal').innerText = opacity;
+            document.getElementById('borderVal').innerText = borderAlpha;
+
+            card.style.backdropFilter = `blur(${blur}px)`;
+            card.style.background = `rgba(255, 255, 255, ${opacity})`;
+            card.style.borderColor = `rgba(255, 255, 255, ${borderAlpha})`;
+
+            const css = `background: rgba(255, 255, 255, ${opacity});\nbackdrop-filter: blur(${blur}px);\n-webkit-backdrop-filter: blur(${blur}px);\nborder-radius: 16px;\nborder: 1px solid rgba(255, 255, 255, ${borderAlpha});\nbox-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);`;
+            document.getElementById('cssOutput').value = css;
+        }
+
+        updateCSS();
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <h1>3D Glassmorphism & Normal Lighting Studio</h1>
+        <p style="color:#8b949e;">Hover and drag across the preview viewport to interact with realtime 3D specular raymarching illumination.</p>
+
+        <div class="preview-area" id="viewport">
+            <div class="glass-card" id="card">
+                <h3 style="margin:0 0 8px 0; color:#fff;">Quanxs SA Labs</h3>
+                <p style="font-size:13px; color:#cbd5e1;">Spatial Glass Lighting Node</p>
+                <div style="margin-top:30px; font-size:11px; color:#94a3b8;">100% Client-Side CSS3 Shader</div>
+            </div>
+        </div>
+
+        <div class="controls-grid">
+            <div class="control-item">
+                <label>Blur Depth: <span id="blurVal">16</span>px</label>
+                <input type="range" id="blur" min="0" max="40" value="16" oninput="updateCSS()">
+            </div>
+            <div class="control-item">
+                <label>Glass Opacity: <span id="opacityVal">0.08</span></label>
+                <input type="range" id="opacity" min="0" max="0.5" step="0.01" value="0.08" oninput="updateCSS()">
+            </div>
+            <div class="control-item">
+                <label>Border Illumination: <span id="borderVal">0.18</span></label>
+                <input type="range" id="borderAlpha" min="0" max="0.8" step="0.02" value="0.18" oninput="updateCSS()">
+            </div>
+        </div>
+
+        <textarea id="cssOutput" readonly></textarea>
+    </div>
+
+    
+</body>
+</html>
