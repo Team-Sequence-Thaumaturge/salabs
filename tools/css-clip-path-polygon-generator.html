@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Clip-Path Polygon Generator & Studio - Quanxs SA Labs</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "CSS Clip-Path Polygon Generator & Studio",
+  "url": "https://salabs.quanxs.com/tools/css-clip-path-polygon-generator.html",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript. Requires HTML5 Canvas API.",
+  "author": {
+    "@type": "Organization",
+    "name": "Quanxs SA Labs"
+  }
+}
+</script>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
+.container { max-width: 880px; margin: 0 auto; background: #1e293b; padding: 26px; border-radius: 12px; border: 1px solid #334155; }
+h1 { color: #38bdf8; font-size: 22px; margin-top: 0; }
+.preview-area { display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap; }
+.canvas-wrapper { position: relative; width: 340px; height: 340px; background: #0f172a; border-radius: 8px; border: 1px solid #475569; }
+canvas { width: 100%; height: 100%; border-radius: 8px; cursor: crosshair; }
+.css-output-area { flex: 1; min-width: 300px; display: flex; flex-direction: column; gap: 12px; }
+.preset-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+button { background: #3b82f6; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; }
+button:hover { background: #2563eb; }
+textarea { width: 100%; height: 120px; background: #0f172a; color: #38bdf8; border: 1px solid #475569; border-radius: 6px; padding: 12px; font-family: monospace; font-size: 14px; box-sizing: border-box; }
+.clipped-demo { width: 100%; height: 120px; background: linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6); border-radius: 8px; transition: clip-path 0.2s; }
+</style>
+<script>
+
+const canvas = document.getElementById('polyCanvas');
+const ctx = canvas.getContext('2d');
+const W = canvas.width;
+const H = canvas.height;
+
+let points = [
+  {x: 50, y: 0},
+  {x: 100, y: 38},
+  {x: 82, y: 100},
+  {x: 18, y: 100},
+  {x: 0, y: 38}
+];
+
+let draggingIdx = -1;
+
+function render() {
+  ctx.clearRect(0, 0, W, H);
+  
+  // Draw grid
+  ctx.strokeStyle = '#1e293b';
+  ctx.lineWidth = 1;
+  for(let i=0; i<W; i+=34) {
+    ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, H); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(W, i); ctx.stroke();
+  }
+  
+  // Draw Polygon
+  ctx.beginPath();
+  points.forEach((p, i) => {
+    const px = (p.x / 100) * W;
+    const py = (p.y / 100) * H;
+    if (i === 0) ctx.moveTo(px, py);
+    else ctx.lineTo(px, py);
+  });
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(56, 189, 248, 0.25)';
+  ctx.fill();
+  ctx.strokeStyle = '#38bdf8';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  
+  // Draw Vertices
+  points.forEach((p, i) => {
+    const px = (p.x / 100) * W;
+    const py = (p.y / 100) * H;
+    ctx.beginPath();
+    ctx.arc(px, py, 6, 0, Math.PI * 2);
+    ctx.fillStyle = (i === draggingIdx) ? '#f43f5e' : '#38bdf8';
+    ctx.fill();
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  });
+  
+  updateCSS();
+}
+
+function updateCSS() {
+  const polyStr = points.map(p => `${Math.round(p.x)}% ${Math.round(p.y)}%`).join(', ');
+  const rule = `clip-path: polygon(${polyStr});\n-webkit-clip-path: polygon(${polyStr});`;
+  document.getElementById('cssCode').value = rule;
+  document.getElementById('demoBox').style.clipPath = `polygon(${polyStr})`;
+}
+
+canvas.addEventListener('mousedown', e => {
+  const rect = canvas.getBoundingClientRect();
+  const mx = (e.clientX - rect.left) / rect.width * 100;
+  const my = (e.clientY - rect.top) / rect.height * 100;
+  
+  draggingIdx = points.findIndex(p => Math.hypot(p.x - mx, p.y - my) < 5);
+  render();
+});
+
+window.addEventListener('mousemove', e => {
+  if (draggingIdx === -1) return;
+  const rect = canvas.getBoundingClientRect();
+  let mx = Math.max(0, Math.min(100, (e.clientX - rect.left) / rect.width * 100));
+  let my = Math.max(0, Math.min(100, (e.clientY - rect.top) / rect.height * 100));
+  points[draggingIdx] = {x: mx, y: my};
+  render();
+});
+
+window.addEventListener('mouseup', () => {
+  draggingIdx = -1;
+  render();
+});
+
+function setPreset(type) {
+  if (type === 'triangle') points = [{x:50,y:0},{x:0,y:100},{x:100,y:100}];
+  else if (type === 'trapezoid') points = [{x:20,y:0},{x:80,y:0},{x:100,y:100},{x:0,y:100}];
+  else if (type === 'parallelogram') points = [{x:25,y:0},{x:100,y:0},{x:75,y:100},{x:0,y:100}];
+  else if (type === 'rhombus') points = [{x:50,y:0},{x:100,y:50},{x:50,y:100},{x:0,y:50}];
+  else if (type === 'pentagon') points = [{x:50,y:0},{x:100,y:38},{x:82,y:100},{x:18,y:100},{x:0,y:38}];
+  else if (type === 'hexagon') points = [{x:25,y:0},{x:75,y:0},{x:100,y:50},{x:75,y:100},{x:25,y:100},{x:0,y:50}];
+  else if (type === 'star') points = [{x:50,y:0},{x:61,y:35},{x:98,y:35},{x:68,y:57},{x:79,y:91},{x:50,y:70},{x:21,y:91},{x:32,y:57},{x:2,y:35},{x:39,y:35}];
+  render();
+}
+
+function copyCSS() {
+  const code = document.getElementById('cssCode').value;
+  navigator.clipboard.writeText(code).then(() => alert('CSS Code copied to clipboard!'));
+}
+
+render();
+
+</script>
+</head>
+<body>
+<div class="container">
+  <h1>📐 CSS Clip-Path Polygon Generator & Studio</h1>
+  <p style="color:#94a3b8; font-size:14px;">Drag vertices on canvas to generate precise CSS polygon clip-path rules in real-time.</p>
+  
+  <div class="preset-btns">
+    <button onclick="setPreset('triangle')">Triangle</button>
+    <button onclick="setPreset('trapezoid')">Trapezoid</button>
+    <button onclick="setPreset('parallelogram')">Parallelogram</button>
+    <button onclick="setPreset('rhombus')">Rhombus</button>
+    <button onclick="setPreset('pentagon')">Pentagon</button>
+    <button onclick="setPreset('hexagon')">Hexagon</button>
+    <button onclick="setPreset('star')">Star</button>
+  </div>
+  
+  <div class="preview-area">
+    <div class="canvas-wrapper">
+      <canvas id="polyCanvas" width="340" height="340"></canvas>
+    </div>
+    
+    <div class="css-output-area">
+      <label style="font-weight:600; font-size:13px; color:#94a3b8;">CSS Live Preview Box:</label>
+      <div id="demoBox" class="clipped-demo"></div>
+      
+      <label style="font-weight:600; font-size:13px; color:#94a3b8;">Generated CSS Code:</label>
+      <textarea id="cssCode" readonly></textarea>
+      <button onclick="copyCSS()" style="background:#10b981;">📋 Copy CSS Clip-Path</button>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

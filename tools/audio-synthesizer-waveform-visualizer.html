@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Audio Multi-Oscillator Synthesizer & Visualizer - Quanxs SA Labs</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Web Audio Multi-Oscillator Synthesizer & Visualizer",
+  "url": "https://salabs.quanxs.com/tools/audio-synthesizer-waveform-visualizer.html",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires JavaScript. Requires HTML5 Web Audio API.",
+  "author": {
+    "@type": "Organization",
+    "name": "Quanxs SA Labs"
+  }
+}
+</script>
+<style>
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #090d16; color: #e2e8f0; margin: 0; padding: 20px; }
+.container { max-width: 880px; margin: 0 auto; background: #131b2e; padding: 28px; border-radius: 12px; border: 1px solid #1e293b; box-shadow: 0 8px 30px rgba(0,0,0,0.6); }
+h1 { color: #38bdf8; font-size: 22px; margin-top: 0; }
+.controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 20px 0; }
+.ctrl-card { background: #0c1222; padding: 16px; border-radius: 8px; border: 1px solid #1e293b; }
+label { display: block; font-size: 13px; color: #94a3b8; font-weight: 600; margin-bottom: 8px; }
+select, input[type=range] { width: 100%; }
+button { background: #0284c7; color: #fff; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 15px; font-weight: 600; width: 100%; margin-top: 10px; }
+button:hover { background: #0369a1; }
+button.active { background: #ef4444; }
+canvas { width: 100%; height: 180px; background: #050811; border-radius: 8px; border: 1px solid #1e293b; margin-top: 20px; }
+</style>
+<script>
+
+let audioCtx = null;
+let osc = null;
+let gainNode = null;
+let analyser = null;
+let isPlaying = false;
+let animId = null;
+
+const canvas = document.getElementById('visCanvas');
+const ctx = canvas.getContext('2d');
+
+function initAudio() {
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 2048;
+  
+  gainNode = audioCtx.createGain();
+  gainNode.gain.setValueAtTime(parseFloat(document.getElementById('gainSlider').value), audioCtx.currentTime);
+  
+  gainNode.connect(analyser);
+  analyser.connect(audioCtx.destination);
+}
+
+function toggleSynth() {
+  const btn = document.getElementById('toggleBtn');
+  if (!isPlaying) {
+    if (!audioCtx) initAudio();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    
+    osc = audioCtx.createOscillator();
+    osc.type = document.getElementById('waveType').value;
+    osc.frequency.setValueAtTime(parseFloat(document.getElementById('freqSlider').value), audioCtx.currentTime);
+    osc.connect(gainNode);
+    osc.start();
+    
+    isPlaying = true;
+    btn.textContent = '⏹ Stop Synthesizer Engine';
+    btn.classList.add('active');
+    draw();
+  } else {
+    if (osc) {
+      osc.stop();
+      osc.disconnect();
+      osc = null;
+    }
+    isPlaying = false;
+    btn.textContent = '▶ Start Synthesizer Engine';
+    btn.classList.remove('active');
+    cancelAnimationFrame(animId);
+  }
+}
+
+document.getElementById('freqSlider').addEventListener('input', e => {
+  document.getElementById('freqVal').textContent = e.target.value;
+  if (osc) osc.frequency.setValueAtTime(parseFloat(e.target.value), audioCtx.currentTime);
+});
+
+document.getElementById('gainSlider').addEventListener('input', e => {
+  document.getElementById('gainVal').textContent = e.target.value;
+  if (gainNode) gainNode.gain.setValueAtTime(parseFloat(e.target.value), audioCtx.currentTime);
+});
+
+document.getElementById('waveType').addEventListener('change', e => {
+  if (osc) osc.type = e.target.value;
+});
+
+function draw() {
+  if (!isPlaying) return;
+  animId = requestAnimationFrame(draw);
+  
+  const bufferLength = analyser.fftSize;
+  const dataArray = new Uint8Array(bufferLength);
+  analyser.getByteTimeDomainData(dataArray);
+  
+  ctx.fillStyle = '#050811';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = '#38bdf8';
+  ctx.beginPath();
+  
+  const sliceWidth = canvas.width * 1.0 / bufferLength;
+  let x = 0;
+  
+  for (let i = 0; i < bufferLength; i++) {
+    const v = dataArray[i] / 128.0;
+    const y = v * canvas.height / 2;
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+    x += sliceWidth;
+  }
+  
+  ctx.lineTo(canvas.width, canvas.height / 2);
+  ctx.stroke();
+}
+
+</script>
+</head>
+<body>
+<div class="container">
+  <h1>🎹 Web Audio Multi-Oscillator Synthesizer & Visualizer</h1>
+  <p style="color:#94a3b8; font-size:14px;">Zero-server Web Audio API oscillator synthesis with real-time FFT frequency & time-domain waveform rendering.</p>
+  
+  <div class="controls">
+    <div class="ctrl-card">
+      <label for="waveType">Waveform Type:</label>
+      <select id="waveType">
+        <option value="sine">Sine</option>
+        <option value="square">Square</option>
+        <option value="sawtooth" selected>Sawtooth</option>
+        <option value="triangle">Triangle</option>
+      </select>
+    </div>
+    
+    <div class="ctrl-card">
+      <label for="freqSlider">Frequency: <span id="freqVal">440</span> Hz</label>
+      <input type="range" id="freqSlider" min="55" max="1760" value="440" step="1">
+    </div>
+    
+    <div class="ctrl-card">
+      <label for="gainSlider">Volume / Gain: <span id="gainVal">0.2</span></label>
+      <input type="range" id="gainSlider" min="0" max="0.5" value="0.2" step="0.01">
+    </div>
+  </div>
+  
+  <button id="toggleBtn" onclick="toggleSynth()">▶ Start Synthesizer Engine</button>
+  
+  <canvas id="visCanvas" width="820" height="180"></canvas>
+</div>
+
+
+</body>
+</html>
