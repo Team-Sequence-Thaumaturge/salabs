@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Realtime Web Audio 10-Band Parametric Equalizer Studio | SA Labs</title>
+  <meta name="description" content="100% Client-side Web Audio API BiquadFilter 10-band equalizer studio and FFT frequency visualizer.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Realtime Web Audio 10-Band Equalizer Studio",
+    "url": "https://salabs.quanxs.com/tools/web-audio-equalizer-parametric-studio.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript and Web Audio API"
+  }
+  </script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 24px; }
+    .container { max-width: 960px; margin: 0 auto; background: #1e293b; padding: 32px; border-radius: 12px; border: 1px solid #334155; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+    h1 { color: #38bdf8; border-bottom: 2px solid #334155; padding-bottom: 12px; margin-top: 0; }
+    .panel { background: #0f172a; padding: 20px; border-radius: 8px; border: 1px solid #334155; margin-bottom: 20px; }
+    label { display: block; margin-bottom: 8px; font-weight: 600; color: #94a3b8; }
+    button, input[type="file"] { width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #475569; background: #1e293b; color: #f8fafc; font-size: 14px; box-sizing: border-box; }
+    button { background: #0284c7; color: white; border: none; font-weight: bold; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
+    button:hover { background: #0369a1; }
+    .eq-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; margin-top: 20px; align-items: end; }
+    .eq-band { text-align: center; background: #020617; padding: 12px 4px; border-radius: 6px; border: 1px solid #1e293b; }
+    .eq-band input[type="range"] { writing-mode: bt-lr; -webkit-appearance: slider-vertical; width: 24px; height: 120px; margin: 10px auto; display: block; }
+    .eq-label { font-size: 11px; color: #38bdf8; font-family: monospace; }
+    .eq-val { font-size: 10px; color: #94a3b8; font-family: monospace; margin-top: 4px; }
+    canvas { width: 100%; height: 160px; background: #020617; border-radius: 8px; border: 1px solid #334155; margin-top: 15px; }
+    @media(max-width: 768px) { .eq-grid { grid-template-columns: repeat(5, 1fr); } }
+  </style>
+<script>
+
+    const freqs = [31, 62, 125, 250, 500, 1000, 2000, 4000, 8000, 16000];
+    const filters = [];
+    let audioCtx, analyser, sourceNode;
+    let isRunning = false;
+
+    const eqContainer = document.getElementById('eqContainer');
+    const audioFileInput = document.getElementById('audioFile');
+    const micBtn = document.getElementById('micBtn');
+    const canvas = document.getElementById('visualizerCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Build 10 EQ Bands UI
+    freqs.forEach((f, idx) => {
+      const band = document.createElement('div');
+      band.className = 'eq-band';
+      band.innerHTML = `
+        <div class="eq-label">${f >= 1000 ? (f/1000)+'k' : f}Hz</div>
+        <input type="range" id="eqSlider-${idx}" min="-12" max="12" value="0" step="0.5">
+        <div class="eq-val" id="eqVal-${idx}">0dB</div>
+      `;
+      eqContainer.appendChild(band);
+
+      const slider = band.querySelector('input');
+      const valDisplay = band.querySelector('.eq-val');
+      slider.addEventListener('input', (e) => {
+        valDisplay.innerText = e.target.value + 'dB';
+        if (filters[idx]) {
+          filters[idx].gain.value = parseFloat(e.target.value);
+        }
+      });
+    });
+
+    function initAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 512;
+
+        // Create 10 biquad filters in series
+        freqs.forEach((f, idx) => {
+          const filter = audioCtx.createBiquadFilter();
+          filter.type = idx === 0 ? 'lowshelf' : (idx === freqs.length - 1 ? 'highshelf' : 'peaking');
+          filter.frequency.value = f;
+          filter.Q.value = 1.4;
+          const sliderVal = parseFloat(document.getElementById(`eqSlider-${idx}`).value);
+          filter.gain.value = sliderVal;
+          filters.push(filter);
+        });
+
+        // Connect filters in chain
+        for (let i = 0; i < filters.length - 1; i++) {
+          filters[i].connect(filters[i+1]);
+        }
+        filters[filters.length - 1].connect(analyser);
+        analyser.connect(audioCtx.destination);
+      }
+    }
+
+    micBtn.addEventListener('click', async () => {
+      try {
+        initAudioContext();
+        if (sourceNode) sourceNode.disconnect();
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        sourceNode = audioCtx.createMediaStreamSource(stream);
+        sourceNode.connect(filters[0]);
+        isRunning = true;
+        drawFFT();
+      } catch (err) {
+        alert('Microphone access error: ' + err.message);
+      }
+    });
+
+    audioFileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      initAudioContext();
+      if (sourceNode) sourceNode.disconnect();
+      const audioEl = new Audio(URL.createObjectURL(file));
+      audioEl.play();
+      sourceNode = audioCtx.createMediaElementSource(audioEl);
+      sourceNode.connect(filters[0]);
+      isRunning = true;
+      drawFFT();
+    });
+
+    function drawFFT() {
+      if (!isRunning) return;
+      requestAnimationFrame(drawFFT);
+      const buffer = new Uint8Array(analyser.frequencyBinCount);
+      analyser.getByteFrequencyData(buffer);
+
+      ctx.fillStyle = '#020617';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const barWidth = (canvas.width / buffer.length) * 2.5;
+      let x = 0;
+      for (let i = 0; i < buffer.length; i++) {
+        const barHeight = (buffer[i] / 255) * canvas.height;
+        ctx.fillStyle = `hsl(${i * 4}, 100%, 50%)`;
+        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+        x += barWidth + 1;
+      }
+    }
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <h1>Realtime Web Audio 10-Band Parametric Equalizer</h1>
+    <p style="color: #94a3b8;">100% Client-side Web Audio API BiquadFilter 10-Band EQ & Realtime FFT Frequency Visualizer.</p>
+
+    <div class="panel">
+      <label>Audio Source Selection:</label>
+      <input type="file" id="audioFile" accept="audio/*">
+      <button id="micBtn">Use Live Microphone Input</button>
+    </div>
+
+    <div class="panel">
+      <label>10-Band Equalizer Gains (-12dB to +12dB):</label>
+      <div class="eq-grid" id="eqContainer"></div>
+    </div>
+
+    <div class="panel">
+      <canvas id="visualizerCanvas"></canvas>
+    </div>
+  </div>
+
+  
+</body>
+</html>
