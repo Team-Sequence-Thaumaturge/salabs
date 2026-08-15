@@ -20,39 +20,45 @@ class ASTParser:
             with open(target_filepath, 'r', encoding='utf-8', errors='ignore') as f:
                 self.full_content = f.read()
             
-            # Extract JS script contents for HTML files (ignore application/ld+json or non-JS tags)
-            if target_filepath.endswith('.html'):
-                scripts = re.findall(r'<script(?:\s+(?!type=["\']application/ld\+json["\'])[^>]*)?>(.*?)</script>', self.full_content, re.DOTALL)
-                clean_scripts = [s for s in scripts if not s.strip().startswith('{')]
-                self.code = "\n".join(clean_scripts)
-            else:
+            self.language = 'js'
+            if target_filepath.endswith('.py'):
+                self.language = 'python'
                 self.code = self.full_content
+                import ast as pyast
+                if self.code.strip():
+                    self.ast = pyast.parse(self.code)
+            else:
+                # Extract JS script contents for HTML files (ignore application/ld+json or non-JS tags)
+                if target_filepath.endswith('.html'):
+                    scripts = re.findall(r'<script(?:\s+(?!type=["\']application/ld\+json["\'])[^>]*)?>(.*?)</script>', self.full_content, re.DOTALL)
+                    clean_scripts = [s for s in scripts if not s.strip().startswith('{')]
+                    self.code = "\n".join(clean_scripts)
+                else:
+                    self.code = self.full_content
 
-            if self.code.strip():
-                self.ast = esprima.parseScript(self.code, loc=True, tolerant=True)
+                if self.code.strip():
+                    self.ast = esprima.parseScript(self.code, loc=True, tolerant=True)
         except Exception as e:
             self.ast = None
             print(f"AST Parsing Warning for {self.filename}: {e}")
 
-    def _traverse(self, node, visitor, scope_depth=0, inside_function=False):
-        if not node or not hasattr(node, 'type'):
+    def _traverse(self, node, visitor):
+        if self.language == 'python':
+            import ast as pyast
+            for subnode in pyast.walk(node):
+                visitor(subnode)
             return
 
-        is_function = node.type in ('FunctionDeclaration', 'FunctionExpression', 'ArrowFunctionExpression')
-        new_inside_function = inside_function or is_function
-
-        visitor(node, scope_depth, new_inside_function)
-
-        # Increase scope depth for blocks
-        new_scope_depth = scope_depth + 1 if node.type == 'BlockStatement' or is_function else scope_depth
-
+        if not node or not hasattr(node, 'type'):
+            return
+        visitor(node)
         for key, value in vars(node).items():
             if isinstance(value, list):
                 for item in value:
                     if hasattr(item, 'type'):
-                        self._traverse(item, visitor, new_scope_depth, new_inside_function)
+                        self._traverse(item, visitor)
             elif hasattr(value, 'type'):
-                self._traverse(value, visitor, new_scope_depth, new_inside_function)
+                self._traverse(value, visitor)
 
     def detect_torsion_crossings(self):
         if not self.ast:
@@ -60,36 +66,12 @@ class ASTParser:
         
         declarations = {}
         usages = []
-        local_scopes = {} # Tracks {symbol_name: list_of_scope_depths}
 
-        def visitor(node, scope_depth, inside_function):
-            # Track Global-like Function Declarations (top level or high level)
+        def visitor(node):
             if node.type == 'FunctionDeclaration' and node.id:
                 declarations[node.id.name] = node.loc.start.line
-
-            # Track Local Variable Declarations and Parameters to isolate block scopes
-            if node.type == 'VariableDeclarator' and node.id.type == 'Identifier':
-                if node.id.name not in local_scopes:
-                    local_scopes[node.id.name] = []
-                local_scopes[node.id.name].append(scope_depth)
-
-            if node.type in ('FunctionDeclaration', 'FunctionExpression', 'ArrowFunctionExpression'):
-                if hasattr(node, 'params'):
-                    for param in node.params:
-                        if param.type == 'Identifier':
-                            if param.name not in local_scopes:
-                                local_scopes[param.name] = []
-                            # Params belong to the inner scope depth (which increments for function bodies)
-                            local_scopes[param.name].append(scope_depth + 1)
-
-            # Track Usage (Call Expressions)
             elif node.type == 'CallExpression' and node.callee.type == 'Identifier':
-                usages.append({
-                    'name': node.callee.name,
-                    'line': node.loc.start.line,
-                    'inside_function': inside_function,
-                    'scope_depth': scope_depth
-                })
+                usages.append({'name': node.callee.name, 'line': node.loc.start.line})
 
         self._traverse(self.ast, visitor)
 
@@ -97,22 +79,9 @@ class ASTParser:
         for u in usages:
             name = u['name']
             if name in declarations:
-                # Check if this usage is shadowed by a local variable/parameter in its scope or a parent scope > 0
-                is_shadowed = False
-                if name in local_scopes:
-                    for decl_depth in local_scopes[name]:
-                        if decl_depth > 0 and decl_depth <= u['scope_depth']:
-                            is_shadowed = True
-                            break
-
-                if is_shadowed:
-                    continue # Skip, it's a local variable shadowing a global declaration
-
                 def_line = declarations[name]
                 ref_line = u['line']
-                # If reference is < definition line, it's a torsion crossing,
-                # UNLESS it's inside a function body (lazy evaluation).
-                if ref_line < def_line and not u['inside_function']:
+                if ref_line < def_line:
                     torsions.append({
                         'symbol': name,
                         'def_line': def_line,
@@ -126,7 +95,7 @@ class ASTParser:
             return []
         
         mockups = []
-        def visitor(node, scope_depth, inside_function):
+        def visitor(node):
             if node.type == 'ReturnStatement' and node.argument:
                 if node.argument.type == 'Literal' and str(node.argument.value) in ('true', '1', 'ok', 'success'):
                     mockups.append({
@@ -158,6 +127,14 @@ class ASTParser:
             pass
 
         def advanced_visitor(node):
+            if self.language == 'python':
+                import ast as pyast
+                if isinstance(node, pyast.Name) and isinstance(node.ctx, pyast.Load):
+                    usages.add(node.id)
+                elif isinstance(node, pyast.arg): # function arguments
+                    usages.add(node.arg)
+                return
+
             if not node or not hasattr(node, 'type'): return
 
             # 1. Used in assignments (right side)

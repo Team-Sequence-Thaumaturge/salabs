@@ -1,115 +1,92 @@
 import json
-import os
-from datetime import datetime
 
 class SAPQArbiter:
     """
-    SAPQ Metacognitive Arbiter
-    - Prevents "Oracle Compliance Bias" where agents repeatedly patch the same code leading to regression.
-    - Detects false positives via oscillation tracking and acts as a circuit breaker.
-    - Implements Tool Refutation Protocol to optionally bypass flawed constraints.
+    Phase 21: LLM Interrogation & Self-Healing Loop
+    - Ingests critical defects (like Phase 20 MISSING_INTENDED_FEATURE).
+    - Generates strict, JSON-formatted 'Interrogation Dossiers' to force the LLM to justify or fix omissions without "lazy rationalization".
+    - Acts as a circuit breaker (RULE_CONFLICT_PAUSE) against infinite patching loops.
     """
-
-    def __init__(self, target_filepath, session_id):
-        self.filepath = target_filepath
-        self.filename = os.path.basename(target_filepath)
+    def __init__(self, max_retries=3, session_id="default"):
+        import os
+        self.max_retries = max_retries
         self.session_id = session_id
-        self.arbiter_dir = os.path.join(os.path.dirname(target_filepath), ".sapq_arbiter_state")
-        self.state_file = os.path.join(self.arbiter_dir, f"{self.session_id}_{self.filename}_arbiter.json")
+        self.patch_history = []
+        self.log_file = f".sapq_logs/arbiter_{self.session_id}.json"
 
-        self.state = {
-            "session_id": self.session_id,
-            "target_file": self.filename,
-            "history": [], # Track previous scores to detect oscillation
-            "modifications": {}, # Track modifications by symbol: {"symbol_name": count}
-            "bypassed_rules": [] # List of bypassed issues
-        }
-
-        if not os.path.exists(self.arbiter_dir):
-            os.makedirs(self.arbiter_dir, exist_ok=True)
-
-        self._load_state()
-
-    def _load_state(self):
-        if os.path.exists(self.state_file):
+        # Load persisted state for CLI usage
+        if os.path.exists(self.log_file):
             try:
-                with open(self.state_file, 'r', encoding='utf-8') as f:
-                    self.state = json.load(f)
+                with open(self.log_file, "r") as log_f:
+                    self.patch_history = json.load(log_f)
             except Exception:
                 pass
 
-    def _save_state(self):
-        with open(self.state_file, 'w', encoding='utf-8') as f:
-            json.dump(self.state, f, indent=2)
+    def log_patch_attempt(self, score, issues_count):
+        """Records a patch attempt to detect oscillation / infinite loops."""
+        import os
+        self.patch_history.append({"score": score, "issues_count": issues_count})
+        # Persist state
+        os.makedirs(".sapq_logs", exist_ok=True)
+        with open(self.log_file, "w") as log_f:
+            json.dump(self.patch_history, log_f)
 
-    def record_run(self, score, issues):
-        """Records the outcome of an audit run."""
-        self.state["history"].append({
-            "timestamp": datetime.utcnow().isoformat() + "Z",
-            "score": score
-        })
+    def check_oscillation(self):
+        """Circuit Breaker: Returns True if the AI is stuck in an infinite loop of fixing and breaking."""
+        if len(self.patch_history) < self.max_retries:
+            return False
 
-        # Increment modification counters for issues found in this run
-        for issue in issues:
-            symbol = issue.get("symbol", "unknown")
-            if symbol not in self.state["modifications"]:
-                self.state["modifications"][symbol] = 0
-            self.state["modifications"][symbol] += 1
+        recent = self.patch_history[-self.max_retries:]
+        # If the issue count never reaches 0 and score oscillates or remains static
+        scores = [h["score"] for h in recent]
+        if max(scores) == min(scores) and recent[-1]["issues_count"] > 0:
+            return True
+        return False
 
-        self._save_state()
-
-    def check_oscillation_and_arbitrate(self, issues):
+    def generate_interrogation_dossier(self, target_filename, baseline_issues=None, generic_issues=None):
         """
-        Evaluates the current issues against history to detect if the agent is stuck in a loop.
-        Returns (should_pause, filtered_issues, message).
+        Generates a strict JSON prompt designed for LLM consumption.
+        It explicitly forbids arbitrary rationalization and demands concrete code fixes or systemic proofs.
         """
-        filtered_issues = []
-        pause_triggered = False
-        message = ""
+        baseline_issues = baseline_issues or []
+        generic_issues = generic_issues or []
 
-        # Check score oscillation (e.g., scores bouncing or dropping repeatedly)
-        if len(self.state["history"]) >= 3:
-            recent_scores = [h["score"] for h in self.state["history"][-3:]]
-            # Simple heuristic: if score hasn't improved or oscillates
-            if recent_scores[0] >= recent_scores[1] and recent_scores[1] <= recent_scores[2] and recent_scores[2] < 100:
-                # We detect a potential macro-level regression loop, but we rely on the
-                # granular symbol modification tracker below to isolate exactly which
-                # rule/symbol to bypass, rather than bypassing everything blindly.
-                pass
+        all_issues = baseline_issues + generic_issues
 
-        for issue in issues:
-            symbol = issue.get("symbol", "unknown")
-            issue_desc = issue.get("issue", "")
-
-            # Skip if already bypassed
-            if any(b['symbol'] == symbol for b in self.state["bypassed_rules"]):
-                continue
-
-            mod_count = self.state["modifications"].get(symbol, 0)
-
-            # If a symbol has been repeatedly flagged/patched 3 or more times, it's likely a false positive
-            if mod_count >= 3:
-                pause_triggered = True
-                message = f"RULE_CONFLICT_PAUSE: Metacognitive Arbiter detected oscillation on symbol '{symbol}'. Possible tool defect."
-                # Apply Tool Refutation Protocol
-                self.state["bypassed_rules"].append({
-                    "symbol": symbol,
-                    "reason": "ISSUE_TOOL_DEFECT: Reached modification limit without resolution."
-                })
-                self._save_state()
-            else:
-                filtered_issues.append(issue)
-
-        return pause_triggered, filtered_issues, message
-
-    def generate_feedback_request(self):
-        """Generates a JSON payload for the SACM Coder to request rule mutation."""
-        if not self.state["bypassed_rules"]:
+        if not all_issues:
             return None
 
-        return {
-            "type": "RuleMutationSuggestion",
-            "target_file": self.filename,
-            "defects": self.state["bypassed_rules"],
-            "suggestion": "Requesting SACM to relax constraints or adjust AST parsing for the listed symbols due to verified false positives."
+        if self.check_oscillation():
+            return json.dumps({
+                "type": "RULE_CONFLICT_PAUSE",
+                "directive": "ABORT_CURRENT_STRATEGY",
+                "message": "Oracle Compliance Bias Detected. You are looping. Stop blindly applying the same patch. Issue a Tool Refutation Protocol to bypass if this is a false positive."
+            }, indent=2)
+
+        dossier = {
+            "type": "SAPQ_INTERROGATION",
+            "target": target_filename,
+            "directive": "You must provide a Git Merge Diff to restore the missing topological nodes, OR provide a systemic proof justifying their removal.",
+            "strict_rules": [
+                "DO NOT provide conversational rationalizations (e.g., 'It seems ok because...').",
+                "DO NOT blindly stub the function back. Restore its actual AST semantic capability (Reads State, Writes DOM)."
+            ],
+            "topological_holes": []
         }
+
+        for issue in baseline_issues:
+            dossier["topological_holes"].append({
+                "missing_role": issue.get("role_signature", "UNKNOWN"),
+                "original_function_context": issue.get("original_functions", []),
+                "demand": "Restore this semantic trajectory in the target file."
+            })
+
+        for issue in generic_issues:
+            # Handle standard structural issues like GHOST_NODE, TORSION_CROSSING, etc.
+            dossier["topological_holes"].append({
+                "issue_type": issue.get("issue", "UNKNOWN_ERROR").split(':')[0],
+                "detail": issue.get("issue", ""),
+                "demand": "Fix the structural contradiction."
+            })
+
+        return json.dumps(dossier, indent=2)

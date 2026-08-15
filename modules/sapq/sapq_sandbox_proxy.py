@@ -38,7 +38,7 @@ class SAPQSandboxProxy:
         socketserver.TCPServer.allow_reuse_address = True
 
         try:
-            self.httpd = socketserver.TCPServer(("", self.port), lambda *args, **kwargs: Handler(*args, directory=self.directory, **kwargs))
+            self.httpd = socketserver.TCPServer(("127.0.0.1", self.port), lambda *args, **kwargs: Handler(*args, directory=self.directory, **kwargs))
         except OSError as e:
             self.logger.error(f"Failed to bind to port {self.port}: {e}")
             raise

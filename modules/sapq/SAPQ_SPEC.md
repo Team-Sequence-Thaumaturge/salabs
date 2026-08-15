@@ -111,3 +111,20 @@ Google Jules must execute **Phase 16: Build Next-Gen AST Node Tree Parser & Dual
 - **Cascade Graph:** Tracks Root State to Sub State dependency propagations via AST.
 - **Blind Interceptor Detection:** Flags UI/DOM writes (`innerHTML`, `style`) occurring inside functions that never read from a master state context (`BLIND_INTERCEPTOR`), preventing untracked state mutations.
 - **Temporal Lifecycle Lock:** Analyzes the global boot timeline to detect Data Races where render/update calls occur sequentially before initialization/boot calls (`TEMPORAL_LIFECYCLE_LOCK`).
+
+## 🧊 Phase 20: Hyper-Isomorphic Baseline Auditor (v2.0)
+- **Semantic Topological Hash Mapping:** Escapes plain-text diff limitations. The engine maps functions into role-based topological hashes (e.g., `READS_STATE:True|WRITES_DOM:True|IS_HANDLER:False`). Renaming a function preserves its isomorphic shape.
+- **Topological Hole Extraction:** Cross-audits a Baseline file's tensor against a Target file's tensor via Set Difference (`Baseline - Target`). If an intended topological capability vanishes entirely, it is definitively flagged as a `MISSING_INTENDED_FEATURE`, eliminating silent logic omissions.
+
+## 🚔 Phase 21: LLM Interrogation & Self-Healing Loop (v2.1)
+- **Strict Dossier Generation:** Aggregates Phase 20 Topological Holes and standard structural contradictions into a strict JSON-formatted Interrogation Dossier.
+- **Rationalization Ban:** Forces the AI agent to provide either a concrete AST fix or a systemic proof justifying the omission, banning lazy rationalization.
+- **Oracle Compliance Breaker (`RULE_CONFLICT_PAUSE`):** Maintains persistent state across CLI sessions to detect infinite patching loops. If an AI agent oscillates without resolving the issue, it fires a circuit breaker to halt the loop and mandate a manual Tool Refutation Protocol.
+
+## 🚀 Phase 22: Playwright Relay E2E Multi-Step Scenario Macro (v2.2)
+- Extends the DOM Relay to process JSON-based scenario arrays (`click`, `fill`, `wait`, `assert_text`, `assert_style`).
+- Provides holistic scenario-level results, capturing DOM deltas and console logs across complex multi-step interaction chains.
+
+## 🐍 Phase 23: Multi-Language AST Adapter (v2.3)
+- Enables `sapq_ast_parser.py` to natively parse `.py` files utilizing Python's built-in `ast` module.
+- Identifies Python-specific AST contexts (e.g., `Load` operations) to seamlessly supply the SAPQ 3.5 Fusion Matrix with exact usage trackers, expanding ghost node prevention natively to backend/AI agent logic.

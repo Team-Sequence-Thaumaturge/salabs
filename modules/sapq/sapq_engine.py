@@ -185,7 +185,9 @@ class SAPQEngine:
 
         return report
 
-def audit_file(filepath, session_id=None):
+from .sapq_baseline_cube import SAPQBaselineCube
+
+def audit_file(filepath, session_id=None, baseline_filepath=None):
     checkpoint_mgr = CheckpointManager(filepath, session_id=session_id)
     logger = SAPQLogger(filepath, session_id=checkpoint_mgr.session_id)
 
@@ -226,6 +228,14 @@ def audit_file(filepath, session_id=None):
     # Proceed to Phase 1-4 analysis
     engine = SAPQEngine(filepath)
     report = engine.execute_vector_end_trajectory_linking()
+
+    # Phase 20: Dual Mode - Hyper-Isomorphic Baseline Auditor
+    if baseline_filepath and os.path.exists(baseline_filepath):
+        cube = SAPQBaselineCube(baseline_filepath=baseline_filepath, target_filepath=filepath)
+        topological_holes = cube.audit_topological_holes()
+        if topological_holes:
+            report["missing_intended_features"] = topological_holes
+            report["audit_integrity_score"] = max(0, report["audit_integrity_score"] - len(topological_holes) * 30)
 
     # Inject Preflight results into report
     report["preflight_status"] = "PASSED"

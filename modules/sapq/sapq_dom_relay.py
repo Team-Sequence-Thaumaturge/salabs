@@ -106,3 +106,89 @@ class SAPQDOMRelay:
                 "console_messages": console_messages,
                 "page_errors": page_errors
             }
+
+    def execute_scenario(self, scenario_steps):
+        """
+        Phase 22: Playwright Relay E2E Multi-Step Scenario Macro
+        Executes a sequence of actions (click, fill, wait, assert_text, assert_style).
+        scenario_steps format:
+        [
+            {"action": "fill", "selector": "#input1", "value": "test"},
+            {"action": "click", "selector": "#btn1"},
+            {"action": "wait", "ms": 1000},
+            {"action": "assert_text", "selector": "#res", "expected": "Success"}
+        ]
+        """
+        with sync_playwright() as p:
+            browser, page = self._get_page(p)
+
+            console_messages = []
+            page_errors = []
+
+            page.on("console", lambda msg: console_messages.append({"type": msg.type, "text": msg.text}))
+            page.on("pageerror", lambda err: page_errors.append(str(err)))
+
+            initial_html = page.content()
+            step_results = []
+
+            for step_idx, step in enumerate(scenario_steps):
+                action = step.get("action")
+                selector = step.get("selector")
+                result = {"step": step_idx, "action": action, "success": True, "error": None}
+
+                try:
+                    if action == "click":
+                        locator = page.locator(selector).first
+                        locator.dispatch_event("click")
+                    elif action == "fill":
+                        # Range sliders often fail with fill, so we use evaluate + dispatchEvent
+                        value = step.get("value")
+                        locator = page.locator(selector).first
+                        locator.evaluate(f"(el) => {{ el.value = '{value}'; }}")
+                        locator.dispatch_event("input")
+                        locator.dispatch_event("change")
+                    elif action == "wait":
+                        page.wait_for_timeout(step.get("ms", 500))
+                    elif action == "assert_text":
+                        locator = page.locator(selector).first
+                        text = locator.inner_text()
+                        if text != step.get("expected"):
+                            result["success"] = False
+                            result["error"] = f"Expected text '{step.get('expected')}', got '{text}'"
+                    elif action == "assert_style":
+                        locator = page.locator(selector).first
+                        prop = step.get("property")
+                        expected = step.get("expected")
+                        actual = locator.evaluate(f"(el) => window.getComputedStyle(el).getPropertyValue('{prop}')")
+                        if actual != expected:
+                            result["success"] = False
+                            result["error"] = f"Expected style {prop}='{expected}', got '{actual}'"
+                    else:
+                        result["success"] = False
+                        result["error"] = f"Unknown action: {action}"
+
+                except Exception as e:
+                    result["success"] = False
+                    result["error"] = str(e)
+
+                step_results.append(result)
+
+                # Halt scenario if an assertion or action fails
+                if not result["success"]:
+                    break
+
+            final_html = page.content()
+            delta_info = {
+                "changed": initial_html != final_html,
+                "length_diff": len(final_html) - len(initial_html)
+            }
+
+            browser.close()
+
+            return {
+                "scenario_completed": all(r["success"] for r in step_results),
+                "steps": step_results,
+                "dom_delta": delta_info,
+                "console_messages": console_messages,
+                "page_errors": page_errors
+            }
