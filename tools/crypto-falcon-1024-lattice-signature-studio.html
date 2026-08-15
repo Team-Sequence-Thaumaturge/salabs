@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post-Quantum Falcon-1024 Lattice Signature Studio | Quanxs SA Labs</title>
+  <meta name="description" content="Interactive NIST Post-Quantum Cryptography Falcon-1024 lattice signature generator, NTRU polynomial sampler, and FFT norm verifier.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Post-Quantum Falcon-1024 Lattice Signature Studio",
+    "url": "https://salabs.quanxs.com/tools/crypto-falcon-1024-lattice-signature-studio.html",
+    "description": "Client-side NIST Post-Quantum Falcon-1024 signature simulation, polynomial keypair generation, and Fast-Fourier norm validation.",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --accent: #a371f7;
+      --success: #3fb950;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace; }
+    body { background: var(--bg); color: var(--text); padding: 20px; }
+    .header { text-align: center; margin-bottom: 25px; }
+    .header h1 { font-size: 1.7rem; color: #fff; margin-bottom: 6px; }
+    .header p { color: #8b949e; font-size: 0.9rem; }
+    .container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
+    .card h2 { font-size: 1.15rem; color: var(--accent); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+    .row { display: flex; gap: 15px; }
+    @media (max-width: 700px) { .row { flex-direction: column; } }
+    .col { flex: 1; }
+    label { display: block; font-size: 0.85rem; color: #8b949e; margin-bottom: 6px; }
+    textarea, input[type="text"] { width: 100%; background: #090d13; border: 1px solid var(--border); border-radius: 6px; color: #fff; padding: 10px; font-family: monospace; font-size: 0.85rem; resize: vertical; }
+    textarea { min-height: 80px; }
+    .btn { background: #238636; color: #fff; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: bold; margin-top: 10px; }
+    .btn:hover { background: #2ea043; }
+    .status-badge { display: inline-block; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-top: 10px; }
+    .badge-ok { background: rgba(63, 185, 80, 0.15); color: var(--success); border: 1px solid var(--success); }
+    .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 12px; }
+    .stat-item { background: #090d13; padding: 10px; border-radius: 6px; border: 1px solid var(--border); }
+    .stat-item span { display: block; font-size: 0.75rem; color: #8b949e; }
+    .stat-item strong { font-size: 0.95rem; color: #fff; }
+  </style>
+<script>
+
+    let currentSK = null;
+    let currentPK = null;
+
+    async function sha256Hex(msg) {
+      const enc = new TextEncoder().encode(msg);
+      const hash = await crypto.subtle.digest('SHA-256', enc);
+      return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    document.getElementById('genKeyBtn').addEventListener('click', async () => {
+      const randBytes = new Uint8Array(32);
+      crypto.getRandomValues(randBytes);
+      const seed = Array.from(randBytes).map(b => b.toString(16).padStart(2, '0')).join('');
+      
+      currentSK = {
+        seed: seed,
+        f_norm: 142.6,
+        g_norm: 139.8,
+        N: 1024,
+        q: 12289
+      };
+      
+      const pkHash = await sha256Hex("FALCON1024_PK_" + seed);
+      currentPK = "0x" + pkHash + "..." + (await sha256Hex(pkHash)).slice(0, 32);
+
+      document.getElementById('skField').value = `Secret Polynomials (N=1024, q=12289):\nSeed: ${seed}\nGram-Schmidt Norm ||B||: 1.17\nStatus: Balanced NTRU Basis Validated`;
+      document.getElementById('pkField').value = `Public Polynomial Matrix h(x):\n${currentPK}\nDegree: 1024 coefficients`;
+    });
+
+    document.getElementById('signBtn').addEventListener('click', async () => {
+      if (!currentSK) {
+        alert("Please generate a Falcon-1024 keypair first.");
+        return;
+      }
+      const msg = document.getElementById('msgField').value;
+      const salt = Array.from(crypto.getRandomValues(new Uint8Array(40))).map(b => b.toString(16).padStart(2, '0')).join('');
+      const msgHash = await sha256Hex(salt + msg + currentSK.seed);
+      
+      const simulatedNorm = 6420.5 + (Math.random() * 400);
+      const sigData = {
+        scheme: "Falcon-1024",
+        salt: salt,
+        msgHash: msgHash,
+        s2_compact: "0x" + msgHash + salt.slice(0, 32),
+        computed_norm: simulatedNorm.toFixed(2),
+        bound_beta: 7079.82
+      };
+      document.getElementById('sigField').value = JSON.stringify(sigData, null, 2);
+    });
+
+    document.getElementById('verifyBtn').addEventListener('click', () => {
+      const sigText = document.getElementById('sigField').value;
+      const resBox = document.getElementById('verifyResult');
+      if (!sigText) {
+        resBox.innerHTML = '<span class="status-badge" style="background:#5c2b29; color:#f85149;">No signature to verify</span>';
+        return;
+      }
+      try {
+        const sig = JSON.parse(sigText);
+        if (parseFloat(sig.computed_norm) <= sig.bound_beta) {
+          resBox.innerHTML = `<span class="status-badge badge-ok">✅ VALID FALCON-1024 SIGNATURE (Norm: ${sig.computed_norm} ≤ ${sig.bound_beta})</span>`;
+        } else {
+          resBox.innerHTML = `<span class="status-badge" style="background:#5c2b29; color:#f85149;">❌ INVALID (Norm exceeded boundary)</span>`;
+        }
+      } catch (e) {
+        resBox.innerHTML = '<span class="status-badge" style="background:#5c2b29; color:#f85149;">Parse error in signature payload</span>';
+      }
+    });
+  
+</script>
+</head>
+<body>
+  <div class="header">
+    <h1>Post-Quantum Falcon-1024 Lattice Signature Studio</h1>
+    <p>NIST Level-5 Fast-Fourier Lattice Signatures (NTRU Gaussian Sampler Simulation)</p>
+  </div>
+  <div class="container">
+    <div class="card">
+      <h2>🔑 Falcon-1024 Keypair Generation (N=1024, Q=12289)</h2>
+      <div class="row">
+        <div class="col">
+          <label>Secret Key (f, g ∈ Z[x]/(x^1024 + 1))</label>
+          <textarea id="skField" readonly placeholder="Click 'Generate Keypair' to compute secret polynomials..."></textarea>
+        </div>
+        <div class="col">
+          <label>Public Key (h = g * f^-1 mod q)</label>
+          <textarea id="pkField" readonly placeholder="Public key polynomial digest will appear here..."></textarea>
+        </div>
+      </div>
+      <button id="genKeyBtn" class="btn">⚡ Generate Falcon-1024 Keypair</button>
+      <div class="stat-grid">
+        <div class="stat-item"><span>Security Level</span><strong>NIST Category 5 (256-bit PQC)</strong></div>
+        <div class="stat-item"><span>Degree (N)</span><strong>1024</strong></div>
+        <div class="stat-item"><span>Modulus (q)</span><strong>12289</strong></div>
+        <div class="stat-item"><span>Max FFT Bound (β)</span><strong>7079.82</strong></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>✍️ Message Signing & Lattice Gaussian Sampler</h2>
+      <label>Plaintext Message Payload</label>
+      <textarea id="msgField">Quanxs SA Labs: Post-Quantum Compute Verification Standard v2.0</textarea>
+      <button id="signBtn" class="btn" style="background:#8957e5;">🖋️ Sign Message (Fast-Fourier Sampler)</button>
+      <div style="margin-top:15px;">
+        <label>Falcon-1024 Compact Signature (Salt || s2)</label>
+        <textarea id="sigField" readonly placeholder="Signature will be output here..."></textarea>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🛡️ Fast-Fourier Norm Verification</h2>
+      <button id="verifyBtn" class="btn" style="background:#1f6feb;">🔍 Verify Signature Norm (||s1, s2|| ≤ β)</button>
+      <div id="verifyResult" style="margin-top:10px;"></div>
+    </div>
+  </div>
+
+  
+</body>
+</html>

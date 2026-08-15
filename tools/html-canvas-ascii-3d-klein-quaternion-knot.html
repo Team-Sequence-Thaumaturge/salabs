@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas ASCII 3D Klein Quaternion Knot Visualizer | Quanxs SA Labs</title>
+  <meta name="description" content="High-performance client-side 4D Klein bottle and quaternion knot parametric surface renderer in pure ASCII shader matrix using HTML5 Canvas.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Canvas ASCII 3D Klein Quaternion Knot Visualizer",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-klein-quaternion-knot.html",
+    "description": "Interactive client-side 4D-to-3D projection ASCII shader rendering Klein bottle and quaternion torus knots.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #090d13;
+      --card: #121820;
+      --border: #232d3b;
+      --text: #d1d7e0;
+      --accent: #388bfd;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "SF Mono", "Fira Code", monospace; }
+    body { background: var(--bg); color: var(--text); padding: 20px; }
+    .header { text-align: center; margin-bottom: 20px; }
+    .header h1 { font-size: 1.6rem; color: #58a6ff; margin-bottom: 6px; }
+    .header p { color: #8b949e; font-size: 0.9rem; }
+    .wrapper { max-width: 950px; margin: 0 auto; display: grid; grid-template-columns: 1fr 300px; gap: 20px; }
+    @media (max-width: 800px) { .wrapper { grid-template-columns: 1fr; } }
+    .render-box { background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 15px; display: flex; justify-content: center; align-items: center; }
+    pre#asciiScreen { font-size: 10px; line-height: 10px; letter-spacing: 0px; color: #7ee787; user-select: none; font-weight: bold; }
+    .controls { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+    .controls h2 { font-size: 1.1rem; color: #fff; margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+    .ctrl-group { margin-bottom: 14px; }
+    .ctrl-group label { display: block; font-size: 0.8rem; color: #8b949e; margin-bottom: 4px; }
+    .ctrl-group input[type="range"], select { width: 100%; accent-color: var(--accent); background: #1b232e; border: 1px solid var(--border); color: #fff; padding: 4px; border-radius: 4px; }
+    .btn { background: #238636; color: #fff; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: bold; width: 100%; margin-top: 6px; }
+    .btn:hover { background: #2ea043; }
+  </style>
+<script>
+
+    const screen = document.getElementById('asciiScreen');
+    const modelSelect = document.getElementById('modelSelect');
+    const paletteSelect = document.getElementById('paletteSelect');
+    const speedSlider = document.getElementById('speedSlider');
+    const wSlider = document.getElementById('wSlider');
+    const pauseBtn = document.getElementById('pauseBtn');
+
+    let A = 0, B = 0, C = 0;
+    let isPaused = false;
+    const chars = " .,-~:;=!*#$@";
+
+    pauseBtn.addEventListener('click', () => {
+      isPaused = !isPaused;
+      pauseBtn.textContent = isPaused ? '▶ Resume' : '⏸ Pause Animation';
+    });
+
+    paletteSelect.addEventListener('change', () => {
+      const p = paletteSelect.value;
+      if (p === 'matrix') screen.style.color = '#7ee787';
+      else if (p === 'cyber') screen.style.color = '#58a6ff';
+      else if (p === 'amber') screen.style.color = '#e3b341';
+    });
+
+    function renderFrame() {
+      if (!isPaused) {
+        const speed = parseFloat(speedSlider.value);
+        A += 0.03 * speed;
+        B += 0.02 * speed;
+        C += 0.01 * speed;
+      }
+
+      const cols = 60;
+      const rows = 40;
+      const zBuffer = new Array(cols * rows).fill(0);
+      const buffer = new Array(cols * rows).fill(' ');
+
+      const model = modelSelect.value;
+      const wDist = parseFloat(wSlider.value);
+
+      // Generate parametric points
+      const uSteps = 60;
+      const vSteps = 30;
+
+      for (let i = 0; i < uSteps; i++) {
+        const u = (i / uSteps) * Math.PI * 2;
+        for (let j = 0; j < vSteps; j++) {
+          const v = (j / vSteps) * Math.PI * 2;
+
+          let x, y, z;
+          if (model === 'knot') {
+            const p = 3, q = 5;
+            const r = 0.5 * (2 + Math.sin(q * u));
+            x = r * Math.cos(p * u) + 0.2 * Math.cos(v);
+            y = r * Math.sin(p * u) + 0.2 * Math.cos(v);
+            z = 0.4 * Math.cos(q * u) + 0.2 * Math.sin(v);
+          } else if (model === 'klein') {
+            const r = 4 * (1 - Math.cos(u) / 2);
+            if (u < Math.PI) {
+              x = 6 * Math.cos(u) * (1 + Math.sin(u)) + r * Math.cos(u) * Math.cos(v);
+              y = 16 * Math.sin(u) + r * Math.sin(u) * Math.cos(v);
+            } else {
+              x = 6 * Math.cos(u) * (1 + Math.sin(u)) + r * Math.cos(v + Math.PI);
+              y = 16 * Math.sin(u);
+            }
+            z = r * Math.sin(v);
+            x *= 0.08; y *= 0.08; z *= 0.08;
+          } else {
+            // Mobius
+            x = (1 + (v / 2) * Math.cos(u / 2)) * Math.cos(u);
+            y = (1 + (v / 2) * Math.cos(u / 2)) * Math.sin(u);
+            z = (v / 2) * Math.sin(u / 2);
+          }
+
+          // 3D Rotations
+          const cosA = Math.cos(A), sinA = Math.sin(A);
+          const cosB = Math.cos(B), sinB = Math.sin(B);
+          const cosC = Math.cos(C), sinC = Math.sin(C);
+
+          // Rotate X
+          let y1 = y * cosA - z * sinA;
+          let z1 = y * sinA + z * cosA;
+
+          // Rotate Y
+          let x2 = x * cosB + z1 * sinB;
+          let z2 = -x * sinB + z1 * cosB;
+
+          // Rotate Z
+          let x3 = x2 * cosC - y1 * sinC;
+          let y3 = x2 * sinC + y1 * cosC;
+
+          const zFinal = z2 + wDist;
+          if (zFinal <= 0) continue;
+
+          const ooz = 1 / zFinal;
+          const xp = Math.floor(cols / 2 + x3 * ooz * 35);
+          const yp = Math.floor(rows / 2 - y3 * ooz * 18);
+
+          if (xp >= 0 && xp < cols && yp >= 0 && yp < rows) {
+            const idx = xp + yp * cols;
+            if (ooz > zBuffer[idx]) {
+              zBuffer[idx] = ooz;
+              const lum = Math.max(0, Math.min(chars.length - 1, Math.floor((z2 + 1.5) * 4)));
+              buffer[idx] = chars[lum];
+            }
+          }
+        }
+      }
+
+      let output = "";
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          output += buffer[c + r * cols];
+        }
+        output += "\n";
+      }
+      screen.textContent = output;
+      requestAnimationFrame(renderFrame);
+    }
+    renderFrame();
+  
+</script>
+</head>
+<body>
+  <div class="header">
+    <h1>Canvas ASCII 3D Klein Quaternion Knot Visualizer</h1>
+    <p>4D-to-3D Parametric ASCII Shader Engine with Real-Time Quaternion Rotations</p>
+  </div>
+  <div class="wrapper">
+    <div class="render-box">
+      <pre id="asciiScreen"></pre>
+    </div>
+    <div class="controls">
+      <h2>⚙️ Geometry & Projection</h2>
+      <div class="ctrl-group">
+        <label>Topology Model</label>
+        <select id="modelSelect">
+          <option value="klein">4D Klein Bottle</option>
+          <option value="knot" selected>Quaternion (3,5) Torus Knot</option>
+          <option value="mobius">Möbius Strip</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label>Shader Palette</label>
+        <select id="paletteSelect">
+          <option value="matrix">Matrix Green</option>
+          <option value="cyber">Cyber Cyan</option>
+          <option value="amber">Amber Terminal</option>
+        </select>
+      </div>
+      <div class="ctrl-group">
+        <label>Rotation Speed</label>
+        <input type="range" id="speedSlider" min="0" max="3" step="0.1" value="1.0">
+      </div>
+      <div class="ctrl-group">
+        <label>4D Hyperplane Distance (W)</label>
+        <input type="range" id="wSlider" min="1" max="5" step="0.1" value="2.5">
+      </div>
+      <div class="ctrl-group">
+        <label>ASCII Resolution Grid</label>
+        <select id="gridSelect">
+          <option value="50x50">Standard (50x50)</option>
+          <option value="60x60" selected>High-Density (60x60)</option>
+        </select>
+      </div>
+      <button id="pauseBtn" class="btn">⏸ Pause Animation</button>
+    </div>
+  </div>
+
+  
+</body>
+</html>
