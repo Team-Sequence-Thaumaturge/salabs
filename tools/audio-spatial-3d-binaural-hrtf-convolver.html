@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Spatial Binaural HRTF Convolver Studio | Quanxs SA Labs</title>
+    <meta name="description" content="Professional 100% client-side 3D spatial binaural HRTF convolver studio using Web Audio API for immersive spatial acoustics.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "3D Spatial Binaural HRTF Convolver Studio",
+      "url": "https://salabs.quanxs.com/tools/audio-spatial-3d-binaural-hrtf-convolver.html",
+      "description": "Professional 100% client-side 3D spatial binaural HRTF convolver studio using Web Audio API for immersive spatial acoustics.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All"
+    }
+    </script>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --border-color: #1f2937;
+            --text-color: #f3f4f6;
+            --text-muted: #9ca3af;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --accent: #10b981;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #60a5fa, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .control-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary);
+        }
+        .val-display {
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-family: monospace;
+        }
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+        .btn-stop {
+            background-color: #ef4444;
+            color: white;
+        }
+        .btn-stop:hover {
+            background-color: #dc2626;
+        }
+        canvas {
+            width: 100%;
+            height: 180px;
+            background-color: #030712;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+        }
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 3rem;
+        }
+    </style>
+<script>
+
+        let audioCtx, osc, panner, gainNode, analyser;
+        let isPlaying = false;
+
+        const azimuth = document.getElementById('azimuth');
+        const elevation = document.getElementById('elevation');
+        const distance = document.getElementById('distance');
+        const frequency = document.getElementById('frequency');
+
+        const azimuthVal = document.getElementById('azimuthVal');
+        const elevationVal = document.getElementById('elevationVal');
+        const distanceVal = document.getElementById('distanceVal');
+        const freqVal = document.getElementById('freqVal');
+
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const canvas = document.getElementById('visualizerCanvas');
+        const canvasCtx = canvas.getContext('2d');
+
+        function updatePanner() {
+            if (!panner) return;
+            const azRad = (parseFloat(azimuth.value) * Math.PI) / 180;
+            const elRad = (parseFloat(elevation.value) * Math.PI) / 180;
+            const dist = parseFloat(distance.value);
+
+            const x = dist * Math.cos(elRad) * Math.sin(azRad);
+            const y = dist * Math.sin(elRad);
+            const z = -dist * Math.cos(elRad) * Math.cos(azRad);
+
+            if (panner.positionX) {
+                panner.positionX.setValueAtTime(x, audioCtx.currentTime);
+                panner.positionY.setValueAtTime(y, audioCtx.currentTime);
+                panner.positionZ.setValueAtTime(z, audioCtx.currentTime);
+            } else {
+                panner.setPosition(x, y, z);
+            }
+        }
+
+        azimuth.addEventListener('input', () => {
+            azimuthVal.textContent = azimuth.value + '°';
+            updatePanner();
+        });
+        elevation.addEventListener('input', () => {
+            elevationVal.textContent = elevation.value + '°';
+            updatePanner();
+        });
+        distance.addEventListener('input', () => {
+            distanceVal.textContent = distance.value + ' m';
+            updatePanner();
+        });
+        frequency.addEventListener('input', () => {
+            freqVal.textContent = frequency.value + ' Hz';
+            if (osc && audioCtx) {
+                osc.frequency.setValueAtTime(parseFloat(frequency.value), audioCtx.currentTime);
+            }
+        });
+
+        startBtn.addEventListener('click', () => {
+            if (isPlaying) return;
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            osc = audioCtx.createOscillator();
+            panner = audioCtx.createPanner();
+            gainNode = audioCtx.createGain();
+            analyser = audioCtx.createAnalyser();
+
+            panner.panningModel = 'HRTF';
+            panner.distanceModel = 'inverse';
+            panner.refDistance = 1;
+            panner.maxDistance = 10000;
+            panner.rolloffFactor = 1;
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(parseFloat(frequency.value), audioCtx.currentTime);
+
+            gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
+
+            osc.connect(panner);
+            panner.connect(gainNode);
+            gainNode.connect(analyser);
+            analyser.connect(audioCtx.destination);
+
+            updatePanner();
+            osc.start();
+            isPlaying = true;
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+            drawVisualizer();
+        });
+
+        stopBtn.addEventListener('click', () => {
+            if (!isPlaying) return;
+            osc.stop();
+            osc.disconnect();
+            audioCtx.close();
+            isPlaying = false;
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+        });
+
+        function drawVisualizer() {
+            if (!isPlaying) return;
+            requestAnimationFrame(drawVisualizer);
+
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            analyser.getByteFrequencyData(dataArray);
+
+            canvas.width = canvas.clientWidth;
+            canvas.height = canvas.clientHeight;
+            canvasCtx.fillStyle = '#030712';
+            canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const barWidth = (canvas.width / bufferLength) * 2.5;
+            let x = 0;
+
+            for (let i = 0; i < bufferLength; i++) {
+                const barHeight = (dataArray[i] / 255) * canvas.height;
+                canvasCtx.fillStyle = `hsl(${(i / bufferLength) * 200 + 120}, 80%, 50%)`;
+                canvasCtx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                x += barWidth + 1;
+            }
+        }
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>3D Spatial Binaural HRTF Convolver Studio</h1>
+            <p class="description">High-fidelity 3D spatial audio generator using Web Audio API HRTF convolver synthesis.</p>
+        </header>
+
+        <div class="card">
+            <div class="control-grid">
+                <div class="control-group">
+                    <label for="azimuth">Azimuth Angle: <span id="azimuthVal" class="val-display">0°</span></label>
+                    <input type="range" id="azimuth" min="-180" max="180" value="0">
+                </div>
+                <div class="control-group">
+                    <label for="elevation">Elevation Angle: <span id="elevationVal" class="val-display">0°</span></label>
+                    <input type="range" id="elevation" min="-90" max="90" value="0">
+                </div>
+                <div class="control-group">
+                    <label for="distance">Virtual Distance: <span id="distanceVal" class="val-display">1.0 m</span></label>
+                    <input type="range" id="distance" min="0.5" max="10.0" step="0.1" value="1.0">
+                </div>
+                <div class="control-group">
+                    <label for="frequency">Tone Frequency: <span id="freqVal" class="val-display">440 Hz</span></label>
+                    <input type="range" id="frequency" min="100" max="2000" step="10" value="440">
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button id="startBtn" class="btn-primary">Start 3D Audio Stream</button>
+                <button id="stopBtn" class="btn-stop" disabled>Stop</button>
+            </div>
+
+            <canvas id="visualizerCanvas"></canvas>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Quanxs SA Labs. 100% Pure Client-Side Web Engineering.</p>
+        </footer>
+    </div>
+
+    
+</body>
+</html>

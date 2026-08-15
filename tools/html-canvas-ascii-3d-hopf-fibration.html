@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D ASCII Hopf Fibration Renderer | Quanxs SA Labs</title>
+    <meta name="description" content="Interactive 100% client-side 3D ASCII Hopf Fibration topology simulation and matrix projection engine.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "3D ASCII Hopf Fibration Renderer",
+      "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-hopf-fibration.html",
+      "description": "Interactive 100% client-side 3D ASCII Hopf Fibration topology simulation and matrix projection engine.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All"
+    }
+    </script>
+    <style>
+        :root {
+            --bg-color: #050811;
+            --card-bg: #0d1322;
+            --border-color: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #8b5cf6;
+            --primary-hover: #7c3aed;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .description {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #asciiOutput {
+            background-color: #020617;
+            color: #38bdf8;
+            font-family: monospace;
+            font-size: 10px;
+            line-height: 10px;
+            letter-spacing: 2px;
+            white-space: pre;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            user-select: none;
+            width: 100%;
+            max-width: 600px;
+            height: 380px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: left;
+        }
+        label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary);
+        }
+        footer {
+            margin-top: 3rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+<script>
+
+        const asciiOutput = document.getElementById('asciiOutput');
+        const speed = document.getElementById('speed');
+        const circles = document.getElementById('circles');
+        const scale = document.getElementById('scale');
+
+        const speedVal = document.getElementById('speedVal');
+        const circlesVal = document.getElementById('circlesVal');
+        const scaleVal = document.getElementById('scaleVal');
+
+        speed.addEventListener('input', () => speedVal.textContent = speed.value + 'x');
+        circles.addEventListener('input', () => circlesVal.textContent = circles.value);
+        scale.addEventListener('input', () => scaleVal.textContent = scale.value);
+
+        let A = 0, B = 0;
+        const width = 64, height = 36;
+        const chars = " .:-=+*#%@";
+
+        function renderHopf() {
+            const b = new Array(width * height).fill(' ');
+            const zBuffer = new Array(width * height).fill(0);
+
+            const numFibers = parseInt(circles.value);
+            const userScale = parseFloat(scale.value);
+            const rotSpeed = parseFloat(speed.value);
+
+            A += 0.03 * rotSpeed;
+            B += 0.02 * rotSpeed;
+
+            const cosA = Math.cos(A), sinA = Math.sin(A);
+            const cosB = Math.cos(B), sinB = Math.sin(B);
+
+            for (let f = 0; f < numFibers; f++) {
+                const eta = (f / numFibers) * (Math.PI / 2);
+                const sinEta = Math.sin(eta), cosEta = Math.cos(eta);
+
+                for (let phi = 0; phi < Math.PI * 2; phi += 0.15) {
+                    const sinPhi = Math.sin(phi), cosPhi = Math.cos(phi);
+
+                    for (let xi = 0; xi < Math.PI * 2; xi += 0.1) {
+                        const sinXi = Math.sin(xi), cosXi = Math.cos(xi);
+
+                        // 4D Hopf circle point
+                        const x1 = cosEta * cosXi;
+                        const y1 = cosEta * sinXi;
+                        const x2 = sinEta * Math.cos(phi + xi);
+                        const y2 = sinEta * Math.sin(phi + xi);
+
+                        // Stereographic projection from 4D S³ to 3D R³
+                        const denom = 1.0 - y2 + 0.001;
+                        const x3 = (x1 / denom) * userScale;
+                        const y3 = (y1 / denom) * userScale;
+                        const z3 = (x2 / denom) * userScale;
+
+                        // 3D rotation
+                        const rx = x3 * cosB - z3 * sinB;
+                        const rz = x3 * sinB + z3 * cosB;
+                        const ry = y3 * cosA - rz * sinA;
+                        const rzFinal = y3 * sinA + rz * cosA + 3.5;
+
+                        const ooz = 1 / rzFinal;
+                        const xp = Math.floor(width / 2 + rx * ooz * 32);
+                        const yp = Math.floor(height / 2 + ry * ooz * 18);
+
+                        if (xp >= 0 && xp < width && yp >= 0 && yp < height) {
+                            const idx = xp + yp * width;
+                            if (ooz > zBuffer[idx]) {
+                                zBuffer[idx] = ooz;
+                                const charIdx = Math.floor(((rx + ry + rzFinal) * 2 + 10) % chars.length);
+                                b[idx] = chars[Math.max(0, Math.min(chars.length - 1, charIdx))];
+                            }
+                        }
+                    }
+                }
+            }
+
+            let result = "";
+            for (let row = 0; row < height; row++) {
+                result += b.slice(row * width, (row + 1) * width).join("") + "\n";
+            }
+            asciiOutput.textContent = result;
+            requestAnimationFrame(renderHopf);
+        }
+
+        renderHopf();
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <h1>3D ASCII Hopf Fibration Topology Engine</h1>
+        <p class="description">Real-time stereographic projection of S³ 4D sphere circles to 3D nested tori in pure ASCII characters.</p>
+
+        <div class="card">
+            <div id="asciiOutput">Generating topology...</div>
+            <div class="controls">
+                <div class="control-group">
+                    <label for="speed">Rotation Velocity: <span id="speedVal">1.0x</span></label>
+                    <input type="range" id="speed" min="0.1" max="3.0" step="0.1" value="1.0">
+                </div>
+                <div class="control-group">
+                    <label for="circles">Fibers Density: <span id="circlesVal">24</span></label>
+                    <input type="range" id="circles" min="8" max="48" step="4" value="24">
+                </div>
+                <div class="control-group">
+                    <label for="scale">Scale: <span id="scaleVal">1.0</span></label>
+                    <input type="range" id="scale" min="0.5" max="2.0" step="0.1" value="1.0">
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 Quanxs SA Labs. High-Precision Mathematical Computing.</p>
+        </footer>
+    </div>
+
+    
+</body>
+</html>
