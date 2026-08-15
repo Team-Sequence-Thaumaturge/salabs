@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Formant Spectral Envelope Morpher | Quanxs SA Labs</title>
+    <meta name="description" content="Web Audio API 기반 실시간 포먼트 필터 뱅크 및 스펙트럼 인벨로프 모퍼 스튜디오">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Audio Formant Spectral Envelope Morpher",
+      "url": "https://salabs.quanxs.com/tools/audio-formant-spectral-envelope-morpher.html",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card-bg: #161b22;
+            --accent: #58a6ff;
+            --accent-glow: rgba(88, 166, 255, 0.3);
+            --border: #30363d;
+            --text: #c9d1d9;
+            --text-bright: #f0f6fc;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace; }
+        body { background: var(--bg); color: var(--text); padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .container { max-width: 900px; width: 100%; }
+        header { margin-bottom: 24px; text-align: center; }
+        h1 { color: var(--text-bright); font-size: 1.8rem; margin-bottom: 8px; }
+        p.subtitle { color: #8b949e; font-size: 0.95rem; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+        .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 20px; }
+        .control-group { display: flex; flex-direction: column; gap: 8px; }
+        label { font-size: 0.85rem; color: #8b949e; font-weight: 600; text-transform: uppercase; }
+        input[type="range"] { accent-color: var(--accent); cursor: pointer; }
+        .btn-group { display: flex; gap: 12px; margin-top: 12px; }
+        button { background: var(--accent); color: #0d1117; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        button:hover { box-shadow: 0 0 12px var(--accent-glow); opacity: 0.9; }
+        button.stop { background: #f85149; color: white; }
+        canvas { width: 100%; height: 200px; background: #010409; border: 1px solid var(--border); border-radius: 8px; }
+        .val-badge { color: var(--accent); float: right; font-family: monospace; }
+        footer { margin-top: auto; font-size: 0.8rem; color: #484f58; text-align: center; padding: 20px 0; }
+    </style>
+<script>
+
+let audioCtx = null;
+let osc = null;
+let f1 = null, f2 = null, f3 = null;
+let analyser = null;
+let animId = null;
+
+const startBtn = document.getElementById('startBtn');
+const stopBtn = document.getElementById('stopBtn');
+const canvas = document.getElementById('scopeCanvas');
+const ctx = canvas.getContext('2d');
+
+function initAudio() {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    osc = audioCtx.createOscillator();
+    osc.type = 'sawtooth';
+    osc.frequency.value = parseFloat(document.getElementById('f0Slider').value);
+
+    f1 = audioCtx.createBiquadFilter();
+    f1.type = 'bandpass';
+    f1.Q.value = 5.0;
+    f1.frequency.value = parseFloat(document.getElementById('f1Slider').value);
+
+    f2 = audioCtx.createBiquadFilter();
+    f2.type = 'bandpass';
+    f2.Q.value = 6.0;
+    f2.frequency.value = parseFloat(document.getElementById('f2Slider').value);
+
+    f3 = audioCtx.createBiquadFilter();
+    f3.type = 'bandpass';
+    f3.Q.value = 7.0;
+    f3.frequency.value = parseFloat(document.getElementById('f3Slider').value);
+
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 1024;
+
+    const merger = audioCtx.createGain();
+    merger.gain.value = 0.33;
+
+    osc.connect(f1);
+    osc.connect(f2);
+    osc.connect(f3);
+
+    f1.connect(merger);
+    f2.connect(merger);
+    f3.connect(merger);
+
+    merger.connect(analyser);
+    analyser.connect(audioCtx.destination);
+
+    osc.start();
+    drawScope();
+}
+
+function drawScope() {
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    
+    function render() {
+        animId = requestAnimationFrame(render);
+        analyser.getByteFrequencyData(dataArray);
+        ctx.fillStyle = '#010409';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#58a6ff';
+        ctx.beginPath();
+        const sliceWidth = canvas.width / (bufferLength / 2);
+        let x = 0;
+        for (let i = 0; i < bufferLength / 2; i++) {
+            const v = dataArray[i] / 255.0;
+            const y = canvas.height - (v * canvas.height);
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+            x += sliceWidth;
+        }
+        ctx.stroke();
+    }
+    render();
+}
+
+startBtn.addEventListener('click', () => {
+    if (!audioCtx) initAudio();
+    else if (audioCtx.state === 'suspended') audioCtx.resume();
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+});
+
+stopBtn.addEventListener('click', () => {
+    if (audioCtx) {
+        audioCtx.close();
+        audioCtx = null;
+        cancelAnimationFrame(animId);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+});
+
+document.getElementById('f0Slider').addEventListener('input', (e) => {
+    document.getElementById('f0Val').textContent = e.target.value + ' Hz';
+    if (osc) osc.frequency.setTargetAtTime(e.target.value, audioCtx.currentTime, 0.05);
+});
+document.getElementById('f1Slider').addEventListener('input', (e) => {
+    document.getElementById('f1Val').textContent = e.target.value + ' Hz';
+    if (f1) f1.frequency.setTargetAtTime(e.target.value, audioCtx.currentTime, 0.05);
+});
+document.getElementById('f2Slider').addEventListener('input', (e) => {
+    document.getElementById('f2Val').textContent = e.target.value + ' Hz';
+    if (f2) f2.frequency.setTargetAtTime(e.target.value, audioCtx.currentTime, 0.05);
+});
+document.getElementById('f3Slider').addEventListener('input', (e) => {
+    document.getElementById('f3Val').textContent = e.target.value + ' Hz';
+    if (f3) f3.frequency.setTargetAtTime(e.target.value, audioCtx.currentTime, 0.05);
+});
+
+function morph(f1T, f2T, f3T) {
+    if (!f1 || !audioCtx) return;
+    const now = audioCtx.currentTime;
+    f1.frequency.setTargetAtTime(f1T, now, 0.15);
+    f2.frequency.setTargetAtTime(f2T, now, 0.15);
+    f3.frequency.setTargetAtTime(f3T, now, 0.15);
+    document.getElementById('f1Slider').value = f1T;
+    document.getElementById('f2Slider').value = f2T;
+    document.getElementById('f3Slider').value = f3T;
+    document.getElementById('f1Val').textContent = f1T + ' Hz';
+    document.getElementById('f2Val').textContent = f2T + ' Hz';
+    document.getElementById('f3Val').textContent = f3T + ' Hz';
+}
+document.getElementById('vowelA').addEventListener('click', () => morph(800, 1200, 2500));
+document.getElementById('vowelI').addEventListener('click', () => morph(280, 2250, 2900));
+document.getElementById('vowelU').addEventListener('click', () => morph(300, 870, 2250));
+
+</script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Audio Formant Spectral Envelope Morpher</h1>
+        <p class="subtitle">Web Audio API 5-Band Formant Filter Cascade & Real-Time Envelope Visualizer</p>
+    </header>
+    <div class="card">
+        <canvas id="scopeCanvas"></canvas>
+        <div class="btn-group">
+            <button id="startBtn">▶ Start Synthesizer</button>
+            <button id="stopBtn" class="stop" disabled>■ Stop</button>
+            <button id="vowelA">Morph /a/</button>
+            <button id="vowelI">Morph /i/</button>
+            <button id="vowelU">Morph /u/</button>
+        </div>
+    </div>
+    <div class="card">
+        <div class="controls">
+            <div class="control-group">
+                <label>Fundamental (F0): <span id="f0Val" class="val-badge">120 Hz</span></label>
+                <input type="range" id="f0Slider" min="50" max="440" value="120">
+            </div>
+            <div class="control-group">
+                <label>Formant 1 (F1): <span id="f1Val" class="val-badge">700 Hz</span></label>
+                <input type="range" id="f1Slider" min="200" max="1200" value="700">
+            </div>
+            <div class="control-group">
+                <label>Formant 2 (F2): <span id="f2Val" class="val-badge">1200 Hz</span></label>
+                <input type="range" id="f2Slider" min="600" max="3000" value="1200">
+            </div>
+            <div class="control-group">
+                <label>Formant 3 (F3): <span id="f3Val" class="val-badge">2600 Hz</span></label>
+                <input type="range" id="f3Slider" min="1500" max="4000" value="2600">
+            </div>
+        </div>
+    </div>
+</div>
+<footer>Quanxs SA Labs &copy; 2026. All Rights Reserved. Client-Side Pure JavaScript Engine.</footer>
+
+</body>
+</html>

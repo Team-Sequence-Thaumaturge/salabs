@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas ASCII 3D Klein Bottle Raymarcher | Quanxs SA Labs</title>
+    <meta name="description" content="순수 브라우저 HTML5 Canvas 4차원 클라인 병 ASCII 3D 투영 회전 렌더러">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Canvas ASCII 3D Klein Bottle Raymarcher",
+      "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-klein-bottle-raymarcher.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --bg: #090d13;
+            --card-bg: #121820;
+            --accent: #39d353;
+            --border: #21262d;
+            --text: #8b949e;
+            --text-bright: #58a6ff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Courier New", Courier, monospace; }
+        body { background: var(--bg); color: var(--text); padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .container { max-width: 850px; width: 100%; }
+        header { text-align: center; margin-bottom: 20px; }
+        h1 { color: #f0f6fc; font-size: 1.6rem; margin-bottom: 6px; }
+        .viewport { background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 12px; display: flex; justify-content: center; align-items: center; min-height: 380px; box-shadow: 0 0 20px rgba(0,0,0,0.8); }
+        pre { font-size: 10px; line-height: 10px; color: var(--accent); white-space: pre; font-weight: bold; }
+        .controls { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+        .ctrl { display: flex; flex-direction: column; gap: 6px; }
+        label { font-size: 0.8rem; color: #c9d1d9; }
+        input[type="range"] { accent-color: var(--accent); }
+        footer { margin-top: auto; font-size: 0.75rem; color: #484f58; text-align: center; padding: 24px 0; }
+    </style>
+<script>
+
+const screen = document.getElementById('asciiScreen');
+let A = 0, B = 0;
+const chars = " .,:;i1tfLCG08@";
+
+function renderKlein() {
+    const width = 64, height = 36;
+    const zBuffer = new Array(width * height).fill(0);
+    const b = new Array(width * height).fill(' ');
+    
+    const density = parseInt(document.getElementById('density').value);
+    const step = Math.PI * 2 / density;
+
+    for (let u = 0; u < Math.PI * 2; u += step) {
+        for (let v = 0; v < Math.PI * 2; v += step) {
+            // Klein bottle parametric equations
+            let r = 4 * (1 - Math.cos(u) / 2);
+            let x, y, z;
+            if (u < Math.PI) {
+                x = 6 * Math.cos(u) * (1 + Math.sin(u)) + r * Math.cos(u) * Math.cos(v);
+                y = 16 * Math.sin(u) + r * Math.sin(u) * Math.cos(v);
+            } else {
+                x = 6 * Math.cos(u) * (1 + Math.sin(u)) + r * Math.cos(v + Math.PI);
+                y = 16 * Math.sin(u);
+            }
+            z = r * Math.sin(v);
+
+            // Scale down
+            x *= 0.15; y *= 0.15; z *= 0.15;
+
+            // Rotation
+            let cosA = Math.cos(A), sinA = Math.sin(A);
+            let cosB = Math.cos(B), sinB = Math.sin(B);
+
+            let y1 = y * cosA - z * sinA;
+            let z1 = y * sinA + z * cosA;
+
+            let x2 = x * cosB + z1 * sinB;
+            let z2 = -x * sinB + z1 * cosB;
+
+            let ooz = 1 / (z2 + 8.0);
+            let xp = Math.floor(width / 2 + 35 * x2 * ooz);
+            let yp = Math.floor(height / 2 - 18 * y1 * ooz);
+
+            let luminance = Math.floor((z2 + 3.0) * 2.0);
+            if (luminance < 0) luminance = 0;
+            if (luminance >= chars.length) luminance = chars.length - 1;
+
+            if (xp >= 0 && xp < width && yp >= 0 && yp < height) {
+                let idx = xp + yp * width;
+                if (ooz > zBuffer[idx]) {
+                    zBuffer[idx] = ooz;
+                    b[idx] = chars[luminance];
+                }
+            }
+        }
+    }
+
+    let out = "";
+    for (let k = 0; k < width * height; k++) {
+        out += (k % width === width - 1) ? b[k] + "\n" : b[k];
+    }
+    screen.textContent = out;
+
+    A += parseInt(document.getElementById('speedX').value) * 0.001;
+    B += parseInt(document.getElementById('speedY').value) * 0.001;
+    requestAnimationFrame(renderKlein);
+}
+renderKlein();
+
+</script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>ASCII 3D Klein Bottle Raymarcher</h1>
+        <p>Real-Time 4D Non-Orientable Surface Ray Projection in Pure ASCII</p>
+    </header>
+    <div class="viewport">
+        <pre id="asciiScreen"></pre>
+    </div>
+    <div class="controls">
+        <div class="ctrl">
+            <label>Rotation Speed X</label>
+            <input type="range" id="speedX" min="0" max="50" value="15">
+        </div>
+        <div class="ctrl">
+            <label>Rotation Speed Y</label>
+            <input type="range" id="speedY" min="0" max="50" value="20">
+        </div>
+        <div class="ctrl">
+            <label>Density / Sampling</label>
+            <input type="range" id="density" min="20" max="80" value="45">
+        </div>
+    </div>
+</div>
+<footer>Quanxs SA Labs &copy; 2026. 100% Client-Side Pure JavaScript Engine.</footer>
+
+</body>
+</html>
