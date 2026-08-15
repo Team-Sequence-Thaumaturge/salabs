@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Binaural Room Impulse & Acoustic Simulator | Quanxs SA Labs</title>
+  <meta name="description" content="Simulate real-time 3D binaural room acoustics, wall reflections, and reverberant spatial impulse responses directly in your browser using the Web Audio API.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "3D Binaural Room Acoustic Simulator",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-3d-binaural-room-simulator.html",
+    "description": "High-fidelity 3D spatial acoustics and room impulse response simulator running purely on client-side Web Audio API.",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "All"
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --accent: #58a6ff;
+      --accent-hover: #79c0ff;
+      --success: #3fb950;
+      --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      padding: 24px;
+      line-height: 1.6;
+    }
+    .container { max-width: 960px; margin: 0 auto; }
+    header { margin-bottom: 24px; text-align: center; }
+    header h1 { font-size: 1.8rem; color: #f0f6fc; margin-bottom: 8px; }
+    header p { color: #8b949e; font-size: 0.95rem; }
+    .card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      background: #090d13;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    canvas { width: 100%; height: 100%; display: block; }
+    .control-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .control-item { display: flex; flex-direction: column; gap: 6px; }
+    label { font-size: 0.85rem; color: #8b949e; font-weight: 500; }
+    input[type="range"] { accent-color: var(--accent); }
+    .btn-group { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+    button {
+      background-color: #21262d;
+      color: #c9d1d9;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    button:hover { background-color: #30363d; border-color: #8b949e; }
+    button.primary { background-color: #238636; color: #fff; border-color: rgba(240,246,252,0.1); }
+    button.primary:hover { background-color: #2ea043; }
+    .stat-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      background: rgba(88, 166, 255, 0.15);
+      color: var(--accent);
+    }
+  </style>
+<script>
+
+    let audioCtx = null;
+    let osc = null;
+    let panner = null;
+    let convolver = null;
+    let gainNode = null;
+    let isPlaying = false;
+
+    const canvas = document.getElementById('roomCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let listenerPos = { x: 0.5, y: 0.6 };
+    let sourcePos = { x: 0.3, y: 0.3 };
+    let dragging = null;
+
+    function resize() {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+      draw();
+    }
+    window.addEventListener('resize', resize);
+
+    function createImpulseResponse(duration, decay) {
+      if (!audioCtx) return null;
+      const rate = audioCtx.sampleRate;
+      const length = rate * duration;
+      const impulse = audioCtx.createBuffer(2, length, rate);
+      const left = impulse.getChannelData(0);
+      const right = impulse.getChannelData(1);
+
+      for (let i = 0; i < length; i++) {
+        const t = i / rate;
+        const env = Math.exp(-t * (3.0 / decay));
+        left[i] = (Math.random() * 2 - 1) * env;
+        right[i] = (Math.random() * 2 - 1) * env;
+      }
+      return impulse;
+    }
+
+    function initAudio() {
+      if (audioCtx) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      
+      panner = audioCtx.createPanner();
+      panner.panningModel = 'HRTF';
+      panner.distanceModel = 'inverse';
+      panner.refDistance = 1;
+      panner.maxDistance = 10000;
+      panner.rolloffFactor = 1;
+
+      convolver = audioCtx.createConvolver();
+      convolver.buffer = createImpulseResponse(2.0, 2.0);
+
+      gainNode = audioCtx.createGain();
+      gainNode.gain.value = 0.15;
+
+      panner.connect(convolver);
+      convolver.connect(audioCtx.destination);
+      panner.connect(audioCtx.destination);
+    }
+
+    function updatePanner() {
+      if (!panner || !audioCtx) return;
+      const roomMeters = parseFloat(document.getElementById('roomSize').value);
+      const px = (sourcePos.x - listenerPos.x) * roomMeters;
+      const py = (sourcePos.y - listenerPos.y) * roomMeters;
+      panner.positionX.setValueAtTime(px, audioCtx.currentTime);
+      panner.positionZ.setValueAtTime(py, audioCtx.currentTime);
+      panner.positionY.setValueAtTime(0, audioCtx.currentTime);
+    }
+
+    document.getElementById('togglePlay').addEventListener('click', () => {
+      initAudio();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      if (!isPlaying) {
+        osc = audioCtx.createOscillator();
+        osc.type = document.getElementById('oscType').value;
+        osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+        osc.connect(gainNode);
+        gainNode.connect(panner);
+        osc.start();
+        isPlaying = true;
+        document.getElementById('togglePlay').textContent = '⏹ Stop Audio Engine';
+        document.getElementById('togglePlay').classList.remove('primary');
+      } else {
+        if (osc) { osc.stop(); osc.disconnect(); osc = null; }
+        isPlaying = false;
+        document.getElementById('togglePlay').textContent = '▶ Start Audio Engine';
+        document.getElementById('togglePlay').classList.add('primary');
+      }
+    });
+
+    document.getElementById('pulseBtn').addEventListener('click', () => {
+      initAudio();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const pOsc = audioCtx.createOscillator();
+      const pGain = audioCtx.createGain();
+      pOsc.frequency.setValueAtTime(880, audioCtx.currentTime);
+      pOsc.frequency.exponentialRampToValueAtTime(110, audioCtx.currentTime + 0.15);
+      pGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      pGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+      pOsc.connect(pGain);
+      pGain.connect(panner);
+      pOsc.start();
+      pOsc.stop(audioCtx.currentTime + 0.2);
+    });
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = '#21262d';
+      ctx.lineWidth = 1;
+      const step = 20;
+      for (let x = 0; x < canvas.width; x += step) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      }
+      for (let y = 0; y < canvas.height; y += step) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
+
+      // Listener
+      const lx = listenerPos.x * canvas.width;
+      const ly = listenerPos.y * canvas.height;
+      ctx.fillStyle = '#58a6ff';
+      ctx.beginPath(); ctx.arc(lx, ly, 12, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#f0f6fc';
+      ctx.font = '11px sans-serif';
+      ctx.fillText('Listener (HRTF)', lx - 36, ly - 16);
+
+      // Source
+      const sx = sourcePos.x * canvas.width;
+      const sy = sourcePos.y * canvas.height;
+      ctx.fillStyle = '#3fb950';
+      ctx.beginPath(); ctx.arc(sx, sy, 10, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#f0f6fc';
+      ctx.fillText('Source (Drag)', sx - 32, sy - 14);
+
+      // Distance line
+      ctx.strokeStyle = 'rgba(88, 166, 255, 0.4)';
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(sx, sy); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    canvas.addEventListener('mousedown', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / canvas.width;
+      const y = (e.clientY - rect.top) / canvas.height;
+      const dL = Math.hypot(x - listenerPos.x, y - listenerPos.y);
+      const dS = Math.hypot(x - sourcePos.x, y - sourcePos.y);
+      if (dL < 0.08) dragging = 'listener';
+      else if (dS < 0.08) dragging = 'source';
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!dragging) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = Math.max(0.05, Math.min(0.95, (e.clientX - rect.left) / canvas.width));
+      const y = Math.max(0.05, Math.min(0.95, (e.clientY - rect.top) / canvas.height));
+      if (dragging === 'listener') listenerPos = { x, y };
+      if (dragging === 'source') sourcePos = { x, y };
+      updatePanner();
+      draw();
+    });
+
+    window.addEventListener('mouseup', () => { dragging = null; });
+    document.getElementById('resetPos').addEventListener('click', () => {
+      listenerPos = { x: 0.5, y: 0.6 };
+      sourcePos = { x: 0.3, y: 0.3 };
+      updatePanner();
+      draw();
+    });
+
+    resize();
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>3D Binaural Room Impulse Simulator</h1>
+      <p>Interact with real-time early reflections and spatial reverberation using Web Audio Panner & Convolver nodes.</p>
+    </header>
+
+    <div class="card">
+      <div class="canvas-container">
+        <canvas id="roomCanvas"></canvas>
+      </div>
+
+      <div class="control-grid">
+        <div class="control-item">
+          <label>Sound Source (Oscillator Type)</label>
+          <select id="oscType" style="background:#0d1117; color:#c9d1d9; border:1px solid #30363d; padding:6px; border-radius:4px;">
+            <option value="sine">Pure Sine Tone</option>
+            <option value="sawtooth">Sawtooth Synth</option>
+            <option value="triangle">Triangle Wave</option>
+            <option value="noise">Pink Noise Burst</option>
+          </select>
+        </div>
+        <div class="control-item">
+          <label>Room Damping / Material: <span id="dampVal" class="stat-badge">0.5</span></label>
+          <input type="range" id="damping" min="0.1" max="0.95" step="0.05" value="0.5">
+        </div>
+        <div class="control-item">
+          <label>Room Size (Meters): <span id="sizeVal" class="stat-badge">12m x 8m</span></label>
+          <input type="range" id="roomSize" min="6" max="30" step="2" value="12">
+        </div>
+        <div class="control-item">
+          <label>Reverb Tail Decay (sec): <span id="decayVal" class="stat-badge">2.0s</span></label>
+          <input type="range" id="decay" min="0.5" max="5.0" step="0.25" value="2.0">
+        </div>
+      </div>
+
+      <div class="btn-group">
+        <button id="togglePlay" class="primary">▶ Start Audio Engine</button>
+        <button id="pulseBtn">⚡ Emit Impulse Ping</button>
+        <button id="resetPos">↺ Center Positions</button>
+      </div>
+    </div>
+  </div>
+
+  
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASCII 3D/4D Klein Bottle Knot Studio | Quanxs SA Labs</title>
+  <meta name="description" content="Real-time interactive 3D/4D ASCII Klein Bottle parametric wireframe renderer running client-side with full matrix rotation and perspective projection.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ASCII 3D Klein Bottle Knot Studio",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-klein-bottle-knot.html",
+    "description": "Interactive pure client-side mathematical 4D/3D Klein Bottle ASCII surface renderer with realtime rotation controls.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All"
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #090d13;
+      --card: #151b23;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --accent: #58a6ff;
+      --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 24px;
+      line-height: 1.5;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 20px; }
+    header h1 { font-size: 1.7rem; color: #f0f6fc; margin-bottom: 6px; }
+    header p { color: #8b949e; font-size: 0.9rem; }
+    .display-card {
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    pre {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      line-height: 9px;
+      color: #388bfd;
+      user-select: none;
+      white-space: pre;
+    }
+    .controls {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+    .control-item { display: flex; flex-direction: column; gap: 6px; }
+    label { font-size: 0.8rem; color: #8b949e; font-weight: 600; }
+    input[type="range"] { accent-color: var(--accent); }
+    .btn-row { margin-top: 12px; display: flex; gap: 8px; }
+    button {
+      background: #21262d;
+      color: #c9d1d9;
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    button:hover { background: #30363d; }
+  </style>
+<script>
+
+    const screen = document.getElementById('asciiScreen');
+    const W = 70;
+    const H = 36;
+    let A = 0, B = 0;
+
+    const charSets = {
+      dense: " .:-=+*#%@",
+      dots: " .:;*#",
+      matrix: " .01░▒▓█"
+    };
+
+    function render() {
+      const zBuffer = new Array(W * H).fill(0);
+      const bBuffer = new Array(W * H).fill(' ');
+      const chars = charSets[document.getElementById('charSet').value];
+      const scale = parseFloat(document.getElementById('scale').value);
+
+      const cosA = Math.cos(A), sinA = Math.sin(A);
+      const cosB = Math.cos(B), sinB = Math.sin(B);
+
+      for (let u = 0; u < Math.PI * 2; u += 0.12) {
+        for (let v = 0; v < Math.PI * 2; v += 0.12) {
+          const r = 4 * (1 - Math.cos(u) / 2);
+          let x, y, z;
+          if (u < Math.PI) {
+            x = 6 * Math.cos(u) * (1 + Math.sin(u)) + r * Math.cos(u) * Math.cos(v);
+            y = 16 * Math.sin(u) + r * Math.sin(u) * Math.cos(v);
+          } else {
+            x = 6 * Math.cos(u) * (1 + Math.sin(u)) + r * Math.cos(v + Math.PI);
+            y = 16 * Math.sin(u);
+          }
+          z = r * Math.sin(v);
+
+          // Rotate
+          const y1 = y * cosA - z * sinA;
+          const z1 = y * sinA + z * cosA;
+          const x2 = x * cosB + z1 * sinB;
+          const z2 = -x * sinB + z1 * cosB;
+
+          const ooz = 1 / (z2 + 45);
+          const xp = Math.floor(W / 2 + scale * ooz * x2 * 1.8);
+          const yp = Math.floor(H / 2 - scale * ooz * y1);
+
+          if (xp >= 0 && xp < W && yp >= 0 && yp < H) {
+            const idx = xp + yp * W;
+            if (ooz > zBuffer[idx]) {
+              zBuffer[idx] = ooz;
+              const luminance = Math.max(0, Math.min(chars.length - 1, Math.floor((z2 + 20) / 40 * chars.length)));
+              bBuffer[idx] = chars[luminance] || chars[0];
+            }
+          }
+        }
+      }
+
+      let out = "";
+      for (let i = 0; i < bBuffer.length; i++) {
+        out += bBuffer[i];
+        if ((i + 1) % W === 0) out += "\n";
+      }
+      screen.textContent = out;
+
+      A += parseFloat(document.getElementById('speedX').value);
+      B += parseFloat(document.getElementById('speedY').value);
+      requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>ASCII 3D/4D Klein Bottle Knot Studio</h1>
+      <p>Parametric non-orientable surface projected in ASCII character density matrix.</p>
+    </header>
+
+    <div class="display-card">
+      <pre id="asciiScreen"></pre>
+    </div>
+
+    <div class="controls">
+      <div class="control-item">
+        <label>Rotation Speed X</label>
+        <input type="range" id="speedX" min="-0.05" max="0.05" step="0.005" value="0.01">
+      </div>
+      <div class="control-item">
+        <label>Rotation Speed Y</label>
+        <input type="range" id="speedY" min="-0.05" max="0.05" step="0.005" value="0.015">
+      </div>
+      <div class="control-item">
+        <label>Shading Gradient</label>
+        <select id="charSet" style="background:#090d13; color:#c9d1d9; border:1px solid #30363d; padding:6px; border-radius:4px;">
+          <option value="dense">Dense: .:-=+*#%@</option>
+          <option value="dots">Dots Only: ·:;*#</option>
+          <option value="matrix">Matrix: 01░▒▓█</option>
+        </select>
+      </div>
+      <div class="control-item">
+        <label>Surface Scale</label>
+        <input type="range" id="scale" min="15" max="40" step="1" value="26">
+      </div>
+    </div>
+  </div>
+
+  
+</body>
+</html>
