@@ -101,3 +101,13 @@ Google Jules must execute **Phase 16: Build Next-Gen AST Node Tree Parser & Dual
   - **Cross-Verification Input**: Original User Prompt + AST Structural Feature Matrix + Generated Code.
   - **Semantic Intent Validation**: Audit whether the generated code fulfills 100% of user business logic or silently stubbed out endpoints (`SCOPE_REDUCTION`).
   - **Zero Self-Bias Guarantee**: Ensure independent dual-LLM cross-verification before approving any PR or live release!
+
+## 🔍 Phase 18: Static DOM-Event Target Mismatch Parser & Relay (v1.1)
+- Introduces `DOM_ID_DEF` capturing dynamically from `id="..."` declarations.
+- Extends Phase 2 Backward parse to capture `DOM_EVENT_TARGET_REF` from strings inside inline events like `onclick="..."`.
+- Dynamically audits and prevents **`EVENT_TARGET_MISMATCH`** where JS event calls target non-existent HTML IDs.
+
+## 🧬 Phase 19: State Lifecycle & Cascade Mutation Graph (v2.0)
+- **Cascade Graph:** Tracks Root State to Sub State dependency propagations via AST.
+- **Blind Interceptor Detection:** Flags UI/DOM writes (`innerHTML`, `style`) occurring inside functions that never read from a master state context (`BLIND_INTERCEPTOR`), preventing untracked state mutations.
+- **Temporal Lifecycle Lock:** Analyzes the global boot timeline to detect Data Races where render/update calls occur sequentially before initialization/boot calls (`TEMPORAL_LIFECYCLE_LOCK`).

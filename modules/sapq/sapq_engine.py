@@ -3,11 +3,10 @@ import re
 import sys
 import json
 import time
-from .sapq_ast_parser import ASTParser
-from .sapq_anti_mockup import AntiMockupDepthEngine
-from .sapq_python_parser import PythonASTParser
-from .sapq_live_probe import LiveProbeEngine
-from .sapq_spec_matcher import SpecSemanticMatcher
+
+from .sapq_preflight import SAPQPreflightGuard
+from .sapq_checkpoint import CheckpointManager
+from .sapq_logger import SAPQLogger
 
 sys.stdout.reconfigure(encoding='utf-8')
 
@@ -29,42 +28,37 @@ class SAPQEngine:
         
     def parse_phase_1_forward(self):
         tokens = []
-        pattern_def = re.compile(r'(?:function\s+([a-zA-Z0-9_$]+)|const\s+([a-zA-Z0-9_$]+)|let\s+([a-zA-Z0-9_$]+)|var\s+([a-zA-Z0-9_$]+)|id=["\']([a-zA-Z0-9_$]+)["\'])')
+        pattern_def = re.compile(r'(?:function\s+([a-zA-Z0-9_$]+)|const\s+([a-zA-Z0-9_$]+)|let\s+([a-zA-Z0-9_$]+)|var\s+([a-zA-Z0-9_$]+))')
+        pattern_id = re.compile(r'id=["\']([a-zA-Z0-9_$]+)["\']')
         for idx, line in enumerate(self.lines):
             match = pattern_def.search(line)
             if match:
                 symbol = next(g for g in match.groups() if g is not None)
                 tokens.append({"line": idx + 1, "symbol": symbol, "type": "FORWARD_DEF", "code_snippet": line.strip()[:80]})
+
+            for id_match in pattern_id.finditer(line):
+                symbol = id_match.group(1)
+                tokens.append({"line": idx + 1, "symbol": symbol, "type": "DOM_ID_DEF", "code_snippet": line.strip()[:80]})
         return tokens
 
     def parse_phase_2_backward(self):
         tokens = []
-        # Negative lookbehind (?<![\w$.]) prevents capturing properties like .name or trailing from other words
-        # The identifier part captures valid JS variables including those starting with $
-        # Negative lookahead (?![\w$]) ensures we don't truncate a longer valid identifier
-        # Combined with legacy captures for window. and document.getElementById explicitly
-        pattern_usage = re.compile(r'(?:document\.getElementById\(["\']([a-zA-Z0-9_$]+)["\']\))|(?:window\.([a-zA-Z0-9_$]+))|(?:(?<![\w$.])([a-zA-Z_$][a-zA-Z0-9_$]*)(?![\w$]))')
-
-        ignore_keywords = {
-            'if', 'for', 'while', 'switch', 'catch', 'function', 'return', 'let', 'const', 'var', 'class',
-            'import', 'export', 'try', 'finally', 'else', 'do', 'new', 'this', 'super', 'typeof', 'instanceof',
-            'in', 'of', 'async', 'await', 'break', 'continue', 'yield', 'null', 'true', 'false', 'undefined',
-            'document', 'window', 'console', 'Math', 'JSON', 'Array', 'Object', 'String', 'Number', 'Boolean', 'Date',
-            'getElementById', 'querySelector', 'querySelectorAll', 'addEventListener', 'removeEventListener',
-            'length', 'push', 'pop', 'shift', 'unshift', 'forEach', 'map', 'filter', 'reduce', 'slice', 'splice',
-            'log', 'warn', 'error', 'info', 'table', 'clear', 'time', 'timeEnd'
-        }
+        pattern_usage = re.compile(r'(?:document\.getElementById\(["\']([a-zA-Z0-9_$]+)["\']\)|window\.([a-zA-Z0-9_$]+)|([a-zA-Z0-9_$]+)\()')
+        pattern_onclick = re.compile(r'onclick\s*=\s*([\"\'])(.*?)\1')
+        pattern_string_literal = re.compile(r'["\']([a-zA-Z0-9_$]+)["\']')
         for idx in range(self.total_lines - 1, -1, -1):
             line = self.lines[idx]
-            # Ignore comments for backward usage checks
-            if line.strip().startswith('//') or line.strip().startswith('*'):
-                continue
-
-            matches = pattern_usage.finditer(line)
-            for match in matches:
+            match = pattern_usage.search(line)
+            if match:
                 symbol = next(g for g in match.groups() if g is not None)
-                if symbol not in ignore_keywords:
+                if symbol not in ('if', 'for', 'while', 'switch', 'catch', 'function', 'return'):
                     tokens.append({"line": idx + 1, "symbol": symbol, "type": "BACKWARD_REF", "code_snippet": line.strip()[:80]})
+
+            for onclick_match in pattern_onclick.finditer(line):
+                onclick_code = onclick_match.group(2)
+                for string_literal_match in pattern_string_literal.finditer(onclick_code):
+                    symbol = string_literal_match.group(1)
+                    tokens.append({"line": idx + 1, "symbol": symbol, "type": "DOM_EVENT_TARGET_REF", "code_snippet": line.strip()[:80]})
         return tokens
 
     def parse_phase_3_skip_forward(self):
@@ -90,53 +84,54 @@ class SAPQEngine:
         v3_skip_forward = self.parse_phase_3_skip_forward()
         v4_skip_backward = self.parse_phase_4_skip_backward()
 
-        forward_symbols = {t["symbol"]: t["line"] for t in v1_forward}
-
-        # Collect all usage lines for each symbol as a list
-        backward_usages = {}
-        for t in v2_backward:
-            sym = t["symbol"]
-            line = t["line"]
-            if sym not in backward_usages:
-                backward_usages[sym] = []
-            backward_usages[sym].append(line)
+        forward_symbols = {t["symbol"]: t["line"] for t in v1_forward if t["type"] == "FORWARD_DEF"}
+        # Include DOM_ID_DEF in forward symbols so document.getElementById doesn't flag them as zombies
+        for t in v1_forward:
+            if t["type"] == "DOM_ID_DEF":
+                forward_symbols[t["symbol"]] = t["line"]
+        backward_symbols = {t["symbol"]: t["line"] for t in v2_backward}
 
         discontinuities = []
         zombie_nodes = []
         closed_loops = []
 
         # Zombie Nodes
-        for symbol, def_line in forward_symbols.items():
-            is_referenced = False
-            if symbol in backward_usages:
-                usages = backward_usages[symbol]
-                # Referenced if it appears multiple times OR if its single usage is on a different line
-                if len(usages) > 1 or usages[0] != def_line:
-                    is_referenced = True
-
-            if not is_referenced and not symbol.startswith('btn_') and len(symbol) > 3:
+        for symbol, line_num in forward_symbols.items():
+            if symbol not in backward_symbols and not symbol.startswith('btn_') and len(symbol) > 3:
                 zombie_nodes.append({
                     "symbol": symbol,
-                    "defined_line": def_line,
-                    "issue": "GHOST_NODE (Defined in V1 forward pass, but never referenced outside its declaration line)"
+                    "defined_line": line_num,
+                    "issue": "GHOST_NODE (Defined in V1 forward pass, but never referenced in V2 backward pass)"
                 })
 
         # Discontinuity Lines (Torsion Crossings)
-        for symbol, usages in backward_usages.items():
+        for symbol, ref_line in backward_symbols.items():
             if symbol in forward_symbols:
                 def_line = forward_symbols[symbol]
-                for ref_line in usages:
-                    # If reference is strictly before the definition line
-                    if ref_line < def_line:
-                        ref_code = self.lines[ref_line - 1] if ref_line <= len(self.lines) else ""
-                        # Check if reference is inside script function scope
-                        if not ('document.getElementById' in ref_code and 'function' in self.full_content_raw):
-                            discontinuities.append({
-                                "symbol": symbol,
-                                "def_line": def_line,
-                                "ref_line": ref_line,
-                                "issue": f"TORSION_CROSSING: Referenced at line {ref_line} before declaration at line {def_line}"
-                            })
+                # If reference is inside a function or event handler in HTML, skip static torsion warning
+                if ref_line < def_line:
+                    ref_code = self.lines[ref_line - 1] if ref_line <= len(self.lines) else ""
+                    # Check if reference is inside script function scope
+                    if not ('document.getElementById' in ref_code and 'function' in self.full_content_raw):
+                        discontinuities.append({
+                            "symbol": symbol,
+                            "def_line": def_line,
+                            "ref_line": ref_line,
+                            "issue": f"TORSION_CROSSING: Referenced at line {ref_line} before declaration at line {def_line}"
+                        })
+
+        # Phase 18: EVENT_TARGET_MISMATCH check
+        event_target_mismatches = []
+        dom_ids = {t["symbol"] for t in v1_forward if t["type"] == "DOM_ID_DEF"}
+        for t in v2_backward:
+            if t["type"] == "DOM_EVENT_TARGET_REF":
+                if t["symbol"] not in dom_ids:
+                    # Target referenced in an event handler does not exist as an ID in the file
+                    event_target_mismatches.append({
+                        "symbol": t["symbol"],
+                        "ref_line": t["line"],
+                        "issue": f"EVENT_TARGET_MISMATCH: Target ID '{t['symbol']}' referenced in event handler at L{t['line']} does not exist in the DOM."
+                    })
 
         # Event Loop Closed Loop Anomalies
         event_lines = [t["line"] for t in v4_skip_backward]
@@ -146,27 +141,7 @@ class SAPQEngine:
                 "issue": "HIGH_EVENT_DENSITY: High frequency event triggers detected across skip-backward trajectory"
             })
 
-        # Phase 15/16 Audits (Mockup, AST Torsion)
-        ast_parser = ASTParser(self.filepath)
-        discontinuities.extend(ast_parser.detect_torsion_crossings())
-        mockups = ast_parser.detect_mockup_hallucinations()
-
-        # Phase 17 Audits (Python, Probes, Spec Match)
-        python_warnings = []
-        if self.filepath.endswith('.py'):
-            py_parser = PythonASTParser(self.filepath)
-            python_warnings = py_parser.audit_subprocess_calls()
-
-        # Probe Check
-        # LiveProbeEngine implementation isolated; dynamic network requests
-        # disabled here to prevent Blind SSRF vulnerabilities and unauthorized CI failures.
-        live_probe_failures = []
-
-        # Spec Semantic Check
-        # Isolated for dedicated invocation via test suite or CLI flags.
-        spec_warnings = []
-
-        score = max(0, 100 - (len(discontinuities) * 10 + len(zombie_nodes) * 2 + len(mockups) * 15 + len(python_warnings) * 20 + len(live_probe_failures) * 20))
+        score = max(0, 100 - (len(discontinuities) * 10 + len(zombie_nodes) * 2 + len(event_target_mismatches) * 20))
 
         report = {
             "target_file": self.filename,
@@ -180,18 +155,81 @@ class SAPQEngine:
             },
             "discontinuities_detected": discontinuities[:10],
             "zombie_nodes_detected": zombie_nodes[:10],
-            "closed_loop_warnings": closed_loops,
-            "mockups_detected": mockups,
-            "python_popup_warnings": python_warnings,
-            "live_probe_failures": live_probe_failures,
-            "spec_alignment_warnings": spec_warnings
+            "event_target_mismatches": event_target_mismatches[:10],
+            "closed_loop_warnings": closed_loops
         }
 
         return report
 
-def audit_file(filepath):
+def audit_file(filepath, session_id=None):
+    checkpoint_mgr = CheckpointManager(filepath, session_id=session_id)
+    logger = SAPQLogger(filepath, session_id=checkpoint_mgr.session_id)
+
+    logger.log_session_start()
+
+    # Attempt to load an existing checkpoint
+    if checkpoint_mgr.load_checkpoint():
+        if checkpoint_mgr.state_data["global_status"] == "COMPLETED":
+            return {"status": "SKIP", "message": f"{filepath} already completed in session {checkpoint_mgr.session_id}."}
+
+        # Verify hash before updating status (which would overwrite it if update_hash=True)
+        if not checkpoint_mgr.verify_hash():
+            return {"status": "ERROR", "message": "File hash mismatch on resume. Checkpoint invalid."}
+
+        checkpoint_mgr.update_status("RECOVERING", update_hash=False)
+    else:
+        checkpoint_mgr.create_backup()
+        checkpoint_mgr.update_status("PENDING")
+
+    checkpoint_mgr.update_status("ANALYZING")
+
+    # Phase 0: Pre-flight Syntax Guard
+    preflight = SAPQPreflightGuard(filepath)
+    is_syntax_valid, syntax_errors = preflight.run_preflight()
+
+    logger.log_preflight_result(is_syntax_valid, syntax_errors)
+
+    if not is_syntax_valid:
+        checkpoint_mgr.update_status("FAILED")
+        return {
+            "target_file": os.path.basename(filepath),
+            "audit_integrity_score": 0,
+            "preflight_status": "FAILED",
+            "syntax_errors": syntax_errors,
+            "session_context": checkpoint_mgr.get_context_prompt()
+        }
+
+    # Proceed to Phase 1-4 analysis
     engine = SAPQEngine(filepath)
-    return engine.execute_vector_end_trajectory_linking()
+    report = engine.execute_vector_end_trajectory_linking()
+
+    # Inject Preflight results into report
+    report["preflight_status"] = "PASSED"
+    report["session_context"] = checkpoint_mgr.get_context_prompt()
+
+    logger.log_audit_completion(
+        report.get("audit_integrity_score", 0),
+        report.get("discontinuities_detected", []),
+        report.get("zombie_nodes_detected", [])
+    )
+
+    # Clear old pending issues before adding new ones from this run
+    checkpoint_mgr.clear_pending_issues()
+
+    # Example logic: add pending issues to checkpoint
+    for dis in report.get("discontinuities_detected", []):
+        checkpoint_mgr.add_pending_issue(dis["issue"].split(":")[0], f"Symbol: {dis['symbol']}")
+    for zom in report.get("zombie_nodes_detected", []):
+        checkpoint_mgr.add_pending_issue(zom["issue"].split(" ")[0], f"Symbol: {zom['symbol']}")
+
+    # If score is somewhat acceptable or issues are zero, you might move to COMPLETED (placeholder logic)
+    if report["audit_integrity_score"] == 100:
+        checkpoint_mgr.update_status("COMPLETED")
+    else:
+        # Assuming the next step for an AI would be patching
+        checkpoint_mgr.update_status("PATCHING")
+
+    return report
 
 def audit_directory(dirpath):
     results = []

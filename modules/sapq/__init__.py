@@ -15,10 +15,13 @@ from .sapq_ast_parser import ASTParser
 from .sapq_llm_auditor import DualLLMAuditor
 from .sapq_causality import CausalityContradictionEngine
 from .sapq_anti_mockup import AntiMockupDepthEngine
-from .sapq_python_parser import PythonASTParser
-from .sapq_live_probe import LiveProbeEngine
-from .sapq_spec_matcher import SpecSemanticMatcher
-from .sapq_interlock import InterlockCircuitBreaker
+from .sapq_preflight import SAPQPreflightGuard
+from .sapq_checkpoint import CheckpointManager
+from .sapq_logger import SAPQLogger
+from .sapq_dom_relay import SAPQDOMRelay
+from .sapq_sandbox_proxy import SAPQSandboxProxy
+from .sapq_agent_protocol import SAPQAgentProtocol
+from .sapq_cascade_graph import SAPQCascadeGraph
 
 __version__ = "2.0.0"
 __all__ = [
@@ -27,10 +30,13 @@ __all__ = [
     "DualLLMAuditor",
     "CausalityContradictionEngine",
     "AntiMockupDepthEngine",
-    "PythonASTParser",
-    "LiveProbeEngine",
-    "SpecSemanticMatcher",
-    "InterlockCircuitBreaker",
+    "SAPQPreflightGuard",
+    "CheckpointManager",
+    "SAPQLogger",
+    "SAPQDOMRelay",
+    "SAPQSandboxProxy",
+    "SAPQAgentProtocol",
+    "SAPQCascadeGraph",
     "audit_file",
     "audit_directory"
 ]

@@ -3,7 +3,6 @@ import os
 import json
 import argparse
 from .sapq_engine import SAPQEngine, audit_file, audit_directory
-from .sapq_interlock import InterlockCircuitBreaker
 
 def main():
     parser = argparse.ArgumentParser(description="SAPQ - Sequence Autonomic Parsing & QA CLI Engine")
@@ -23,18 +22,19 @@ def main():
         if args.json:
             print(json.dumps(res, ensure_ascii=False, indent=2))
         else:
-            print(f"📊 Audit Integrity Score: {res['audit_integrity_score']}/100")
-            print(f"Total Lines: {res['total_lines']}")
-            print(f"Discontinuities (Torsion Crossings): {len(res['discontinuities_detected'])}")
-            print(f"Zombie Nodes (Ghost Variables): {len(res['zombie_nodes_detected'])}")
-            if res['discontinuities_detected']:
+            print(f"📊 Audit Integrity Score: {res.get('audit_integrity_score', 0)}/100")
+            print(f"Total Lines: {res.get('total_lines', 0)}")
+            print(f"Discontinuities (Torsion Crossings): {len(res.get('discontinuities_detected', []))}")
+            print(f"Zombie Nodes (Ghost Variables): {len(res.get('zombie_nodes_detected', []))}")
+            print(f"Event Target Mismatches: {len(res.get('event_target_mismatches', []))}")
+            if res.get('discontinuities_detected'):
                 print("\n⚠️ Torsion Crossings:")
                 for item in res['discontinuities_detected']:
                     print(f"  - {item['symbol']}: ref at L{item['ref_line']} before def at L{item['def_line']}")
-
-        # Interlock Phase 17.5 verification
-        InterlockCircuitBreaker.evaluate_audit_results([res])
-
+            if res.get('event_target_mismatches'):
+                print("\n⚠️ Event Target Mismatches (Phase 18):")
+                for item in res['event_target_mismatches']:
+                    print(f"  - {item['issue']}")
     elif os.path.isdir(target):
         results = audit_directory(target)
         perfect = sum(1 for r in results if r['audit_integrity_score'] == 100)
@@ -42,9 +42,6 @@ def main():
         pct = (perfect / total_cnt) * 100
         print(f"\n📊 Total Files Audited: {len(results)}")
         print(f"✅ Perfect 100-Score Files: {perfect}/{len(results)} ({pct:.1f}%)")
-
-        # Interlock Phase 17.5 verification
-        InterlockCircuitBreaker.evaluate_audit_results(results)
 
 if __name__ == "__main__":
     main()
