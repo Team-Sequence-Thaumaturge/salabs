@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D ASCII Enneper Minimal Surface Studio | Quanxs SA Labs</title>
+  <meta name="description" content="100% Client-Side Pure JS HTML5 Canvas Real-Time 3D ASCII Weierstrass-Enneper Minimal Surface & Parametric Topological Raymarcher.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "3D ASCII Enneper Minimal Surface Studio",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-enneper-surface.html",
+    "description": "Real-time 3D ASCII projection of the Weierstrass-Enneper minimal surface parametric manifold with dynamic lighting and ASCII shading.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires HTML5 Canvas support"
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #030712;
+      --card: #111827;
+      --border: #1f2937;
+      --accent: #10b981;
+      --accent-glow: rgba(16, 185, 129, 0.3);
+      --text: #f9fafb;
+      --text-muted: #9ca3af;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'JetBrains Mono', monospace, monospace; }
+    body { background: var(--bg); color: var(--text); padding: 20px; line-height: 1.5; }
+    .container { max-width: 960px; margin: 0 auto; }
+    header { margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    h1 { font-size: 1.5rem; color: #fff; margin-bottom: 8px; }
+    .desc { color: var(--text-muted); font-size: 0.85rem; }
+    .panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+    .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 16px; }
+    .control-item { display: flex; flex-direction: column; gap: 6px; }
+    label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
+    input[type=range], select { width: 100%; background: #1f2937; border: 1px solid var(--border); color: #fff; padding: 8px; border-radius: 6px; }
+    .render-box { background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 10px; display: flex; justify-content: center; overflow: hidden; }
+    pre#asciiOutput { font-size: 11px; line-height: 11px; letter-spacing: -1px; color: var(--accent); text-shadow: 0 0 5px var(--accent-glow); user-select: none; }
+    .stats { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-top: 12px; }
+  </style>
+<script>
+
+    const asciiOutput = document.getElementById('asciiOutput');
+    const resSlider = document.getElementById('resSlider');
+    const rotXSlider = document.getElementById('rotXSlider');
+    const rotYSlider = document.getElementById('rotYSlider');
+    const charsetSelect = document.getElementById('charsetSelect');
+    const fpsNum = document.getElementById('fpsNum');
+
+    let A = 0, B = 0;
+    const SCREEN_W = 80, SCREEN_H = 40;
+    let lastTime = performance.now();
+    let frameCount = 0;
+
+    const charsets = {
+      matrix: " .:-=+*#%@",
+      blocks: " ░▒▓█",
+      dense: " .'`^",:;Il!i><~+_-?][}{1)(|\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
+    };
+
+    function renderFrame() {
+      const chars = charsets[charsetSelect.value];
+      const steps = parseInt(resSlider.value);
+      const spdX = parseInt(rotXSlider.value) * 0.001;
+      const spdY = parseInt(rotYSlider.value) * 0.001;
+
+      A += spdX;
+      B += spdY;
+
+      const output = Array(SCREEN_H).fill(null).map(() => Array(SCREEN_W).fill(' '));
+      const zBuffer = Array(SCREEN_H).fill(null).map(() => Array(SCREEN_W).fill(-1e9));
+
+      const uMin = -1.6, uMax = 1.6;
+      const vMin = -1.6, vMax = 1.6;
+      const du = (uMax - uMin) / steps;
+      const dv = (vMax - vMin) / steps;
+
+      const cosA = Math.cos(A), sinA = Math.sin(A);
+      const cosB = Math.cos(B), sinB = Math.sin(B);
+
+      for (let u = uMin; u <= uMax; u += du) {
+        for (let v = vMin; v <= vMax; v += dv) {
+          // Enneper Parametric Minimal Surface
+          const x0 = u - (u*u*u)/3 + u*v*v;
+          const y0 = v - (v*v*v)/3 + v*u*u;
+          const z0 = u*u - v*v;
+
+          // Scale
+          const scale = 5.5;
+          const px = x0 * scale;
+          const py = y0 * scale;
+          const pz = z0 * scale;
+
+          // 3D Rotation (Euler angles)
+          const y1 = py * cosA - pz * sinA;
+          const z1 = py * sinA + pz * cosA;
+          const x2 = px * cosB + z1 * sinB;
+          const z2 = -px * sinB + z1 * cosB;
+
+          // Normal estimation (analytical surface normal)
+          const nx = 2*u / (1 + u*u + v*v);
+          const ny = -2*v / (1 + u*u + v*v);
+          const nz = (1 - u*u - v*v) / (1 + u*u + v*v);
+
+          // Rotate normal
+          const ny1 = ny * cosA - nz * sinA;
+          const nz1 = ny * sinA + nz * cosA;
+          const nx2 = nx * cosB + nz1 * sinB;
+          const nz2 = -nx * sinB + nz1 * cosB;
+
+          // Directional Light: (0, 1, -1) normalized
+          const lx = 0, ly = 0.707, lz = -0.707;
+          const lum = Math.max(0, nx2 * lx + ny1 * ly + nz2 * lz);
+
+          // Perspective projection
+          const K1 = 45;
+          const dist = z2 + 35;
+          if (dist > 1) {
+            const ooz = 1 / dist;
+            const xp = Math.floor(SCREEN_W / 2 + K1 * ooz * x2 * 1.8);
+            const yp = Math.floor(SCREEN_H / 2 + K1 * ooz * y1);
+
+            if (xp >= 0 && xp < SCREEN_W && yp >= 0 && yp < SCREEN_H) {
+              if (ooz > zBuffer[yp][xp]) {
+                zBuffer[yp][xp] = ooz;
+                const charIdx = Math.floor(lum * (chars.length - 1));
+                output[yp][xp] = chars[charIdx];
+              }
+            }
+          }
+        }
+      }
+
+      asciiOutput.textContent = output.map(row => row.join('')).join('\n');
+
+      frameCount++;
+      const now = performance.now();
+      if (now - lastTime >= 1000) {
+        fpsNum.textContent = frameCount;
+        frameCount = 0;
+        lastTime = now;
+      }
+
+      requestAnimationFrame(renderFrame);
+    }
+
+    requestAnimationFrame(renderFrame);
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🌐 3D ASCII Enneper Minimal Surface Studio</h1>
+      <p class="desc">100% Client-Side Pure JavaScript 3D Parametric Weierstrass-Enneper Self-Intersecting Minimal Surface ASCII Projector.</p>
+    </header>
+
+    <div class="panel">
+      <div class="controls">
+        <div class="control-item">
+          <label>Density / Resolution</label>
+          <input type="range" id="resSlider" min="20" max="60" value="40">
+        </div>
+        <div class="control-item">
+          <label>Rotation Speed X</label>
+          <input type="range" id="rotXSlider" min="0" max="50" value="15">
+        </div>
+        <div class="control-item">
+          <label>Rotation Speed Y</label>
+          <input type="range" id="rotYSlider" min="0" max="50" value="20">
+        </div>
+        <div class="control-item">
+          <label>ASCII Palette</label>
+          <select id="charsetSelect">
+            <option value="matrix">Matrix: .:-=+*#%@</option>
+            <option value="blocks">Blocks: ░▒▓█</option>
+            <option value="dense">Dense: .'`^",:;Il!i><~+_-?][}{1)(|\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="render-box">
+        <pre id="asciiOutput"></pre>
+      </div>
+
+      <div class="stats">
+        <div>Equation: x = u - u³/3 + u·v², y = v - v³/3 + v·u², z = u² - v²</div>
+        <div>FPS: <span id="fpsNum" style="color:var(--accent);">60</span></div>
+      </div>
+    </div>
+  </div>
+
+  
+</body>
+</html>
