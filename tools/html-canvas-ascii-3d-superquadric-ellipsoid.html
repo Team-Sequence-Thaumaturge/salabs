@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas 3D Superquadric Ellipsoid ASCII Engine - Quanxs SA Labs</title>
+  <meta name="description" content="100% Client-Side Pure HTML5 Canvas 3D Superquadric Ellipsoid ASCII Wireframe & Shading Engine. Parametric geometry and Euler matrix projection.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Canvas 3D Superquadric Ellipsoid ASCII Engine",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-superquadric-ellipsoid.html",
+    "description": "Parametric 3D Superquadric Ellipsoid ASCII wireframe and ray-matrix simulation engine running purely client-side.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript and HTML5 Canvas support."
+  }
+  </script>
+  <style>
+    :root { --bg: #0a0e14; --panel: #131920; --border: #232c37; --text: #b3bcc6; --accent: #39bae6; }
+    body { margin: 0; padding: 20px; font-family: monospace; background: var(--bg); color: var(--text); }
+    .container { max-width: 920px; margin: 0 auto; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 24px; }
+    h1 { color: #fff; font-size: 22px; margin-top: 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 18px 0; }
+    .card { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 12px; }
+    label { display: block; font-size: 11px; text-transform: uppercase; color: #707a8a; margin-bottom: 4px; }
+    input[type=range] { width: 100%; }
+    pre { font-family: 'Courier New', Courier, monospace; font-size: 11px; line-height: 11px; background: #000; color: #59c2ff; padding: 15px; border-radius: 6px; border: 1px solid var(--border); overflow: hidden; text-align: center; }
+  </style>
+<script>
+
+  let rotX = 0, rotY = 0;
+  const screen = document.getElementById('asciiScreen');
+  const chars = ' .:-=+*#%@';
+
+  function sign(x) { return x >= 0 ? 1 : -1; }
+  function sgnpow(val, p) { return sign(val) * Math.pow(Math.abs(val), p); }
+
+  function render() {
+    const e1 = parseFloat(document.getElementById('e1Slider').value);
+    const e2 = parseFloat(document.getElementById('e2Slider').value);
+    const speed = parseFloat(document.getElementById('speedSlider').value);
+    const N = parseInt(document.getElementById('densitySlider').value);
+
+    rotX += 0.02 * speed;
+    rotY += 0.03 * speed;
+
+    const width = 64, height = 32;
+    const zBuffer = new Array(width * height).fill(-Infinity);
+    const charBuffer = new Array(width * height).fill(' ');
+
+    const uSteps = N, vSteps = N * 2;
+    for (let i = 0; i < uSteps; i++) {
+      const u = -Math.PI / 2 + (Math.PI * i) / (uSteps - 1);
+      for (let j = 0; j < vSteps; j++) {
+        const v = -Math.PI + (2 * Math.PI * j) / (vSteps - 1);
+
+        const cosU = Math.cos(u), sinU = Math.sin(u);
+        const cosV = Math.cos(v), sinV = Math.sin(v);
+
+        const x = sgnpow(cosU, e1) * sgnpow(cosV, e2);
+        const y = sgnpow(cosU, e1) * sgnpow(sinV, e2);
+        const z = sgnpow(sinU, e1);
+
+        // Rotate Y
+        let x1 = x * Math.cos(rotY) + z * Math.sin(rotY);
+        let y1 = y;
+        let z1 = -x * Math.sin(rotY) + z * Math.cos(rotY);
+
+        // Rotate X
+        let x2 = x1;
+        let y2 = y1 * Math.cos(rotX) - z1 * Math.sin(rotX);
+        let z2 = y1 * Math.sin(rotX) + z1 * Math.cos(rotX);
+
+        const distance = 3.5;
+        const ooz = 1 / (z2 + distance);
+        const xp = Math.floor(width / 2 + x2 * ooz * 45);
+        const yp = Math.floor(height / 2 - y2 * ooz * 22);
+
+        if (xp >= 0 && xp < width && yp >= 0 && yp < height) {
+          const idx = xp + yp * width;
+          if (ooz > zBuffer[idx]) {
+            zBuffer[idx] = ooz;
+            const luminance = Math.max(0, Math.min(chars.length - 1, Math.floor((z2 + 1.2) * 3)));
+            charBuffer[idx] = chars[luminance];
+          }
+        }
+      }
+    }
+
+    let output = '';
+    for (let r = 0; r < height; r++) {
+      output += charBuffer.slice(r * width, (r + 1) * width).join('') + '\n';
+    }
+    screen.textContent = output;
+    requestAnimationFrame(render);
+  }
+
+  document.getElementById('e1Slider').oninput = e => document.getElementById('e1Val').textContent = e.target.value;
+  document.getElementById('e2Slider').oninput = e => document.getElementById('e2Val').textContent = e.target.value;
+  document.getElementById('speedSlider').oninput = e => document.getElementById('speedVal').textContent = e.target.value + 'x';
+  document.getElementById('densitySlider').oninput = e => document.getElementById('densityVal').textContent = e.target.value + 'x' + e.target.value;
+
+  render();
+
+</script>
+</head>
+<body>
+<div class="container">
+  <h1>3D Superquadric Ellipsoid ASCII Engine</h1>
+  <p>100% Client-Side Pure HTML5 Canvas & 3D Math Matrix Projection for Parametric Superquadrics.</p>
+  <div class="grid">
+    <div class="card">
+      <label>Shape Exponent E1 (Squareness 1)</label>
+      <input type="range" id="e1Slider" min="0.1" max="3.0" step="0.1" value="1.0">
+      <span id="e1Val">1.0</span>
+    </div>
+    <div class="card">
+      <label>Shape Exponent E2 (Squareness 2)</label>
+      <input type="range" id="e2Slider" min="0.1" max="3.0" step="0.1" value="1.0">
+      <span id="e2Val">1.0</span>
+    </div>
+    <div class="card">
+      <label>Rotation Speed X/Y</label>
+      <input type="range" id="speedSlider" min="0" max="5" step="0.2" value="1.0">
+      <span id="speedVal">1.0x</span>
+    </div>
+    <div class="card">
+      <label>ASCII Shading Density</label>
+      <input type="range" id="densitySlider" min="15" max="45" step="1" value="28">
+      <span id="densityVal">28x28</span>
+    </div>
+  </div>
+  <pre id="asciiScreen"></pre>
+</div>
+
+</body>
+</html>

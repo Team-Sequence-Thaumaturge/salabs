@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio Spectral Freeze & Reverb Soundfield Studio - Quanxs SA Labs</title>
+  <meta name="description" content="100% Client-Side Pure Web Audio API Spectral Freeze and Infinite Reverb Soundfield Studio. Zero-server local real-time buffer freezing and multi-band reverberation.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Audio Spectral Freeze & Reverb Soundfield Studio",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-freeze-reverb-studio.html",
+    "description": "Real-time client-side Web Audio API spectral audio freeze, infinite tail reverberator, and soundfield parametric synthesizer.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript and Web Audio API support."
+  }
+  </script>
+  <style>
+    :root { --bg: #0d1117; --panel: #161b22; --border: #30363d; --text: #c9d1d9; --accent: #58a6ff; --green: #238636; }
+    body { margin: 0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); }
+    .container { max-width: 900px; margin: 0 auto; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 24px; }
+    h1 { color: #fff; font-size: 24px; margin-top: 0; }
+    .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 20px 0; }
+    .card { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 14px; }
+    label { display: block; font-size: 12px; text-transform: uppercase; color: #8b949e; margin-bottom: 6px; }
+    input[type=range] { width: 100%; }
+    .btn { background: var(--green); color: #fff; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    .btn.active { background: #da3633; }
+    canvas { width: 100%; height: 160px; background: #000; border-radius: 6px; border: 1px solid var(--border); margin-top: 15px; }
+  </style>
+<script>
+
+  let ctx, osc, gain, convolver, filter, analyser, isPlaying = false, isFrozen = false;
+  const toggleBtn = document.getElementById('toggleAudioBtn');
+  const freezeBtn = document.getElementById('freezeBtn');
+  const canvas = document.getElementById('scopeCanvas');
+  const cctx = canvas.getContext('2d');
+
+  function generateImpulseResponse(duration, decay) {
+    const rate = ctx.sampleRate;
+    const length = rate * duration;
+    const impulse = ctx.createBuffer(2, length, rate);
+    const left = impulse.getChannelData(0);
+    const right = impulse.getChannelData(1);
+    for (let i = 0; i < length; i++) {
+      const n = i / length;
+      left[i] = (Math.random() * 2 - 1) * Math.pow(1 - n, decay);
+      right[i] = (Math.random() * 2 - 1) * Math.pow(1 - n, decay);
+    }
+    return impulse;
+  }
+
+  function initAudio() {
+    ctx = new (window.AudioContext || window.webkitAudioContext)();
+    osc = ctx.createOscillator();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(220, ctx.currentTime);
+
+    filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(3200, ctx.currentTime);
+
+    convolver = ctx.createConvolver();
+    convolver.buffer = generateImpulseResponse(4.0, 2.0);
+
+    gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+
+    analyser = ctx.createAnalyser();
+    analyser.fftSize = 1024;
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(convolver);
+    convolver.connect(analyser);
+    gain.connect(analyser);
+    analyser.connect(ctx.destination);
+
+    osc.start();
+    isPlaying = true;
+    toggleBtn.textContent = 'Stop Audio Engine';
+    toggleBtn.classList.add('active');
+    freezeBtn.disabled = false;
+    renderVisualizer();
+  }
+
+  toggleBtn.onclick = () => {
+    if (!isPlaying) { initAudio(); }
+    else { ctx.close(); isPlaying = false; toggleBtn.textContent = 'Start Audio Engine'; toggleBtn.classList.remove('active'); freezeBtn.disabled = true; }
+  };
+
+  freezeBtn.onclick = () => {
+    isFrozen = !isFrozen;
+    if (isFrozen) {
+      freezeBtn.textContent = 'Unfreeze Buffer';
+      convolver.buffer = generateImpulseResponse(15.0, 0.05);
+    } else {
+      freezeBtn.textContent = 'Freeze Spectral Buffer';
+      convolver.buffer = generateImpulseResponse(parseFloat(document.getElementById('decaySlider').value), 2.0);
+    }
+  };
+
+  document.getElementById('freqSlider').oninput = (e) => {
+    document.getElementById('freqVal').textContent = e.target.value + ' Hz';
+    if (osc) osc.frequency.setValueAtTime(parseFloat(e.target.value), ctx.currentTime);
+  };
+  document.getElementById('dampSlider').oninput = (e) => {
+    document.getElementById('dampVal').textContent = e.target.value + ' Hz';
+    if (filter) filter.frequency.setValueAtTime(parseFloat(e.target.value), ctx.currentTime);
+  };
+  document.getElementById('decaySlider').oninput = (e) => {
+    document.getElementById('decayVal').textContent = e.target.value + ' s';
+    if (convolver && !isFrozen) convolver.buffer = generateImpulseResponse(parseFloat(e.target.value), 2.0);
+  };
+  document.getElementById('mixSlider').oninput = (e) => {
+    document.getElementById('mixVal').textContent = e.target.value + ' %';
+    if (gain) gain.gain.setValueAtTime(parseFloat(e.target.value) / 300, ctx.currentTime);
+  };
+
+  function renderVisualizer() {
+    if (!isPlaying) return;
+    requestAnimationFrame(renderVisualizer);
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    analyser.getByteFrequencyData(dataArray);
+
+    cctx.fillStyle = '#0d1117';
+    cctx.fillRect(0, 0, canvas.width, canvas.height);
+    const barWidth = (canvas.width / bufferLength) * 2.5;
+    let x = 0;
+    for (let i = 0; i < bufferLength; i++) {
+      const barHeight = (dataArray[i] / 255) * canvas.height;
+      cctx.fillStyle = `rgb(${dataArray[i] + 50}, 88, 255)`;
+      cctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+      x += barWidth + 1;
+    }
+  }
+
+</script>
+</head>
+<body>
+<div class="container">
+  <h1>Audio Spectral Freeze & Reverb Studio</h1>
+  <p>100% Client-Side Pure Web Audio API spectral sustain, freeze buffer, and impulse soundfield simulation.</p>
+  <button id="toggleAudioBtn" class="btn">Start Audio Engine</button>
+  <button id="freezeBtn" class="btn" style="background:#8957e5; margin-left:8px;" disabled>Freeze Spectral Buffer</button>
+  <div class="controls">
+    <div class="card">
+      <label>Oscillator Frequency (Hz)</label>
+      <input type="range" id="freqSlider" min="50" max="1200" value="220">
+      <span id="freqVal">220 Hz</span>
+    </div>
+    <div class="card">
+      <label>Reverb Decay Time (s)</label>
+      <input type="range" id="decaySlider" min="0.5" max="15" step="0.5" value="4.0">
+      <span id="decayVal">4.0 s</span>
+    </div>
+    <div class="card">
+      <label>Damping Filter (Hz)</label>
+      <input type="range" id="dampSlider" min="500" max="8000" step="100" value="3200">
+      <span id="dampVal">3200 Hz</span>
+    </div>
+    <div class="card">
+      <label>Wet / Dry Mix (%)</label>
+      <input type="range" id="mixSlider" min="0" max="100" value="65">
+      <span id="mixVal">65 %</span>
+    </div>
+  </div>
+  <canvas id="scopeCanvas"></canvas>
+</div>
+
+</body>
+</html>
