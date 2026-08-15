@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3-Band Audio Multiband Compressor Studio | Quanxs SA Labs</title>
+  <meta name="description" content="100% Client-Side 3-Band Audio Dynamics Multiband Compressor Studio using Web Audio API BiquadFilter crossover and DynamicsCompressor nodes.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "3-Band Audio Multiband Compressor Studio",
+    "url": "https://salabs.quanxs.com/tools/audio-multi-band-compressor-studio.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript and Web Audio API support"
+  }
+  </script>
+  <style>
+    :root { --bg: #0d1117; --card: #161b22; --border: #30363d; --text: #c9d1d9; --accent: #58a6ff; --green: #3fb950; --amber: #d29922; --red: #f85149; }
+    body { margin: 0; padding: 20px; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    h1 { color: #fff; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+    .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+    .band-box { background: #0b0e14; border: 1px solid var(--border); border-radius: 6px; padding: 12px; }
+    .band-title { font-weight: bold; margin-bottom: 8px; display: flex; justify-content: space-between; }
+    .ctrl-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.85rem; }
+    input[type=range] { width: 60%; accent-color: var(--accent); }
+    .btn { background: #238636; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    .btn:hover { background: #2ea043; }
+    .btn-stop { background: #da3633; }
+    .btn-stop:hover { background: #f85149; }
+    canvas { width: 100%; height: 120px; background: #010409; border-radius: 4px; border: 1px solid var(--border); }
+    .meter-bar { height: 8px; background: #21262d; border-radius: 4px; overflow: hidden; margin-top: 4px; }
+    .meter-fill { height: 100%; width: 0%; background: var(--green); transition: width 0.05s; }
+  </style>
+<script>
+
+let ctx, osc1, osc2, noise, isPlaying = false;
+let lpFilter, bpFilter, hpFilter;
+let compLow, compMid, compHigh;
+let gainLow, gainMid, gainHigh, masterGain, analyser;
+
+function initAudio() {
+  ctx = new (window.AudioContext || window.webkitAudioContext)();
+  
+  // Cross-over filters
+  lpFilter = ctx.createBiquadFilter();
+  lpFilter.type = "lowpass";
+  lpFilter.frequency.value = 250;
+
+  bpFilter = ctx.createBiquadFilter();
+  bpFilter.type = "bandpass";
+  bpFilter.frequency.value = 1200;
+  bpFilter.Q.value = 1.0;
+
+  hpFilter = ctx.createBiquadFilter();
+  hpFilter.type = "highpass";
+  hpFilter.frequency.value = 3000;
+
+  // Compressors
+  compLow = ctx.createDynamicsCompressor();
+  compMid = ctx.createDynamicsCompressor();
+  compHigh = ctx.createDynamicsCompressor();
+
+  // Makeup Gains
+  gainLow = ctx.createGain();
+  gainMid = ctx.createGain();
+  gainHigh = ctx.createGain();
+  masterGain = ctx.createGain();
+  masterGain.gain.value = 0.8;
+
+  analyser = ctx.createAnalyser();
+  analyser.fftSize = 256;
+
+  // Wiring
+  lpFilter.connect(compLow); compLow.connect(gainLow); gainLow.connect(masterGain);
+  bpFilter.connect(compMid); compMid.connect(gainMid); gainMid.connect(masterGain);
+  hpFilter.connect(compHigh); compHigh.connect(gainHigh); gainHigh.connect(masterGain);
+  masterGain.connect(analyser);
+  analyser.connect(ctx.destination);
+}
+
+function startSynth() {
+  if (!ctx) initAudio();
+  if (ctx.state === 'suspended') ctx.resume();
+
+  osc1 = ctx.createOscillator();
+  osc1.type = 'sawtooth';
+  osc1.frequency.setValueAtTime(110, ctx.currentTime);
+
+  osc2 = ctx.createOscillator();
+  osc2.type = 'sine';
+  osc2.frequency.setValueAtTime(55, ctx.currentTime);
+
+  // Noise generator
+  const bufferSize = ctx.sampleRate * 2;
+  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const output = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
+  noise = ctx.createBufferSource();
+  noise.buffer = noiseBuffer;
+  noise.loop = true;
+
+  const noiseGain = ctx.createGain();
+  noiseGain.gain.value = 0.15;
+  noise.connect(noiseGain);
+
+  const synthBus = ctx.createGain();
+  osc1.connect(synthBus);
+  osc2.connect(synthBus);
+  noiseGain.connect(synthBus);
+
+  synthBus.connect(lpFilter);
+  synthBus.connect(bpFilter);
+  synthBus.connect(hpFilter);
+
+  osc1.start();
+  osc2.start();
+  noise.start();
+  isPlaying = true;
+
+  document.getElementById('btnPlay').disabled = true;
+  document.getElementById('btnStop').disabled = false;
+  document.getElementById('statusLabel').innerText = "가동 중 (Processing 3-Band Audio)";
+  drawVisualizer();
+}
+
+function stopSynth() {
+  if (isPlaying) {
+    if (osc1) osc1.stop();
+    if (osc2) osc2.stop();
+    if (noise) noise.stop();
+    isPlaying = false;
+    document.getElementById('btnPlay').disabled = false;
+    document.getElementById('btnStop').disabled = true;
+    document.getElementById('statusLabel').innerText = "정지됨 (Stopped)";
+  }
+}
+
+document.getElementById('btnPlay').addEventListener('click', startSynth);
+document.getElementById('btnStop').addEventListener('click', stopSynth);
+
+// Controls
+function bindCtrl(id, target, prop, suffix, scale=1) {
+  document.getElementById(id).addEventListener('input', (e) => {
+    const val = parseFloat(e.target.value);
+    document.getElementById('val' + id.charAt(0).toUpperCase() + id.slice(1)).innerText = val + suffix;
+    if (target) {
+      if (prop === 'value') target.value = val * scale;
+      else if (target[prop] && target[prop].setValueAtTime) target[prop].setValueAtTime(val * scale, ctx.currentTime);
+      else target[prop] = val * scale;
+    }
+  });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  bindCtrl('lowThresh', compLow, 'threshold', 'dB');
+  bindCtrl('lowRatio', compLow, 'ratio', ':1');
+  bindCtrl('lowGain', gainLow, 'gain', 'x');
+
+  bindCtrl('midThresh', compMid, 'threshold', 'dB');
+  bindCtrl('midRatio', compMid, 'ratio', ':1');
+  bindCtrl('midGain', gainMid, 'gain', 'x');
+
+  bindCtrl('highThresh', compHigh, 'threshold', 'dB');
+  bindCtrl('highRatio', compHigh, 'ratio', ':1');
+  bindCtrl('highGain', gainHigh, 'gain', 'x');
+});
+
+function drawVisualizer() {
+  if (!isPlaying) return;
+  requestAnimationFrame(drawVisualizer);
+
+  const canvas = document.getElementById('scopeCanvas');
+  const dctx = canvas.getContext('2d');
+  canvas.width = canvas.clientWidth;
+  canvas.height = canvas.clientHeight;
+
+  const data = new Uint8Array(analyser.frequencyBinCount);
+  analyser.getByteTimeDomainData(data);
+
+  dctx.fillStyle = '#010409';
+  dctx.fillRect(0, 0, canvas.width, canvas.height);
+  dctx.lineWidth = 2;
+  dctx.strokeStyle = '#58a6ff';
+  dctx.beginPath();
+
+  const sliceWidth = canvas.width * 1.0 / data.length;
+  let x = 0;
+  for (let i = 0; i < data.length; i++) {
+    const v = data[i] / 128.0;
+    const y = v * canvas.height / 2;
+    if (i === 0) dctx.moveTo(x, y);
+    else dctx.lineTo(x, y);
+    x += sliceWidth;
+  }
+  dctx.lineTo(canvas.width, canvas.height / 2);
+  dctx.stroke();
+
+  if (compLow) document.getElementById('meterLow').style.width = Math.min(100, Math.abs(compLow.reduction) * 5) + '%';
+  if (compMid) document.getElementById('meterMid').style.width = Math.min(100, Math.abs(compMid.reduction) * 5) + '%';
+  if (compHigh) document.getElementById('meterHigh').style.width = Math.min(100, Math.abs(compHigh.reduction) * 5) + '%';
+}
+
+</script>
+</head>
+<body>
+<div class="container">
+  <h1>🎚️ 3-Band Audio Multiband Compressor Studio</h1>
+  <p>Low/Mid/High 대역 분할 크로스오버 및 3중 다이내믹스 컴프레서 실시간 브라우저 오디오 프로세서</p>
+  
+  <div class="card">
+    <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 12px;">
+      <button id="btnPlay" class="btn">▶ 오디오 신디사이저 재생</button>
+      <button id="btnStop" class="btn btn-stop" disabled>⏹ 정지</button>
+      <span id="statusLabel" style="font-size: 0.9rem; color: #8b949e;">준비됨 (Ready)</span>
+    </div>
+    <canvas id="scopeCanvas"></canvas>
+  </div>
+
+  <div class="grid3">
+    <!-- Low Band -->
+    <div class="band-box" style="border-top: 3px solid var(--red);">
+      <div class="band-title" style="color: var(--red);">Low Band (<span id="txtLowFreq">250</span> Hz)</div>
+      <div class="ctrl-row"><span>Threshold</span><input type="range" id="lowThresh" min="-60" max="0" value="-24"><span id="valLowThresh">-24dB</span></div>
+      <div class="ctrl-row"><span>Ratio</span><input type="range" id="lowRatio" min="1" max="20" value="4"><span id="valLowRatio">4:1</span></div>
+      <div class="ctrl-row"><span>Gain (Makeup)</span><input type="range" id="lowGain" min="0" max="3" step="0.1" value="1.2"><span id="valLowGain">1.2x</span></div>
+      <div style="font-size:0.75rem; color:#8b949e;">Gain Reduction</div>
+      <div class="meter-bar"><div id="meterLow" class="meter-fill" style="background: var(--red);"></div></div>
+    </div>
+
+    <!-- Mid Band -->
+    <div class="band-box" style="border-top: 3px solid var(--amber);">
+      <div class="band-title" style="color: var(--amber);">Mid Band (250Hz - <span id="txtMidFreq">3000</span> Hz)</div>
+      <div class="ctrl-row"><span>Threshold</span><input type="range" id="midThresh" min="-60" max="0" value="-18"><span id="valMidThresh">-18dB</span></div>
+      <div class="ctrl-row"><span>Ratio</span><input type="range" id="midRatio" min="1" max="20" value="3"><span id="valMidRatio">3:1</span></div>
+      <div class="ctrl-row"><span>Gain (Makeup)</span><input type="range" id="midGain" min="0" max="3" step="0.1" value="1.0"><span id="valMidGain">1.0x</span></div>
+      <div style="font-size:0.75rem; color:#8b949e;">Gain Reduction</div>
+      <div class="meter-bar"><div id="meterMid" class="meter-fill" style="background: var(--amber);"></div></div>
+    </div>
+
+    <!-- High Band -->
+    <div class="band-box" style="border-top: 3px solid var(--accent);">
+      <div class="band-title" style="color: var(--accent);">High Band (> <span id="txtHighFreq">3000</span> Hz)</div>
+      <div class="ctrl-row"><span>Threshold</span><input type="range" id="highThresh" min="-60" max="0" value="-12"><span id="valHighThresh">-12dB</span></div>
+      <div class="ctrl-row"><span>Ratio</span><input type="range" id="highRatio" min="1" max="20" value="2"><span id="valHighRatio">2:1</span></div>
+      <div class="ctrl-row"><span>Gain (Makeup)</span><input type="range" id="highGain" min="0" max="3" step="0.1" value="1.1"><span id="valHighGain">1.1x</span></div>
+      <div style="font-size:0.75rem; color:#8b949e;">Gain Reduction</div>
+      <div class="meter-bar"><div id="meterHigh" class="meter-fill" style="background: var(--accent);"></div></div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
