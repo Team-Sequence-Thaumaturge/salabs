@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Track Soundstage & Audio Mixer - Quanxs SA Labs</title>
+    <meta name="description" content="100% Client-Side Web Audio API Multi-Track Soundstage Synthesizer & Mixer. Control frequency, waveforms, individual panning, volume, and real-time audio visualization.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Multi-Track Soundstage Audio Mixer",
+      "url": "https://salabs.quanxs.com/tools/audio-multi-track-soundstage-mixer.html",
+      "description": "Interactive multi-channel audio synthesizer and soundstage mixer built with the Web Audio API.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --bg-main: #0a0e17;
+            --bg-panel: #111927;
+            --bg-track: #182234;
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.3);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background: var(--bg-main); color: var(--text-main); padding: 24px 16px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 100%; max-width: 900px; display: flex; flex-direction: column; gap: 20px; }
+        header { text-align: center; margin-bottom: 8px; }
+        header h1 { font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+        header p { color: var(--text-muted); font-size: 0.95rem; }
+        .panel { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+        .visualizer-container { width: 100%; height: 140px; background: #000; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 16px; }
+        canvas { width: 100%; height: 100%; display: block; }
+        .master-controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; padding: 12px; background: #0e1522; border-radius: 8px; margin-bottom: 16px; }
+        .btn { background: var(--accent); color: #0f172a; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .btn:hover { filter: brightness(1.1); box-shadow: 0 0 12px var(--accent-glow); }
+        .btn-stop { background: #f43f5e; color: #fff; }
+        .tracks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+        .track-card { background: var(--bg-track); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+        .track-header { display: flex; justify-content: space-between; font-weight: 600; font-size: 0.9rem; color: var(--accent); }
+        .control-group { display: flex; flex-direction: column; gap: 4px; }
+        .control-group label { font-size: 0.8rem; color: var(--text-muted); display: flex; justify-content: space-between; }
+        input[type="range"], select { width: 100%; background: #0a0e17; border: 1px solid var(--border-color); color: #fff; border-radius: 4px; padding: 4px; }
+        .mute-btn { background: #334155; color: #fff; border: none; padding: 6px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; }
+        .mute-btn.active { background: #ef4444; }
+    </style>
+<script>
+
+        let audioCtx = null;
+        let masterGain = null;
+        let analyser = null;
+        let isPlaying = false;
+
+        const trackConfigs = [
+            { name: "Channel 1 (Lead)", type: "sine", freq: 440, pan: -0.6, vol: 0.6, muted: false },
+            { name: "Channel 2 (Harmony)", type: "triangle", freq: 554.37, pan: -0.2, vol: 0.5, muted: false },
+            { name: "Channel 3 (Chord)", type: "sawtooth", freq: 659.25, pan: 0.3, vol: 0.4, muted: false },
+            { name: "Channel 4 (Bass)", type: "square", freq: 110, pan: 0.7, vol: 0.5, muted: false }
+        ];
+
+        let activeNodes = [];
+
+        function initTracksUI() {
+            const grid = document.getElementById('tracksGrid');
+            grid.innerHTML = '';
+            trackConfigs.forEach((t, i) => {
+                const card = document.createElement('div');
+                card.className = 'track-card';
+                card.innerHTML = `
+                    <div class="track-header">
+                        <span>${t.name}</span>
+                        <button class="mute-btn ${t.muted ? 'active' : ''}" id="mute-${i}">Mute</button>
+                    </div>
+                    <div class="control-group">
+                        <label>Waveform</label>
+                        <select id="wave-${i}">
+                            <option value="sine" ${t.type==='sine'?'selected':''}>Sine</option>
+                            <option value="triangle" ${t.type==='triangle'?'selected':''}>Triangle</option>
+                            <option value="sawtooth" ${t.type==='sawtooth'?'selected':''}>Sawtooth</option>
+                            <option value="square" ${t.type==='square'?'selected':''}>Square</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Frequency <span>${t.freq} Hz</span></label>
+                        <input type="range" id="freq-${i}" min="40" max="1500" step="1" value="${t.freq}">
+                    </div>
+                    <div class="control-group">
+                        <label>Stereo Pan <span>${t.pan}</span></label>
+                        <input type="range" id="pan-${i}" min="-1" max="1" step="0.05" value="${t.pan}">
+                    </div>
+                    <div class="control-group">
+                        <label>Volume <span>${t.vol}</span></label>
+                        <input type="range" id="vol-${i}" min="0" max="1" step="0.01" value="${t.vol}">
+                    </div>
+                `;
+                grid.appendChild(card);
+
+                card.querySelector(`#wave-${i}`).addEventListener('change', (e) => {
+                    t.type = e.target.value;
+                    if(activeNodes[i]) activeNodes[i].osc.type = t.type;
+                });
+                card.querySelector(`#freq-${i}`).addEventListener('input', (e) => {
+                    t.freq = parseFloat(e.target.value);
+                    e.target.previousElementSibling.querySelector('span').innerText = t.freq + " Hz";
+                    if(activeNodes[i]) activeNodes[i].osc.frequency.setValueAtTime(t.freq, audioCtx.currentTime);
+                });
+                card.querySelector(`#pan-${i}`).addEventListener('input', (e) => {
+                    t.pan = parseFloat(e.target.value);
+                    e.target.previousElementSibling.querySelector('span').innerText = t.pan;
+                    if(activeNodes[i] && activeNodes[i].panner.pan) activeNodes[i].panner.pan.setValueAtTime(t.pan, audioCtx.currentTime);
+                });
+                card.querySelector(`#vol-${i}`).addEventListener('input', (e) => {
+                    t.vol = parseFloat(e.target.value);
+                    e.target.previousElementSibling.querySelector('span').innerText = t.vol;
+                    if(activeNodes[i] && !t.muted) activeNodes[i].gain.gain.setValueAtTime(t.vol, audioCtx.currentTime);
+                });
+                card.querySelector(`#mute-${i}`).addEventListener('click', (e) => {
+                    t.muted = !t.muted;
+                    e.target.classList.toggle('active', t.muted);
+                    if(activeNodes[i]) {
+                        activeNodes[i].gain.gain.setValueAtTime(t.muted ? 0 : t.vol, audioCtx.currentTime);
+                    }
+                });
+            });
+        }
+
+        function startAudio() {
+            if(!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                masterGain = audioCtx.createGain();
+                masterGain.gain.value = parseFloat(document.getElementById('masterVolume').value);
+                analyser = audioCtx.createAnalyser();
+                analyser.fftSize = 256;
+                masterGain.connect(analyser);
+                analyser.connect(audioCtx.destination);
+            }
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            stopAudio();
+
+            activeNodes = trackConfigs.map(t => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                let panner = null;
+                if(audioCtx.createStereoPanner) {
+                    panner = audioCtx.createStereoPanner();
+                    panner.pan.value = t.pan;
+                } else {
+                    panner = audioCtx.createPanner();
+                }
+
+                osc.type = t.type;
+                osc.frequency.value = t.freq;
+                gain.gain.value = t.muted ? 0 : t.vol;
+
+                osc.connect(gain);
+                gain.connect(panner);
+                panner.connect(masterGain);
+                osc.start();
+
+                return { osc, gain, panner };
+            });
+
+            isPlaying = true;
+            renderVisualizer();
+        }
+
+        function stopAudio() {
+            activeNodes.forEach(node => {
+                try { node.osc.stop(); node.osc.disconnect(); } catch(e){}
+            });
+            activeNodes = [];
+            isPlaying = false;
+        }
+
+        document.getElementById('playBtn').addEventListener('click', startAudio);
+        document.getElementById('stopBtn').addEventListener('click', stopAudio);
+        document.getElementById('masterVolume').addEventListener('input', (e) => {
+            if(masterGain) masterGain.gain.setValueAtTime(parseFloat(e.target.value), audioCtx.currentTime);
+        });
+
+        function renderVisualizer() {
+            const canvas = document.getElementById('vizCanvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+
+            const bufferLength = analyser ? analyser.frequencyBinCount : 128;
+            const dataArray = new Uint8Array(bufferLength);
+
+            function draw() {
+                if(!isPlaying) {
+                    ctx.fillStyle = '#0a0e17';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    return;
+                }
+                requestAnimationFrame(draw);
+                analyser.getByteFrequencyData(dataArray);
+
+                ctx.fillStyle = '#05080f';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                const barWidth = (canvas.width / bufferLength) * 2.2;
+                let x = 0;
+
+                for (let i = 0; i < bufferLength; i++) {
+                    const barHeight = (dataArray[i] / 255) * canvas.height;
+                    const r = 56 + (i * 2);
+                    const g = 189 - (i / 2);
+                    const b = 248;
+
+                    ctx.fillStyle = `rgb(${r},${g},${b})`;
+                    ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                    x += barWidth + 1;
+                }
+            }
+            draw();
+        }
+
+        initTracksUI();
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Multi-Track Soundstage Audio Mixer</h1>
+            <p>100% Client-side Web Audio API 4-Channel Synthesizer & Soundstage Mixer</p>
+        </header>
+
+        <div class="panel">
+            <div class="visualizer-container">
+                <canvas id="vizCanvas"></canvas>
+            </div>
+
+            <div class="master-controls">
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn" id="playBtn">▶ Start Master Engine</button>
+                    <button class="btn btn-stop" id="stopBtn">⏹ Stop All</button>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <label style="font-size: 0.9rem; color: var(--text-muted);">Master Volume</label>
+                    <input type="range" id="masterVolume" min="0" max="1" step="0.01" value="0.7" style="width: 140px;">
+                </div>
+            </div>
+
+            <div class="tracks-grid" id="tracksGrid">
+                <!-- 4 Interactive Audio Tracks Generated Dynamically -->
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merkle Tree Proof Generator & Verifier - Quanxs SA Labs</title>
+    <meta name="description" content="100% Client-Side Web Crypto SubtleCrypto SHA-256 Merkle Tree Hash Tree Builder and Cryptographic Inclusion Proof Audit Validator.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Merkle Tree Proof Studio",
+      "url": "https://salabs.quanxs.com/tools/crypto-merkle-tree-proof-generator.html",
+      "description": "Cryptographic SHA-256 Merkle tree calculation, audit path proof generator, and verification studio.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --bg-main: #0a0e17;
+            --bg-panel: #111927;
+            --accent: #8b5cf6;
+            --accent-glow: rgba(139, 92, 246, 0.3);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background: var(--bg-main); color: var(--text-main); padding: 24px 16px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 100%; max-width: 900px; display: flex; flex-direction: column; gap: 20px; }
+        header { text-align: center; margin-bottom: 8px; }
+        header h1 { font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+        header p { color: var(--text-muted); font-size: 0.95rem; }
+        .panel { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); display: flex; flex-direction: column; gap: 16px; }
+        textarea { width: 100%; height: 110px; background: #070a12; border: 1px solid var(--border-color); color: #38bdf8; font-family: monospace; border-radius: 6px; padding: 10px; font-size: 0.9rem; resize: vertical; }
+        .btn { background: var(--accent); color: #fff; border: none; padding: 10px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .btn:hover { filter: brightness(1.1); box-shadow: 0 0 12px var(--accent-glow); }
+        .root-box { background: #070a12; border: 1px solid var(--accent); border-radius: 8px; padding: 14px; font-family: monospace; font-size: 0.9rem; word-break: break-all; color: #a78bfa; }
+        .tree-view { display: flex; flex-direction: column; gap: 12px; background: #050811; border-radius: 8px; padding: 16px; border: 1px solid var(--border-color); overflow-x: auto; }
+        .tree-level { display: flex; justify-content: center; gap: 12px; }
+        .tree-node { background: #1e293b; border: 1px solid #334155; border-radius: 6px; padding: 6px 10px; font-family: monospace; font-size: 0.75rem; color: #cbd5e1; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .tree-node.highlight { border-color: #38bdf8; background: #0369a1; color: #fff; }
+        .proof-box { background: #0c1424; border: 1px solid #1d4ed8; border-radius: 8px; padding: 14px; font-size: 0.85rem; }
+    </style>
+<script>
+
+        async function sha256(text) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(text);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        let currentTree = [];
+        let currentLeaves = [];
+
+        async function buildMerkleTree() {
+            const lines = document.getElementById('leafInputs').value.trim().split('\n').filter(l => l.trim().length > 0);
+            if(lines.length === 0) return;
+
+            currentLeaves = lines;
+            let currentLevel = await Promise.all(lines.map(async line => await sha256(line)));
+            currentTree = [currentLevel];
+
+            while(currentLevel.length > 1) {
+                let nextLevel = [];
+                for(let i = 0; i < currentLevel.length; i += 2) {
+                    if(i + 1 < currentLevel.length) {
+                        const combined = await sha256(currentLevel[i] + currentLevel[i+1]);
+                        nextLevel.push(combined);
+                    } else {
+                        // Duplicate odd leaf
+                        const combined = await sha256(currentLevel[i] + currentLevel[i]);
+                        nextLevel.push(combined);
+                    }
+                }
+                currentTree.push(nextLevel);
+                currentLevel = nextLevel;
+            }
+
+            const rootHash = currentTree[currentTree.length - 1][0];
+            document.getElementById('rootDisplay').innerText = rootHash;
+            renderTree();
+        }
+
+        function renderTree() {
+            const container = document.getElementById('treeContainer');
+            container.innerHTML = '';
+
+            for(let level = currentTree.length - 1; level >= 0; level--) {
+                const row = document.createElement('div');
+                row.className = 'tree-level';
+                currentTree[level].forEach((hash, idx) => {
+                    const node = document.createElement('div');
+                    node.className = 'tree-node';
+                    node.innerText = `${hash.slice(0, 8)}...${hash.slice(-6)}`;
+                    node.title = hash;
+                    if(level === 0) {
+                        node.style.cursor = 'pointer';
+                        node.onclick = () => generateProof(idx);
+                    }
+                    row.appendChild(node);
+                });
+                container.appendChild(row);
+            }
+        }
+
+        async function generateProof(leafIdx) {
+            let proof = [];
+            let idx = leafIdx;
+
+            for(let level = 0; level < currentTree.length - 1; level++) {
+                const isRight = idx % 2 === 1;
+                const siblingIdx = isRight ? idx - 1 : (idx + 1 < currentTree[level].length ? idx + 1 : idx);
+                proof.push({
+                    sibling: currentTree[level][siblingIdx],
+                    direction: isRight ? 'left' : 'right'
+                });
+                idx = Math.floor(idx / 2);
+            }
+
+            // Verify Proof
+            let hash = currentTree[0][leafIdx];
+            for(let p of proof) {
+                if(p.direction === 'left') {
+                    hash = await sha256(p.sibling + hash);
+                } else {
+                    hash = await sha256(hash + p.sibling);
+                }
+            }
+
+            const root = currentTree[currentTree.length - 1][0];
+            const isValid = (hash === root);
+
+            document.getElementById('proofText').innerHTML = `
+                <div style="color: ${isValid ? '#34d399' : '#f87171'}; font-weight: bold; margin-bottom: 6px;">
+                    ${isValid ? '✅ Cryptographic Proof Verified!' : '❌ Proof Verification Failed'}
+                </div>
+                <div>Target Leaf: "${currentLeaves[leafIdx]}"</div>
+                <div>Leaf Hash: ${currentTree[0][leafIdx]}</div>
+                <div>Proof Steps: ${proof.length}</div>
+                <div style="margin-top: 6px;">Computed Root: ${hash}</div>
+                <div>Expected Root: ${root}</div>
+            `;
+        }
+
+        document.getElementById('buildBtn').addEventListener('click', buildMerkleTree);
+        window.addEventListener('DOMContentLoaded', buildMerkleTree);
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Cryptographic Merkle Tree Studio</h1>
+            <p>100% Client-Side Web Crypto SHA-256 Hash Tree & Audit Proof Verifier</p>
+        </header>
+
+        <div class="panel">
+            <div>
+                <label style="font-size: 0.9rem; color: var(--text-muted); font-weight: 600; margin-bottom: 6px; display: block;">
+                    Leaf Data Items (One item per line)
+                </label>
+                <textarea id="leafInputs">tx1: Alice -> Bob (1.5 BTC)
+tx2: Charlie -> Dave (0.8 ETH)
+tx3: Eve -> Frank (100 USDT)
+tx4: Grace -> Heidi (50 SOL)</textarea>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button class="btn" id="buildBtn">⚡ Compute Merkle Root & Build Tree</button>
+            </div>
+
+            <div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px;">Merkle Root Hash (SHA-256)</div>
+                <div class="root-box" id="rootDisplay">Calculating...</div>
+            </div>
+
+            <div>
+                <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px;">Visual Tree Representation</div>
+                <div class="tree-view" id="treeContainer"></div>
+            </div>
+
+            <div class="proof-box" id="proofContainer">
+                <div style="font-weight: 600; color: #60a5fa; margin-bottom: 6px;">Inclusion Audit Proof Validator</div>
+                <div id="proofText" style="font-family: monospace; color: #94a3b8;">Click any leaf node in the tree above to compute and verify its inclusion audit proof path.</div>
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>

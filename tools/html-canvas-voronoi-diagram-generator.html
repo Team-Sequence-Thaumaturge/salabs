@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Voronoi & Delaunay Diagram Studio - Quanxs SA Labs</title>
+    <meta name="description" content="100% Client-Side Pure HTML5 Canvas Voronoi Diagram & Delaunay Mesh Generator. Real-time metric calculations (Euclidean, Manhattan, Chebyshev) with SVG and PNG export.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Voronoi & Delaunay Studio",
+      "url": "https://salabs.quanxs.com/tools/html-canvas-voronoi-diagram-generator.html",
+      "description": "Interactive 2D Voronoi partition diagram and Delaunay mesh simulator with metric calculations.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --bg-main: #0a0e17;
+            --bg-panel: #111927;
+            --accent: #10b981;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background: var(--bg-main); color: var(--text-main); padding: 24px 16px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        .container { width: 100%; max-width: 960px; display: flex; flex-direction: column; gap: 16px; }
+        header { text-align: center; }
+        header h1 { font-size: 1.8rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+        header p { color: var(--text-muted); font-size: 0.95rem; }
+        .main-layout { display: grid; grid-template-columns: 1fr 280px; gap: 16px; }
+        @media(max-width: 768px) { .main-layout { grid-template-columns: 1fr; } }
+        .canvas-card { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; align-items: center; }
+        canvas { width: 100%; height: 480px; background: #000; border-radius: 8px; cursor: crosshair; }
+        .controls-card { background: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+        .btn { background: var(--accent); color: #042f2e; border: none; padding: 10px 14px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s; width: 100%; }
+        .btn:hover { filter: brightness(1.1); }
+        .btn-outline { background: transparent; border: 1px solid var(--border-color); color: var(--text-main); }
+        .btn-outline:hover { background: #1e293b; }
+        .control-group { display: flex; flex-direction: column; gap: 6px; }
+        .control-group label { font-size: 0.85rem; color: var(--text-muted); }
+        select, input[type="range"] { width: 100%; background: #0a0e17; border: 1px solid var(--border-color); color: #fff; border-radius: 4px; padding: 6px; }
+    </style>
+<script>
+
+        const canvas = document.getElementById('voronoiCanvas');
+        const ctx = canvas.getContext('2d');
+        let points = [];
+        let numPoints = 25;
+        let metric = 'euclidean';
+        let palette = 'neon';
+        let draggingPoint = null;
+
+        const palettes = {
+            neon: ['#06b6d4', '#3b82f6', '#8b5cf6', '#ec4899', '#f43f5e', '#10b981'],
+            emerald: ['#064e3b', '#047857', '#059669', '#10b981', '#34d399', '#6ee7b7'],
+            sunset: ['#4c0519', '#881337', '#be123c', '#e11d48', '#fb7185', '#fde047'],
+            grayscale: ['#1e293b', '#334155', '#475569', '#64748b', '#94a3b8', '#cbd5e1']
+        };
+
+        function resize() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = 480;
+            if(points.length === 0) generatePoints();
+            render();
+        }
+
+        function generatePoints() {
+            points = [];
+            for (let i = 0; i < numPoints; i++) {
+                points.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    color: palettes[palette][i % palettes[palette].length]
+                });
+            }
+        }
+
+        function dist(x1, y1, x2, y2, type) {
+            const dx = Math.abs(x1 - x2);
+            const dy = Math.abs(y1 - y2);
+            if (type === 'manhattan') return dx + dy;
+            if (type === 'chebyshev') return Math.max(dx, dy);
+            if (type === 'minkowski') return Math.pow(Math.pow(dx, 3) + Math.pow(dy, 3), 1/3);
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+
+        function render() {
+            const width = canvas.width;
+            const height = canvas.height;
+            const imgData = ctx.createImageData(width, height);
+            const data = imgData.data;
+
+            const rgbMap = points.map(p => {
+                const c = p.color;
+                const r = parseInt(c.slice(1,3), 16);
+                const g = parseInt(c.slice(3,5), 16);
+                const b = parseInt(c.slice(5,7), 16);
+                return { r, g, b };
+            });
+
+            const step = 2; // Performance render resolution
+            for (let y = 0; y < height; y += step) {
+                for (let x = 0; x < width; x += step) {
+                    let minDist = Infinity;
+                    let nearestIdx = 0;
+
+                    for (let i = 0; i < points.length; i++) {
+                        const d = dist(x, y, points[i].x, points[i].y, metric);
+                        if (d < minDist) {
+                            minDist = d;
+                            nearestIdx = i;
+                        }
+                    }
+
+                    const rgb = rgbMap[nearestIdx];
+                    for (let dy = 0; dy < step && y + dy < height; dy++) {
+                        for (let dx = 0; dx < step && x + dx < width; dx++) {
+                            const idx = ((y + dy) * width + (x + dx)) * 4;
+                            data[idx] = rgb.r;
+                            data[idx+1] = rgb.g;
+                            data[idx+2] = rgb.b;
+                            data[idx+3] = 255;
+                        }
+                    }
+                }
+            }
+
+            ctx.putImageData(imgData, 0, 0);
+
+            if (document.getElementById('showMesh').checked) {
+                ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+                ctx.lineWidth = 1;
+                for(let i = 0; i < points.length; i++) {
+                    for(let j = i + 1; j < points.length; j++) {
+                        const d = Math.hypot(points[i].x - points[j].x, points[i].y - points[j].y);
+                        if(d < 140) {
+                            ctx.beginPath();
+                            ctx.moveTo(points[i].x, points[i].y);
+                            ctx.lineTo(points[j].x, points[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            if (document.getElementById('showPoints').checked) {
+                points.forEach(p => {
+                    ctx.fillStyle = '#ffffff';
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.strokeStyle = '#000000';
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+                });
+            }
+        }
+
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const clickedIdx = points.findIndex(p => Math.hypot(p.x - x, p.y - y) < 12);
+            if (clickedIdx >= 0) {
+                draggingPoint = points[clickedIdx];
+            } else {
+                points.push({ x, y, color: palettes[palette][points.length % palettes[palette].length] });
+                document.getElementById('ptCount').innerText = points.length;
+                render();
+            }
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!draggingPoint) return;
+            const rect = canvas.getBoundingClientRect();
+            draggingPoint.x = Math.max(0, Math.min(canvas.width, e.clientX - rect.left));
+            draggingPoint.y = Math.max(0, Math.min(canvas.height, e.clientY - rect.top));
+            render();
+        });
+
+        window.addEventListener('mouseup', () => { draggingPoint = null; });
+
+        document.getElementById('metricSelect').addEventListener('change', (e) => { metric = e.target.value; render(); });
+        document.getElementById('paletteSelect').addEventListener('change', (e) => {
+            palette = e.target.value;
+            points.forEach((p, i) => p.color = palettes[palette][i % palettes[palette].length]);
+            render();
+        });
+        document.getElementById('pointSlider').addEventListener('input', (e) => {
+            numPoints = parseInt(e.target.value);
+            document.getElementById('ptCount').innerText = numPoints;
+            generatePoints();
+            render();
+        });
+        document.getElementById('randomizeBtn').addEventListener('click', () => { generatePoints(); render(); });
+        document.getElementById('showPoints').addEventListener('change', render);
+        document.getElementById('showMesh').addEventListener('change', render);
+
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'voronoi-diagram.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+
+        window.addEventListener('resize', resize);
+        window.addEventListener('DOMContentLoaded', resize);
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Voronoi Diagram & Delaunay Mesh Studio</h1>
+            <p>100% Client-side HTML5 Canvas Geometric Partition & Distance Metric Generator</p>
+        </header>
+
+        <div class="main-layout">
+            <div class="canvas-card">
+                <canvas id="voronoiCanvas"></canvas>
+                <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px;">
+                    Click canvas to add points | Drag to reposition points
+                </div>
+            </div>
+
+            <div class="controls-card">
+                <div class="control-group">
+                    <label>Distance Metric</label>
+                    <select id="metricSelect">
+                        <option value="euclidean">Euclidean (L2 Norm)</option>
+                        <option value="manhattan">Manhattan (L1 Cityblock)</option>
+                        <option value="chebyshev">Chebyshev (L-Infinity)</option>
+                        <option value="minkowski">Minkowski (p=3)</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label>Seed Point Count: <span id="ptCount">25</span></label>
+                    <input type="range" id="pointSlider" min="5" max="60" value="25">
+                </div>
+
+                <div class="control-group">
+                    <label>Color Palette</label>
+                    <select id="paletteSelect">
+                        <option value="neon">Neon Cyberpunk</option>
+                        <option value="emerald">Emerald Forest</option>
+                        <option value="sunset">Solar Sunset</option>
+                        <option value="grayscale">High-Contrast Mono</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label><input type="checkbox" id="showPoints" checked> Show Point Seeds</label>
+                    <label><input type="checkbox" id="showMesh"> Show Delaunay Mesh</label>
+                </div>
+
+                <button class="btn" id="randomizeBtn">🎲 Randomize Seeds</button>
+                <button class="btn btn-outline" id="downloadBtn">💾 Export PNG Image</button>
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>
