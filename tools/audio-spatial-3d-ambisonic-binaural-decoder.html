@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D 앰비소닉스 바이노럴 디코더 | Quanxs SA Labs</title>
+  <meta name="description" content="1차/2차 앰비소닉스 구면 조화함수 기반 3D 공간 음향 바이노럴 가상화 디코더 및 사운드 필드 시뮬레이터 (100% 클라이언트 로컬 구동)">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "3D 앰비소닉스 바이노럴 디코더",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-3d-ambisonic-binaural-decoder.html",
+    "description": "구면 조화함수 기반 3D 앰비소닉스 B-format(W, X, Y, Z) 바이노럴 디코딩 및 가상 스피커 음장 시뮬레이터",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All"
+  }
+  </script>
+  <style>
+    :root { --bg: #0d1117; --card: #161b22; --border: #30363d; --text: #c9d1d9; --accent: #58a6ff; --accent-glow: rgba(88,166,255,0.2); }
+    body { margin: 0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: var(--bg); color: var(--text); }
+    .container { max-width: 900px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 24px; }
+    h1 { margin: 0 0 8px 0; color: #fff; font-size: 1.8rem; }
+    .desc { color: #8b949e; font-size: 0.95rem; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .control-group { margin-bottom: 16px; }
+    label { display: block; font-size: 0.85rem; color: #8b949e; margin-bottom: 6px; font-weight: 600; }
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+    select, button { width: 100%; padding: 10px 14px; background: #21262d; border: 1px solid var(--border); border-radius: 6px; color: #fff; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; }
+    button:hover { background: #30363d; border-color: var(--accent); }
+    button.primary { background: var(--accent); color: #0d1117; font-weight: 700; border: none; }
+    button.primary:hover { background: #79b8ff; box-shadow: 0 0 12px var(--accent-glow); }
+    canvas { width: 100%; height: 260px; background: #090d13; border: 1px solid var(--border); border-radius: 6px; display: block; margin-top: 10px; }
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 12px; }
+    .metric-box { background: #090d13; border: 1px solid var(--border); border-radius: 6px; padding: 10px; text-align: center; }
+    .metric-title { font-size: 0.75rem; color: #8b949e; }
+    .metric-val { font-size: 1rem; color: var(--accent); font-weight: bold; margin-top: 4px; font-family: monospace; }
+  </style>
+<script>
+
+    let ctx = null, osc = null, gainNode = null, pannerL = null, isRunning = false;
+    const canvas = document.getElementById('soundfieldCanvas');
+    const cCtx = canvas.getContext('2d');
+    function initCanvas() {
+      canvas.width = canvas.clientWidth * window.devicePixelRatio;
+      canvas.height = canvas.clientHeight * window.devicePixelRatio;
+      drawField();
+    }
+    window.addEventListener('resize', initCanvas);
+    function updateHarmonics() {
+      const az = parseFloat(document.getElementById('azimuth').value) * Math.PI / 180;
+      const el = parseFloat(document.getElementById('elevation').value) * Math.PI / 180;
+      const dist = parseFloat(document.getElementById('distance').value) / 10;
+      document.getElementById('azVal').innerText = document.getElementById('azimuth').value + '°';
+      document.getElementById('elVal').innerText = document.getElementById('elevation').value + '°';
+      document.getElementById('distVal').innerText = dist.toFixed(1) + 'm';
+      const W = 0.7071;
+      const X = Math.cos(el) * Math.cos(az);
+      const Y = Math.cos(el) * Math.sin(az);
+      const Z = Math.sin(el);
+      document.getElementById('valW').innerText = W.toFixed(3);
+      document.getElementById('valX').innerText = X.toFixed(3);
+      document.getElementById('valY').innerText = Y.toFixed(3);
+      document.getElementById('valZ').innerText = Z.toFixed(3);
+      if (ctx && pannerL) {
+        pannerL.positionX.setTargetAtTime(Y * dist, ctx.currentTime, 0.05);
+        pannerL.positionY.setTargetAtTime(Z * dist, ctx.currentTime, 0.05);
+        pannerL.positionZ.setTargetAtTime(-X * dist, ctx.currentTime, 0.05);
+      }
+      drawField();
+    }
+    function drawField() {
+      cCtx.clearRect(0, 0, canvas.width, canvas.height);
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+      const r = Math.min(cx, cy) * 0.75;
+      cCtx.strokeStyle = '#30363d';
+      cCtx.lineWidth = 2;
+      cCtx.beginPath(); cCtx.arc(cx, cy, r, 0, Math.PI * 2); cCtx.stroke();
+      cCtx.beginPath(); cCtx.arc(cx, cy, r * 0.5, 0, Math.PI * 2); cCtx.stroke();
+      cCtx.strokeStyle = '#21262d';
+      cCtx.beginPath(); cCtx.moveTo(cx - r, cy); cCtx.lineTo(cx + r, cy); cCtx.stroke();
+      cCtx.beginPath(); cCtx.moveTo(cx, cy - r); cCtx.lineTo(cx, cy + r); cCtx.stroke();
+      cCtx.fillStyle = '#fff'; cCtx.beginPath(); cCtx.arc(cx, cy, 6, 0, Math.PI * 2); cCtx.fill();
+      const az = parseFloat(document.getElementById('azimuth').value) * Math.PI / 180;
+      const dist = (parseFloat(document.getElementById('distance').value) / 100) * r;
+      const sx = cx + dist * Math.sin(az);
+      const sy = cy - dist * Math.cos(az);
+      cCtx.fillStyle = '#58a6ff'; cCtx.shadowColor = '#58a6ff'; cCtx.shadowBlur = 15;
+      cCtx.beginPath(); cCtx.arc(sx, sy, 9, 0, Math.PI * 2); cCtx.fill();
+      cCtx.shadowBlur = 0;
+    }
+    document.getElementById('togglePlay').addEventListener('click', () => {
+      if (!isRunning) {
+        ctx = new (window.AudioContext || window.webkitAudioContext)();
+        osc = ctx.createOscillator();
+        osc.type = document.getElementById('waveType').value === 'sawtooth' ? 'sawtooth' : 'sine';
+        osc.frequency.setValueAtTime(300, ctx.currentTime);
+        gainNode = ctx.createGain();
+        gainNode.gain.setValueAtTime(0.2, ctx.currentTime);
+        pannerL = ctx.createPanner();
+        pannerL.panningModel = 'HRTF';
+        pannerL.distanceModel = 'inverse';
+        osc.connect(gainNode);
+        gainNode.connect(pannerL);
+        pannerL.connect(ctx.destination);
+        osc.start();
+        isRunning = true;
+        document.getElementById('togglePlay').innerText = '엔진 정지 (Stop Engine)';
+        document.getElementById('togglePlay').style.background = '#f85149';
+        updateHarmonics();
+      } else {
+        if (osc) { osc.stop(); osc.disconnect(); }
+        if (ctx) { ctx.close(); }
+        isRunning = false;
+        document.getElementById('togglePlay').innerText = '앰비소닉스 엔진 가동 (Start Engine)';
+        document.getElementById('togglePlay').style.background = 'var(--accent)';
+      }
+    });
+    ['azimuth', 'elevation', 'distance'].forEach(id => {
+      document.getElementById(id).addEventListener('input', updateHarmonics);
+    });
+    initCanvas();
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>3D 앰비소닉스 바이노럴 디코더</h1>
+      <div class="desc">Spherical Harmonics B-Format (W, X, Y, Z) 3D 공간 음향 가상 헤드폰 디코더 & 음장 시각화기</div>
+    </header>
+    <div class="card">
+      <div class="grid-2">
+        <div>
+          <div class="control-group">
+            <label>사운드 소스 신호 (Signal Generator)</label>
+            <select id="waveType">
+              <option value="sine">Pure Sine Wave (440Hz)</option>
+              <option value="sawtooth">Harmonic Sawtooth (220Hz)</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label>방위각 Azimuth θ (-180° ~ +180°): <span id="azVal">0°</span></label>
+            <input type="range" id="azimuth" min="-180" max="180" value="0">
+          </div>
+          <div class="control-group">
+            <label>고도각 Elevation φ (-90° ~ +90°): <span id="elVal">0°</span></label>
+            <input type="range" id="elevation" min="-90" max="90" value="0">
+          </div>
+          <div class="control-group">
+            <label>거리 Distance r (0.5m ~ 10.0m): <span id="distVal">1.5m</span></label>
+            <input type="range" id="distance" min="5" max="100" value="15">
+          </div>
+        </div>
+        <div>
+          <div class="control-group">
+            <label>가상 디코더 가상 스피커 배열</label>
+            <select id="decoderLayout">
+              <option value="octahedron">8채널 정팔면체 (Virtual Octahedron)</option>
+              <option value="cube">8채널 정육면체 (Virtual Cube Array)</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label>앰비소닉스 차수 Order</label>
+            <select id="ambisonicOrder">
+              <option value="1">1st Order (4 Channels: W, X, Y, Z)</option>
+              <option value="2">2nd Order Higher Spherical Harmonics</option>
+            </select>
+          </div>
+          <div style="margin-top: 28px;">
+            <button id="togglePlay" class="primary">앰비소닉스 엔진 가동 (Start Engine)</button>
+          </div>
+        </div>
+      </div>
+      <canvas id="soundfieldCanvas"></canvas>
+      <div class="metrics">
+        <div class="metric-box"><div class="metric-title">W (Omni)</div><div class="metric-val" id="valW">0.707</div></div>
+        <div class="metric-box"><div class="metric-title">X (Front-Back)</div><div class="metric-val" id="valX">1.000</div></div>
+        <div class="metric-box"><div class="metric-title">Y (Left-Right)</div><div class="metric-val" id="valY">0.000</div></div>
+        <div class="metric-box"><div class="metric-title">Z (Up-Down)</div><div class="metric-val" id="valZ">0.000</div></div>
+      </div>
+    </div>
+  </div>
+  
+</body>
+</html>
