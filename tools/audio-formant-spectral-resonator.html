@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Formant Spectral Resonator Studio - Quanxs SA Labs</title>
+    <meta name="description" content="Professional client-side Web Audio Formant Spectral Resonator & Vowel Filter Studio. 100% local browser execution.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Audio Formant Spectral Resonator Studio",
+      "url": "https://salabs.quanxs.com/tools/audio-formant-spectral-resonator.html",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All",
+      "description": "High-fidelity Web Audio Formant Spectral Resonator & Vowel Filter Studio for real-time acoustic sound shaping and vocal synthesis."
+    }
+    </script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container { max-width: 900px; width: 100%; }
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { font-size: 2rem; color: var(--accent-color); margin-bottom: 0.5rem; }
+        header p { color: var(--text-muted); font-size: 0.95rem; }
+        .nav-back { display: inline-block; margin-bottom: 1rem; color: var(--accent-color); text-decoration: none; font-size: 0.9rem; }
+        .nav-back:hover { text-decoration: underline; }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+        }
+        .canvas-container {
+            width: 100%;
+            height: 220px;
+            background-color: #020617;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .control-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        .control-group label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent-color);
+        }
+        select, button {
+            background-color: #0f172a;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        select:focus, button:focus { outline: none; border-color: var(--accent-color); }
+        button.btn-primary {
+            background-color: #0284c7;
+            border-color: #0284c7;
+            font-weight: 600;
+            padding: 0.85rem 1.5rem;
+        }
+        button.btn-primary:hover { background-color: #0369a1; }
+        button.btn-stop { background-color: #e11d48; border-color: #e11d48; }
+        button.btn-stop:hover { background-color: #be123c; }
+        .button-bar { display: flex; gap: 1rem; justify-content: center; }
+        .badge {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--accent-color);
+            padding: 0.25rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+    </style>
+<script>
+
+        let audioCtx = null;
+        let osc = null;
+        let isPlaying = false;
+        let f1 = null, f2 = null, f3 = null;
+        let gainNode = null;
+        let analyser = null;
+        let animId = null;
+
+        const presets = {
+            'A': [800, 1200, 2800],
+            'E': [500, 1800, 2600],
+            'I': [300, 2300, 3000],
+            'O': [500, 1000, 2500],
+            'U': [350, 800, 2400]
+        };
+
+        const canvas = document.getElementById('spectralCanvas');
+        const ctx = canvas.getContext('2d');
+        const toggleBtn = document.getElementById('toggleBtn');
+        const vowelPreset = document.getElementById('vowelPreset');
+        const baseFreq = document.getElementById('baseFreq');
+        const qFactor = document.getElementById('qFactor');
+        const waveform = document.getElementById('waveform');
+        const freqVal = document.getElementById('freqVal');
+        const qVal = document.getElementById('qVal');
+        const vowelDisplay = document.getElementById('vowelDisplay');
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth * window.devicePixelRatio;
+            canvas.height = canvas.parentElement.clientHeight * window.devicePixelRatio;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function startSynth() {
+            initAudio();
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            osc = audioCtx.createOscillator();
+            osc.type = waveform.value;
+            osc.frequency.setValueAtTime(parseFloat(baseFreq.value), audioCtx.currentTime);
+
+            f1 = audioCtx.createBiquadFilter();
+            f2 = audioCtx.createBiquadFilter();
+            f3 = audioCtx.createBiquadFilter();
+
+            const q = parseFloat(qFactor.value);
+            const freqs = presets[vowelPreset.value];
+
+            [f1, f2, f3].forEach((f, idx) => {
+                f.type = 'bandpass';
+                f.frequency.setValueAtTime(freqs[idx], audioCtx.currentTime);
+                f.Q.setValueAtTime(q, audioCtx.currentTime);
+            });
+
+            gainNode = audioCtx.createGain();
+            gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+
+            analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 512;
+
+            osc.connect(f1);
+            osc.connect(f2);
+            osc.connect(f3);
+
+            f1.connect(gainNode);
+            f2.connect(gainNode);
+            f3.connect(gainNode);
+
+            gainNode.connect(analyser);
+            analyser.connect(audioCtx.destination);
+
+            osc.start();
+            isPlaying = true;
+            toggleBtn.textContent = 'Stop Resonator Synthesis';
+            toggleBtn.className = 'btn-stop';
+            drawSpectrum();
+        }
+
+        function stopSynth() {
+            if (osc) {
+                osc.stop();
+                osc.disconnect();
+                osc = null;
+            }
+            isPlaying = false;
+            toggleBtn.textContent = 'Start Resonator Synthesis';
+            toggleBtn.className = 'btn-primary';
+            if (animId) cancelAnimationFrame(animId);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            if (!isPlaying) startSynth();
+            else stopSynth();
+        });
+
+        baseFreq.addEventListener('input', (e) => {
+            freqVal.textContent = e.target.value + ' Hz';
+            if (osc) osc.frequency.setTargetAtTime(parseFloat(e.target.value), audioCtx.currentTime, 0.05);
+        });
+
+        qFactor.addEventListener('input', (e) => {
+            qVal.textContent = e.target.value;
+            if (isPlaying && f1) {
+                const q = parseFloat(e.target.value);
+                f1.Q.setTargetAtTime(q, audioCtx.currentTime, 0.05);
+                f2.Q.setTargetAtTime(q, audioCtx.currentTime, 0.05);
+                f3.Q.setTargetAtTime(q, audioCtx.currentTime, 0.05);
+            }
+        });
+
+        vowelPreset.addEventListener('change', (e) => {
+            const v = e.target.value;
+            vowelDisplay.textContent = 'Vowel /' + v.toLowerCase() + '/';
+            if (isPlaying && f1) {
+                const freqs = presets[v];
+                f1.frequency.setTargetAtTime(freqs[0], audioCtx.currentTime, 0.05);
+                f2.frequency.setTargetAtTime(freqs[1], audioCtx.currentTime, 0.05);
+                f3.frequency.setTargetAtTime(freqs[2], audioCtx.currentTime, 0.05);
+            }
+        });
+
+        waveform.addEventListener('change', (e) => {
+            if (osc) osc.type = e.target.value;
+        });
+
+        function drawSpectrum() {
+            if (!isPlaying) return;
+            animId = requestAnimationFrame(drawSpectrum);
+
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            analyser.getByteFrequencyData(dataArray);
+
+            ctx.fillStyle = '#020617';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const barWidth = (canvas.width / bufferLength) * 2.5;
+            let barHeight;
+            let x = 0;
+
+            for (let i = 0; i < bufferLength; i++) {
+                barHeight = (dataArray[i] / 255) * canvas.height;
+                const r = Math.min(255, 56 + i * 2);
+                const g = 189;
+                const b = 248;
+                ctx.fillStyle = `rgb(${r},${g},${b})`;
+                ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                x += barWidth + 1;
+            }
+        }
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="nav-back">&larr; Back to SA Labs Hub</a>
+        <header>
+            <h1>Audio Formant Spectral Resonator</h1>
+            <p>Real-time client-side acoustic vowel resonator and harmonic formant filter studio using Web Audio API</p>
+        </header>
+
+        <div class="card">
+            <div class="canvas-container">
+                <canvas id="spectralCanvas"></canvas>
+            </div>
+
+            <div class="controls-grid">
+                <div class="control-group">
+                    <label for="vowelPreset">Vowel Formant Preset <span id="vowelDisplay" class="badge">A [a:]</span></label>
+                    <select id="vowelPreset">
+                        <option value="A">Vowel /a/ (Father: F1:800Hz, F2:1200Hz, F3:2800Hz)</option>
+                        <option value="E">Vowel /e/ (Bed: F1:500Hz, F2:1800Hz, F3:2600Hz)</option>
+                        <option value="I">Vowel /i/ (See: F1:300Hz, F2:2300Hz, F3:3000Hz)</option>
+                        <option value="O">Vowel /o/ (Go: F1:500Hz, F2:1000Hz, F3:2500Hz)</option>
+                        <option value="U">Vowel /u/ (Boot: F1:350Hz, F2:800Hz, F3:2400Hz)</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="baseFreq">Fundamental Pitch (F0): <span id="freqVal">120 Hz</span></label>
+                    <input type="range" id="baseFreq" min="50" max="440" value="120">
+                </div>
+                <div class="control-group">
+                    <label for="qFactor">Resonance Q-Factor: <span id="qVal">12</span></label>
+                    <input type="range" id="qFactor" min="1" max="30" value="12">
+                </div>
+                <div class="control-group">
+                    <label for="waveform">Carrier Waveform</label>
+                    <select id="waveform">
+                        <option value="sawtooth">Sawtooth (Rich Harmonics)</option>
+                        <option value="square">Square (Hollow Overtone)</option>
+                        <option value="triangle">Triangle (Subtle Formant)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="button-bar">
+                <button id="toggleBtn" class="btn-primary">Start Resonator Synthesis</button>
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>

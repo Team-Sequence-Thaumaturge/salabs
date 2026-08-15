@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4D-to-3D Klein Bottle ASCII Matrix Pro - Quanxs SA Labs</title>
+    <meta name="description" content="Real-time 4D-to-3D Projected Klein Bottle ASCII Art Visualizer Studio with Pure Trigonometric Matrix. 100% Client-Side JS.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "4D Klein Bottle ASCII Matrix Pro",
+      "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-klein-bottle-pro.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "description": "Interactive client-side 4D non-orientable Klein bottle projection rendered in real-time ASCII matrix characters."
+    }
+    </script>
+    <style>
+        :root {
+            --bg-color: #090d16;
+            --card-bg: #131b2e;
+            --accent-color: #10b981;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: #1f293d;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container { max-width: 900px; width: 100%; }
+        header { text-align: center; margin-bottom: 1.5rem; }
+        header h1 { font-size: 1.8rem; color: var(--accent-color); margin-bottom: 0.5rem; font-family: monospace; }
+        header p { color: var(--text-muted); font-size: 0.9rem; }
+        .nav-back { display: inline-block; margin-bottom: 1rem; color: var(--accent-color); text-decoration: none; font-size: 0.9rem; }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        }
+        #asciiOutput {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11px;
+            line-height: 11px;
+            letter-spacing: 2px;
+            white-space: pre;
+            background-color: #030712;
+            color: var(--accent-color);
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            min-height: 380px;
+            user-select: none;
+        }
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .control-group { display: flex; flex-direction: column; gap: 0.4rem; }
+        .control-group label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+        input[type="range"] { width: 100%; accent-color: var(--accent-color); }
+        select, button {
+            background-color: #090d16;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.6rem 0.8rem;
+            border-radius: 0.4rem;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .btn-group { display: flex; gap: 0.75rem; margin-top: 1.25rem; justify-content: center; }
+        button.btn-primary { background-color: #059669; border-color: #059669; font-weight: bold; }
+        button.btn-primary:hover { background-color: #047857; }
+    </style>
+<script>
+
+        const output = document.getElementById('asciiOutput');
+        const speedX = document.getElementById('speedX');
+        const speedY = document.getElementById('speedY');
+        const speedXVal = document.getElementById('speedXVal');
+        const speedYVal = document.getElementById('speedYVal');
+        const glyphSet = document.getElementById('glyphSet');
+        const scaleFactor = document.getElementById('scaleFactor');
+        const scaleVal = document.getElementById('scaleVal');
+        const toggleAnim = document.getElementById('toggleAnim');
+        const resetView = document.getElementById('resetView');
+
+        let A = 0, B = 0;
+        let running = true;
+        let animId = null;
+
+        const glyphs = {
+            dense: " .:-=+*#%@",
+            matrix: " 01░▒▓█",
+            minimal: " .·:*"
+        };
+
+        const WIDTH = 64;
+        const HEIGHT = 32;
+
+        function renderFrame() {
+            if (!running) return;
+
+            const b = [];
+            const z = [];
+            const currentGlyphs = glyphs[glyphSet.value];
+            const maxGlyph = currentGlyphs.length - 1;
+            const scale = parseFloat(scaleFactor.value);
+
+            for (let k = 0; k < WIDTH * HEIGHT; k++) {
+                b[k] = ' ';
+                z[k] = -1e9;
+            }
+
+            const cosA = Math.cos(A), sinA = Math.sin(A);
+            const cosB = Math.cos(B), sinB = Math.sin(B);
+
+            // Klein Bottle Parametric Equation
+            for (let u = 0; u < Math.PI * 2; u += 0.08) {
+                for (let v = 0; v < Math.PI * 2; v += 0.08) {
+                    let x, y, zCoord;
+                    const r = 4 * (1 - Math.cos(u) / 2);
+                    if (u < Math.PI) {
+                        x = 6 * Math.cos(u) * (1 + Math.sin(u)) + r * Math.cos(u) * Math.cos(v);
+                        y = 16 * Math.sin(u) + r * Math.sin(u) * Math.cos(v);
+                    } else {
+                        x = 6 * Math.cos(u) * (1 + Math.sin(u)) + r * Math.cos(v + Math.PI);
+                        y = 16 * Math.sin(u);
+                    }
+                    zCoord = r * Math.sin(v);
+
+                    // 3D Rotation
+                    const nx = x;
+                    const ny = y * cosA - zCoord * sinA;
+                    const nz = y * sinA + zCoord * cosA;
+
+                    const rx = nx * cosB + nz * sinB;
+                    const ry = ny;
+                    const rz = -nx * sinB + nz * cosB + 35;
+
+                    const ooz = 1 / rz;
+                    const xp = Math.floor(WIDTH / 2 + (rx * ooz * scale * 2.2));
+                    const yp = Math.floor(HEIGHT / 2 + (ry * ooz * scale * 1.1));
+
+                    if (xp >= 0 && xp < WIDTH && yp >= 0 && yp < HEIGHT) {
+                        const idx = xp + yp * WIDTH;
+                        if (ooz > z[idx]) {
+                            z[idx] = ooz;
+                            const luminance = Math.floor((nz + 15) / 30 * maxGlyph);
+                            const lClamped = Math.max(0, Math.min(maxGlyph, luminance));
+                            b[idx] = currentGlyphs[lClamped];
+                        }
+                    }
+                }
+            }
+
+            let str = '';
+            for (let y = 0; y < HEIGHT; y++) {
+                for (let x = 0; x < WIDTH; x++) {
+                    str += b[x + y * WIDTH];
+                }
+                str += '\n';
+            }
+            output.textContent = str;
+
+            A += (parseFloat(speedX.value) / 10) * 0.02;
+            B += (parseFloat(speedY.value) / 10) * 0.03;
+
+            animId = requestAnimationFrame(renderFrame);
+        }
+
+        speedX.addEventListener('input', (e) => { speedXVal.textContent = (e.target.value / 10).toFixed(1) + 'x'; });
+        speedY.addEventListener('input', (e) => { speedYVal.textContent = (e.target.value / 10).toFixed(1) + 'x'; });
+        scaleFactor.addEventListener('input', (e) => { scaleVal.textContent = (e.target.value / 14).toFixed(1); });
+
+        toggleAnim.addEventListener('click', () => {
+            running = !running;
+            toggleAnim.textContent = running ? 'Pause Animation' : 'Resume Animation';
+            if (running) renderFrame();
+        });
+
+        resetView.addEventListener('click', () => {
+            A = 0; B = 0;
+            if (!running) { running = true; renderFrame(); running = false; }
+        });
+
+        renderFrame();
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="nav-back">&larr; Back to SA Labs Hub</a>
+        <header>
+            <h1>4D Klein Bottle ASCII Matrix Pro</h1>
+            <p>Non-orientable 4D surface trigonometric rotation & ASCII depth shading</p>
+        </header>
+
+        <div class="card">
+            <pre id="asciiOutput">Initializing 4D Projection Matrix...</pre>
+
+            <div class="controls-grid">
+                <div class="control-group">
+                    <label for="speedX">Rotation Speed X: <span id="speedXVal">1.0x</span></label>
+                    <input type="range" id="speedX" min="0" max="30" value="10">
+                </div>
+                <div class="control-group">
+                    <label for="speedY">Rotation Speed Y: <span id="speedYVal">1.5x</span></label>
+                    <input type="range" id="speedY" min="0" max="30" value="15">
+                </div>
+                <div class="control-group">
+                    <label for="glyphSet">ASCII Glyph Density</label>
+                    <select id="glyphSet">
+                        <option value="dense">Dense: .:-=+*#%@</option>
+                        <option value="matrix">Matrix: 01░▒▓█</option>
+                        <option value="minimal">Minimal: . · : *</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="scaleFactor">Model Scale: <span id="scaleVal">1.0</span></label>
+                    <input type="range" id="scaleFactor" min="5" max="25" value="14">
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button id="toggleAnim" class="btn-primary">Pause Animation</button>
+                <button id="resetView">Reset Coordinates</button>
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>

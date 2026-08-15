@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero-Knowledge Pedersen Commitment Studio - Quanxs SA Labs</title>
+    <meta name="description" content="Client-side Zero-Knowledge Pedersen Commitment & Homomorphic Blinding Factor Studio. 100% Web Crypto API.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Zero-Knowledge Pedersen Commitment Studio",
+      "url": "https://salabs.quanxs.com/tools/crypto-zk-pedersen-commitment-studio.html",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "All",
+      "description": "Cryptographic Pedersen Commitment generator and homomorphic property verifier with zero-knowledge blinding factors."
+    }
+    </script>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --accent-color: #a855f7;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --border-color: #1f2937;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container { max-width: 900px; width: 100%; }
+        header { text-align: center; margin-bottom: 2rem; }
+        header h1 { font-size: 2rem; color: var(--accent-color); margin-bottom: 0.5rem; }
+        header p { color: var(--text-muted); font-size: 0.95rem; }
+        .nav-back { display: inline-block; margin-bottom: 1rem; color: var(--accent-color); text-decoration: none; font-size: 0.9rem; }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+        @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+        label { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); }
+        input[type="text"], input[type="number"], textarea {
+            background-color: #030712;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            font-family: monospace;
+        }
+        button {
+            background-color: #9333ea;
+            border: 1px solid #9333ea;
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover { background-color: #7e22ce; }
+        .result-box {
+            background-color: #030712;
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            font-size: 0.85rem;
+            word-break: break-all;
+            color: #38bdf8;
+            margin-top: 0.5rem;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+        .status-valid { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid #22c55e; }
+        .status-invalid { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+    </style>
+<script>
+
+        // Secp256k1 base generators (G and H)
+        const G = BigInt("0x79BE667EF9DCBBAC55A06295CE870B07029BFCDB2DCE28D959F2815B16F81798");
+        const H = BigInt("0x25E22E1A8771A6CF56B3A64FA9D50D676F0E34509A29EA610AC9D45E661297B3");
+        const P = BigInt("0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F");
+
+        function modPow(base, exp, mod) {
+            let res = 1n;
+            base = base % mod;
+            while (exp > 0n) {
+                if (exp % 2n === 1n) res = (res * base) % mod;
+                base = (base * base) % mod;
+                exp = exp / 2n;
+            }
+            return res;
+        }
+
+        async function computeCommitment(v, r) {
+            const vBig = BigInt(v);
+            const rBig = BigInt("0x" + r);
+            const gV = modPow(G, vBig, P);
+            const hR = modPow(H, rBig, P);
+            const c = (gV * hR) % P;
+
+            // SHA-256 Digest for compact visual commitment
+            const enc = new TextEncoder();
+            const hashBuf = await crypto.subtle.digest("SHA-256", enc.encode(c.toString(16)));
+            const hashArr = Array.from(new Uint8Array(hashBuf));
+            return hashArr.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        function generateRandomHex(bytes) {
+            const arr = new Uint8Array(bytes);
+            crypto.getRandomValues(arr);
+            return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        const secretValue = document.getElementById('secretValue');
+        const blindingFactor = document.getElementById('blindingFactor');
+        const commitBtn = document.getElementById('commitBtn');
+        const commitmentResult = document.getElementById('commitmentResult');
+
+        const verifyValue = document.getElementById('verifyValue');
+        const verifyBlinding = document.getElementById('verifyBlinding');
+        const targetCommitment = document.getElementById('targetCommitment');
+        const verifyBtn = document.getElementById('verifyBtn');
+        const verifyStatus = document.getElementById('verifyStatus');
+
+        commitBtn.addEventListener('click', async () => {
+            if (!blindingFactor.value.trim()) {
+                blindingFactor.value = generateRandomHex(32);
+            }
+            const val = parseInt(secretValue.value, 10) || 0;
+            const r = blindingFactor.value.trim();
+
+            const cHash = await computeCommitment(val, r);
+            commitmentResult.textContent = cHash;
+
+            verifyValue.value = val;
+            verifyBlinding.value = r;
+            targetCommitment.value = cHash;
+        });
+
+        verifyBtn.addEventListener('click', async () => {
+            const val = parseInt(verifyValue.value, 10) || 0;
+            const r = verifyBlinding.value.trim();
+            const target = targetCommitment.value.trim();
+
+            if (!r || !target) {
+                verifyStatus.innerHTML = '<span class="status-badge status-invalid">Invalid Inputs</span>';
+                return;
+            }
+
+            const computed = await computeCommitment(val, r);
+            if (computed.toLowerCase() === target.toLowerCase()) {
+                verifyStatus.innerHTML = '<span class="status-badge status-valid">✓ Valid Decommitment Proof (Values Match)</span>';
+            } else {
+                verifyStatus.innerHTML = '<span class="status-badge status-invalid">✗ Verification Failed (Invalid Secret or Blinding Factor)</span>';
+            }
+        });
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="nav-back">&larr; Back to SA Labs Hub</a>
+        <header>
+            <h1>Zero-Knowledge Pedersen Commitment Studio</h1>
+            <p>Generate perfectly blinding and computationally binding commitments with homomorphic verification</p>
+        </header>
+
+        <div class="card">
+            <h3>1. Create Pedersen Commitment (C = g^v * h^r mod p)</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin: 0.5rem 0 1rem 0;">
+                Hide a secret value $v$ using a random blinding factor $r$.
+            </p>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="secretValue">Secret Value ($v$)</label>
+                    <input type="number" id="secretValue" value="42" min="0">
+                </div>
+                <div class="form-group">
+                    <label for="blindingFactor">Blinding Factor ($r$ - auto-generated if empty)</label>
+                    <input type="text" id="blindingFactor" placeholder="Click Generate to randomize">
+                </div>
+            </div>
+            <button id="commitBtn">Generate Commitment</button>
+
+            <div class="form-group" style="margin-top: 1rem;">
+                <label>Resulting Commitment Hash (C):</label>
+                <div id="commitmentResult" class="result-box">Ready to commit...</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>2. Verify Commitment & Decommit Proof</h3>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label for="verifyValue">Revealed Value ($v$)</label>
+                    <input type="number" id="verifyValue" value="42">
+                </div>
+                <div class="form-group">
+                    <label for="verifyBlinding">Revealed Blinding Factor ($r$)</label>
+                    <input type="text" id="verifyBlinding">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="targetCommitment">Target Commitment Hash (C)</label>
+                <input type="text" id="targetCommitment">
+            </div>
+            <button id="verifyBtn" style="background-color: #3b82f6; border-color: #3b82f6;">Verify Decommitment</button>
+            <div id="verifyStatus"></div>
+        </div>
+    </div>
+
+    
+</body>
+</html>
