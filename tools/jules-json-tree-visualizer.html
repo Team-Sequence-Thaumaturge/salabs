@@ -18,7 +18,11 @@
     </script>
 
     <!-- Google AdSense script tag -->
-    
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011"
+      crossorigin="anonymous"
+    ></script>
 
     <style>
       body {
@@ -166,16 +170,30 @@
         min-height: 20px;
       }
     </style>
-  <!-- SAPQ Hoisted Script Gate -->
+  </head>
+  <body>
+    <h1>JSON Tree Visualizer</h1>
+    <div class="container">
+      <div class="top-panel">
+        <textarea
+          id="json-input"
+          placeholder="Paste your JSON here..."
+          spellcheck="false"
+        ></textarea>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search nodes (keys or values)..."
+          autocomplete="off"
+        />
+      </div>
+      <div id="error-msg" class="error"></div>
+      <div class="bottom-panel tree-root" id="tree-container">
+        <!-- Tree will be rendered here -->
+      </div>
+    </div>
 
-<!-- SAPQ v2.0 Hoisted Script Gate -->
-
-<!-- SAPQ v2.0 Hoisted Script Gate -->
-<script>
-
-
-
-
+    <script>
       const jsonInput = document.getElementById("json-input");
       const searchInput = document.getElementById("search-input");
       const treeContainer = document.getElementById("tree-container");
@@ -194,85 +212,7 @@
           }
           currentData = JSON.parse(val);
           errorMsg.textContent = "";
-      function renderTree() {
-        treeContainer.innerHTML = "";
-        if (currentData !== null) {
-          const rootUl = document.createElement("ul");
-          rootUl.className = "tree-ul";
-          rootUl.appendChild(createNode(null, currentData, true));
-          treeContainer.appendChild(rootUl);
-        }
-      }
           renderTree();
-      function filterTree() {
-        const query = searchInput.value.toLowerCase();
-        const allLis = Array.from(treeContainer.querySelectorAll(".tree-li"));
-        const searchables = treeContainer.querySelectorAll(".searchable");
-
-        if (!query) {
-          allLis.forEach((li) => li.classList.remove("hidden"));
-          searchables.forEach((el) => {
-            if (el.innerHTML.includes('<mark class="highlight">')) {
-              el.textContent = el.textContent;
-            }
-          });
-          return;
-        }
-
-        searchables.forEach((el) => {
-          const text = el.textContent;
-          const lowerText = text.toLowerCase();
-          if (lowerText.includes(query)) {
-      function escapeHTML(str) {
-        return str
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#039;");
-      }
-            const escapedText = escapeHTML(text);
-            const regex = new RegExp(
-              `(${escapeHTML(escapeRegExp(query))})`,
-              "gi",
-            );
-            el.innerHTML = escapedText.replace(
-              regex,
-              '<mark class="highlight">$1</mark>',
-            );
-          } else {
-            el.textContent = text;
-          }
-        });
-
-        allLis.forEach((li) => {
-          li.classList.add("hidden");
-          li.dataset.match = "false";
-        });
-
-        const matchingSearchables = treeContainer.querySelectorAll(
-          ".searchable mark.highlight",
-        );
-        matchingSearchables.forEach((mark) => {
-          const li = mark.closest(".tree-li");
-          if (li) li.dataset.match = "true";
-        });
-
-        allLis.forEach((li) => {
-          if (li.dataset.match === "true") {
-            let parent = li.parentElement.closest(".tree-li");
-            while (parent) {
-              parent.classList.remove("hidden");
-              parent.classList.remove("collapsed");
-              parent.classList.add("expanded");
-              parent = parent.parentElement.closest(".tree-li");
-            }
-            li.classList.remove("hidden");
-            const descendants = li.querySelectorAll(".tree-li");
-            descendants.forEach((desc) => desc.classList.remove("hidden"));
-          }
-        });
-      }
           filterTree();
         } catch (e) {
           errorMsg.textContent = "Invalid JSON: " + e.message;
@@ -354,12 +294,113 @@
         return li;
       }
 
+      function renderTree() {
+        treeContainer.innerHTML = "";
+        if (currentData !== null) {
+          const rootUl = document.createElement("ul");
+          rootUl.className = "tree-ul";
+          rootUl.appendChild(createNode(null, currentData, true));
+          treeContainer.appendChild(rootUl);
+        }
+      }
 
+      function filterTree() {
+        const query = searchInput.value.toLowerCase();
+        const allLis = Array.from(treeContainer.querySelectorAll(".tree-li"));
+        const searchables = treeContainer.querySelectorAll(".searchable");
 
+        if (!query) {
+          allLis.forEach((li) => li.classList.remove("hidden"));
+          searchables.forEach((el) => {
+            if (el.innerHTML.includes('<mark class="highlight">')) {
+              el.textContent = el.textContent;
+            }
+          });
+          return;
+        }
+
+        searchables.forEach((el) => {
+          const text = el.textContent;
+          const lowerText = text.toLowerCase();
+          if (lowerText.includes(query)) {
+            const escapedText = escapeHTML(text);
+            const regex = new RegExp(
+              `(${escapeHTML(escapeRegExp(query))})`,
+              "gi",
+            );
+            el.innerHTML = escapedText.replace(
+              regex,
+              '<mark class="highlight">$1</mark>',
+            );
+          } else {
+            el.textContent = text;
+          }
+        });
+
+        allLis.forEach((li) => {
+          li.classList.add("hidden");
+          li.dataset.match = "false";
+        });
+
+        const matchingSearchables = treeContainer.querySelectorAll(
+          ".searchable mark.highlight",
+        );
+        matchingSearchables.forEach((mark) => {
+          const li = mark.closest(".tree-li");
+          if (li) li.dataset.match = "true";
+        });
+
+        allLis.forEach((li) => {
+          if (li.dataset.match === "true") {
+            let parent = li.parentElement.closest(".tree-li");
+            while (parent) {
+              parent.classList.remove("hidden");
+              parent.classList.remove("collapsed");
+              parent.classList.add("expanded");
+              parent = parent.parentElement.closest(".tree-li");
+            }
+            li.classList.remove("hidden");
+            const descendants = li.querySelectorAll(".tree-li");
+            descendants.forEach((desc) => desc.classList.remove("hidden"));
+          }
+        });
+      }
+
+      function escapeHTML(str) {
+        return str
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
 
       function escapeRegExp(string) {
         return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       }
+
+      // Listen for Global State changes from the Unified Engine Kernel
+      window.addEventListener("message", (event) => {
+        if (event.data && event.data.type === "STATE_UPDATE") {
+          const state = event.data.state;
+          // Dynamically update the tree with the new state
+          jsonInput.value = JSON.stringify(
+            {
+              event: "GLOBAL_STATE_BUS_MUTATION",
+              timestamp: new Date().toISOString(),
+              unifiedEngineState: state,
+              telemetry: {
+                quantumField: "Active",
+                vectorGraph: "Interlocked",
+                audioSpectrum: "Interlocked",
+              },
+            },
+            null,
+            2,
+          );
+          updateTree();
+        }
+      });
 
       // Initialize with sample JSON
       jsonInput.value = JSON.stringify(
@@ -372,38 +413,13 @@
             active: true,
           },
           data: null,
+          status: "Awaiting Global State Bus connection...",
         },
         null,
         2,
       );
 
       updateTree();
-    
-
-</script>
-</head>
-  <body>
-    <h1>JSON Tree Visualizer</h1>
-    <div class="container">
-      <div class="top-panel">
-        <textarea
-          id="json-input"
-          placeholder="Paste your JSON here..."
-          spellcheck="false"
-        ></textarea>
-        <input
-          type="text"
-          id="search-input"
-          placeholder="Search nodes (keys or values)..."
-          autocomplete="off"
-        />
-      </div>
-      <div id="error-msg" class="error"></div>
-      <div class="bottom-panel tree-root" id="tree-container">
-        <!-- Tree will be rendered here -->
-      </div>
-    </div>
-
-    
+    </script>
   </body>
 </html>

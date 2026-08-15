@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Audio Spectrum Synthesizer - Jules Studio - v2.0</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              slate: {
+                900: "#0f172a",
+              },
+              cyan: {
+                400: "#00f2fe",
+              },
+              blue: {
+                500: "#4facfe",
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Schema.org WebApplication JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "3D Audio Spectrum Synthesizer",
+        "softwareVersion": "2.0",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Web",
+        "description": "100% client-side WebGL 3D Audio Frequency Spectrum visualizer with Web Audio API tone generator and 3D particle terrain displacement.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Jules Studio"
+        }
+      }
+    </script>
+
+    <!-- Google AdSense -->
+    <script
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011"
+      crossorigin="anonymous"
+    ></script>
+
+    <style>
+      body {
+        background-color: #0f172a;
+        color: #cbd5e1;
+        margin: 0;
+        overflow: hidden;
+        font-family:
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          "Helvetica Neue",
+          Arial,
+          sans-serif;
+      }
+
+      #visualizer-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+      }
+
+      #ui-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        pointer-events: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 1.5rem;
+        box-sizing: border-box;
+      }
+
+      .panel {
+        background: rgba(15, 23, 42, 0.75);
+        border: 1px solid rgba(0, 242, 254, 0.3);
+        backdrop-filter: blur(12px);
+        pointer-events: auto;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        max-width: 400px;
+      }
+
+      .btn {
+        background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+        color: #0f172a;
+        font-weight: bold;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        border: none;
+      }
+
+      .btn:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+      }
+
+      .btn:active {
+        transform: translateY(1px);
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: #00f2fe;
+        border: 1px solid #00f2fe;
+      }
+      .btn-outline:hover {
+        background: rgba(0, 242, 254, 0.1);
+      }
+
+      .slider {
+        width: 100%;
+        accent-color: #00f2fe;
+      }
+
+      select,
+      input[type="range"] {
+        background: rgba(255, 255, 255, 0.1);
+        color: #e2e8f0;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 0.25rem;
+        padding: 0.25rem;
+      }
+
+      select option {
+        background: #0f172a;
+      }
+
+      #fft-canvas {
+        position: absolute;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 400px;
+        height: 150px;
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(0, 242, 254, 0.2);
+        border-radius: 0.5rem;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- WebGL 3D Canvas -->
+    <canvas
+      id="webgl-canvas"
+      style="position: absolute; top: 0; left: 0; z-index: 0"
+    ></canvas>
+
+    <!-- UI Overlay -->
+    <div id="ui-layer">
+      <div class="panel">
+        <h1 class="text-xl font-bold mb-4 text-cyan-400">
+          3D Audio Synthesizer
+        </h1>
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm mb-1 text-blue-300">Audio Source</label>
+            <div class="flex gap-2">
+              <button id="btn-synth" class="btn flex-1">Synthesizer</button>
+              <button id="btn-mic" class="btn btn-outline flex-1">
+                Microphone
+              </button>
+            </div>
+          </div>
+
+          <div id="synth-controls" class="space-y-3">
+            <div>
+              <label class="block text-sm mb-1 text-blue-300">Waveform</label>
+              <select id="osc-type" class="w-full">
+                <option value="sine">Sine</option>
+                <option value="square">Square</option>
+                <option value="sawtooth">Sawtooth</option>
+                <option value="triangle">Triangle</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm mb-1 text-blue-300"
+                >Frequency (<span id="freq-val">440</span> Hz)</label
+              >
+              <input
+                type="range"
+                id="osc-freq"
+                class="slider"
+                min="20"
+                max="2000"
+                value="440"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm mb-1 text-blue-300"
+              >Master Volume (<span id="vol-val">50</span>%)</label
+            >
+            <input
+              type="range"
+              id="master-vol"
+              class="slider"
+              min="0"
+              max="100"
+              value="50"
+            />
+          </div>
+
+          <div class="pt-2">
+            <button
+              id="btn-power"
+              class="btn w-full !bg-slate-700 !text-white border border-slate-500"
+            >
+              Power: OFF
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2D FFT Canvas -->
+    <canvas id="fft-canvas"></canvas>
+
+    <script>
+      // --- Web Audio API Setup ---
+      let audioCtx;
+      let masterGain;
+      let analyser;
+      let oscillator;
+      let micStream;
+      let micSource;
+
+      let isPlaying = false;
+      let currentSource = "synth"; // 'synth' or 'mic'
+
+      const UI = {
+        btnSynth: document.getElementById("btn-synth"),
+        btnMic: document.getElementById("btn-mic"),
+        btnPower: document.getElementById("btn-power"),
+        oscType: document.getElementById("osc-type"),
+        oscFreq: document.getElementById("osc-freq"),
+        freqVal: document.getElementById("freq-val"),
+        masterVol: document.getElementById("master-vol"),
+        volVal: document.getElementById("vol-val"),
+        synthControls: document.getElementById("synth-controls"),
+      };
+
+      function initAudio() {
+        if (audioCtx) return;
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        masterGain = audioCtx.createGain();
+        masterGain.gain.value = UI.masterVol.value / 100;
+        masterGain.connect(audioCtx.destination);
+
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 256;
+        analyser.smoothingTimeConstant = 0.8;
+
+        // Connect analyser to master output if synth is used, mic handles it differently
+      }
+
+      async function togglePower() {
+        initAudio();
+
+        if (audioCtx.state === "suspended") {
+          await audioCtx.resume();
+        }
+
+        if (isPlaying) {
+          stopAudio();
+          UI.btnPower.textContent = "Power: OFF";
+          UI.btnPower.className =
+            "btn w-full !bg-slate-700 !text-white border border-slate-500";
+        } else {
+          startAudio();
+          UI.btnPower.textContent = "Power: ON";
+          UI.btnPower.className = "btn w-full !bg-cyan-500 !text-slate-900";
+        }
+        isPlaying = !isPlaying;
+      }
+
+      async function startAudio() {
+        if (currentSource === "synth") {
+          oscillator = audioCtx.createOscillator();
+          oscillator.type = UI.oscType.value;
+          oscillator.frequency.value = UI.oscFreq.value;
+
+          oscillator.connect(analyser);
+          analyser.connect(masterGain);
+
+          oscillator.start();
+        } else if (currentSource === "mic") {
+          try {
+            micStream = await navigator.mediaDevices.getUserMedia({
+              audio: true,
+              video: false,
+            });
+            micSource = audioCtx.createMediaStreamSource(micStream);
+
+            // Route mic to analyser but NOT to masterGain (to prevent feedback)
+            micSource.connect(analyser);
+            // Ensure analyser is NOT connected to destination or masterGain here
+            try {
+              analyser.disconnect();
+            } catch (e) {}
+          } catch (err) {
+            console.error("Microphone access denied:", err);
+            alert(
+              "Microphone access denied. Please allow microphone permissions.",
+            );
+            stopAudio();
+            isPlaying = false;
+            UI.btnPower.textContent = "Power: OFF";
+            UI.btnPower.className =
+              "btn w-full !bg-slate-700 !text-white border border-slate-500";
+          }
+        }
+      }
+
+      function stopAudio() {
+        if (oscillator) {
+          oscillator.stop();
+          oscillator.disconnect();
+          oscillator = null;
+        }
+        if (micStream) {
+          micStream.getTracks().forEach((track) => track.stop());
+          micStream = null;
+        }
+        if (micSource) {
+          micSource.disconnect();
+          micSource = null;
+        }
+        try {
+          analyser.disconnect();
+        } catch (e) {}
+      }
+
+      function switchSource(source) {
+        if (currentSource === source) return;
+        currentSource = source;
+
+        if (source === "synth") {
+          UI.btnSynth.className = "btn flex-1";
+          UI.btnMic.className = "btn btn-outline flex-1";
+          UI.synthControls.style.opacity = "1";
+          UI.synthControls.style.pointerEvents = "auto";
+        } else {
+          UI.btnMic.className = "btn flex-1";
+          UI.btnSynth.className = "btn btn-outline flex-1";
+          UI.synthControls.style.opacity = "0.5";
+          UI.synthControls.style.pointerEvents = "none";
+        }
+
+        if (isPlaying) {
+          stopAudio();
+          startAudio();
+        }
+      }
+
+      // Event Listeners
+      UI.btnPower.addEventListener("click", togglePower);
+      UI.btnSynth.addEventListener("click", () => switchSource("synth"));
+      UI.btnMic.addEventListener("click", () => switchSource("mic"));
+
+      UI.oscType.addEventListener("change", (e) => {
+        if (oscillator) oscillator.type = e.target.value;
+      });
+
+      UI.oscFreq.addEventListener("input", (e) => {
+        UI.freqVal.textContent = e.target.value;
+        if (oscillator)
+          oscillator.frequency.setValueAtTime(
+            e.target.value,
+            audioCtx.currentTime,
+          );
+      });
+
+      UI.masterVol.addEventListener("input", (e) => {
+        UI.volVal.textContent = e.target.value;
+        if (masterGain)
+          masterGain.gain.setValueAtTime(
+            e.target.value / 100,
+            audioCtx.currentTime,
+          );
+      });
+
+      // --- WebGL 3D Terrain Setup ---
+      const canvas = document.getElementById("webgl-canvas");
+      const gl =
+        canvas.getContext("webgl", { antialias: true }) ||
+        canvas.getContext("experimental-webgl");
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        canvas.style.width = window.innerWidth + "px";
+        canvas.style.height = window.innerHeight + "px";
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      }
+      window.addEventListener("resize", resizeCanvas);
+      resizeCanvas();
+
+      const vsSource = `
+            attribute vec3 aVertexPosition;
+            uniform mat4 uModelViewMatrix;
+            uniform mat4 uProjectionMatrix;
+            uniform float uTime;
+
+            varying float vHeight;
+
+            void main() {
+                vHeight = aVertexPosition.y;
+                vec4 pos = uProjectionMatrix * uModelViewMatrix * vec4(aVertexPosition, 1.0);
+                gl_Position = pos;
+                gl_PointSize = 2.0 + (aVertexPosition.y * 5.0); // Size based on height
+            }
+        `;
+
+      const fsSource = `
+            precision mediump float;
+            varying float vHeight;
+
+            void main() {
+                // Mix between cyan and blue based on height
+                vec3 colorLow = vec3(0.31, 0.67, 0.99); // #4facfe
+                vec3 colorHigh = vec3(0.0, 0.95, 0.99); // #00f2fe
+                vec3 color = mix(colorLow, colorHigh, clamp(vHeight * 2.0, 0.0, 1.0));
+
+                // Soft particle
+                vec2 coord = gl_PointCoord - vec2(0.5);
+                float dist = length(coord);
+                if (dist > 0.5) discard;
+
+                float alpha = (0.5 - dist) * 2.0;
+                gl_FragColor = vec4(color, alpha * 0.8);
+            }
+        `;
+
+      function compileShader(gl, type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          console.error("Shader compile failed:", gl.getShaderInfoLog(shader));
+          gl.deleteShader(shader);
+          return null;
+        }
+        return shader;
+      }
+
+      const vertexShader = compileShader(gl, gl.VERTEX_SHADER, vsSource);
+      const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, fsSource);
+
+      const shaderProgram = gl.createProgram();
+      gl.attachShader(shaderProgram, vertexShader);
+      gl.attachShader(shaderProgram, fragmentShader);
+      gl.linkProgram(shaderProgram);
+
+      const programInfo = {
+        program: shaderProgram,
+        attribLocations: {
+          vertexPosition: gl.getAttribLocation(
+            shaderProgram,
+            "aVertexPosition",
+          ),
+        },
+        uniformLocations: {
+          projectionMatrix: gl.getUniformLocation(
+            shaderProgram,
+            "uProjectionMatrix",
+          ),
+          modelViewMatrix: gl.getUniformLocation(
+            shaderProgram,
+            "uModelViewMatrix",
+          ),
+          time: gl.getUniformLocation(shaderProgram, "uTime"),
+        },
+      };
+
+      // Grid parameters
+      const GRID_W = 64; // Frequency bins
+      const GRID_H = 64; // Time history
+      const NUM_PARTICLES = GRID_W * GRID_H;
+
+      let positions = new Float32Array(NUM_PARTICLES * 3);
+      let history = new Array(GRID_H).fill(new Uint8Array(GRID_W));
+
+      const positionBuffer = gl.createBuffer();
+
+      function updateTerrainData(freqData) {
+        // Shift history
+        history.pop();
+        history.unshift(new Uint8Array(freqData));
+
+        // Build vertices
+        let idx = 0;
+        for (let z = 0; z < GRID_H; z++) {
+          for (let x = 0; x < GRID_W; x++) {
+            const normX = (x / (GRID_W - 1)) * 2.0 - 1.0; // -1 to 1
+            const normZ = (z / (GRID_H - 1)) * 2.0 - 1.0; // -1 to 1
+
+            // Height from history
+            const val = history[z][x] / 255.0;
+            const height = val * 0.5;
+
+            positions[idx++] = normX * 4.0; // scale X
+            positions[idx++] = height - 0.2; // Y position
+            positions[idx++] = normZ * 4.0; // scale Z
+          }
+        }
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, positions, gl.DYNAMIC_DRAW);
+      }
+
+      // Simple Matrix Math
+      function perspective(out, fovy, aspect, near, far) {
+        const f = 1.0 / Math.tan(fovy / 2);
+        const nf = 1 / (near - far);
+        out[0] = f / aspect;
+        out[1] = 0;
+        out[2] = 0;
+        out[3] = 0;
+        out[4] = 0;
+        out[5] = f;
+        out[6] = 0;
+        out[7] = 0;
+        out[8] = 0;
+        out[9] = 0;
+        out[10] = (far + near) * nf;
+        out[11] = -1;
+        out[12] = 0;
+        out[13] = 0;
+        out[14] = 2 * far * near * nf;
+        out[15] = 0;
+        return out;
+      }
+
+      function translate(out, a, v) {
+        let x = v[0],
+          y = v[1],
+          z = v[2];
+        out[12] = a[0] * x + a[4] * y + a[8] * z + a[12];
+        out[13] = a[1] * x + a[5] * y + a[9] * z + a[13];
+        out[14] = a[2] * x + a[6] * y + a[10] * z + a[14];
+        out[15] = a[3] * x + a[7] * y + a[11] * z + a[15];
+        return out;
+      }
+
+      function rotateX(out, a, rad) {
+        let s = Math.sin(rad),
+          c = Math.cos(rad);
+        let a10 = a[4],
+          a11 = a[5],
+          a12 = a[6],
+          a13 = a[7];
+        let a20 = a[8],
+          a21 = a[9],
+          a22 = a[10],
+          a23 = a[11];
+        out[4] = a10 * c + a20 * s;
+        out[5] = a11 * c + a21 * s;
+        out[6] = a12 * c + a22 * s;
+        out[7] = a13 * c + a23 * s;
+        out[8] = a20 * c - a10 * s;
+        out[9] = a21 * c - a11 * s;
+        out[10] = a22 * c - a12 * s;
+        out[11] = a23 * c - a13 * s;
+        return out;
+      }
+
+      function rotateY(out, a, rad) {
+        let s = Math.sin(rad),
+          c = Math.cos(rad);
+        let a00 = a[0],
+          a01 = a[1],
+          a02 = a[2],
+          a03 = a[3];
+        let a20 = a[8],
+          a21 = a[9],
+          a22 = a[10],
+          a23 = a[11];
+        out[0] = a00 * c - a20 * s;
+        out[1] = a01 * c - a21 * s;
+        out[2] = a02 * c - a22 * s;
+        out[3] = a03 * c - a23 * s;
+        out[8] = a00 * s + a20 * c;
+        out[9] = a01 * s + a21 * c;
+        out[10] = a02 * s + a22 * c;
+        out[11] = a03 * s + a23 * c;
+        return out;
+      }
+
+      const projectionMatrix = new Float32Array(16);
+      const modelViewMatrix = new Float32Array([
+        1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,
+      ]);
+      const identityMatrix = new Float32Array([
+        1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,
+      ]);
+
+      // Enable blending
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+      gl.disable(gl.DEPTH_TEST);
+
+      // --- 2D FFT Canvas Setup ---
+      const fftCanvas = document.getElementById("fft-canvas");
+      const fftCtx = fftCanvas.getContext("2d");
+      fftCanvas.width = 400;
+      fftCanvas.height = 150;
+
+      function drawFFT(dataArray) {
+        fftCtx.clearRect(0, 0, fftCanvas.width, fftCanvas.height);
+
+        const barWidth = (fftCanvas.width / dataArray.length) * 2.5;
+        let barHeight;
+        let x = 0;
+
+        // Draw grid
+        fftCtx.strokeStyle = "rgba(0, 242, 254, 0.1)";
+        fftCtx.lineWidth = 1;
+        for (let i = 0; i < 4; i++) {
+          fftCtx.beginPath();
+          fftCtx.moveTo(0, (i * fftCanvas.height) / 4);
+          fftCtx.lineTo(fftCanvas.width, (i * fftCanvas.height) / 4);
+          fftCtx.stroke();
+        }
+
+        for (let i = 0; i < dataArray.length; i++) {
+          barHeight = (dataArray[i] / 255) * fftCanvas.height;
+
+          // Gradient for bars
+          let grad = fftCtx.createLinearGradient(
+            0,
+            fftCanvas.height,
+            0,
+            fftCanvas.height - barHeight,
+          );
+          grad.addColorStop(0, "#4facfe");
+          grad.addColorStop(1, "#00f2fe");
+
+          fftCtx.fillStyle = grad;
+          fftCtx.fillRect(x, fftCanvas.height - barHeight, barWidth, barHeight);
+
+          // Top cap
+          fftCtx.fillStyle = "#fff";
+          fftCtx.fillRect(x, fftCanvas.height - barHeight - 2, barWidth, 2);
+
+          x += barWidth + 1;
+        }
+      }
+
+      // --- Render Loop ---
+      const freqData = new Uint8Array(GRID_W);
+      let time = 0;
+
+      function render() {
+        requestAnimationFrame(render);
+        time += 0.01;
+
+        if (analyser && isPlaying) {
+          // Get FFT data
+          const fullData = new Uint8Array(analyser.frequencyBinCount);
+          analyser.getByteFrequencyData(fullData);
+
+          // Downsample to GRID_W for 3D
+          const step = Math.floor(fullData.length / GRID_W);
+          for (let i = 0; i < GRID_W; i++) {
+            freqData[i] = fullData[i * step];
+          }
+
+          updateTerrainData(freqData);
+          drawFFT(fullData.slice(0, 100)); // Draw first 100 bins in 2D
+        } else {
+          // Idle state, just zeros
+          freqData.fill(0);
+          updateTerrainData(freqData);
+          drawFFT(new Uint8Array(100));
+        }
+
+        // Render WebGL
+        gl.clearColor(0.06, 0.09, 0.16, 1.0); // #0f172a
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+        perspective(
+          projectionMatrix,
+          (45 * Math.PI) / 180,
+          canvas.width / canvas.height,
+          0.1,
+          100.0,
+        );
+
+        // Reset model view matrix
+        for (let i = 0; i < 16; i++) modelViewMatrix[i] = identityMatrix[i];
+
+        // Camera position
+        translate(modelViewMatrix, modelViewMatrix, [0.0, -1.0, -4.5]);
+        rotateX(modelViewMatrix, modelViewMatrix, 0.4);
+        rotateY(modelViewMatrix, modelViewMatrix, time * 0.2); // Slow rotation
+
+        gl.useProgram(programInfo.program);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.vertexAttribPointer(
+          programInfo.attribLocations.vertexPosition,
+          3,
+          gl.FLOAT,
+          false,
+          0,
+          0,
+        );
+        gl.enableVertexAttribArray(programInfo.attribLocations.vertexPosition);
+
+        gl.uniformMatrix4fv(
+          programInfo.uniformLocations.projectionMatrix,
+          false,
+          projectionMatrix,
+        );
+        gl.uniformMatrix4fv(
+          programInfo.uniformLocations.modelViewMatrix,
+          false,
+          modelViewMatrix,
+        );
+        gl.uniform1f(programInfo.uniformLocations.time, time);
+
+        gl.drawArrays(gl.POINTS, 0, NUM_PARTICLES);
+      }
+
+      render();
+    </script>
+  </body>
+</html>

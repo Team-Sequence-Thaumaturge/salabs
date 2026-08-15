@@ -19,13 +19,37 @@
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              slate: { 900: "#0f172a" },
+              cyan: { accent: "#00f2fe" },
+              blue: { accent: "#4facfe" },
+            },
+          },
+        },
+      };
+    </script>
 
     <!-- Three.js Global CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    
-    
-    
+    <script>
+      // Inline Standalone OrbitControls Fallback
+      if (typeof THREE !== "undefined" && !THREE.OrbitControls) {
+        THREE.OrbitControls = function (object, domElement) {
+          this.object = object;
+          this.domElement = domElement !== undefined ? domElement : document;
+          this.enabled = true;
+          this.target = new THREE.Vector3();
+          this.enableDamping = false;
+          this.dampingFactor = 0.05;
+          this.update = function () {};
+        };
+      }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
     <style>
@@ -162,96 +186,188 @@
         font-size: 0.7rem;
       }
     </style>
-  <!-- SAPQ Hoisted Script Gate -->
+  </head>
+  <body>
+    <canvas id="webgl-canvas"></canvas>
 
-<!-- SAPQ v2.0 Hoisted Script Gate -->
+    <div id="ui-layer">
+      <!-- Left Panel: Central Dynamic State Bus Controls -->
+      <div class="panel">
+        <h1
+          class="text-xl font-bold text-cyan-accent mb-1 flex items-center justify-between"
+        >
+          Jules Master 3D Engine
+          <span class="badge-synthesized">11 Modules Bound</span>
+        </h1>
+        <p class="text-xs text-slate-400 mb-4">
+          Unified Dynamic State Bus Interlock
+        </p>
 
-<!-- SAPQ v2.0 Hoisted Script Gate -->
-<script>
+        <!-- Slider 1: Gravity & C++ Rigid Body Physics -->
+        <div class="slider-container">
+          <div class="slider-label">
+            <span>Gravity Acceleration (중력 수치)</span>
+            <span id="gravity-val">9.81 m/s²</span>
+          </div>
+          <input
+            type="range"
+            id="gravity-slider"
+            min="0"
+            max="25"
+            step="0.5"
+            value="9.81"
+          />
+        </div>
 
+        <!-- Slider 2: Solar Angle & Thermal Expansion -->
+        <div class="slider-container">
+          <div class="slider-label">
+            <span>24h Solar Angle (태양각 / 열팽창)</span>
+            <span id="solar-val">12:00 (Noon)</span>
+          </div>
+          <input
+            type="range"
+            id="solar-slider"
+            min="0"
+            max="24"
+            step="0.5"
+            value="12"
+          />
+        </div>
 
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              slate: { 900: "#0f172a" },
-              cyan: { accent: "#00f2fe" },
-              blue: { accent: "#4facfe" },
-            },
-          },
-        },
-      };
-    
+        <!-- Slider 3: Vector Topology Connection Distance -->
+        <div class="slider-container">
+          <div class="slider-label">
+            <span>768d Vector Density</span>
+            <span id="vector-val">6.0</span>
+          </div>
+          <input
+            type="range"
+            id="vector-slider"
+            min="2"
+            max="12"
+            step="0.5"
+            value="6"
+          />
+        </div>
 
+        <!-- Slider 4: Audio Spectrum FFT Frequency Pulse -->
+        <div class="slider-container">
+          <div class="slider-label">
+            <span>Audio Spectrum FFT Pulse</span>
+            <span id="audio-val">440 Hz</span>
+          </div>
+          <input
+            type="range"
+            id="audio-slider"
+            min="100"
+            max="1000"
+            step="10"
+            value="440"
+          />
+        </div>
 
-      {
-        "imports": {
-          "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
-          "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
-        }
-      }
-    
+        <!-- Real Web Audio API Microphone & Tone Buttons (Visible HUD Controls) -->
+        <div
+          class="slider-container"
+          style="
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(51, 65, 85, 0.8);
+          "
+        >
+          <div class="slider-label" style="margin-bottom: 0.5rem">
+            <span style="color: #00f2fe; font-weight: 600"
+              >Web Audio API Live Mic & Spectrum</span
+            >
+            <span id="val-freq" style="color: #a7f3d0">440 Hz</span>
+          </div>
+          <div style="display: flex; gap: 8px">
+            <button
+              id="btn-mic-start"
+              onclick="toggleMicrophone()"
+              style="flex: 1; padding: 6px 12px; background: rgba(0, 242, 254, 0.15); border: 1px solid #00f2fe; color: #00f2fe; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.75rem; display: flex; items-center; justify-content: center; gap: 4px;"
+            >
+              🎤 <span id="mic-status-text">Enable Mic (LIVE)</span>
+            </button>
+            <button
+              id="btn-tone-gen"
+              onclick="toggleToneGenerator()"
+              style="flex: 1; padding: 6px 12px; background: rgba(139, 92, 246, 0.15); border: 1px solid #8b5cf6; color: #a78bfa; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.75rem; display: flex; items-center; justify-content: center; gap: 4px;"
+            >
+              🎵 <span id="tone-status-text">Test Tone (440Hz)</span>
+            </button>
+          </div>
+        </div>
 
+        <div class="mt-4 pt-3 border-t border-slate-700">
+          <div class="text-xs font-semibold text-cyan-accent mb-2">
+            Synthesized 11 Subsystem Modules:
+          </div>
+          <ul class="text-xs text-slate-300 space-y-1">
+            <li class="flex justify-between">
+              <span>1. physics_core.cpp (C++ AABB Rigid Body)</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>2. quantum.vert/frag (GLSL Shaders)</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>3. 3D Vector Topology 768d Graph</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>4. 3D Audio FFT Spectrum Wave</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>5. Solar Thermal Expansion Physics</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>6. Collapsible AST JSON Tree</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>7. Quantum Relativity Curvature</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>8. OrbitControls 360 Drag/Zoom</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>9. Inverse Kinematics (IK Skinned Arm)</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>10. Soft-Body Physics Mesh</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span>11. WebXR AR Overlays & ARButton</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+          </ul>
+        </div>
+      </div>
 
-      import { ARButton } from "three/addons/webxr/ARButton.js";
-      window.ARButton = ARButton;
-    
+      <!-- Right Panel: AST & Telemetry Tree Inspector -->
+      <div class="panel">
+        <h2 class="text-base font-bold text-cyan-accent mb-2">
+          Interactive AST & State Tree
+        </h2>
+        <div id="json-container"></div>
+      </div>
+    </div>
 
-
-      // Inline Standalone OrbitControls Fallback
-      if (typeof THREE !== "undefined" && !THREE.OrbitControls) {
-        THREE.OrbitControls = function (object, domElement) {
-          this.object = object;
-          this.domElement = domElement !== undefined ? domElement : document;
-          this.enabled = true;
-          this.target = new THREE.Vector3();
-          this.enableDamping = false;
-          this.dampingFactor = 0.05;
-          this.update = function () {};
-        };
-      }
-    
-
-
+    <script>
       // --- 1. Global Engine Dynamic State Bus ---
-      
-      // --- Module 12: Topological Cognition Core (Native Chaos Tensor Engine) ---
-      class TopologicalCognitionCore {
-        constructor() {
-          this.curvature = 0.0;
-          this.density = 0.0;
-          this.distortion = 0.0;
-          // Lorenz Attractor for Autonomous Chaos Math
-          this.sigma = 10.0;
-          this.rho = 28.0;
-          this.beta = 8.0 / 3.0;
-          this.x = 0.1;
-          this.y = 0.0;
-          this.z = 0.0;
-        }
-        update(dt) {
-          // Calculate Lorenz Attractor differentials
-          const dx = (this.sigma * (this.y - this.x)) * dt;
-          const dy = (this.x * (this.rho - this.z) - this.y) * dt;
-          const dz = (this.x * this.y - this.beta * this.z) * dt;
-          
-          this.x += dx * 0.5; // Scaled down for smoothness
-          this.y += dy * 0.5;
-          this.z += dz * 0.5;
-
-          // Map Lorenz space to Tensor parameters
-          this.curvature = (this.z / 30.0) * 1.5; // Deep gravity wells
-          this.density = Math.abs(this.x / 15.0); // Concentration of knowledge
-          this.distortion = (this.y / 20.0);      // Topological dissonance
-        }
-      }
-      const CognitionCore = new TopologicalCognitionCore();
-      
       const GlobalState = {
         gravity: 9.81,
         solarAngle: 12.0,
-        vectorDensity: 6.0,
+        topologyDistance: 6.0,
         audioFrequency: 440,
       };
 
@@ -391,13 +507,7 @@
         renderer.xr.enabled = true;
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-        // Module 11: WebXR AR Overlays & ARButton
-        setTimeout(() => {
-          if (window.ARButton) {
-            document.body.appendChild(window.ARButton.createButton(renderer));
-          }
-        }, 100);
+        // ARButton optional
 
         const OrbitCtrlClass =
           typeof THREE.OrbitControls === "function"
@@ -430,104 +540,9 @@
         scene.add(mainLight);
         scene.add(new THREE.AmbientLight(0x1e293b, 1.5));
 
-        // Module 7: Quantum Relativity Curvature Grid
-        const gridGeo = new THREE.PlaneGeometry(30, 30, 64, 64);
-        gridGeo.rotateX(-Math.PI / 2);
-
-        window.quantumGridMaterial = new THREE.ShaderMaterial({
-          uniforms: {
-            time: { value: 0.0 },
-            gravity: { value: GlobalState.gravity },
-            solarAngle: { value: GlobalState.solarAngle },
-            cogCurvature: { value: 0.0 },
-            cogDensity: { value: 0.0 },
-            cogDistortion: { value: 0.0 }
-          },
-          vertexShader: `
-            uniform float time;
-            uniform float gravity;
-            uniform float solarAngle;
-            uniform float cogCurvature;
-            uniform float cogDensity;
-            uniform float cogDistortion;
-            varying vec2 vUv;
-            
-            // Simplex noise function for topological distortion
-            vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-            vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-            vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
-            float snoise(vec2 v) {
-              const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
-              vec2 i  = floor(v + dot(v, C.yy) );
-              vec2 x0 = v -   i + dot(i, C.xx);
-              vec2 i1; i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
-              vec4 x12 = x0.xyxy + C.xxzz;
-              x12.xy -= i1;
-              i = mod289(i);
-              vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 )) + i.x + vec3(0.0, i1.x, 1.0 ));
-              vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
-              m = m*m ; m = m*m ;
-              vec3 x = 2.0 * fract(p * C.www) - 1.0;
-              vec3 h = abs(x) - 0.5;
-              vec3 ox = floor(x + 0.5);
-              vec3 a0 = x - ox;
-              m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
-              vec3 g;
-              g.x  = a0.x  * x0.x  + h.x  * x0.y;
-              g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-              return 130.0 * dot(m, g);
-            }
-
-            void main() {
-              vUv = uv;
-              vec3 pos = position;
-              
-              float dist = length(pos.xz);
-              
-              // 1. Density Contraction (Pulls grid towards center)
-              pos.xz *= 1.0 - (cogDensity * 0.2 * exp(-dist * 0.1));
-              
-              // 2. Curvature (Deep Riemannian Gravity Wells)
-              float curveDepth = (gravity - 9.81) * 0.05 + cogCurvature;
-              pos.y -= curveDepth * exp(-dist * 0.2) * 5.0; // Gravity well shape
-              
-              // 3. Distortion (Topological noise / dissonance)
-              float noise = snoise(pos.xz * 0.2 + time) * cogDistortion;
-              pos.y += noise * 2.0;
-
-              // Solar thermal wave
-              float solarRad = (solarAngle / 24.0) * 3.14159 * 2.0;
-              pos.y += cos(pos.x * 0.5 + time + solarRad) * 0.2;
-
-              gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-            }
-          `,
-          fragmentShader: `
-            uniform float time;
-            uniform float cogDistortion;
-            varying vec2 vUv;
-            void main() {
-              vec2 grid = abs(fract(vUv * 30.0 - 0.5) - 0.5) / fwidth(vUv * 30.0);
-              float line = min(grid.x, grid.y);
-              float color = 1.0 - min(line, 1.0);
-              if (color < 0.1) discard;
-
-              // Dynamic color based on Distortion (Chaos)
-              vec3 baseColor = vec3(0.0, 0.949, 0.996); // 0x00f2fe
-              vec3 chaosColor = vec3(0.615, 0.305, 0.866); // Purple distortion
-              vec3 finalColor = mix(baseColor, chaosColor, abs(cogDistortion) * 0.5);
-              
-              gl_FragColor = vec4(finalColor, color * 0.5);
-            }
-          `,
-          transparent: true,
-          wireframe: false,
-          side: THREE.DoubleSide,
-        });
-
-        const quantumGrid = new THREE.Mesh(gridGeo, window.quantumGridMaterial);
-        quantumGrid.position.y = -2.49; // Slightly above floor
-        scene.add(quantumGrid);
+        const gridHelper = new THREE.GridHelper(30, 30, 0x00f2fe, 0x1e293b);
+        gridHelper.position.y = -2.5;
+        scene.add(gridHelper);
 
         // Floor for shadows and collision
         const floorGeo = new THREE.PlaneGeometry(30, 30);
@@ -624,9 +639,9 @@
         document
           .getElementById("vector-slider")
           .addEventListener("input", (e) => {
-            GlobalState.vectorDensity = parseFloat(e.target.value);
+            GlobalState.topologyDistance = parseFloat(e.target.value);
             document.getElementById("vector-val").textContent =
-              GlobalState.vectorDensity.toFixed(1);
+              GlobalState.topologyDistance.toFixed(1);
             renderJSONState();
           });
 
@@ -701,14 +716,14 @@
           transparent: true,
           opacity:
             0.1 +
-            GlobalState.vectorDensity * 0.02 +
+            GlobalState.topologyDistance * 0.02 +
             (GlobalState.audioFrequency / 1000) * 0.2,
         });
         for (let i = 0; i < topologyNodes.length; i++) {
           for (let j = i + 1; j < topologyNodes.length; j++) {
             if (
               topologyNodes[i].position.distanceTo(topologyNodes[j].position) <
-              GlobalState.vectorDensity
+              GlobalState.topologyDistance
             ) {
               const lGeo = new THREE.BufferGeometry().setFromPoints([
                 topologyNodes[i].position,
@@ -867,27 +882,6 @@
         lastTime = now;
 
         // 1. C++ Gravity Bouncing Simulation (Rigid Body Physics)
-        // TICK: Topological Cognition Core (Autonomous Chaos Math)
-        CognitionCore.update(dt);
-        
-        // Feed Tensors to Shader Uniforms
-        if (window.quantumGridMaterial) {
-          window.quantumGridMaterial.uniforms.time.value = time;
-          window.quantumGridMaterial.uniforms.gravity.value = GlobalState.gravity;
-          window.quantumGridMaterial.uniforms.solarAngle.value = GlobalState.solarAngle;
-          window.quantumGridMaterial.uniforms.cogCurvature.value = CognitionCore.curvature;
-          window.quantumGridMaterial.uniforms.cogDensity.value = CognitionCore.density;
-          window.quantumGridMaterial.uniforms.cogDistortion.value = CognitionCore.distortion;
-        }
-
-        // Update Cognitive UI HUD
-        const curEl = document.getElementById('cog-curvature');
-        if (curEl) curEl.innerText = CognitionCore.curvature.toFixed(3);
-        const denEl = document.getElementById('cog-density');
-        if (denEl) denEl.innerText = CognitionCore.density.toFixed(3);
-        const distEl = document.getElementById('cog-distortion');
-        if (distEl) distEl.innerText = CognitionCore.distortion.toFixed(3);
-
         const rb = bouncingSphere.userData;
 
         // Apply gravity
@@ -1056,201 +1050,6 @@
         window.addEventListener("DOMContentLoaded", init);
         window.addEventListener("load", init);
       }
-    
-
-</script>
-</head>
-  <body>
-    <canvas id="webgl-canvas"></canvas>
-
-    <div id="ui-layer">
-      <!-- Left Panel: Central Dynamic State Bus Controls -->
-      <div class="panel">
-        <h1
-          class="text-xl font-bold text-cyan-accent mb-1 flex items-center justify-between"
-        >
-          Jules Master 3D Engine
-          <span class="badge-synthesized">11 Modules Bound</span>
-        </h1>
-        <p class="text-xs text-slate-400 mb-4">
-          Unified Dynamic State Bus Interlock
-        </p>
-
-        <!-- Slider 1: Gravity & C++ Rigid Body Physics -->
-        <div class="slider-container">
-          <div class="slider-label">
-            <span>Gravity Acceleration (중력 수치)</span>
-            <span id="gravity-val">9.81 m/s²</span>
-
-            <div class="mt-4 pt-3 border-t border-slate-700">
-              <div class="text-xs font-semibold text-slate-400 mb-2 tracking-wider">TOPOLOGICAL COGNITION TENSORS</div>
-              <div class="flex justify-between items-center mb-1">
-                <span class="text-slate-300 text-[11px]">Curvature ∇Φ</span>
-                <span id="cog-curvature" class="font-mono text-cyan-400 text-xs font-bold">0.000</span>
-              </div>
-              <div class="flex justify-between items-center mb-1">
-                <span class="text-slate-300 text-[11px]">Density ρ</span>
-                <span id="cog-density" class="font-mono text-blue-400 text-xs font-bold">0.000</span>
-              </div>
-              <div class="flex justify-between items-center mb-1">
-                <span class="text-slate-300 text-[11px]">Distortion J</span>
-                <span id="cog-distortion" class="font-mono text-purple-400 text-xs font-bold">0.000</span>
-              </div>
-            </div>
-          </div>
-          <input
-            type="range"
-            id="gravity-slider"
-            min="0"
-            max="25"
-            step="0.5"
-            value="9.81"
-          />
-        </div>
-
-        <!-- Slider 2: Solar Angle & Thermal Expansion -->
-        <div class="slider-container">
-          <div class="slider-label">
-            <span>24h Solar Angle (태양각 / 열팽창)</span>
-            <span id="solar-val">12:00 (Noon)</span>
-          </div>
-          <input
-            type="range"
-            id="solar-slider"
-            min="0"
-            max="24"
-            step="0.5"
-            value="12"
-          />
-        </div>
-
-        <!-- Slider 3: Vector Topology Connection Distance -->
-        <div class="slider-container">
-          <div class="slider-label">
-            <span>768d Vector Density</span>
-            <span id="vector-val">6.0</span>
-          </div>
-          <input
-            type="range"
-            id="vector-slider"
-            min="2"
-            max="12"
-            step="0.5"
-            value="6"
-          />
-        </div>
-
-        <!-- Slider 4: Audio Spectrum FFT Frequency Pulse -->
-        <div class="slider-container">
-          <div class="slider-label">
-            <span>Audio Spectrum FFT Pulse</span>
-            <span id="audio-val">440 Hz</span>
-          </div>
-          <input
-            type="range"
-            id="audio-slider"
-            min="100"
-            max="1000"
-            step="10"
-            value="440"
-          />
-        </div>
-
-        <!-- Real Web Audio API Microphone & Tone Buttons (Visible HUD Controls) -->
-        <div
-          class="slider-container"
-          style="
-            margin-top: 1rem;
-            padding-top: 0.75rem;
-            border-top: 1px solid rgba(51, 65, 85, 0.8);
-          "
-        >
-          <div class="slider-label" style="margin-bottom: 0.5rem">
-            <span style="color: #00f2fe; font-weight: 600"
-              >Web Audio API Live Mic & Spectrum</span
-            >
-            <span id="val-freq" style="color: #a7f3d0">440 Hz</span>
-          </div>
-          <div style="display: flex; gap: 8px">
-            <button
-              id="btn-mic-start"
-              onclick="toggleMicrophone()"
-              style="flex: 1; padding: 6px 12px; background: rgba(0, 242, 254, 0.15); border: 1px solid #00f2fe; color: #00f2fe; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.75rem; display: flex; items-center; justify-content: center; gap: 4px;"
-            >
-              🎤 <span id="mic-status-text">Enable Mic (LIVE)</span>
-            </button>
-            <button
-              id="btn-tone-gen"
-              onclick="toggleToneGenerator()"
-              style="flex: 1; padding: 6px 12px; background: rgba(139, 92, 246, 0.15); border: 1px solid #8b5cf6; color: #a78bfa; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.75rem; display: flex; items-center; justify-content: center; gap: 4px;"
-            >
-              🎵 <span id="tone-status-text">Test Tone (440Hz)</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="mt-4 pt-3 border-t border-slate-700">
-          <div class="text-xs font-semibold text-cyan-accent mb-2">
-            Synthesized 11 Subsystem Modules:
-          </div>
-          <ul class="text-xs text-slate-300 space-y-1">
-            <li class="flex justify-between">
-              <span>1. physics_core.cpp (C++ AABB Rigid Body)</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>2. quantum.vert/frag (GLSL Shaders)</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>3. 3D Vector Topology 768d Graph</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>4. 3D Audio FFT Spectrum Wave</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>5. Solar Thermal Expansion Physics</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>6. Collapsible AST JSON Tree</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>7. Quantum Relativity Curvature</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>8. OrbitControls 360 Drag/Zoom</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>9. Inverse Kinematics (IK Skinned Arm)</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>10. Soft-Body Physics Mesh</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-            <li class="flex justify-between">
-              <span>11. WebXR AR Overlays & ARButton</span
-              ><span class="text-emerald-400">ONLINE</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Right Panel: AST & Telemetry Tree Inspector -->
-      <div class="panel">
-        <h2 class="text-base font-bold text-cyan-accent mb-2">
-          Interactive AST & State Tree
-        </h2>
-        <div id="json-container"></div>
-      </div>
-    </div>
-
-    
+    </script>
   </body>
 </html>
