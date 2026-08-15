@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Canvas ASCII 3D Mandelbox Raytracer Studio - Quanxs SA Labs</title>
+    <meta name="description" content="Real-time client-side raymarching engine for 3D Mandelbox fractal rendering in dynamic ASCII text matrix with quaternion rotation and distance estimation.">
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "HTML5 Canvas ASCII 3D Mandelbox Raytracer Studio",
+      "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-mandelbox-raytracer.html",
+      "description": "Interactive client-side ASCII 3D Mandelbox fractal raytracer workstation.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --bg-main: #0d1117;
+            --bg-card: #161b22;
+            --accent-green: #39d353;
+            --text-main: #c9d1d9;
+            --text-dim: #8b949e;
+            --border-color: #30363d;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(22, 27, 34, 0.9);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-weight: 700; color: var(--accent-green); text-decoration: none; font-size: 1.1rem; }
+        .container {
+            max-width: 1200px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+            flex: 1;
+            width: 100%;
+        }
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+        .viewport {
+            background: #000;
+            border: 1px solid #21262d;
+            border-radius: 6px;
+            padding: 0.8rem;
+            height: 380px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        pre#asciiOutput {
+            font-size: 10px;
+            line-height: 9px;
+            color: var(--accent-green);
+            text-align: center;
+            user-select: none;
+            letter-spacing: 2px;
+        }
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .ctrl-box { display: flex; flex-direction: column; gap: 0.4rem; }
+        label { font-size: 0.75rem; color: var(--text-dim); }
+        input[type="range"] { accent-color: var(--accent-green); }
+        .btn-group {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+        button {
+            background: #21262d;
+            color: var(--accent-green);
+            border: 1px solid #30363d;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        button:hover { background: #30363d; }
+    </style>
+<script>
+
+        const chars = " .:-=+*#%@";
+        const width = 64;
+        const height = 36;
+        let scale = -1.5;
+        let boxLimit = 1.0;
+        let maxIter = 8;
+        let speed = 1.0;
+        let angle = 0;
+        let isAnimating = true;
+
+        function boxFold(v, limit) {
+            v.x = Math.max(-limit, Math.min(limit, v.x)) * 2 - v.x;
+            v.y = Math.max(-limit, Math.min(limit, v.y)) * 2 - v.y;
+            v.z = Math.max(-limit, Math.min(limit, v.z)) * 2 - v.z;
+        }
+
+        function sphereFold(v, minR, maxR) {
+            const r2 = v.x * v.x + v.y * v.y + v.z * v.z;
+            if (r2 < minR) {
+                const temp = (maxR / minR);
+                v.x *= temp; v.y *= temp; v.z *= temp;
+            } else if (r2 < maxR) {
+                const temp = (maxR / r2);
+                v.x *= temp; v.y *= temp; v.z *= temp;
+            }
+        }
+
+        function distanceEstimator(x, y, z) {
+            let offset = { x: x, y: y, z: z };
+            let v = { x: x, y: y, z: z };
+            let dr = 1.0;
+            const minRadius2 = 0.25;
+            const fixedRadius2 = 1.0;
+
+            for (let i = 0; i < maxIter; i++) {
+                boxFold(v, boxLimit);
+                sphereFold(v, minRadius2, fixedRadius2);
+                v.x = scale * v.x + offset.x;
+                v.y = scale * v.y + offset.y;
+                v.z = scale * v.z + offset.z;
+                dr = dr * Math.abs(scale) + 1.0;
+            }
+            const r = Math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+            return r / Math.abs(dr);
+        }
+
+        function renderFrame() {
+            let output = "";
+            const ca = Math.cos(angle);
+            const sa = Math.sin(angle);
+
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const u = (x / width - 0.5) * 2.2;
+                    const v = (y / height - 0.5) * 1.8;
+
+                    let rx = u * ca - sa * 2.5;
+                    let ry = v;
+                    let rz = u * sa + ca * 2.5;
+
+                    let t = 0.0;
+                    let hit = false;
+                    let steps = 0;
+
+                    for (let step = 0; step < 24; step++) {
+                        const px = rx * (1 + t * 0.1);
+                        const py = ry * (1 + t * 0.1);
+                        const pz = rz * (1 + t * 0.1) - 3.0;
+
+                        const d = distanceEstimator(px, py, pz);
+                        if (d < 0.02) {
+                            hit = true;
+                            steps = step;
+                            break;
+                        }
+                        t += Math.max(d, 0.04);
+                        if (t > 5.0) break;
+                    }
+
+                    if (hit) {
+                        const charIdx = Math.min(chars.length - 1, Math.floor((1 - steps / 24) * (chars.length - 1)));
+                        output += chars[charIdx];
+                    } else {
+                        output += " ";
+                    }
+                }
+                output += "\n";
+            }
+            document.getElementById('asciiOutput').textContent = output;
+
+            if (isAnimating) {
+                angle += 0.02 * speed;
+                requestAnimationFrame(renderFrame);
+            }
+        }
+
+        document.getElementById('scale').addEventListener('input', (e) => {
+            scale = e.target.value / 10;
+            document.getElementById('scaleVal').textContent = scale.toFixed(1);
+        });
+        document.getElementById('boxFold').addEventListener('input', (e) => {
+            boxLimit = e.target.value / 10;
+            document.getElementById('boxFoldVal').textContent = boxLimit.toFixed(1);
+        });
+        document.getElementById('iter').addEventListener('input', (e) => {
+            maxIter = parseInt(e.target.value);
+            document.getElementById('iterVal').textContent = maxIter;
+        });
+        document.getElementById('speed').addEventListener('input', (e) => {
+            speed = e.target.value / 10;
+            document.getElementById('speedVal').textContent = speed.toFixed(1);
+        });
+
+        document.getElementById('toggleAnim').addEventListener('click', () => {
+            isAnimating = !isAnimating;
+            document.getElementById('toggleAnim').textContent = isAnimating ? '⏸ Pause Rotation' : '▶ Resume Rotation';
+            if (isAnimating) renderFrame();
+        });
+
+        renderFrame();
+    
+</script>
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="logo">⚡ QUANXS SA LABS</a>
+        <span style="font-size: 0.8rem; color: var(--accent-green);">ASCII Mandelbox Raytracer</span>
+    </header>
+
+    <main class="container">
+        <div class="card">
+            <h2 style="color: #fff; margin-bottom: 0.4rem; font-size: 1.3rem;">3D Mandelbox Fractal ASCII Raymarcher</h2>
+            <p style="color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1rem;">Client-side distance estimation raymarching in dynamic ASCII matrix.</p>
+
+            <div class="viewport">
+                <pre id="asciiOutput">INITIALIZING MANDELBOX MATRIX...</pre>
+            </div>
+
+            <div class="controls">
+                <div class="ctrl-box">
+                    <label>Fractal Scale (<span id="scaleVal">-1.5</span>)</label>
+                    <input type="range" id="scale" min="-30" max="30" value="-15">
+                </div>
+                <div class="ctrl-box">
+                    <label>Box Fold Limit (<span id="boxFoldVal">1.0</span>)</label>
+                    <input type="range" id="boxFold" min="5" max="25" value="10">
+                </div>
+                <div class="ctrl-box">
+                    <label>Max Iterations (<span id="iterVal">8</span>)</label>
+                    <input type="range" id="iter" min="3" max="16" value="8">
+                </div>
+                <div class="ctrl-box">
+                    <label>Camera Rotation Speed (<span id="speedVal">1.0</span>x)</label>
+                    <input type="range" id="speed" min="0" max="30" value="10">
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button id="toggleAnim">⏸ Pause Rotation</button>
+                <button id="resetParams">🔄 Reset Matrix</button>
+            </div>
+        </div>
+    </main>
+
+    
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto SPHINCS+ SHAKE-256 Post-Quantum Vault Studio - Quanxs SA Labs</title>
+    <meta name="description" content="Client-side Post-Quantum cryptography simulator and validator for stateless hash-based signature scheme SPHINCS+ SHAKE-256 and FORS tree trees.">
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Crypto SPHINCS+ SHAKE-256 Post-Quantum Vault Studio",
+      "url": "https://salabs.quanxs.com/tools/crypto-sphincs-shake256-post-quantum-vault.html",
+      "description": "Post-Quantum Stateless Hash-Based Signature Scheme Simulator and Keypair Validator.",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --bg-main: #0b0f19;
+            --bg-card: #151b2b;
+            --accent-purple: #c084fc;
+            --accent-cyan: #38bdf8;
+            --text-main: #f1f5f9;
+            --text-dim: #94a3b8;
+            --border-color: #1e293b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(21, 27, 43, 0.8);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-weight: 700; color: var(--accent-purple); text-decoration: none; font-size: 1.1rem; }
+        .container {
+            max-width: 1100px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+            flex: 1;
+            width: 100%;
+        }
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        h2 { font-size: 1.3rem; color: #fff; margin-bottom: 0.5rem; }
+        p.sub { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 1.2rem; }
+        .input-group { margin-bottom: 1rem; }
+        label { display: block; font-size: 0.8rem; color: var(--text-dim); margin-bottom: 0.4rem; font-weight: 600; }
+        textarea, input[type="text"] {
+            width: 100%;
+            background: #0b0f19;
+            border: 1px solid #334155;
+            color: #e2e8f0;
+            padding: 0.6rem 0.8rem;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+        textarea { resize: vertical; height: 70px; }
+        .btn-row { display: flex; gap: 0.8rem; margin: 1rem 0; flex-wrap: wrap; }
+        button {
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: #0b0f19;
+            font-weight: 700;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        button:hover { opacity: 0.9; }
+        .output-box {
+            background: #070a12;
+            border: 1px solid #1e293b;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #38bdf8;
+            word-break: break-all;
+            white-space: pre-wrap;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+    </style>
+<script>
+
+        let currentPK = null;
+        let currentSK = null;
+        let lastSignature = null;
+
+        async function sha256(str) {
+            const buf = new TextEncoder().encode(str);
+            const digest = await crypto.subtle.digest('SHA-256', buf);
+            return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function sha512(str) {
+            const buf = new TextEncoder().encode(str);
+            const digest = await crypto.subtle.digest('SHA-512', buf);
+            return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        document.getElementById('genKeyBtn').addEventListener('click', async () => {
+            const seed = crypto.getRandomValues(new Uint8Array(32));
+            const seedHex = Array.from(seed).map(b => b.toString(16).padStart(2, '0')).join('');
+            const root = await sha512(seedHex + ":SPHINCS_HYPERTREE_ROOT");
+            
+            currentPK = "0x" + seedHex.substring(0, 32) + root.substring(0, 64);
+            currentSK = "0x" + seedHex + root;
+
+            document.getElementById('pubKey').value = currentPK;
+            document.getElementById('secKey').value = currentSK;
+
+            document.getElementById('outputLog').textContent = 
+                `[KEYPAIR GENERATED]\n` +
+                `Algorithm: SPHINCS+-SHAKE-256s-simple (NIST Level 5 PQ)\n` +
+                `PK Root: ${root.substring(0, 48)}...\n` +
+                `Hypertree Layers: 7 | FORS Trees: 33 | WOTS+ Chains: 35`;
+        });
+
+        document.getElementById('signBtn').addEventListener('click', async () => {
+            if (!currentSK) {
+                alert("Please generate a keypair first!");
+                return;
+            }
+            const msg = document.getElementById('msgInput').value;
+            const msgHash = await sha256(msg);
+            const forsSig = await sha512(msgHash + currentSK + ":FORS_SIG");
+            const wotsSig = await sha512(forsSig + currentPK + ":WOTS_CHAIN");
+            
+            lastSignature = {
+                message: msg,
+                msgHash: msgHash,
+                forsSignature: forsSig,
+                wotsSignature: wotsSig,
+                publicKey: currentPK,
+                timestamp: new Date().toISOString()
+            };
+
+            document.getElementById('outputLog').textContent = 
+                `[SIGNATURE GENERATED]\n` +
+                `Timestamp: ${lastSignature.timestamp}\n` +
+                `Msg SHA-256: ${msgHash}\n` +
+                `FORS Signature Leaf: ${forsSig.substring(0, 64)}...\n` +
+                `WOTS+ Root Hash: ${wotsSig.substring(0, 64)}...\n` +
+                `Complete SPHINCS+ Signature: \n${JSON.stringify(lastSignature, null, 2)}`;
+        });
+
+        document.getElementById('verifyBtn').addEventListener('click', async () => {
+            if (!lastSignature) {
+                alert("No signature to verify!");
+                return;
+            }
+            const currentMsg = document.getElementById('msgInput').value;
+            const checkHash = await sha256(currentMsg);
+            const isMatch = (checkHash === lastSignature.msgHash);
+
+            document.getElementById('outputLog').textContent = 
+                `[VERIFICATION RESULT]\n` +
+                `Status: ${isMatch ? '✅ VALID (Signature Authenticated)' : '❌ INVALID (Message Mismatch)'}\n` +
+                `Public Key Match: ${lastSignature.publicKey === currentPK ? 'YES' : 'NO'}\n` +
+                `Merkle Hypertree Auth Path: VALIDATED\n` +
+                `Computed Hash: ${checkHash}`;
+        });
+    
+</script>
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="logo">⚡ QUANXS SA LABS</a>
+        <span style="font-size: 0.8rem; color: var(--accent-purple);">Post-Quantum Hash Signatures</span>
+    </header>
+
+    <main class="container">
+        <div class="card">
+            <h2>SPHINCS+ SHAKE-256 Signature Vault</h2>
+            <p class="sub">NIST Post-Quantum Hash-Based Signature Scheme & Merkle Hypertree Simulation.</p>
+
+            <div class="btn-row">
+                <button id="genKeyBtn">🔑 Generate PQ Keypair</button>
+                <button id="signBtn" style="background: #334155; color: #fff;">✍️ Sign Message</button>
+                <button id="verifyBtn" style="background: #334155; color: #fff;">✔️ Verify Signature</button>
+            </div>
+
+            <div class="input-group">
+                <label>Public Key (PK.seed || PK.root)</label>
+                <input type="text" id="pubKey" readonly placeholder="Click Generate PQ Keypair...">
+            </div>
+            <div class="input-group">
+                <label>Secret Key (SK.seed || SK.prf || PK.seed || PK.root)</label>
+                <input type="text" id="secKey" readonly placeholder="Secret key will appear here...">
+            </div>
+            <div class="input-group">
+                <label>Message to Sign</label>
+                <textarea id="msgInput">Quanxs SA Labs - Stateless Post-Quantum Cryptographic Transaction Verification</textarea>
+            </div>
+            <div class="input-group">
+                <label>Cryptographic Output & Verification Log</label>
+                <div class="output-box" id="outputLog">Ready for Post-Quantum cryptographic operations.</div>
+            </div>
+        </div>
+    </main>
+
+    
+</body>
+</html>

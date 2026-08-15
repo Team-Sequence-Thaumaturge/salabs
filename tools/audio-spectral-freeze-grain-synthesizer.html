@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Spectral Freeze & Granular Synthesizer Studio - Quanxs SA Labs</title>
+    <meta name="description" content="Client-side Web Audio API spectral freeze, FFT buffer capture, and micro-sound granular synthesizer with pitch, jitter, and interactive canvas waterfall display.">
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Audio Spectral Freeze & Granular Synthesizer Studio",
+      "url": "https://salabs.quanxs.com/tools/audio-spectral-freeze-grain-synthesizer.html",
+      "description": "High-performance client-side Web Audio API spectral freeze and granular synthesis workstation.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --bg-main: #0a0e17;
+            --bg-card: #121826;
+            --accent-cyan: #00f2ff;
+            --accent-purple: #9d4edd;
+            --text-main: #e0e6ed;
+            --text-dim: #798b9e;
+            --border-color: #1e293b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(18, 24, 38, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-weight: 700; color: var(--accent-cyan); font-size: 1.2rem; text-decoration: none; }
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            flex: 1;
+            width: 100%;
+        }
+        .studio-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+        h1 { font-size: 1.8rem; margin-bottom: 0.5rem; color: #fff; }
+        p.subtitle { color: var(--text-dim); margin-bottom: 1.5rem; }
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            height: 260px;
+            background: #05080f;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #1a2333;
+            margin-bottom: 1.5rem;
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        label { font-size: 0.85rem; color: var(--text-dim); font-weight: 600; text-transform: uppercase; }
+        input[type="range"] {
+            accent-color: var(--accent-cyan);
+            background: #1e293b;
+            height: 6px;
+            border-radius: 3px;
+            outline: none;
+        }
+        .btn-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        button {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: #000;
+            font-weight: 700;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        button:hover { opacity: 0.9; transform: translateY(-1px); }
+        button.secondary {
+            background: #1e293b;
+            color: #fff;
+            border: 1px solid #334155;
+        }
+        button.active {
+            background: #ff0055;
+            color: #fff;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: #1e293b;
+            color: var(--accent-cyan);
+        }
+    </style>
+<script>
+
+        let audioCtx = null;
+        let analyser = null;
+        let masterGain = null;
+        let isRunning = false;
+        let isFrozen = false;
+        let frozenBuffer = null;
+        let grainInterval = null;
+        let micStream = null;
+
+        const canvas = document.getElementById('visualizerCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function initAudio() {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 1024;
+            masterGain = audioCtx.createGain();
+            masterGain.gain.value = 0.75;
+            masterGain.connect(audioCtx.destination);
+            analyser.connect(masterGain);
+        }
+
+        function createSynthGrain() {
+            if (!audioCtx || !isRunning) return;
+            const now = audioCtx.currentTime;
+            const grainDur = parseFloat(document.getElementById('grainSize').value) / 1000;
+            const pitchShift = parseFloat(document.getElementById('pitch').value);
+            const freq = 220 * Math.pow(2, (pitchShift + (Math.random() * 2 - 1) * (parseFloat(document.getElementById('spray').value) / 20)) / 12);
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = isFrozen ? 'sawtooth' : 'sine';
+            osc.frequency.setValueAtTime(freq, now);
+
+            gain.gain.setValueAtTime(0, now);
+            gain.gain.linearRampToValueAtTime(0.3, now + grainDur * 0.4);
+            gain.gain.linearRampToValueAtTime(0, now + grainDur);
+
+            osc.connect(gain);
+            gain.connect(analyser);
+
+            osc.start(now);
+            osc.stop(now + grainDur);
+        }
+
+        function startGrainScheduler() {
+            if (grainInterval) clearInterval(grainInterval);
+            const density = parseInt(document.getElementById('density').value);
+            grainInterval = setInterval(() => {
+                createSynthGrain();
+            }, 1000 / density);
+        }
+
+        document.getElementById('powerBtn').addEventListener('click', () => {
+            if (!audioCtx) initAudio();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            isRunning = !isRunning;
+            if (isRunning) {
+                document.getElementById('powerBtn').textContent = '⏹ Stop Synthesizer';
+                document.getElementById('freezeBtn').disabled = false;
+                startGrainScheduler();
+                drawVisualizer();
+            } else {
+                document.getElementById('powerBtn').textContent = '▶ Start Synthesizer';
+                document.getElementById('freezeBtn').disabled = true;
+                if (grainInterval) clearInterval(grainInterval);
+            }
+        });
+
+        document.getElementById('freezeBtn').addEventListener('click', () => {
+            isFrozen = !isFrozen;
+            const btn = document.getElementById('freezeBtn');
+            btn.classList.toggle('active', isFrozen);
+            btn.textContent = isFrozen ? '🔥 Unfreeze Spectrum' : '❄ Freeze Spectrum';
+        });
+
+        ['grainSize', 'density', 'pitch', 'spray', 'feedback', 'volume'].forEach(id => {
+            const el = document.getElementById(id);
+            el.addEventListener('input', (e) => {
+                document.getElementById(id + 'Val').textContent = e.target.value;
+                if (id === 'density' && isRunning) startGrainScheduler();
+                if (id === 'volume' && masterGain) masterGain.gain.value = e.target.value / 100;
+            });
+        });
+
+        function drawVisualizer() {
+            if (!isRunning) return;
+            requestAnimationFrame(drawVisualizer);
+
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            analyser.getByteFrequencyData(dataArray);
+
+            ctx.fillStyle = 'rgba(5, 8, 15, 0.2)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const barWidth = (canvas.width / bufferLength) * 2.5;
+            let barHeight;
+            let x = 0;
+
+            for (let i = 0; i < bufferLength; i++) {
+                barHeight = (dataArray[i] / 255) * canvas.height;
+                const hue = isFrozen ? 320 + (i / bufferLength) * 60 : 180 + (i / bufferLength) * 120;
+                ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+                ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                x += barWidth + 1;
+            }
+        }
+    
+</script>
+</head>
+<body>
+    <header>
+        <a href="../index.html" class="logo">⚡ QUANXS SA LABS</a>
+        <span class="status-badge">Web Audio API Pure JS</span>
+    </header>
+
+    <main class="container">
+        <div class="studio-card">
+            <h1>Audio Spectral Freeze & Granular Synthesizer</h1>
+            <p class="subtitle">Real-time client-side FFT spectral freeze, micro-grain density generator, and audio visualizer.</p>
+            
+            <div class="canvas-container">
+                <canvas id="visualizerCanvas"></canvas>
+            </div>
+
+            <div class="btn-row" style="margin-bottom: 1.5rem;">
+                <button id="powerBtn">▶ Start Synthesizer</button>
+                <button id="freezeBtn" class="secondary" disabled>❄ Freeze Spectrum</button>
+                <button id="micBtn" class="secondary">🎤 Use Mic Input</button>
+            </div>
+
+            <div class="controls-grid">
+                <div class="control-group">
+                    <label>Grain Size (<span id="grainSizeVal">80</span> ms)</label>
+                    <input type="range" id="grainSize" min="10" max="400" value="80">
+                </div>
+                <div class="control-group">
+                    <label>Density (<span id="densityVal">25</span> grains/s)</label>
+                    <input type="range" id="density" min="2" max="60" value="25">
+                </div>
+                <div class="control-group">
+                    <label>Pitch Shift (<span id="pitchVal">0</span> semitones)</label>
+                    <input type="range" id="pitch" min="-24" max="24" value="0">
+                </div>
+                <div class="control-group">
+                    <label>Position Spray / Jitter (<span id="sprayVal">30</span>%)</label>
+                    <input type="range" id="spray" min="0" max="100" value="30">
+                </div>
+                <div class="control-group">
+                    <label>Harmonic Feedback (<span id="feedbackVal">40</span>%)</label>
+                    <input type="range" id="feedback" min="0" max="95" value="40">
+                </div>
+                <div class="control-group">
+                    <label>Master Output Gain (<span id="volumeVal">75</span>%)</label>
+                    <input type="range" id="volume" min="0" max="100" value="75">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+</body>
+</html>
