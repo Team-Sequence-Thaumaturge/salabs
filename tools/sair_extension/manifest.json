@@ -1,0 +1,58 @@
+{
+  "manifest_version": 3,
+  "name": "SAIR 1-Click Auto Injector",
+  "version": "1.2.8",
+  "description": "SAIR 487-Tensor Specification Text & C++ Render PNG Image 1-Click Auto Injector for AI Sites",
+  "permissions": [
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://labs.google/*",
+    "https://*.google.com/*",
+    "https://*.google/*",
+    "https://*.manus.im/*",
+    "https://*.manus.ai/*",
+    "https://*.chatgpt.com/*",
+    "https://*.openai.com/*",
+    "https://*.claude.ai/*",
+    "https://*.midjourney.com/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://sair.quanxs.com/*",
+      "http://localhost/*",
+      "http://127.0.0.1/*"
+    ]
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://sair.quanxs.com/*",
+        "http://localhost/*",
+        "http://127.0.0.1/*"
+      ],
+      "js": ["sair_bridge.js"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://labs.google/*",
+        "https://*.google.com/*",
+        "https://*.google/*",
+        "https://*.manus.im/*",
+        "https://*.manus.ai/*",
+        "https://*.chatgpt.com/*",
+        "https://*.openai.com/*",
+        "https://*.claude.ai/*",
+        "https://*.midjourney.com/*"
+      ],
+      "js": ["target_injector.js"],
+      "all_frames": false,
+      "run_at": "document_end"
+    }
+  ]
+}
