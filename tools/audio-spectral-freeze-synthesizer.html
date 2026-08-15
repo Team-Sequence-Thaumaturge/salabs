@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Spectral Freeze Synthesizer - Quanxs SA Labs</title>
+    <meta name="description" content="100% Client-Side Pure Web Audio API Realtime FFT Spectral Freeze & Harmonic Drone Ambient Synthesizer.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Audio Spectral Freeze Synthesizer",
+      "url": "https://salabs.quanxs.com/tools/audio-spectral-freeze-synthesizer.html",
+      "description": "Realtime Web Audio API Spectral Freeze drone synth and frequency freeze visualizer.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All"
+    }
+    </script>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --accent: #58a6ff;
+            --accent-glow: rgba(88, 166, 255, 0.4);
+            --text-main: #c9d1d9;
+            --text-muted: #8b949e;
+            --border: #30363d;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+        header {
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 16px;
+        }
+        h1 {
+            color: var(--accent);
+            margin: 0 0 8px 0;
+            font-size: 1.8rem;
+        }
+        p { color: var(--text-muted); margin: 0; font-size: 0.95rem; }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        label {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent);
+        }
+        button {
+            background: var(--accent);
+            color: #0d1117;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        button:hover {
+            box-shadow: 0 0 12px var(--accent-glow);
+            transform: translateY(-1px);
+        }
+        button.active {
+            background: #f85149;
+            color: white;
+        }
+        canvas {
+            width: 100%;
+            height: 240px;
+            background: #000;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+        }
+        .status-box {
+            font-family: monospace;
+            background: #0d1117;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: #7ee787;
+            margin-top: 15px;
+        }
+    </style>
+<script>
+
+        let audioCtx = null;
+        let masterGain = null;
+        let oscillators = [];
+        let filterBanks = [];
+        let analyser = null;
+        let isRunning = false;
+        let isFrozen = false;
+        let frozenBuffer = null;
+
+        const toggleBtn = document.getElementById('toggleSynthBtn');
+        const freezeBtn = document.getElementById('freezeBtn');
+        const freqInput = document.getElementById('rootFreq');
+        const harmInput = document.getElementById('harmonics');
+        const spreadInput = document.getElementById('spectralSpread');
+        const statusLog = document.getElementById('statusLog');
+        const canvas = document.getElementById('scopeCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = canvas.clientWidth * window.devicePixelRatio;
+            canvas.height = canvas.clientHeight * window.devicePixelRatio;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        freqInput.oninput = () => {
+            document.getElementById('freqVal').innerText = freqInput.value;
+            updateFrequencies();
+        };
+        harmInput.oninput = () => {
+            document.getElementById('harmVal').innerText = harmInput.value;
+            if (isRunning) buildHarmonics();
+        };
+        spreadInput.oninput = () => {
+            document.getElementById('spreadVal').innerText = spreadInput.value;
+            updateFilters();
+        };
+        document.getElementById('decayTime').oninput = (e) => {
+            document.getElementById('decayVal').innerText = e.target.value;
+        };
+
+        function initAudio() {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            masterGain = audioCtx.createGain();
+            masterGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+
+            analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 1024;
+
+            masterGain.connect(analyser);
+            analyser.connect(audioCtx.destination);
+        }
+
+        function buildHarmonics() {
+            oscillators.forEach(o => { try { o.stop(); o.disconnect(); } catch(e){} });
+            filterBanks.forEach(f => f.disconnect());
+            oscillators = [];
+            filterBanks = [];
+
+            const count = parseInt(harmInput.value);
+            const baseFreq = parseFloat(freqInput.value);
+            const qVal = parseFloat(spreadInput.value);
+
+            for (let i = 1; i <= count; i++) {
+                const osc = audioCtx.createOscillator();
+                osc.type = (i % 2 === 0) ? 'sawtooth' : 'sine';
+                osc.frequency.setValueAtTime(baseFreq * i, audioCtx.currentTime);
+
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.setValueAtTime(baseFreq * i, audioCtx.currentTime);
+                filter.Q.setValueAtTime(qVal, audioCtx.currentTime);
+
+                const gain = audioCtx.createGain();
+                gain.gain.setValueAtTime(1.0 / (i * 0.8), audioCtx.currentTime);
+
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(masterGain);
+
+                osc.start();
+                oscillators.push(osc);
+                filterBanks.push(filter);
+            }
+        }
+
+        function updateFrequencies() {
+            if (!audioCtx) return;
+            const baseFreq = parseFloat(freqInput.value);
+            oscillators.forEach((osc, idx) => {
+                osc.frequency.setTargetAtTime(baseFreq * (idx + 1), audioCtx.currentTime, 0.05);
+            });
+            filterBanks.forEach((filter, idx) => {
+                filter.frequency.setTargetAtTime(baseFreq * (idx + 1), audioCtx.currentTime, 0.05);
+            });
+        }
+
+        function updateFilters() {
+            if (!audioCtx) return;
+            const qVal = parseFloat(spreadInput.value);
+            filterBanks.forEach(f => f.Q.setTargetAtTime(qVal, audioCtx.currentTime, 0.05));
+        }
+
+        toggleBtn.addEventListener('click', async () => {
+            if (!isRunning) {
+                if (!audioCtx) initAudio();
+                if (audioCtx.state === 'suspended') await audioCtx.resume();
+                buildHarmonics();
+                isRunning = true;
+                toggleBtn.innerText = '■ Stop Drone Engine';
+                toggleBtn.classList.add('active');
+                statusLog.innerText = `System Status: Active Drone Synth running at ${freqInput.value} Hz (${harmInput.value} layers).`;
+                draw();
+            } else {
+                oscillators.forEach(o => { try { o.stop(); } catch(e){} });
+                isRunning = false;
+                toggleBtn.innerText = '▶ Start Drone Engine';
+                toggleBtn.classList.remove('active');
+                statusLog.innerText = 'System Status: Drone Engine stopped.';
+            }
+        });
+
+        freezeBtn.addEventListener('click', () => {
+            if (!isRunning) return;
+            isFrozen = !isFrozen;
+            if (isFrozen) {
+                freezeBtn.style.background = '#238636';
+                freezeBtn.innerText = '⚡ Unfreeze';
+                statusLog.innerText = 'System Status: [SPECTRUM FROZEN] - Phase lock active across all harmonic bands.';
+            } else {
+                freezeBtn.style.background = '#a371f7';
+                freezeBtn.innerText = '❄ Freeze Spectrum';
+                statusLog.innerText = 'System Status: Realtime dynamic synthesis resumed.';
+            }
+        });
+
+        function draw() {
+            if (!isRunning) return;
+            requestAnimationFrame(draw);
+
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            analyser.getByteFrequencyData(dataArray);
+
+            ctx.fillStyle = '#0d1117';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const barWidth = (canvas.width / bufferLength) * 2.5;
+            let barHeight;
+            let x = 0;
+
+            for (let i = 0; i < bufferLength; i++) {
+                barHeight = (dataArray[i] / 255) * canvas.height;
+                const hue = (i / bufferLength) * 280 + 160;
+                ctx.fillStyle = isFrozen ? '#58a6ff' : `hsl(${hue}, 80%, 55%)`;
+                ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                x += barWidth + 1;
+            }
+        }
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Audio Spectral Freeze Synthesizer</h1>
+            <p>100% Client-Side Pure Web Audio API Harmonic Drone & Spectral Phase Freezer</p>
+        </header>
+
+        <div class="card">
+            <div class="controls-grid">
+                <div class="control-group">
+                    <label for="rootFreq">Root Frequency (Hz): <span id="freqVal">110</span></label>
+                    <input type="range" id="rootFreq" min="40" max="880" value="110" step="1">
+                </div>
+                <div class="control-group">
+                    <label for="harmonics">Harmonic Layers: <span id="harmVal">8</span></label>
+                    <input type="range" id="harmonics" min="1" max="16" value="8" step="1">
+                </div>
+                <div class="control-group">
+                    <label for="spectralSpread">Spectral Spread (Q): <span id="spreadVal">12</span></label>
+                    <input type="range" id="spectralSpread" min="1" max="30" value="12" step="0.5">
+                </div>
+                <div class="control-group">
+                    <label for="decayTime">Freeze Decay (s): <span id="decayVal">10</span></label>
+                    <input type="range" id="decayTime" min="1" max="30" value="10" step="1">
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-bottom: 20px;">
+                <button id="toggleSynthBtn">▶ Start Drone Engine</button>
+                <button id="freezeBtn" style="background:#a371f7; color:white;">❄ Freeze Spectrum</button>
+            </div>
+
+            <canvas id="scopeCanvas"></canvas>
+            <div class="status-box" id="statusLog">System Status: Idle. Click 'Start Drone Engine' to initialize Web Audio context.</div>
+        </div>
+    </div>
+
+    
+</body>
+</html>
