@@ -1,6 +1,10 @@
 // SAIR Cockpit Bridge Script (sair_bridge.js)
 console.log("⚡ SAIR Cockpit Extension Bridge loaded!");
 
+document.documentElement.setAttribute('data-sair-ext', 'active');
+window.__SAIR_EXTENSION_ACTIVE__ = true;
+window.__SAIR_EXT__ = true;
+
 let lastInjectTime = 0;
 
 window.addEventListener('message', (event) => {
