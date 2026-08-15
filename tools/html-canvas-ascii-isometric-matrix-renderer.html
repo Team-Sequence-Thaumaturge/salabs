@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas ASCII Isometric 3D Matrix Renderer | Quanxs SA Labs</title>
+  <meta name="description" content="Pure client-side HTML5 Canvas ASCII Isometric 3D wireframe and volume renderer. Real-time shading and projection with zero server load.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Canvas ASCII Isometric 3D Matrix Renderer",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-isometric-matrix-renderer.html",
+    "description": "Interactive HTML5 Canvas ASCII 3D isometric matrix engine with customizable geometry, lighting, and real-time text export.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All"
+  }
+  </script>
+  <style>
+    :root { --bg: #090d16; --panel: #131b2e; --text: #e2e8f0; --accent: #10b981; }
+    body { margin: 0; padding: 20px; background: var(--bg); color: var(--text); font-family: monospace; display: flex; flex-direction: column; align-items: center; }
+    .container { max-width: 860px; width: 100%; background: var(--panel); border-radius: 12px; padding: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.5); }
+    h1 { color: var(--accent); font-size: 1.4rem; text-align: center; margin: 0 0 10px 0; }
+    .canvas-wrap { display: flex; justify-content: center; margin: 15px 0; }
+    pre#asciiScreen { background: #000; color: #10b981; padding: 16px; border-radius: 8px; border: 1px solid #1e293b; font-size: 10px; line-height: 10px; overflow-x: auto; user-select: all; }
+    .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 15px; }
+    .control-box { background: #090d16; padding: 10px; border-radius: 6px; border: 1px solid #1e293b; }
+    label { display: block; font-size: 0.8rem; color: #94a3b8; margin-bottom: 4px; }
+    select, input[type="range"], button { width: 100%; box-sizing: border-box; background: #1e293b; color: #fff; border: 1px solid #334155; padding: 6px; border-radius: 4px; font-family: inherit; }
+    button { background: var(--accent); color: #000; font-weight: bold; cursor: pointer; border: none; padding: 8px; margin-top: 10px; }
+    button:hover { opacity: 0.9; }
+  </style>
+<script>
+
+    const screen = document.getElementById('asciiScreen');
+    const COLS = 64, ROWS = 36;
+    const charSets = {
+      standard: '@%#*+=-:. ',
+      blocks: '██▓▓▒▒░░  ',
+      minimal: '##++..    '
+    };
+
+    let angleY = 0, angleX = 0.6;
+    let points = [];
+
+    function generatePoints(type) {
+      points = [];
+      if (type === 'cube') {
+        for (let x = -1.5; x <= 1.5; x += 0.75) {
+          for (let y = -1.5; y <= 1.5; y += 0.75) {
+            for (let z = -1.5; z <= 1.5; z += 0.75) {
+              if (Math.abs(x) === 1.5 || Math.abs(y) === 1.5 || Math.abs(z) === 1.5) {
+                points.push({x, y, z});
+              }
+            }
+          }
+        }
+      } else if (type === 'terrain') {
+        for (let x = -2; x <= 2; x += 0.3) {
+          for (let z = -2; z <= 2; z += 0.3) {
+            const y = Math.sin(Math.sqrt(x*x + z*z) * 3) * 0.6;
+            points.push({x, y, z});
+          }
+        }
+      } else if (type === 'torus') {
+        for (let u = 0; u < Math.PI * 2; u += 0.25) {
+          for (let v = 0; v < Math.PI * 2; v += 0.4) {
+            const r = 0.5, R = 1.3;
+            const x = (R + r * Math.cos(v)) * Math.cos(u);
+            const y = r * Math.sin(v);
+            const z = (R + r * Math.cos(v)) * Math.sin(u);
+            points.push({x, y, z});
+          }
+        }
+      } else { // pyramid
+        for (let y = -1.5; y <= 1.5; y += 0.3) {
+          const w = (1.5 - y) * 0.8;
+          for (let a = 0; a < Math.PI * 2; a += 0.4) {
+            points.push({x: Math.cos(a) * w, y, z: Math.sin(a) * w});
+          }
+        }
+      }
+    }
+
+    generatePoints('cube');
+    document.getElementById('meshType').addEventListener('change', (e) => generatePoints(e.target.value));
+
+    function render() {
+      const speed = parseFloat(document.getElementById('rotSpeed').value) * 0.002;
+      angleY += speed;
+      angleX = parseFloat(document.getElementById('camPitch').value) * (Math.PI / 180);
+
+      const buffer = Array(ROWS).fill(null).map(() => Array(COLS).fill(' '));
+      const zBuffer = Array(ROWS).fill(null).map(() => Array(COLS).fill(-Infinity));
+      const chars = charSets[document.getElementById('charSet').value];
+
+      const cosY = Math.cos(angleY), sinY = Math.sin(angleY);
+      const cosX = Math.cos(angleX), sinX = Math.sin(angleX);
+
+      points.forEach(p => {
+        // Rotate Y
+        let x1 = p.x * cosY - p.z * sinY;
+        let z1 = p.x * sinY + p.z * cosY;
+        let y1 = p.y;
+
+        // Rotate X (Pitch)
+        let y2 = y1 * cosX - z1 * sinX;
+        let z2 = y1 * sinX + z1 * cosX;
+        let x2 = x1;
+
+        // Isometric projection
+        const scale = 14;
+        const screenX = Math.floor(COLS / 2 + x2 * scale);
+        const screenY = Math.floor(ROWS / 2 - y2 * (scale * 0.55));
+
+        if (screenX >= 0 && screenX < COLS && screenY >= 0 && screenY < ROWS) {
+          if (z2 > zBuffer[screenY][screenX]) {
+            zBuffer[screenY][screenX] = z2;
+            const depthIdx = Math.floor(((z2 + 3) / 6) * (chars.length - 1));
+            const charIdx = Math.max(0, Math.min(chars.length - 1, depthIdx));
+            buffer[screenY][screenX] = chars[charIdx];
+          }
+        }
+      });
+
+      screen.textContent = buffer.map(r => r.join('')).join('\n');
+      requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
+
+    document.getElementById('copyAscii').addEventListener('click', () => {
+      navigator.clipboard.writeText(screen.textContent).then(() => alert('ASCII frame copied!'));
+    });
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <h1>Canvas ASCII Isometric 3D Matrix Renderer</h1>
+    <p style="color:#64748b; font-size:0.85rem; text-align:center; margin-top:0;">Pure Client-Side 3D Wireframe & Point Cloud ASCII Engine</p>
+
+    <div class="canvas-wrap">
+      <pre id="asciiScreen"></pre>
+    </div>
+
+    <div class="controls">
+      <div class="control-box">
+        <label>Geometry Mesh</label>
+        <select id="meshType">
+          <option value="cube">Isometric Cube Grid</option>
+          <option value="pyramid">Sierpinski Pyramid</option>
+          <option value="torus">Isometric Torus Knot</option>
+          <option value="terrain">Sinusoidal 3D Terrain</option>
+        </select>
+      </div>
+      <div class="control-box">
+        <label>Rotation Speed: <span id="speedVal">1.0x</span></label>
+        <input type="range" id="rotSpeed" min="0" max="30" value="10">
+      </div>
+      <div class="control-box">
+        <label>Camera Pitch: <span id="pitchVal">35°</span></label>
+        <input type="range" id="camPitch" min="-90" max="90" value="35">
+      </div>
+      <div class="control-box">
+        <label>ASCII Character Density</label>
+        <select id="charSet">
+          <option value="standard">Standard: @%#*+=-:. </option>
+          <option value="blocks">Blocks: █▓▒░ </option>
+          <option value="minimal">Minimal: #. </option>
+        </select>
+      </div>
+    </div>
+    <button id="copyAscii">Copy ASCII Frame to Clipboard</button>
+  </div>
+
+  
+</body>
+</html>
