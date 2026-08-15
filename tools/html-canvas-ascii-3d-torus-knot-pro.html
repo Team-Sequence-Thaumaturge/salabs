@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas ASCII 3D Torus Knot & Lissajous Studio Pro | Quanxs SA Labs</title>
+  <meta name="description" content="Real-time 3D parametric Torus Knot and Lissajous curve ASCII rendering engine with client-side matrix transforms.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Canvas ASCII 3D Torus Knot & Lissajous Studio Pro",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot-pro.html",
+    "description": "High-performance client-side ASCII 3D parametric Torus Knot generator and Lissajous matrix transformer.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All"
+  }
+  </script>
+  <style>
+    body { font-family: monospace; background: #050505; color: #10b981; margin: 0; padding: 20px; text-align: center; }
+    .container { max-width: 900px; margin: 0 auto; background: #0f172a; padding: 20px; border-radius: 10px; border: 1px solid #1e293b; }
+    h1 { color: #34d399; font-size: 1.5rem; }
+    #screen { background: #000; color: #10b981; font-family: monospace; font-size: 11px; line-height: 11px; white-space: pre; border-radius: 8px; padding: 12px; display: inline-block; border: 1px solid #059669; }
+    .controls { display: flex; justify-content: center; gap: 15px; margin: 15px 0; flex-wrap: wrap; }
+    label { color: #94a3b8; font-size: 0.85rem; }
+  </style>
+<script>
+
+    const screen = document.getElementById('screen');
+    const paramP = document.getElementById('paramP');
+    const paramQ = document.getElementById('paramQ');
+    const sampleCount = document.getElementById('sampleCount');
+    const rotSpeed = document.getElementById('rotSpeed');
+
+    const width = 64;
+    const height = 36;
+    const asciiPalette = " .,-~:;=!*#$@";
+
+    let angleA = 0;
+    let angleB = 0;
+
+    function render() {
+      const p = parseInt(paramP.value) || 2;
+      const q = parseInt(paramQ.value) || 3;
+      const samples = parseInt(sampleCount.value) || 600;
+      const speed = parseFloat(rotSpeed.value) || 1;
+
+      angleA += 0.03 * speed;
+      angleB += 0.02 * speed;
+
+      const zBuffer = new Array(width * height).fill(0);
+      const bBuffer = new Array(width * height).fill(' ');
+
+      const cosA = Math.cos(angleA), sinA = Math.sin(angleA);
+      const cosB = Math.cos(angleB), sinB = Math.sin(angleB);
+
+      for (let i = 0; i < samples; i++) {
+        const phi = (i / samples) * Math.PI * 2;
+        const r = 0.5 * (2 + Math.sin(q * phi));
+        const x = r * Math.cos(p * phi);
+        const y = r * Math.sin(p * phi);
+        const z = -Math.cos(q * phi) * 0.8;
+
+        const x1 = x * cosA - z * sinA;
+        const z1 = x * sinA + z * cosA;
+        const y2 = y * cosB - z1 * sinB;
+        const z2 = y * sinB + z1 * cosB + 4;
+
+        const ooz = 1 / z2;
+        const xp = Math.floor(width / 2 + 35 * x1 * ooz);
+        const yp = Math.floor(height / 2 + 20 * y2 * ooz);
+
+        if (xp >= 0 && xp < width && yp >= 0 && yp < height) {
+          const idx = xp + yp * width;
+          if (ooz > zBuffer[idx]) {
+            zBuffer[idx] = ooz;
+            const lIndex = Math.min(asciiPalette.length - 1, Math.floor(ooz * 24));
+            bBuffer[idx] = asciiPalette[Math.max(0, lIndex)];
+          }
+        }
+      }
+
+      let out = "";
+      for (let k = 0; k < width * height; k++) {
+        out += (k % width === 0 && k > 0) ? "\n" : "";
+        out += bBuffer[k];
+      }
+      screen.textContent = out;
+      requestAnimationFrame(render);
+    }
+    render();
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <h1>Canvas ASCII 3D Torus Knot Studio Pro</h1>
+    <div class="controls">
+      <label>Param P: <input type="number" id="paramP" value="2" min="1" max="10" style="width: 45px;"></label>
+      <label>Param Q: <input type="number" id="paramQ" value="3" min="1" max="10" style="width: 45px;"></label>
+      <label>Density: <input type="range" id="sampleCount" min="200" max="1200" value="600"></label>
+      <label>Speed: <input type="range" id="rotSpeed" min="0.1" max="3" step="0.1" value="1"></label>
+    </div>
+    <div id="screen"></div>
+  </div>
+  
+</body>
+</html>
