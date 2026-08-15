@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematical ASCII 3D Gyroid Surface Raymarcher - Quanxs SA Labs</title>
+    <meta name="description" content="100% Client-Side Pure JS Mathematical ASCII 3D Gyroid Triply Periodic Minimal Surface Raymarcher by Quanxs SA Labs.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Mathematical ASCII 3D Gyroid Surface Raymarcher",
+      "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-gyroid-surface.html",
+      "description": "High-performance client-side ASCII 3D Gyroid mathematical surface raymarcher and visualizer.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0"
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --bg: #050811;
+            --panel: #0d1322;
+            --accent: #10b981;
+            --border: #1e293b;
+            --text: #e2e8f0;
+            --text-dim: #64748b;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: monospace; }
+        body { background: var(--bg); color: var(--text); padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        .wrapper { max-width: 960px; width: 100%; }
+        header { text-align: center; margin-bottom: 20px; }
+        header h1 { font-size: 1.6rem; color: var(--accent); margin-bottom: 5px; }
+        header p { color: var(--text-dim); font-size: 0.9rem; }
+        .viewer-container { display: flex; flex-direction: column; align-items: center; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+        pre#asciiOutput { font-size: 9px; line-height: 8px; letter-spacing: 1px; color: var(--accent); text-shadow: 0 0 5px rgba(16, 185, 129, 0.4); user-select: none; background: #000; padding: 15px; border-radius: 8px; border: 1px solid var(--border); overflow: hidden; }
+        .controls-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; width: 100%; margin-top: 20px; }
+        .ctrl { display: flex; flex-direction: column; font-size: 0.85rem; }
+        .ctrl label { margin-bottom: 5px; color: var(--text-dim); }
+        input[type="range"] { accent-color: var(--accent); cursor: pointer; }
+        select, button { padding: 8px 12px; background: #162032; border: 1px solid var(--border); color: var(--text); border-radius: 6px; font-family: monospace; cursor: pointer; }
+        button:hover { background: #1e293b; border-color: var(--accent); }
+        .footer { margin-top: 25px; font-size: 0.8rem; color: var(--text-dim); text-align: center; }
+        .footer a { color: var(--accent); text-decoration: none; }
+    </style>
+<script>
+
+        const asciiPre = document.getElementById('asciiOutput');
+        const isoRange = document.getElementById('isoRange');
+        const scaleRange = document.getElementById('scaleRange');
+        const speedRange = document.getElementById('speedRange');
+        const themeSelect = document.getElementById('themeSelect');
+        const isoVal = document.getElementById('isoVal');
+        const scaleVal = document.getElementById('scaleVal');
+        const speedVal = document.getElementById('speedVal');
+
+        const COLS = 72, ROWS = 36;
+        const GLYPHS = " .:-=+*#%@";
+        let rotX = 0.5, rotY = 0.3;
+
+        isoRange.oninput = () => { isoVal.textContent = isoRange.value; };
+        scaleRange.oninput = () => { scaleVal.textContent = scaleRange.value; };
+        speedRange.oninput = () => { speedVal.textContent = speedRange.value + 'x'; };
+        themeSelect.onchange = () => { asciiPre.style.color = themeSelect.value; asciiPre.style.textShadow = `0 0 5px ${themeSelect.value}66`; };
+
+        function gyroidSDF(x, y, z, scale, iso) {
+            const sx = x * scale, sy = y * scale, sz = z * scale;
+            const g = (Math.sin(sx) * Math.cos(sy) + Math.sin(sy) * Math.cos(sz) + Math.sin(sz) * Math.cos(sx)) - iso;
+            const dSphere = Math.sqrt(x*x + y*y + z*z) - 1.2;
+            return Math.max(Math.abs(g) / scale - 0.04, dSphere);
+        }
+
+        function renderFrame() {
+            const iso = parseFloat(isoRange.value);
+            const scale = parseFloat(scaleRange.value);
+            const speed = parseFloat(speedRange.value);
+            rotX += 0.02 * speed;
+            rotY += 0.015 * speed;
+
+            let buffer = "";
+            const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
+            const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+
+            for (let r = 0; r < ROWS; r++) {
+                const v = (r / ROWS) * 2 - 1;
+                for (let c = 0; c < COLS; c++) {
+                    const u = ((c / COLS) * 2 - 1) * (COLS / (ROWS * 2));
+                    let roX = 0, roY = 0, roZ = -2.5;
+                    let rdX = u, rdY = v, rdZ = 1.0;
+                    const len = Math.sqrt(rdX*rdX + rdY*rdY + rdZ*rdZ);
+                    rdX /= len; rdY /= len; rdZ /= len;
+
+                    let t = 0.0, hit = false, normalZ = 0;
+                    for (let step = 0; step < 32; step++) {
+                        let px = roX + rdX * t;
+                        let py = roY + rdY * t;
+                        let pz = roZ + rdZ * t;
+
+                        let y1 = py * cosX - pz * sinX;
+                        let z1 = py * sinX + pz * cosX;
+                        let x2 = px * cosY + z1 * sinY;
+                        let z2 = -px * sinY + z1 * cosY;
+
+                        const dist = gyroidSDF(x2, y1, z2, scale, iso);
+                        if (dist < 0.01) {
+                            hit = true;
+                            normalZ = Math.min(1.0, Math.max(0.0, 1.0 - t / 3.5));
+                            break;
+                        }
+                        t += dist;
+                        if (t > 4.0) break;
+                    }
+
+                    if (hit) {
+                        const glyphIdx = Math.floor(normalZ * (GLYPHS.length - 1));
+                        buffer += GLYPHS[glyphIdx];
+                    } else {
+                        buffer += " ";
+                    }
+                }
+                buffer += "\n";
+            }
+            asciiPre.textContent = buffer;
+            requestAnimationFrame(renderFrame);
+        }
+        renderFrame();
+    
+</script>
+</head>
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>ASCII 3D Gyroid Surface Raymarcher</h1>
+            <p>Triply Periodic Minimal Surface Math Raymarching Engine in Pure JavaScript</p>
+        </header>
+        <div class="viewer-container">
+            <pre id="asciiOutput"></pre>
+            <div class="controls-grid">
+                <div class="ctrl">
+                    <label>Iso-surface Value (Thickness): <span id="isoVal">0.0</span></label>
+                    <input type="range" id="isoRange" min="-1.2" max="1.2" step="0.05" value="0.0">
+                </div>
+                <div class="ctrl">
+                    <label>Surface Scale: <span id="scaleVal">3.0</span></label>
+                    <input type="range" id="scaleRange" min="1.0" max="6.0" step="0.1" value="3.0">
+                </div>
+                <div class="ctrl">
+                    <label>Rotation Speed: <span id="speedVal">1.0x</span></label>
+                    <input type="range" id="speedRange" min="0.0" max="3.0" step="0.1" value="1.0">
+                </div>
+                <div class="ctrl">
+                    <label>Color Palette Theme</label>
+                    <select id="themeSelect">
+                        <option value="#10b981">Matrix Emerald</option>
+                        <option value="#38bdf8">Cyber Blue</option>
+                        <option value="#f59e0b">Amber Terminal</option>
+                        <option value="#ec4899">Neon Pink</option>
+                        <option value="#f8fafc">Pure White</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <p>© 2026 Quanxs SA Labs • Zero-Trust Pure JS Architecture • <a href="https://salabs.quanxs.com">Hub</a></p>
+        </div>
+    </div>
+    
+</body>
+</html>

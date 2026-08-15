@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Envelope Follower & VCA Peak Modulator - Quanxs SA Labs</title>
+    <meta name="description" content="100% Client-Side Pure Web Audio API Dynamic Envelope Follower & VCA Peak Modulator Studio by Quanxs SA Labs.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Audio Envelope Follower & VCA Peak Modulator",
+      "url": "https://salabs.quanxs.com/tools/audio-envelope-follower-modulator.html",
+      "description": "Real-time client-side Web Audio API dynamic envelope follower and VCA modulation synthesizer.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0"
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #151d30;
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.25);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #22304e;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; }
+        body { background: var(--bg-color); color: var(--text-main); line-height: 1.6; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        header h1 { font-size: 1.8rem; color: var(--accent); margin-bottom: 8px; }
+        header p { color: var(--text-muted); font-size: 0.95rem; }
+        .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .main-grid { grid-template-columns: 1fr; } }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .card h2 { font-size: 1.2rem; margin-bottom: 15px; color: var(--accent); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+        .control-group { margin-bottom: 15px; }
+        .control-group label { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 6px; color: var(--text-muted); }
+        .control-group span.val { color: var(--accent); font-weight: bold; }
+        input[type="range"] { width: 100%; height: 6px; background: #22304e; border-radius: 3px; outline: none; -webkit-appearance: none; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--accent); cursor: pointer; }
+        select, button { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: #1c2742; color: var(--text-main); font-size: 0.95rem; cursor: pointer; transition: all 0.2s; }
+        button.btn-primary { background: #0284c7; color: white; font-weight: bold; border: none; margin-top: 10px; }
+        button.btn-primary:hover { background: #0369a1; box-shadow: 0 0 12px var(--accent-glow); }
+        button.btn-active { background: #10b981; }
+        canvas { width: 100%; height: 160px; background: #080c14; border-radius: 8px; border: 1px solid var(--border); margin-top: 10px; display: block; }
+        .meter-container { height: 12px; background: #1c2742; border-radius: 6px; overflow: hidden; margin-top: 6px; }
+        .meter-bar { height: 100%; width: 0%; background: linear-gradient(90deg, #38bdf8, #10b981, #ef4444); transition: width 0.05s linear; }
+        .nav-footer { margin-top: 30px; text-align: center; font-size: 0.85rem; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 15px; }
+        .nav-footer a { color: var(--accent); text-decoration: none; }
+    </style>
+<script>
+
+        let audioCtx = null, isPlaying = false;
+        let sourceOsc = null, sourceGain = null, carrierOsc = null, carrierGain = null, analyser = null, envFollowerVal = 0;
+        let animFrameId = null;
+
+        const toggleBtn = document.getElementById('toggleAudioBtn');
+        const envMeter = document.getElementById('envMeter');
+        const scopeCanvas = document.getElementById('scopeCanvas');
+        const ctx = scopeCanvas.getContext('2d');
+        const carrierFreq = document.getElementById('carrierFreq');
+        const freqVal = document.getElementById('freqVal');
+        const modDepth = document.getElementById('modDepth');
+        const depthVal = document.getElementById('depthVal');
+        const attackTime = document.getElementById('attackTime');
+        const attackVal = document.getElementById('attackVal');
+        const releaseTime = document.getElementById('releaseTime');
+        const releaseVal = document.getElementById('releaseVal');
+        const carrierType = document.getElementById('carrierType');
+
+        carrierFreq.oninput = () => { freqVal.textContent = carrierFreq.value + ' Hz'; if(carrierOsc) carrierOsc.frequency.setTargetAtTime(parseFloat(carrierFreq.value), audioCtx.currentTime, 0.05); };
+        modDepth.oninput = () => { depthVal.textContent = modDepth.value + '%'; };
+        attackTime.oninput = () => { attackVal.textContent = attackTime.value + ' ms'; };
+        releaseTime.oninput = () => { releaseVal.textContent = releaseTime.value + ' ms'; };
+        carrierType.onchange = () => { if(carrierOsc) carrierOsc.type = carrierType.value; };
+
+        function initAudio() {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 512;
+
+            sourceOsc = audioCtx.createOscillator();
+            sourceOsc.type = 'sawtooth';
+            sourceOsc.frequency.setValueAtTime(2.5, audioCtx.currentTime);
+
+            sourceGain = audioCtx.createGain();
+            sourceGain.gain.setValueAtTime(0.8, audioCtx.currentTime);
+
+            carrierOsc = audioCtx.createOscillator();
+            carrierOsc.type = carrierType.value;
+            carrierOsc.frequency.setValueAtTime(parseFloat(carrierFreq.value), audioCtx.currentTime);
+
+            carrierGain = audioCtx.createGain();
+            carrierGain.gain.setValueAtTime(0.0, audioCtx.currentTime);
+
+            sourceOsc.connect(sourceGain);
+            sourceGain.connect(analyser);
+
+            carrierOsc.connect(carrierGain);
+            carrierGain.connect(audioCtx.destination);
+
+            sourceOsc.start();
+            carrierOsc.start();
+            isPlaying = true;
+            toggleBtn.textContent = '■ Stop Audio Engine';
+            toggleBtn.classList.add('btn-active');
+            renderLoop();
+        }
+
+        function stopAudio() {
+            if (audioCtx) {
+                audioCtx.close();
+                audioCtx = null;
+            }
+            isPlaying = false;
+            cancelAnimationFrame(animFrameId);
+            toggleBtn.textContent = '▶ Start Audio Engine';
+            toggleBtn.classList.remove('btn-active');
+            envMeter.style.width = '0%';
+        }
+
+        toggleBtn.onclick = () => { if (isPlaying) stopAudio(); else initAudio(); };
+
+        const history = new Array(200).fill(0);
+        function renderLoop() {
+            if (!isPlaying || !analyser) return;
+            const buffer = new Float32Array(analyser.fftSize);
+            analyser.getFloatTimeDomainData(buffer);
+
+            let peak = 0;
+            for (let i = 0; i < buffer.length; i++) {
+                const abs = Math.abs(buffer[i]);
+                if (abs > peak) peak = abs;
+            }
+
+            const att = parseFloat(attackTime.value) / 1000;
+            const rel = parseFloat(releaseTime.value) / 1000;
+            const coeff = peak > envFollowerVal ? (1 / (att * 60 + 1)) : (1 / (rel * 60 + 1));
+            envFollowerVal += (peak - envFollowerVal) * coeff;
+
+            envMeter.style.width = Math.min(100, Math.round(envFollowerVal * 100)) + '%';
+
+            if (carrierGain && audioCtx) {
+                const depth = parseFloat(modDepth.value) / 100;
+                const targetGain = Math.min(1.0, envFollowerVal * depth);
+                carrierGain.gain.setTargetAtTime(targetGain, audioCtx.currentTime, 0.02);
+            }
+
+            history.push(envFollowerVal);
+            history.shift();
+
+            scopeCanvas.width = scopeCanvas.clientWidth * window.devicePixelRatio || 300;
+            scopeCanvas.height = scopeCanvas.clientHeight * window.devicePixelRatio || 150;
+            ctx.clearRect(0, 0, scopeCanvas.width, scopeCanvas.height);
+
+            ctx.beginPath();
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 2;
+            const step = scopeCanvas.width / history.length;
+            for (let i = 0; i < history.length; i++) {
+                const x = i * step;
+                const y = scopeCanvas.height - (history[i] * (scopeCanvas.height - 20) + 10);
+                if (i === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            animFrameId = requestAnimationFrame(renderLoop);
+        }
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Audio Dynamic Envelope Follower & VCA Modulator</h1>
+            <p>100% Client-Side Pure Web Audio API Signal Amplitude Tracker & Synthesis Engine</p>
+        </header>
+        <div class="main-grid">
+            <div class="card">
+                <h2>Control & Synthesizer Input</h2>
+                <div class="control-group">
+                    <label>Input Source Mode</label>
+                    <select id="sourceMode">
+                        <option value="oscillator">Internal Multi-Harmonic Pulse</option>
+                        <option value="noise">Dynamic Pink Noise Burst</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Carrier Waveform</label>
+                    <select id="carrierType">
+                        <option value="sawtooth">Sawtooth</option>
+                        <option value="sine">Sine</option>
+                        <option value="square">Square</option>
+                        <option value="triangle">Triangle</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Base Carrier Frequency <span class="val" id="freqVal">220 Hz</span></label>
+                    <input type="range" id="carrierFreq" min="55" max="880" step="1" value="220">
+                </div>
+                <div class="control-group">
+                    <label>Modulation Depth (VCA / Pitch) <span class="val" id="depthVal">80%</span></label>
+                    <input type="range" id="modDepth" min="0" max="100" step="1" value="80">
+                </div>
+                <button id="toggleAudioBtn" class="btn-primary">▶ Start Audio Engine</button>
+            </div>
+            <div class="card">
+                <h2>Envelope Follower Parameters</h2>
+                <div class="control-group">
+                    <label>Attack Time (Smoothing) <span class="val" id="attackVal">15 ms</span></label>
+                    <input type="range" id="attackTime" min="1" max="100" step="1" value="15">
+                </div>
+                <div class="control-group">
+                    <label>Release Time (Decay Decay) <span class="val" id="releaseVal">180 ms</span></label>
+                    <input type="range" id="releaseTime" min="10" max="1000" step="5" value="180">
+                </div>
+                <div class="control-group">
+                    <label>Envelope Peak Level</label>
+                    <div class="meter-container"><div id="envMeter" class="meter-bar"></div></div>
+                </div>
+                <div class="control-group">
+                    <label>Real-Time Envelope & Signal Visualizer</label>
+                    <canvas id="scopeCanvas"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="nav-footer">
+            <p>© 2026 Quanxs SA Labs • Stella OS SA-CM Autonomous Ecosystem • <a href="https://salabs.quanxs.com">Back to Hub</a></p>
+        </div>
+    </div>
+    
+</body>
+</html>
