@@ -57,9 +57,9 @@ class PythonASTParser:
                     has_creationflags = False
                     for kw in node.keywords:
                         if kw.arg == "creationflags":
-                            if isinstance(kw.value, ast.Constant) and isinstance(kw.value.value, int) and (kw.value.value & 0x08000000) != 0:
+                            if isinstance(kw.value, ast.Constant) and kw.value.value == 0x08000000:
                                 has_creationflags = True
-                            elif isinstance(kw.value, ast.Num) and isinstance(kw.value.n, int) and (kw.value.n & 0x08000000) != 0: # for older python versions
+                            elif isinstance(kw.value, ast.Num) and kw.value.n == 0x08000000: # for older python versions
                                 has_creationflags = True
 
                     if not has_creationflags:

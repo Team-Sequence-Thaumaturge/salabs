@@ -34,17 +34,25 @@ class ASTParser:
             self.ast = None
             print(f"AST Parsing Warning for {self.filename}: {e}")
 
-    def _traverse(self, node, visitor):
+    def _traverse(self, node, visitor, scope_depth=0, inside_function=False):
         if not node or not hasattr(node, 'type'):
             return
-        visitor(node)
+
+        is_function = node.type in ('FunctionDeclaration', 'FunctionExpression', 'ArrowFunctionExpression')
+        new_inside_function = inside_function or is_function
+
+        visitor(node, scope_depth, new_inside_function)
+
+        # Increase scope depth for blocks
+        new_scope_depth = scope_depth + 1 if node.type == 'BlockStatement' or is_function else scope_depth
+
         for key, value in vars(node).items():
             if isinstance(value, list):
                 for item in value:
                     if hasattr(item, 'type'):
-                        self._traverse(item, visitor)
+                        self._traverse(item, visitor, new_scope_depth, new_inside_function)
             elif hasattr(value, 'type'):
-                self._traverse(value, visitor)
+                self._traverse(value, visitor, new_scope_depth, new_inside_function)
 
     def detect_torsion_crossings(self):
         if not self.ast:
@@ -52,12 +60,36 @@ class ASTParser:
         
         declarations = {}
         usages = []
+        local_scopes = {} # Tracks {symbol_name: list_of_scope_depths}
 
-        def visitor(node):
+        def visitor(node, scope_depth, inside_function):
+            # Track Global-like Function Declarations (top level or high level)
             if node.type == 'FunctionDeclaration' and node.id:
                 declarations[node.id.name] = node.loc.start.line
+
+            # Track Local Variable Declarations and Parameters to isolate block scopes
+            if node.type == 'VariableDeclarator' and node.id.type == 'Identifier':
+                if node.id.name not in local_scopes:
+                    local_scopes[node.id.name] = []
+                local_scopes[node.id.name].append(scope_depth)
+
+            if node.type in ('FunctionDeclaration', 'FunctionExpression', 'ArrowFunctionExpression'):
+                if hasattr(node, 'params'):
+                    for param in node.params:
+                        if param.type == 'Identifier':
+                            if param.name not in local_scopes:
+                                local_scopes[param.name] = []
+                            # Params belong to the inner scope depth (which increments for function bodies)
+                            local_scopes[param.name].append(scope_depth + 1)
+
+            # Track Usage (Call Expressions)
             elif node.type == 'CallExpression' and node.callee.type == 'Identifier':
-                usages.append({'name': node.callee.name, 'line': node.loc.start.line})
+                usages.append({
+                    'name': node.callee.name,
+                    'line': node.loc.start.line,
+                    'inside_function': inside_function,
+                    'scope_depth': scope_depth
+                })
 
         self._traverse(self.ast, visitor)
 
@@ -65,9 +97,22 @@ class ASTParser:
         for u in usages:
             name = u['name']
             if name in declarations:
+                # Check if this usage is shadowed by a local variable/parameter in its scope or a parent scope > 0
+                is_shadowed = False
+                if name in local_scopes:
+                    for decl_depth in local_scopes[name]:
+                        if decl_depth > 0 and decl_depth <= u['scope_depth']:
+                            is_shadowed = True
+                            break
+
+                if is_shadowed:
+                    continue # Skip, it's a local variable shadowing a global declaration
+
                 def_line = declarations[name]
                 ref_line = u['line']
-                if ref_line < def_line:
+                # If reference is < definition line, it's a torsion crossing,
+                # UNLESS it's inside a function body (lazy evaluation).
+                if ref_line < def_line and not u['inside_function']:
                     torsions.append({
                         'symbol': name,
                         'def_line': def_line,
@@ -81,7 +126,7 @@ class ASTParser:
             return []
         
         mockups = []
-        def visitor(node):
+        def visitor(node, scope_depth, inside_function):
             if node.type == 'ReturnStatement' and node.argument:
                 if node.argument.type == 'Literal' and str(node.argument.value) in ('true', '1', 'ok', 'success'):
                     mockups.append({
@@ -98,3 +143,44 @@ class ASTParser:
 
         self._traverse(self.ast, visitor)
         return mockups
+
+    def get_all_identifier_usages(self):
+        """Extracts a set of all variable identifier names used in the AST, strictly tracking usages (ignoring declarations)."""
+        if not self.ast:
+            return set()
+
+        usages = set()
+
+        def visitor(node):
+            # If the node itself is an Identifier, it might be a usage OR a declaration.
+            # We filter it by looking at parent contexts during traversal. But esprima AST doesn't have parent links easily accessible.
+            # However, we can track actual usage properties from parent nodes like CallExpression, MemberExpression, AssignmentExpression right side, etc.
+            pass
+
+        def advanced_visitor(node):
+            if not node or not hasattr(node, 'type'): return
+
+            # 1. Used in assignments (right side)
+            if node.type == 'AssignmentExpression' and node.right.type == 'Identifier':
+                usages.add(node.right.name)
+            # 2. Used in Binary/Logical expressions
+            if node.type in ('BinaryExpression', 'LogicalExpression'):
+                if node.left.type == 'Identifier': usages.add(node.left.name)
+                if node.right.type == 'Identifier': usages.add(node.right.name)
+            # 3. Used in Return statement
+            if node.type == 'ReturnStatement' and node.argument and node.argument.type == 'Identifier':
+                usages.add(node.argument.name)
+            # 4. Used as an argument in a function call
+            if node.type == 'CallExpression':
+                for arg in node.arguments:
+                    if arg.type == 'Identifier':
+                        usages.add(arg.name)
+            # 5. Used in variable declarator initialization (right side)
+            if node.type == 'VariableDeclarator' and node.init and node.init.type == 'Identifier':
+                usages.add(node.init.name)
+            # 6. Used in Member expressions (left side only usually, e.g., obj.prop -> obj is used)
+            if node.type == 'MemberExpression' and node.object.type == 'Identifier':
+                usages.add(node.object.name)
+
+        self._traverse(self.ast, advanced_visitor)
+        return usages

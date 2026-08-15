@@ -7,6 +7,7 @@ import time
 from .sapq_preflight import SAPQPreflightGuard
 from .sapq_checkpoint import CheckpointManager
 from .sapq_logger import SAPQLogger
+from .sapq_ast_parser import ASTParser
 
 sys.stdout.reconfigure(encoding='utf-8')
 
@@ -43,15 +44,31 @@ class SAPQEngine:
 
     def parse_phase_2_backward(self):
         tokens = []
-        pattern_usage = re.compile(r'(?:document\.getElementById\(["\']([a-zA-Z0-9_$]+)["\']\)|window\.([a-zA-Z0-9_$]+)|([a-zA-Z0-9_$]+)\()')
+        # Phase 2 Hotfix: Capture standalone identifiers (arguments, returns) safely without object properties (.foo)
+        pattern_usage = re.compile(r'(?<![\w$.])([a-zA-Z_$][a-zA-Z0-9_$]*)(?![\w$])')
         pattern_onclick = re.compile(r'onclick\s*=\s*([\"\'])(.*?)\1')
         pattern_string_literal = re.compile(r'["\']([a-zA-Z0-9_$]+)["\']')
+
+        reserved_keywords = {
+            'if', 'for', 'while', 'switch', 'catch', 'function', 'return', 'const', 'let', 'var',
+            'document', 'window', 'Math', 'console', 'true', 'false', 'null', 'undefined', 'new', 'class'
+        }
+
+        # We need to strip out function and variable declarations to avoid parsing a declaration as a usage.
+        pattern_decl_strip = re.compile(r'(?:function|const|let|var)\s+([a-zA-Z0-9_$]+)')
+
         for idx in range(self.total_lines - 1, -1, -1):
             line = self.lines[idx]
-            match = pattern_usage.search(line)
-            if match:
-                symbol = next(g for g in match.groups() if g is not None)
-                if symbol not in ('if', 'for', 'while', 'switch', 'catch', 'function', 'return'):
+
+            # Remove declarations from the line before parsing for usages
+            clean_line = pattern_decl_strip.sub('', line)
+
+            # Strip simple string literals from line to prevent capturing text inside strings as variables
+            clean_line = re.sub(r'["\'](.*?)["\']', '""', clean_line)
+
+            for match in pattern_usage.finditer(clean_line):
+                symbol = match.group(1)
+                if symbol not in reserved_keywords:
                     tokens.append({"line": idx + 1, "symbol": symbol, "type": "BACKWARD_REF", "code_snippet": line.strip()[:80]})
 
             for onclick_match in pattern_onclick.finditer(line):
@@ -95,14 +112,21 @@ class SAPQEngine:
         zombie_nodes = []
         closed_loops = []
 
+        # SAPQ 3.5 Fusion: Bring in AST Context to cross-verify zombie nodes
+        ast_parser = ASTParser(self.filepath)
+        ast_usages = ast_parser.get_all_identifier_usages()
+
         # Zombie Nodes
         for symbol, line_num in forward_symbols.items():
+            # Check Regex Scanner first
             if symbol not in backward_symbols and not symbol.startswith('btn_') and len(symbol) > 3:
-                zombie_nodes.append({
-                    "symbol": symbol,
-                    "defined_line": line_num,
-                    "issue": "GHOST_NODE (Defined in V1 forward pass, but never referenced in V2 backward pass)"
-                })
+                # SAPQ 3.5 Fusion: Cross-verify against true AST usages to prevent 100% false positives
+                if symbol not in ast_usages:
+                    zombie_nodes.append({
+                        "symbol": symbol,
+                        "defined_line": line_num,
+                        "issue": "GHOST_NODE (Defined in V1 forward pass, but never referenced in V2 backward pass OR AST)"
+                    })
 
         # Discontinuity Lines (Torsion Crossings)
         for symbol, ref_line in backward_symbols.items():

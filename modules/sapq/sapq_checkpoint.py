@@ -13,7 +13,7 @@ class CheckpointManager:
     - Validates file hash to prevent corrupt resumptions.
     """
 
-    STATES = ["PENDING", "ANALYZING", "PATCHING", "VERIFYING", "COMPLETED", "RECOVERING", "FAILED"]
+    STATES = ["PENDING", "ANALYZING", "PATCHING", "VERIFYING", "COMPLETED", "RECOVERING", "FAILED", "RULE_CONFLICT_PAUSE"]
 
     def __init__(self, target_filepath, session_id=None):
         self.filepath = target_filepath
