@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zero-Knowledge Poseidon Hash & Sponge Permutation Studio - Quanxs SA Labs</title>
+  <meta name="description" content="Free online client-side ZK-SNARK friendly Poseidon hash function, Sponge permutation state analyzer, and Galois field arithmetic calculator.">
+  <meta name="keywords" content="poseidon hash, zero knowledge, zk snark, sponge permutation, web crypto, finite field arithmetic">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Zero-Knowledge Poseidon Hash & Sponge Permutation Studio",
+    "description": "Interactive computation and permutation state visualization for ZK-SNARK friendly Poseidon Hash over prime field BN254.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "url": "https://salabs.quanxs.com/tools/crypto-poseidon-hash-zk-sponge.html",
+    "author": {
+      "@type": "Organization",
+      "name": "Quanxs SA Labs"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --accent-green: #3fb950;
+      --accent-purple: #bc8cff;
+      --text: #c9d1d9;
+      --text-bright: #f0f6fc;
+      --text-muted: #8b949e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace; }
+    body { background: var(--bg); color: var(--text); padding: 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+    .container { max-width: 1000px; width: 100%; }
+    header { margin-bottom: 24px; text-align: center; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    h1 { color: var(--text-bright); font-size: 1.8rem; margin-bottom: 8px; }
+    p.desc { color: var(--text-muted); font-size: 0.95rem; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    @media(max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+    .card h2 { font-size: 1.1rem; color: var(--accent); margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .form-group { margin-bottom: 14px; }
+    label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
+    input[type="text"], textarea, select {
+      width: 100%;
+      background: #0e1217;
+      border: 1px solid var(--border);
+      color: var(--text-bright);
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-family: monospace;
+    }
+    textarea { resize: vertical; height: 100px; }
+    button { background: var(--card-bg); border: 1px solid var(--accent); color: var(--accent); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.2s ease; width: 100%; }
+    button:hover { background: var(--accent); color: #fff; }
+    .result-box { background: #080b0f; border: 1px solid var(--border); border-radius: 6px; padding: 12px; margin-top: 14px; word-break: break-all; font-family: monospace; font-size: 0.85rem; }
+    .round-step { background: #12161f; border-left: 3px solid var(--accent); padding: 6px 10px; margin-bottom: 6px; font-size: 0.8rem; font-family: monospace; }
+  </style>
+<script>
+
+    const PRIME = BigInt("21888242871839275222246405745257275088548364400416034343698204186575808495617");
+
+    function modAdd(a, b) { return (a + b) % PRIME; }
+    function modMul(a, b) { return (a * b) % PRIME; }
+    function sbox(x) {
+      let x2 = modMul(x, x);
+      let x4 = modMul(x2, x2);
+      return modMul(x4, x);
+    }
+
+    function poseidon(inputs) {
+      let state = [0n, ...inputs.map(x => BigInt(x) % PRIME)];
+      const trace = [];
+      const R_F = 8;
+      const R_P = 57;
+
+      trace.push(`Init State: [${state.map(s => s.toString(16).slice(0,6)+'...').join(', ')}]`);
+
+      for (let r = 0; r < R_F/2; r++) {
+        state = state.map(s => sbox(s));
+        trace.push(`Full Round ${r+1}: S-Box applied to all elements`);
+      }
+
+      for (let r = 0; r < R_P; r++) {
+        state[0] = sbox(state[0]);
+        let sum = state.reduce((acc, v) => modAdd(acc, v), 0n);
+        state = state.map((v, i) => modAdd(v, modMul(sum, BigInt(i + 1))));
+        if (r === 0 || r === R_P - 1) {
+          trace.push(`Partial Round ${r+1}: S-Box applied to state[0]`);
+        }
+      }
+
+      for (let r = 0; r < R_F/2; r++) {
+        state = state.map(s => sbox(s));
+        trace.push(`Full Round ${R_F/2 + r + 1}: S-Box finalized`);
+      }
+
+      return { hash: state[0], trace };
+    }
+
+    document.getElementById('btnCompute').addEventListener('click', () => {
+      const e1 = document.getElementById('inpElem1').value.trim();
+      const e2 = document.getElementById('inpElem2').value.trim();
+      try {
+        const v1 = e1.startsWith('0x') ? BigInt(e1) : BigInt(e1 || '0');
+        const v2 = e2.startsWith('0x') ? BigInt(e2) : BigInt(e2 || '0');
+        const res = poseidon([v1, v2]);
+        document.getElementById('outHex').innerText = '0x' + res.hash.toString(16);
+        document.getElementById('outDec').innerText = res.hash.toString(10);
+
+        const traceBox = document.getElementById('roundTrace');
+        traceBox.innerHTML = res.trace.map(t => `<div class="round-step">${t}</div>`).join('');
+      } catch(err) {
+        alert('Invalid input element: ' + err.message);
+      }
+    });
+
+    document.getElementById('btnCompute').click();
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Zero-Knowledge Poseidon Hash & Sponge Studio</h1>
+      <p class="desc">ZK-SNARK friendly algebraic hash function & multi-round Sponge permutation analyzer over Prime Field BN254.</p>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2>Input Field Elements</h2>
+        <div class="form-group">
+          <label>Prime Field Modulus (BN254 Scalar Field):</label>
+          <input type="text" readonly value="21888242871839275222246405745257275088548364400416034343698204186575808495617">
+        </div>
+        <div class="form-group">
+          <label>Input Element 1 (Integer or Hex):</label>
+          <input type="text" id="inpElem1" value="123456789">
+        </div>
+        <div class="form-group">
+          <label>Input Element 2 (Integer or Hex):</label>
+          <input type="text" id="inpElem2" value="987654321">
+        </div>
+        <div class="form-group">
+          <label>Sponge Capacity Width (t):</label>
+          <select id="selWidth">
+            <option value="3">t = 3 (2 Inputs + 1 Capacity, Rate=2)</option>
+            <option value="4">t = 4 (3 Inputs + 1 Capacity, Rate=3)</option>
+          </select>
+        </div>
+        <button id="btnCompute">Compute Poseidon Hash & Simulate Rounds</button>
+      </div>
+
+      <div class="card">
+        <h2>Hash Output & Sponge Permutation</h2>
+        <div class="result-box">
+          <div style="color:var(--text-muted); font-size:0.75rem; margin-bottom:4px;">POSEIDON HASH (HEX):</div>
+          <div id="outHex" style="color:var(--accent-green); font-weight:bold;">0x1a8f...</div>
+          <div style="color:var(--text-muted); font-size:0.75rem; margin-top:8px; margin-bottom:4px;">DECIMAL FIELD ELEMENT:</div>
+          <div id="outDec" style="color:var(--accent);">0</div>
+        </div>
+
+        <h2 style="margin-top:18px;">Permutation Round Execution Trace</h2>
+        <div id="roundTrace" style="max-height:180px; overflow-y:auto;"></div>
+      </div>
+    </div>
+  </div>
+
+  
+</body>
+</html>

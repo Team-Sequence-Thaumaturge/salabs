@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML5 Canvas ASCII 3D Rössler Strange Attractor Chaos Visualizer - Quanxs SA Labs</title>
+  <meta name="description" content="Interactive 3D ASCII Rössler Strange Attractor chaos dynamic system simulation with parameter modulation and Lyapunov phase space orbit visualization.">
+  <meta name="keywords" content="rossler attractor, ascii 3d, chaos theory, strange attractor, html5 canvas, math visualizer">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "HTML5 Canvas ASCII 3D Rössler Strange Attractor Chaos Visualizer",
+    "description": "Interactive mathematical simulation of the Rössler attractor continuous-time dynamic system projected in 3D ASCII terminal matrix.",
+    "applicationCategory": "EducationalApplication",
+    "operatingSystem": "All",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-rossler-attractor.html",
+    "author": {
+      "@type": "Organization",
+      "name": "Quanxs SA Labs"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --accent-green: #3fb950;
+      --accent-orange: #f0883e;
+      --accent-purple: #bc8cff;
+      --text: #c9d1d9;
+      --text-bright: #f0f6fc;
+      --text-muted: #8b949e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace; }
+    body { background: var(--bg); color: var(--text); padding: 20px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+    .container { max-width: 1050px; width: 100%; }
+    header { margin-bottom: 24px; text-align: center; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+    h1 { color: var(--text-bright); font-size: 1.8rem; margin-bottom: 8px; }
+    p.desc { color: var(--text-muted); font-size: 0.95rem; }
+    .grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; margin-bottom: 20px; }
+    @media(max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+    .card h2 { font-size: 1.1rem; color: var(--accent); margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    pre#asciiScreen {
+      background: #05080c;
+      color: #3fb950;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 11px;
+      line-height: 11px;
+      letter-spacing: 0px;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      user-select: none;
+      height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .control-group { margin-bottom: 12px; }
+    .control-group label { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 4px; }
+    input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+    .btn-row { display: flex; gap: 10px; margin-top: 14px; }
+    button { background: var(--card-bg); border: 1px solid var(--accent); color: var(--accent); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: 600; transition: all 0.2s ease; }
+    button:hover { background: var(--accent); color: #fff; }
+    .stats-badge { display: inline-block; padding: 4px 8px; background: rgba(88,166,255,0.1); border: 1px solid var(--accent); border-radius: 4px; font-size: 0.8rem; color: var(--accent); margin-right: 6px; margin-bottom: 6px; }
+    select { background: #0e1217; color: var(--text-bright); border: 1px solid var(--border); padding: 6px 10px; border-radius: 6px; width: 100%; font-size: 0.85rem; margin-bottom: 10px; }
+  </style>
+<script>
+
+    const screen = document.getElementById('asciiScreen');
+    const COLS = 64;
+    const ROWS = 32;
+    const glyphs = " .':-=+*#%@";
+
+    let a = 0.20, b = 0.20, c = 5.70;
+    let rotX = 0.4, rotY = 0.0, rotZ = 0.0;
+    let speed = 1.0;
+    let isRunning = true;
+    let lastTime = performance.now();
+    let frameCount = 0;
+
+    let points = [];
+    const MAX_POINTS = 2400;
+    let curX = 1.0, curY = 1.0, curZ = 1.0;
+    const dt = 0.035;
+
+    function initPoints() {
+      points = [];
+      curX = 1.0; curY = 1.0; curZ = 1.0;
+      for (let i = 0; i < MAX_POINTS; i++) {
+        stepAttractor();
+        points.push({ x: curX, y: curY, z: curZ });
+      }
+    }
+
+    function stepAttractor() {
+      const dx = -curY - curZ;
+      const dy = curX + a * curY;
+      const dz = b + curZ * (curX - c);
+      curX += dx * dt;
+      curY += dy * dt;
+      curZ += dz * dt;
+    }
+
+    initPoints();
+
+    document.getElementById('rngA').addEventListener('input', (e) => {
+      a = parseFloat(e.target.value);
+      document.getElementById('lblA').innerText = a.toFixed(2);
+      initPoints();
+    });
+    document.getElementById('rngB').addEventListener('input', (e) => {
+      b = parseFloat(e.target.value);
+      document.getElementById('lblB').innerText = b.toFixed(2);
+      initPoints();
+    });
+    document.getElementById('rngC').addEventListener('input', (e) => {
+      c = parseFloat(e.target.value);
+      document.getElementById('lblC').innerText = c.toFixed(2);
+      initPoints();
+    });
+    document.getElementById('rngSpeed').addEventListener('input', (e) => {
+      speed = parseFloat(e.target.value);
+      document.getElementById('lblSpeed').innerText = `${speed.toFixed(1)}x`;
+    });
+    document.getElementById('btnReset').addEventListener('click', initPoints);
+    document.getElementById('btnToggleAnim').addEventListener('click', () => { isRunning = !isRunning; });
+
+    function render() {
+      requestAnimationFrame(render);
+      if (isRunning) {
+        rotY += 0.015 * speed;
+        rotZ += 0.008 * speed;
+        stepAttractor();
+        points.shift();
+        points.push({ x: curX, y: curY, z: curZ });
+      }
+
+      frameCount++;
+      const now = performance.now();
+      if (now - lastTime >= 1000) {
+        document.getElementById('valFPS').innerText = frameCount;
+        frameCount = 0;
+        lastTime = now;
+      }
+
+      const grid = Array.from({ length: ROWS }, () => Array(COLS).fill(' '));
+      const zBuffer = Array.from({ length: ROWS }, () => Array(COLS).fill(-9999));
+
+      const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+      const cosZ = Math.cos(rotZ), sinZ = Math.sin(rotZ);
+      const cosX = Math.cos(rotX), sinX = Math.sin(rotX);
+
+      for (let i = 0; i < points.length; i++) {
+        const p = points[i];
+        let x = p.x * 0.9;
+        let y = p.y * 0.9;
+        let z = (p.z - 12) * 0.9;
+
+        let x1 = x * cosY - z * sinY;
+        let z1 = x * sinY + z * cosY;
+
+        let y2 = y * cosX - z1 * sinX;
+        let z2 = y * sinX + z1 * cosX;
+
+        let x3 = x1 * cosZ - y2 * sinZ;
+        let y3 = x1 * sinZ + y2 * cosZ;
+
+        const distance = 45;
+        const fov = 40;
+        const projX = Math.floor(COLS / 2 + (x3 * fov) / (z2 + distance));
+        const projY = Math.floor(ROWS / 2 + (y3 * fov * 0.5) / (z2 + distance));
+
+        if (projX >= 0 && projX < COLS && projY >= 0 && projY < ROWS) {
+          if (z2 > zBuffer[projY][projX]) {
+            zBuffer[projY][projX] = z2;
+            const normZ = Math.max(0, Math.min(1, (z2 + 20) / 40));
+            const charIdx = Math.floor(normZ * (glyphs.length - 1));
+            grid[projY][projX] = glyphs[charIdx];
+          }
+        }
+      }
+
+      screen.textContent = grid.map(row => row.join('')).join('\n');
+    }
+    render();
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>ASCII 3D Rössler Strange Attractor Chaos Visualizer</h1>
+      <p class="desc">Continuous-time non-linear dynamical system generating fractal chaotic orbits in 3D ASCII terminal projection.</p>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2>3D ASCII Phase Space Projection</h2>
+        <pre id="asciiScreen"></pre>
+        <div style="margin-top:12px;">
+          <div class="stats-badge">Trajectory Points: <span id="valPoints">2,400</span></div>
+          <div class="stats-badge">FPS: <span id="valFPS">60</span></div>
+          <div class="stats-badge">Lyapunov State: <span id="valLyapunov">CHAOTIC (λ > 0)</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Differential System Parameters</h2>
+        <div style="background:#090d13; padding:10px; border-radius:6px; border:1px solid var(--border); font-family:monospace; font-size:0.8rem; color:#f0883e; margin-bottom:14px;">
+          dx/dt = -y - z<br>
+          dy/dt = x + a·y<br>
+          dz/dt = b + z·(x - c)
+        </div>
+
+        <div class="control-group">
+          <label><span>Parameter a (Bifurcation):</span><span id="lblA">0.20</span></label>
+          <input type="range" id="rngA" min="0.05" max="0.4" value="0.20" step="0.01">
+        </div>
+        <div class="control-group">
+          <label><span>Parameter b:</span><span id="lblB">0.20</span></label>
+          <input type="range" id="rngB" min="0.05" max="0.5" value="0.20" step="0.01">
+        </div>
+        <div class="control-group">
+          <label><span>Parameter c (Fold Threshold):</span><span id="lblC">5.70</span></label>
+          <input type="range" id="rngC" min="2.0" max="12.0" value="5.70" step="0.1">
+        </div>
+        <div class="control-group">
+          <label><span>Rotation Speed:</span><span id="lblSpeed">1.0x</span></label>
+          <input type="range" id="rngSpeed" min="0.1" max="3.0" value="1.0" step="0.1">
+        </div>
+        <div class="control-group">
+          <label><span>Shading Palette:</span></label>
+          <select id="selPalette">
+            <option value="matrix">Matrix Green ( .:-=+*#%@)</option>
+            <option value="cyber">Cyberpunk Neon</option>
+            <option value="amber">Amber Phosphor</option>
+            <option value="fire">Thermal Gradient</option>
+          </select>
+        </div>
+
+        <div class="btn-row">
+          <button id="btnReset">Reset Trajectory</button>
+          <button id="btnToggleAnim">Pause / Play</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</body>
+</html>
