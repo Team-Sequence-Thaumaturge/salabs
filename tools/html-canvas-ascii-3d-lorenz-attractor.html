@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas ASCII 3D 로렌츠 어트랙터 카오스 시뮬레이터 | Quanxs SA Labs</title>
+  <meta name="description" content="HTML5 Canvas 및 ASCII 텍스트 매트릭스를 통해 로렌츠 카오스 끌개(Lorenz Attractor)의 3차원 비선형 동역학 궤적을 실시간 시뮬레이션하고 렌더링하는 순수 클라이언트 사이드 도구입니다.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Canvas ASCII 3D 로렌츠 어트랙터 카오스 시뮬레이터",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-lorenz-attractor.html",
+    "description": "3D 비선형 로렌츠 어트랙터 카오스 궤적 실시간 ASCII 렌더링 엔진",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --text-bright: #58a6ff;
+      --accent: #238636;
+      --accent-hover: #2ea043;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: monospace;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      max-width: 900px;
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    h1 {
+      font-size: 1.5rem;
+      color: var(--text-bright);
+      margin-bottom: 8px;
+      text-align: center;
+    }
+    p.desc {
+      font-size: 0.9rem;
+      color: #8b949e;
+      text-align: center;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    .viewport {
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    pre#asciiScreen {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 9px;
+      line-height: 9px;
+      color: #7ee787;
+      user-select: none;
+      letter-spacing: 1px;
+    }
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    label {
+      font-size: 0.8rem;
+      color: var(--text);
+    }
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--text-bright);
+    }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 8px;
+    }
+    button {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover {
+      background: var(--accent-hover);
+    }
+  </style>
+<script>
+
+    const COLS = 70;
+    const ROWS = 35;
+    const asciiScreen = document.getElementById("asciiScreen");
+
+    let x = 0.1, y = 0.0, z = 0.0;
+    let points = [];
+    const MAX_POINTS = 500;
+    let angleY = 0;
+    let angleX = 0.3;
+
+    const sigmaInput = document.getElementById("sigma");
+    const rhoInput = document.getElementById("rho");
+    const betaInput = document.getElementById("beta");
+    const rotSpeedInput = document.getElementById("rotSpeed");
+
+    sigmaInput.addEventListener("input", (e) => document.getElementById("valSigma").textContent = e.target.value);
+    rhoInput.addEventListener("input", (e) => document.getElementById("valRho").textContent = e.target.value);
+    betaInput.addEventListener("input", (e) => document.getElementById("valBeta").textContent = e.target.value);
+    rotSpeedInput.addEventListener("input", (e) => document.getElementById("valRot").textContent = e.target.value);
+
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      x = 0.1 + (Math.random() - 0.5) * 0.1;
+      y = 0.0;
+      z = 0.0;
+      points = [];
+    });
+
+    function lorenzDeriv(px, py, pz, s, r, b) {
+      return [
+        s * (py - px),
+        px * (r - pz) - py,
+        px * py - b * pz
+      ];
+    }
+
+    function rk4Step(dt, s, r, b) {
+      const [k1x, k1y, k1z] = lorenzDeriv(x, y, z, s, r, b);
+      const [k2x, k2y, k2z] = lorenzDeriv(x + 0.5 * dt * k1x, y + 0.5 * dt * k1y, z + 0.5 * dt * k1z, s, r, b);
+      const [k3x, k3y, k3z] = lorenzDeriv(x + 0.5 * dt * k2x, y + 0.5 * dt * k2y, z + 0.5 * dt * k2z, s, r, b);
+      const [k4x, k4y, k4z] = lorenzDeriv(x + dt * k3x, y + dt * k3y, z + dt * k3z, s, r, b);
+
+      x += (dt / 6) * (k1x + 2 * k2x + 2 * k3x + k4x);
+      y += (dt / 6) * (k1y + 2 * k2y + 2 * k3y + k4y);
+      z += (dt / 6) * (k1z + 2 * k2z + 2 * k3z + k4z);
+    }
+
+    const DENSITY_CHARS = " .:-=+*#%@";
+
+    function loop() {
+      const s = parseFloat(sigmaInput.value);
+      const r = parseFloat(rhoInput.value);
+      const b = parseFloat(betaInput.value);
+      const rot = parseFloat(rotSpeedInput.value);
+
+      for (let i = 0; i < 4; i++) {
+        rk4Step(0.01, s, r, b);
+        points.push({ x, y, z: z - 25 });
+        if (points.length > MAX_POINTS) points.shift();
+      }
+
+      angleY += 0.015 * rot;
+
+      const grid = Array.from({ length: ROWS }, () => Array(COLS).fill(" "));
+      const zBuffer = Array.from({ length: ROWS }, () => Array(COLS).fill(-Infinity));
+
+      const cosY = Math.cos(angleY), sinY = Math.sin(angleY);
+      const cosX = Math.cos(angleX), sinX = Math.sin(angleX);
+
+      for (let i = 0; i < points.length; i++) {
+        const pt = points[i];
+        const x1 = pt.x * cosY - pt.y * sinY;
+        const y1 = pt.x * sinY + pt.y * cosY;
+        const z1 = pt.z;
+
+        const y2 = y1 * cosX - z1 * sinX;
+        const z2 = y1 * sinX + z1 * cosX;
+        const x2 = x1;
+
+        const fov = 60;
+        const dist = 70;
+        const screenX = Math.floor(COLS / 2 + (x2 * fov) / (z2 + dist) * 1.8);
+        const screenY = Math.floor(ROWS / 2 - (y2 * fov) / (z2 + dist));
+
+        if (screenX >= 0 && screenX < COLS && screenY >= 0 && screenY < ROWS) {
+          if (z2 > zBuffer[screenY][screenX]) {
+            zBuffer[screenY][screenX] = z2;
+            const intensity = Math.floor((i / points.length) * (DENSITY_CHARS.length - 1));
+            grid[screenY][screenX] = DENSITY_CHARS[intensity];
+          } 
+        }
+      }
+
+      asciiScreen.textContent = grid.map(row => row.join("")).join("\n");
+      requestAnimationFrame(loop);
+    }
+
+    requestAnimationFrame(loop);
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <h1>Canvas ASCII 3D 로렌츠 어트랙터 카오스 시뮬레이터</h1>
+    <p class="desc">dx/dt = σ(y - x), dy/dt = x(ρ - z) - y, dz/dt = xy - βz 미분방정식을 Runge-Kutta 4차 기법으로 적분하여 3차원 ASCII 공간에 실시간 투영합니다.</p>
+    
+    <div class="viewport">
+      <pre id="asciiScreen"></pre>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label>시그마 (σ = <span id="valSigma">10.0</span>)</label>
+        <input type="range" id="sigma" min="5" max="25" step="0.5" value="10">
+      </div>
+      <div class="control-group">
+        <label>로우 (ρ = <span id="valRho">28.0</span>)</label>
+        <input type="range" id="rho" min="10" max="50" step="0.5" value="28">
+      </div>
+      <div class="control-group">
+        <label>베타 (β = <span id="valBeta">2.67</span>)</label>
+        <input type="range" id="beta" min="1" max="5" step="0.05" value="2.67">
+      </div>
+      <div class="control-group">
+        <label>회전 속도 (<span id="valRot">1.0</span>x)</label>
+        <input type="range" id="rotSpeed" min="0.2" max="3.0" step="0.1" value="1.0">
+      </div>
+    </div>
+
+    <div class="btn-group">
+      <button id="resetBtn">궤적 초기화 (Reset Trajectory)</button>
+    </div>
+  </div>
+
+  
+</body>
+</html>
