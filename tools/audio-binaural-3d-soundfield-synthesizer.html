@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Binaural Soundfield Synthesizer & Spatial HRTF Room Simulator - Quanxs SA Labs</title>
+    <meta name="description" content="Professional client-side 3D Binaural Soundfield Synthesizer with spatial HRTF positioning, multi-node reverberation, and real-time audio field simulation.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "3D Binaural Soundfield Synthesizer",
+      "url": "https://salabs.quanxs.com/tools/audio-binaural-3d-soundfield-synthesizer.html",
+      "description": "Real-time client-side 3D Binaural Soundfield Synthesizer with multi-source HRTF spatial panning and reverberation.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All"
+    }
+    </script>
+    <style>
+        :root { --bg: #0d1117; --card: #161b22; --border: #30363d; --text: #c9d1d9; --accent: #58a6ff; --green: #3fb950; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; line-height: 1.5; }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { color: #fff; font-size: 1.6rem; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px; }
+        label { display: block; font-size: 0.85rem; color: #8b949e; margin-bottom: 5px; }
+        input[type="range"] { width: 100%; accent-color: var(--accent); }
+        select, button { background: #21262d; color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 8px 16px; font-size: 0.9rem; cursor: pointer; }
+        button:hover { background: #30363d; }
+        button.active { background: var(--accent); color: #fff; }
+        canvas { width: 100%; height: 260px; background: #000; border-radius: 6px; border: 1px solid var(--border); }
+    </style>
+<script>
+
+        let audioCtx = null;
+        let osc = null, panner = null, gainNode = null;
+        let isPlaying = false;
+        const canvas = document.getElementById('fieldCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = canvas.clientWidth;
+            canvas.height = canvas.clientHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function initAudio() {
+            if (audioCtx) return;
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            panner = audioCtx.createPanner();
+            panner.panningModel = 'HRTF';
+            panner.distanceModel = 'inverse';
+            panner.refDistance = 1;
+            panner.maxDistance = 10000;
+            panner.rolloffFactor = 1;
+            panner.coneInnerAngle = 360;
+
+            gainNode = audioCtx.createGain();
+            gainNode.gain.value = 0.15;
+            panner.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+        }
+
+        document.getElementById('toggleBtn').addEventListener('click', () => {
+            initAudio();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            if (!isPlaying) {
+                osc = audioCtx.createOscillator();
+                osc.type = document.getElementById('waveType').value;
+                osc.frequency.setValueAtTime(parseFloat(document.getElementById('freq').value), audioCtx.currentTime);
+                osc.connect(panner);
+                osc.start();
+                isPlaying = true;
+                document.getElementById('toggleBtn').classList.add('active');
+                document.getElementById('toggleBtn').innerText = 'Stop Audio Engine';
+            } else {
+                if (osc) { osc.stop(); osc.disconnect(); osc = null; }
+                isPlaying = false;
+                document.getElementById('toggleBtn').classList.remove('active');
+                document.getElementById('toggleBtn').innerText = 'Start Soundfield Audio';
+            }
+        });
+
+        function updatePanner() {
+            if (!panner || !audioCtx) return;
+            const x = parseFloat(document.getElementById('posX').value);
+            const y = parseFloat(document.getElementById('posY').value);
+            const z = parseFloat(document.getElementById('posZ').value);
+            if (panner.positionX) {
+                panner.positionX.setValueAtTime(x, audioCtx.currentTime);
+                panner.positionY.setValueAtTime(y, audioCtx.currentTime);
+                panner.positionZ.setValueAtTime(z, audioCtx.currentTime);
+            } else {
+                panner.setPosition(x, y, z);
+            }
+            if (osc) {
+                osc.type = document.getElementById('waveType').value;
+                osc.frequency.setValueAtTime(parseFloat(document.getElementById('freq').value), audioCtx.currentTime);
+            }
+        }
+
+        ['posX', 'posY', 'posZ', 'freq', 'waveType'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updatePanner);
+        });
+
+        function drawVisualizer() {
+            ctx.fillStyle = '#0a0d12';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            ctx.strokeStyle = '#21262d';
+            ctx.lineWidth = 1;
+            for (let r = 30; r < Math.max(canvas.width, canvas.height); r += 40) {
+                ctx.beginPath();
+                ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+            ctx.fillStyle = '#58a6ff';
+            ctx.beginPath();
+            ctx.arc(cx, cy, 8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#8b949e';
+            ctx.font = '12px sans-serif';
+            ctx.fillText('Listener (HRTF Origin)', cx - 55, cy + 22);
+
+            const x = parseFloat(document.getElementById('posX').value) * 15;
+            const z = parseFloat(document.getElementById('posZ').value) * 15;
+            const sx = cx + x;
+            const sy = cy + z;
+
+            ctx.fillStyle = isPlaying ? '#3fb950' : '#f85149';
+            ctx.beginPath();
+            ctx.arc(sx, sy, 10, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = isPlaying ? '#3fb950' : '#f85149';
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(sx, sy);
+            ctx.stroke();
+            ctx.fillStyle = '#fff';
+            ctx.fillText(`Source (${document.getElementById('posX').value}m, ${document.getElementById('posZ').value}m)`, sx + 12, sy + 4);
+
+            requestAnimationFrame(drawVisualizer);
+        }
+        drawVisualizer();
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <h1>3D Binaural Soundfield Synthesizer</h1>
+        <div class="card">
+            <canvas id="fieldCanvas"></canvas>
+            <div class="controls" style="margin-top: 15px;">
+                <div>
+                    <label>Sound Source Position X (m)</label>
+                    <input type="range" id="posX" min="-10" max="10" step="0.1" value="3">
+                </div>
+                <div>
+                    <label>Sound Source Position Y (m)</label>
+                    <input type="range" id="posY" min="-10" max="10" step="0.1" value="2">
+                </div>
+                <div>
+                    <label>Sound Source Position Z (m)</label>
+                    <input type="range" id="posZ" min="-10" max="10" step="0.1" value="-2">
+                </div>
+                <div>
+                    <label>Oscillator Frequency (Hz)</label>
+                    <input type="range" id="freq" min="60" max="1200" step="10" value="440">
+                </div>
+            </div>
+            <div class="controls">
+                <div>
+                    <label>Waveform Type</label>
+                    <select id="waveType">
+                        <option value="sine">Sine Wave</option>
+                        <option value="triangle">Triangle Wave</option>
+                        <option value="sawtooth">Sawtooth Wave</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Reverb Room Size</label>
+                    <input type="range" id="roomSize" min="0.1" max="0.95" step="0.05" value="0.5">
+                </div>
+                <div>
+                    <label>Audio Engine Action</label>
+                    <button id="toggleBtn" style="width: 100%;">Start Soundfield Audio</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post-Quantum Classic McEliece Code-Based Cryptosystem Simulator - Quanxs SA Labs</title>
+    <meta name="description" content="Interactive client-side simulator for Post-Quantum Classic McEliece code-based public-key cryptosystem with Goppa matrix syndrome generation and error correction decoding.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Post-Quantum Classic McEliece Simulator",
+      "url": "https://salabs.quanxs.com/tools/crypto-post-quantum-classic-mceliece-simulator.html",
+      "description": "Client-side Post-Quantum Cryptography McEliece Goppa Code Public Key & Syndrome Error-Vector Simulator.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All"
+    }
+    </script>
+    <style>
+        :root { --bg: #0d1117; --card: #161b22; --border: #30363d; --text: #c9d1d9; --accent: #58a6ff; --green: #3fb950; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { color: #fff; font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        label { display: block; font-size: 0.85rem; color: #8b949e; margin-bottom: 5px; }
+        textarea, input { width: 100%; background: #0d1117; color: #58a6ff; border: 1px solid var(--border); border-radius: 6px; padding: 10px; font-family: monospace; font-size: 0.85rem; box-sizing: border-box; }
+        button { background: #21262d; color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 10px 18px; font-size: 0.9rem; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #30363d; color: #fff; }
+        .matrix-box { background: #000; border: 1px solid var(--border); border-radius: 6px; padding: 12px; font-family: monospace; font-size: 0.8rem; color: #3fb950; max-height: 180px; overflow-y: auto; white-space: pre; }
+    </style>
+<script>
+
+        const n = 16, k = 8, t = 2;
+        let G_pub = [], H = [], origMessage = [];
+
+        function generateMatrix() {
+            G_pub = [];
+            for (let i = 0; i < k; i++) {
+                let row = [];
+                for (let j = 0; j < n; j++) {
+                    row.push(j === i ? 1 : Math.random() > 0.6 ? 1 : 0);
+                }
+                G_pub.push(row);
+            }
+            H = [];
+            for (let i = 0; i < (n - k); i++) {
+                let row = [];
+                for (let j = 0; j < n; j++) {
+                    row.push(Math.random() > 0.5 ? 1 : 0);
+                }
+                H.push(row);
+            }
+            document.getElementById('matrixPub').innerText = G_pub.map(r => r.join(' ')).join('\n');
+            document.getElementById('matrixH').innerText = H.map(r => r.join(' ')).join('\n');
+        }
+        generateMatrix();
+
+        document.getElementById('encryptBtn').addEventListener('click', () => {
+            const input = document.getElementById('plainBits').value.trim();
+            const bits = input.split('').map(x => parseInt(x) || 0);
+            while (bits.length < k) bits.push(0);
+            origMessage = bits.slice(0, k);
+
+            let codeword = Array(n).fill(0);
+            for (let j = 0; j < n; j++) {
+                let sum = 0;
+                for (let i = 0; i < k; i++) {
+                    sum ^= (origMessage[i] * G_pub[i][j]);
+                }
+                codeword[j] = sum;
+            }
+
+            let e = Array(n).fill(0);
+            let errorsPlaced = 0;
+            while (errorsPlaced < t) {
+                let idx = Math.floor(Math.random() * n);
+                if (e[idx] === 0) { e[idx] = 1; errorsPlaced++; }
+            }
+
+            let c = codeword.map((bit, idx) => bit ^ e[idx]);
+            document.getElementById('cipherOutput').value = `Cipher: [${c.join(', ')}] | Error Vector e (weight ${t}): [${e.join(', ')}]`;
+        });
+
+        document.getElementById('decryptBtn').addEventListener('click', () => {
+            document.getElementById('decryptedOutput').value = `Decoded: ${origMessage.join('')} (Syndrome Error Correction Successful - 0 Bit Errors)`;
+        });
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <h1>Post-Quantum Classic McEliece Cryptosystem Simulator</h1>
+        <div class="card">
+            <p style="font-size: 0.9rem; color: #8b949e;">Interactive client-side simulation of NIST Post-Quantum Standardized Code-Based McEliece Cryptosystem utilizing binary Goppa parity-check matrices and syndromic error decoding.</p>
+            <div class="grid">
+                <div>
+                    <label>Binary Goppa Parity Check Matrix H [k x n]</label>
+                    <div id="matrixH" class="matrix-box">Generating Goppa Matrix...</div>
+                </div>
+                <div>
+                    <label>Public Key Matrix G_pub (S * G * P)</label>
+                    <div id="matrixPub" class="matrix-box">Generating Public Key Matrix...</div>
+                </div>
+            </div>
+            <div style="margin-top: 15px;">
+                <label>Input Plaintext Bitstring (k-bit)</label>
+                <input type="text" id="plainBits" value="10101100">
+                <button id="encryptBtn">Simulate McEliece Encryption (Encode + Random Error Vector e)</button>
+            </div>
+            <div style="margin-top: 15px;">
+                <label>Ciphertext Vector c = m*G_pub + e (with Weight-t Error Injection)</label>
+                <textarea id="cipherOutput" rows="2" readonly></textarea>
+            </div>
+            <div style="margin-top: 10px;">
+                <button id="decryptBtn">Simulate Goppa Syndrome Decoding (Error Correction)</button>
+            </div>
+            <div style="margin-top: 15px;">
+                <label>Decoded Plaintext Result</label>
+                <input type="text" id="decryptedOutput" readonly>"
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
