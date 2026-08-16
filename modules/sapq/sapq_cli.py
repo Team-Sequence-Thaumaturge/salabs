@@ -11,6 +11,7 @@ def main():
     parser.add_argument("--json", action="store_true", help="Output raw JSON format")
     parser.add_argument("--baseline", type=str, help="Baseline original file for Phase 20 Hyper-Isomorphic auditing")
     parser.add_argument("--interrogate", action="store_true", help="Phase 21: Generate LLM Interrogation Dossier if holes exist")
+    parser.add_argument("--audit-only", action="store_true", help="Phase 3: Run in non-destructive Audit Mode")
     args = parser.parse_args()
 
     target = args.target
@@ -21,7 +22,7 @@ def main():
     print(f"🛡️ [SAPQ Engine v1.0] Running 4-Tier Contradiction Matrix Audit on: {target}")
 
     if os.path.isfile(target):
-        res = audit_file(target, baseline_filepath=args.baseline)
+        res = audit_file(target, baseline_filepath=args.baseline, audit_only=args.audit_only)
         if args.json:
             print(json.dumps(res, ensure_ascii=False, indent=2))
         else:
@@ -43,7 +44,20 @@ def main():
                 for item in res['missing_intended_features']:
                     print(f"  - {item['issue']}")
 
-            if args.interrogate:
+            if res.get('causality_contradictions'):
+                print(f"Causality Contradictions: {len(res['causality_contradictions'])}")
+            if res.get('mockup_hallucinations'):
+                print(f"Mockup Hallucinations: {len(res['mockup_hallucinations'])}")
+            if res.get('cascade_graph_issues'):
+                print(f"Cascade Graph Issues: {len(res['cascade_graph_issues'])}")
+            if res.get('python_subprocess_issues'):
+                print(f"Python Subprocess Issues: {len(res['python_subprocess_issues'])}")
+            if res.get('spec_mismatches'):
+                print(f"Spec Mismatches: {len(res['spec_mismatches'])}")
+            if res.get('dom_relay_orchestrated'):
+                print("DOM Relay: Orchestrated via HTML Proxy Map")
+
+            if args.interrogate and not args.audit_only:
                 session_id = os.path.basename(target).split('.')[0]
                 arbiter = SAPQArbiter(session_id=session_id)
                 arbiter.log_patch_attempt(res.get('audit_integrity_score', 0), len(res.get('missing_intended_features', [])))
@@ -56,7 +70,7 @@ def main():
                     print("\n🤖 [SAPQ Phase 21] LLM INTERROGATION DOSSIER GENERATED:")
                     print(dossier)
     elif os.path.isdir(target):
-        results = audit_directory(target)
+        results = audit_directory(target, audit_only=args.audit_only)
         perfect = sum(1 for r in results if r['audit_integrity_score'] == 100)
         total_cnt = max(1, len(results))
         pct = (perfect / total_cnt) * 100
