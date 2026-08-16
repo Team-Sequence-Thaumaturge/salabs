@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Binaural Crossfeed & Headphone Spatializer | Quanxs SA Labs</title>
+  <meta name="description" content="Real-time client-side binaural crossfeed and headphone spatialization studio using Web Audio API for natural acoustic room simulation.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Binaural Crossfeed & Headphone Spatializer",
+    "description": "Real-time client-side binaural crossfeed and acoustic room spatializer for headphone listening.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    :root { --bg: #0d1117; --card: #161b22; --border: #30363d; --text: #c9d1d9; --accent: #58a6ff; --accent-hover: #1f6feb; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 20px; line-height: 1.5; }
+    .container { max-width: 900px; margin: 0 auto; }
+    header { border-bottom: 1px solid var(--border); padding-bottom: 15px; margin-bottom: 20px; }
+    h1 { color: #fff; font-size: 1.5rem; margin-bottom: 5px; }
+    p.desc { color: #8b949e; font-size: 0.9rem; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 20px; margin-bottom: 20px; }
+    .control-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; margin-top: 15px; }
+    .control-group { display: flex; flex-direction: column; gap: 5px; }
+    label { font-size: 0.85rem; color: #8b949e; }
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+    .btn { background: var(--accent); color: #fff; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: background 0.2s; }
+    .btn:hover { background: var(--accent-hover); }
+    .btn-secondary { background: #21262d; border: 1px solid var(--border); color: var(--text); margin-left: 10px; }
+    .btn-secondary:hover { background: #30363d; }
+    .visualizer-box { width: 100%; height: 180px; background: #000; border-radius: 6px; border: 1px solid var(--border); margin-top: 15px; }
+    canvas { width: 100%; height: 100%; display: block; }
+    .stat-badge { display: inline-block; background: #238636; color: #fff; font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; margin-bottom: 10px; }
+  </style>
+<script>
+
+    let audioCtx = null;
+    let sourceNode = null;
+    let crossfeedGain = null;
+    let delayLeft = null, delayRight = null;
+    let filterLeft = null, filterRight = null;
+    let analyser = null;
+    let isPlaying = false;
+    let animId = null;
+
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 512;
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function createCrossfeedNetwork(inputNode) {
+      const splitter = audioCtx.createChannelSplitter(2);
+      const merger = audioCtx.createChannelMerger(2);
+
+      delayLeft = audioCtx.createDelay();
+      delayRight = audioCtx.createDelay();
+      delayLeft.delayTime.value = 0.00028;
+      delayRight.delayTime.value = 0.00028;
+
+      filterLeft = audioCtx.createBiquadFilter();
+      filterRight = audioCtx.createBiquadFilter();
+      filterLeft.type = 'lowpass';
+      filterRight.type = 'lowpass';
+      filterLeft.frequency.value = 720;
+      filterRight.frequency.value = 720;
+
+      crossfeedGain = audioCtx.createGain();
+      crossfeedGain.gain.value = 0.45;
+
+      inputNode.connect(splitter);
+      splitter.connect(merger, 0, 0);
+      splitter.connect(merger, 1, 1);
+
+      splitter.connect(delayRight, 0);
+      delayRight.connect(filterRight);
+      filterRight.connect(crossfeedGain);
+      crossfeedGain.connect(merger, 0, 1);
+
+      splitter.connect(delayLeft, 1);
+      delayLeft.connect(filterLeft);
+      filterLeft.connect(crossfeedGain);
+      crossfeedGain.connect(merger, 0, 0);
+
+      merger.connect(analyser);
+      analyser.connect(audioCtx.destination);
+    }
+
+    function startPinkNoiseAndTone() {
+      initAudio();
+      stopAudio();
+      const bufferSize = audioCtx.sampleRate * 2;
+      const noiseBuffer = audioCtx.createBuffer(2, bufferSize, audioCtx.sampleRate);
+      for (let channel = 0; channel < 2; channel++) {
+        const output = noiseBuffer.getChannelData(channel);
+        let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+        for (let i = 0; i < bufferSize; i++) {
+          const white = Math.random() * 2 - 1;
+          b0 = 0.99886 * b0 + white * 0.0555179;
+          b1 = 0.99332 * b1 + white * 0.0750759;
+          b2 = 0.96900 * b2 + white * 0.1538520;
+          b3 = 0.86650 * b3 + white * 0.3104856;
+          b4 = 0.55000 * b4 + white * 0.5329522;
+          b5 = -0.7616 * b5 - white * 0.0168980;
+          output[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.06;
+          b6 = white * 0.115926;
+        }
+      }
+      sourceNode = audioCtx.createBufferSource();
+      sourceNode.buffer = noiseBuffer;
+      sourceNode.loop = true;
+
+      createCrossfeedNetwork(sourceNode);
+      sourceNode.start();
+      isPlaying = true;
+      drawVisualizer();
+    }
+
+    function stopAudio() {
+      if (sourceNode) {
+        try { sourceNode.stop(); sourceNode.disconnect(); } catch(e){}
+        sourceNode = null;
+      }
+      isPlaying = false;
+      if (animId) cancelAnimationFrame(animId);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function drawVisualizer() {
+      if (!isPlaying) return;
+      animId = requestAnimationFrame(drawVisualizer);
+      const bufferLength = analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+      analyser.getByteFrequencyData(dataArray);
+
+      ctx.fillStyle = '#0d1117';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const barWidth = (canvas.width / bufferLength) * 2.5;
+      let barHeight;
+      let x = 0;
+
+      for (let i = 0; i < bufferLength; i++) {
+        barHeight = dataArray[i] / 255 * canvas.height;
+        ctx.fillStyle = 'rgb(88, 166, 255)';
+        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+        x += barWidth + 1;
+      }
+    }
+
+    document.getElementById('btn-test-tone').onclick = startPinkNoiseAndTone;
+    document.getElementById('btn-stop').onclick = stopAudio;
+
+    document.getElementById('crossfeed-amount').oninput = (e) => {
+      const val = e.target.value;
+      document.getElementById('val-crossfeed').textContent = val + '%';
+      if (crossfeedGain) crossfeedGain.gain.value = val / 100;
+    };
+    document.getElementById('crossfeed-delay').oninput = (e) => {
+      const val = e.target.value;
+      document.getElementById('val-delay').textContent = val + ' μs';
+      if (delayLeft && delayRight) {
+        delayLeft.delayTime.value = val / 1000000;
+        delayRight.delayTime.value = val / 1000000;
+      }
+    };
+    document.getElementById('crossfeed-cutoff').oninput = (e) => {
+      const val = e.target.value;
+      document.getElementById('val-cutoff').textContent = val + ' Hz';
+      if (filterLeft && filterRight) {
+        filterLeft.frequency.value = val;
+        filterRight.frequency.value = val;
+      }
+    };
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="stat-badge">100% Client-Side Pure Web Audio</div>
+      <h1>Binaural Crossfeed &amp; Headphone Spatializer</h1>
+      <p class="desc">Simulates natural loudspeaker acoustics on headphones by blending subtle low-passed opposite-ear delays (Meier/Linkwitz Crossfeed Model).</p>
+    </header>
+
+    <div class="card">
+      <h3>Audio Source &amp; Playback</h3>
+      <div style="margin-top: 15px;">
+        <button id="btn-test-tone" class="btn">Generate Acoustic Pink Noise &amp; Tone</button>
+        <button id="btn-stop" class="btn btn-secondary">Stop Audio</button>
+      </div>
+      <div class="visualizer-box">
+        <canvas id="canvas"></canvas>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Spatial Acoustic Parameters</h3>
+      <div class="control-grid">
+        <div class="control-group">
+          <label for="crossfeed-amount">Crossfeed Intensity: <span id="val-crossfeed">45%</span></label>
+          <input type="range" id="crossfeed-amount" min="0" max="100" value="45">
+        </div>
+        <div class="control-group">
+          <label for="crossfeed-delay">Interaural Time Delay (ITD): <span id="val-delay">280 μs</span></label>
+          <input type="range" id="crossfeed-delay" min="50" max="700" value="280">
+        </div>
+        <div class="control-group">
+          <label for="crossfeed-cutoff">Head Shadow Lowpass Cutoff: <span id="val-cutoff">720 Hz</span></label>
+          <input type="range" id="crossfeed-cutoff" min="300" max="2500" value="720">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</body>
+</html>
