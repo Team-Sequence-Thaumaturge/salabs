@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Calabi-Yau Manifold ASCII Raymarcher - Quanxs SA Labs</title>
+    <meta name="description" content="Real-time 6D Calabi-Yau compactification manifold projection to 3D ASCII matrix renderer with full parameter morphing.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "3D Calabi-Yau Manifold ASCII Raymarcher",
+      "description": "Real-time 6D Calabi-Yau compactification manifold projection to 3D ASCII matrix renderer.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --bg-color: #030712;
+            --panel-bg: #111827;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent: #10b981;
+            --border-color: #1f2937;
+        }
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: monospace;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: var(--accent);
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+        .ascii-viewport {
+            background: #000;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 16px;
+            overflow: auto;
+            text-align: center;
+            line-height: 11px;
+            font-size: 11px;
+            color: var(--accent);
+            text-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+            user-select: none;
+            min-height: 380px;
+        }
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 18px;
+            background: var(--panel-bg);
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .control-item label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent);
+        }
+    </style>
+<script>
+
+        const screen = document.getElementById('asciiScreen');
+        const paramN = document.getElementById('paramN');
+        const speedX = document.getElementById('speedX');
+        const speedY = document.getElementById('speedY');
+        const paramAlpha = document.getElementById('paramAlpha');
+
+        const chars = " .:-=+*#%@";
+        const width = 64;
+        const height = 34;
+
+        let rotX = 0;
+        let rotY = 0;
+
+        function renderManifold() {
+            const n = parseInt(paramN.value);
+            const alpha = parseFloat(paramAlpha.value);
+            rotX += parseFloat(speedX.value) * 0.02;
+            rotY += parseFloat(speedY.value) * 0.02;
+
+            document.getElementById('nVal').textContent = n;
+            document.getElementById('speedXVal').textContent = parseFloat(speedX.value).toFixed(1);
+            document.getElementById('speedYVal').textContent = parseFloat(speedY.value).toFixed(1);
+            document.getElementById('alphaVal').textContent = alpha.toFixed(2);
+
+            const zBuffer = new Array(width * height).fill(-Infinity);
+            const frame = new Array(width * height).fill(' ');
+
+            const stepsU = 32;
+            const stepsV = 32;
+
+            for (let i = 0; i < stepsU; i++) {
+                const u = (i / stepsU) * Math.PI * 2;
+                for (let j = 0; j < stepsV; j++) {
+                    const v = (j / stepsV) * Math.PI * 2;
+
+                    const z1_r = Math.cos(u) * Math.pow(Math.cos(v), 2/n);
+                    const z1_i = Math.sin(u) * Math.pow(Math.cos(v), 2/n);
+                    const z2_r = Math.cos(alpha * u + v) * Math.pow(Math.sin(v), 2/n);
+
+                    let px = z1_r * 2.2;
+                    let py = z1_i * 2.2;
+                    let pz = z2_r * 2.2;
+
+                    const y1 = py * Math.cos(rotX) - pz * Math.sin(rotX);
+                    const z1 = py * Math.sin(rotX) + pz * Math.cos(rotX);
+                    const x2 = px * Math.cos(rotY) + z1 * Math.sin(rotY);
+                    const z2 = -px * Math.sin(rotY) + z1 * Math.cos(rotY);
+
+                    const scrX = Math.floor(width / 2 + x2 * 12);
+                    const scrY = Math.floor(height / 2 + y1 * 6.5);
+
+                    if (scrX >= 0 && scrX < width && scrY >= 0 && scrY < height) {
+                        const idx = scrY * width + scrX;
+                        if (z2 > zBuffer[idx]) {
+                            zBuffer[idx] = z2;
+                            const lumIdx = Math.floor(((z2 + 3) / 6) * (chars.length - 1));
+                            const safeLum = Math.max(0, Math.min(chars.length - 1, lumIdx));
+                            frame[idx] = chars[safeLum];
+                        }
+                    }
+                }
+            }
+
+            let output = "";
+            for (let row = 0; row < height; row++) {
+                output += frame.slice(row * width, (row + 1) * width).join("") + "\n";
+            }
+            screen.textContent = output;
+
+            requestAnimationFrame(renderManifold);
+        }
+
+        renderManifold();
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calabi-Yau 6D Manifold ASCII Projector</h1>
+            <div style="color: var(--text-muted); font-size: 0.85rem;">String Theory Compactification Surface Projection • 100% Client-Side Pure JS</div>
+        </header>
+
+        <pre id="asciiScreen" class="ascii-viewport"></pre>
+
+        <div class="controls">
+            <div class="control-item">
+                <label><span>Manifold Cross-Section (n)</span><span id="nVal">5</span></label>
+                <input type="range" id="paramN" min="2" max="8" step="1" value="5">
+            </div>
+            <div class="control-item">
+                <label><span>Rotation Speed X</span><span id="speedXVal">1.0</span></label>
+                <input type="range" id="speedX" min="-3" max="3" step="0.1" value="1.0">
+            </div>
+            <div class="control-item">
+                <label><span>Rotation Speed Y</span><span id="speedYVal">1.2</span></label>
+                <input type="range" id="speedY" min="-3" max="3" step="0.1" value="1.2">
+            </div>
+            <div class="control-item">
+                <label><span>Complex Phase Morph (α)</span><span id="alphaVal">0.5</span></label>
+                <input type="range" id="paramAlpha" min="0" max="2" step="0.05" value="0.5">
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>
