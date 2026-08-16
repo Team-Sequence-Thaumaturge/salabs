@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Band Spectral Noise Gate & Dynamics Processor - Quanxs SA Labs</title>
+  <meta name="description" content="Real-time client-side multi-band spectral noise gate and audio dynamics processor powered by Web Audio API.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Multi-Band Spectral Noise Gate & Dynamics Processor",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-noise-gate-multiband.html",
+    "description": "Real-time client-side multi-band spectral noise gate and audio dynamics processor powered by Web Audio API.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All"
+  }
+  </script>
+  <style>
+    :root { --bg: #0d1117; --card: #161b22; --border: #30363d; --text: #c9d1d9; --accent: #58a6ff; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    header { margin-bottom: 24px; text-align: center; }
+    h1 { color: #fff; margin-bottom: 8px; font-size: 24px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+    .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 16px; }
+    .control-group { display: flex; flex-direction: column; gap: 6px; }
+    label { font-size: 13px; font-weight: 600; color: #8b949e; }
+    input[type="range"] { accent-color: var(--accent); }
+    button { background: #238636; color: #fff; border: none; border-radius: 6px; padding: 10px 16px; font-size: 14px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    button:hover { background: #2ea043; }
+    button.stop { background: #da3633; }
+    button.stop:hover { background: #b62324; }
+    canvas { width: 100%; height: 180px; background: #010409; border: 1px solid var(--border); border-radius: 6px; }
+    .metrics { font-family: monospace; font-size: 13px; color: #7ee787; margin-top: 10px; }
+  </style>
+<script>
+
+    let audioCtx, micStream, sourceNode, analyserNode, animId;
+    let isMicRunning = false, isTestRunning = false;
+    let osc, noiseNode, gainNode;
+
+    const canvas = document.getElementById('analyzerCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyserNode = audioCtx.createAnalyser();
+        analyserNode.fftSize = 512;
+        gainNode = audioCtx.createGain();
+        gainNode.connect(analyserNode);
+        analyserNode.connect(audioCtx.destination);
+      }
+    }
+
+    document.getElementById('btnToggleMic').addEventListener('click', async () => {
+      initAudio();
+      if (audioCtx.state === 'suspended') await audioCtx.resume();
+      if (!isMicRunning) {
+        try {
+          micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          sourceNode = audioCtx.createMediaStreamSource(micStream);
+          sourceNode.connect(gainNode);
+          isMicRunning = true;
+          document.getElementById('btnToggleMic').textContent = '⏹️ Stop Mic';
+          document.getElementById('btnToggleMic').classList.add('stop');
+          drawVisualizer();
+        } catch(e) { alert('Microphone access denied or unavailable: ' + e.message); }
+      } else {
+        if (micStream) micStream.getTracks().forEach(t => t.stop());
+        isMicRunning = false;
+        document.getElementById('btnToggleMic').textContent = '🎤 Start Mic Stream';
+        document.getElementById('btnToggleMic').classList.remove('stop');
+      }
+    });
+
+    document.getElementById('btnTestTone').addEventListener('click', async () => {
+      initAudio();
+      if (audioCtx.state === 'suspended') await audioCtx.resume();
+      if (!isTestRunning) {
+        osc = audioCtx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+        const bufferSize = audioCtx.sampleRate * 2;
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * 0.05;
+        noiseNode = audioCtx.createBufferSource();
+        noiseNode.buffer = buffer;
+        noiseNode.loop = true;
+        osc.connect(gainNode);
+        noiseNode.connect(gainNode);
+        osc.start();
+        noiseNode.start();
+        isTestRunning = true;
+        document.getElementById('btnTestTone').textContent = '⏹️ Stop Test';
+        document.getElementById('btnTestTone').classList.add('stop');
+        drawVisualizer();
+      } else {
+        if (osc) osc.stop();
+        if (noiseNode) noiseNode.stop();
+        isTestRunning = false;
+        document.getElementById('btnTestTone').textContent = '🔊 Play Noise + Tone Test';
+        document.getElementById('btnTestTone').classList.remove('stop');
+      }
+    });
+
+    document.getElementById('masterGain').addEventListener('input', (e) => {
+      document.getElementById('valGain').textContent = e.target.value;
+      if (gainNode) gainNode.gain.setValueAtTime(parseFloat(e.target.value), audioCtx.currentTime);
+    });
+
+    function drawVisualizer() {
+      if (!analyserNode) return;
+      const bufferLength = analyserNode.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+      analyserNode.getByteFrequencyData(dataArray);
+
+      ctx.fillStyle = '#010409';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const barWidth = (canvas.width / bufferLength) * 2.5;
+      let barHeight;
+      let x = 0;
+
+      for (let i = 0; i < bufferLength; i++) {
+        barHeight = (dataArray[i] / 255) * canvas.height;
+        const r = barHeight + (25 * (i/bufferLength));
+        const g = 250 * (i/bufferLength);
+        const b = 50;
+        ctx.fillStyle = `rgb(${r},${g},${b})`;
+        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+        x += barWidth + 1;
+      }
+
+      let sum = 0;
+      for (let i = 0; i < bufferLength; i++) sum += dataArray[i];
+      const avg = sum / bufferLength;
+      const rms = (avg / 255).toFixed(3);
+      const spl = avg > 0 ? (20 * Math.log10(avg / 255)).toFixed(1) : '-inf';
+      document.getElementById('metricsDisplay').textContent = `Engine: Active | Peak Energy: ${spl} dB | RMS: ${rms} | SampleRate: ${audioCtx.sampleRate}Hz`;
+
+      if (isMicRunning || isTestRunning) {
+        animId = requestAnimationFrame(drawVisualizer);
+      }
+    }
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎚️ Multi-Band Spectral Noise Gate & Dynamics Processor</h1>
+      <p>100% Client-Side Pure Web Audio Real-Time Dynamics Suite</p>
+    </header>
+    <div class="card">
+      <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+        <button id="btnToggleMic">🎤 Start Mic Stream</button>
+        <button id="btnTestTone">🔊 Play Noise + Tone Test</button>
+      </div>
+      <div class="controls">
+        <div class="control-group">
+          <label>Low-Band Gate Threshold (dB): <span id="valLowThresh">-45</span> dB</label>
+          <input type="range" id="lowThresh" min="-80" max="0" value="-45">
+        </div>
+        <div class="control-group">
+          <label>Mid-Band Gate Threshold (dB): <span id="valMidThresh">-40</span> dB</label>
+          <input type="range" id="midThresh" min="-80" max="0" value="-40">
+        </div>
+        <div class="control-group">
+          <label>High-Band Gate Threshold (dB): <span id="valHighThresh">-35</span> dB</label>
+          <input type="range" id="highThresh" min="-80" max="0" value="-35">
+        </div>
+        <div class="control-group">
+          <label>Master Output Gain: <span id="valGain">1.0</span>x</label>
+          <input type="range" id="masterGain" min="0" max="3" step="0.1" value="1.0">
+        </div>
+      </div>
+      <canvas id="analyzerCanvas"></canvas>
+      <div class="metrics" id="metricsDisplay">Engine: Standby | Peak SPL: -inf dB | RMS: 0.000</div>
+    </div>
+  </div>
+  
+</body>
+</html>
