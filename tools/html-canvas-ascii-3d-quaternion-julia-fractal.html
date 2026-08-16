@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4D Quaternion Julia Fractal ASCII Raymarcher Studio - Quanxs SA Labs</title>
+  <meta name="description" content="100% Client-Side Pure JavaScript Real-Time 4D Quaternion Julia Fractal Distance-Estimator Raymarcher with ASCII Shading Engine.">
+  <meta name="keywords" content="quaternion julia fractal, ascii art, raymarching, 4d mathematics, pure javascript canvas">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "4D Quaternion Julia Fractal ASCII Raymarcher Studio",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-quaternion-julia-fractal.html",
+    "description": "Real-time 4D Quaternion Julia fractal raymarcher rendered directly into high-density ASCII shading buffers in Pure JavaScript.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #050508;
+      --card-bg: #0f111a;
+      --border: #23283b;
+      --accent: #ff7b72;
+      --accent-cyan: #79c0ff;
+      --text: #c9d1d9;
+      --text-bright: #f0f6fc;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 16px; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 16px; }
+    h1 { font-size: 1.4rem; color: var(--text-bright); }
+    .badge { background: #d29922; color: #000; font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; font-weight: bold; }
+    .layout { display: grid; grid-template-columns: 340px 1fr; gap: 16px; }
+    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+    .sidebar { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px; height: fit-content; }
+    .sidebar h2 { font-size: 1rem; color: var(--accent-cyan); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+    .ctrl { margin-bottom: 10px; }
+    label { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 2px; color: var(--text-bright); }
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+    select, button { background: #161b22; border: 1px solid var(--border); color: var(--text-bright); padding: 6px 10px; border-radius: 6px; font-size: 0.85rem; width: 100%; cursor: pointer; margin-top: 4px; }
+    button { background: var(--accent); color: #000; font-weight: bold; border: none; margin-top: 10px; transition: opacity 0.2s; }
+    button:hover { opacity: 0.9; }
+    .viewport { background: #000; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    pre#ascii-canvas { font-family: 'Courier New', Courier, monospace; font-size: 8px; line-height: 8px; letter-spacing: 0; color: #39d353; user-select: none; white-space: pre; cursor: grab; padding: 10px; }
+    .hud { position: absolute; top: 10px; right: 10px; font-size: 0.75rem; background: rgba(0,0,0,0.7); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border); color: var(--accent-cyan); font-family: monospace; }
+    .ad-banner { background: var(--card-bg); border: 1px dashed var(--border); padding: 8px; text-align: center; font-size: 0.75rem; color: #8b949e; margin-bottom: 16px; border-radius: 6px; }
+  </style>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div>
+      <h1>4D Quaternion Julia Fractal ASCII Raymarcher</h1>
+      <p style="font-size:0.8rem; color:#8b949e;">Interactive 4D Quaternion ($q \mapsto q^2 + c$) Raymarching & High-Density ASCII Shading</p>
+    </div>
+    <span class="badge">Pure JS Raymarcher</span>
+  </header>
+
+  <div class="ad-banner">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-9108438313531011"
+         data-ad-slot="auto"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    
+  </div>
+
+  <div class="layout">
+    <div class="sidebar">
+      <h2>1. Quaternion Constant (c)</h2>
+      <div class="ctrl">
+        <label>Real $c_r$: <span id="v-cr">-0.20</span></label>
+        <input type="range" id="p-cr" min="-1.5" max="1.5" step="0.02" value="-0.2">
+      </div>
+      <div class="ctrl">
+        <label>Imag $c_i$: <span id="v-ci">0.65</span></label>
+        <input type="range" id="p-ci" min="-1.5" max="1.5" step="0.02" value="0.65">
+      </div>
+      <div class="ctrl">
+        <label>Imag $c_j$: <span id="v-cj">0.40</span></label>
+        <input type="range" id="p-cj" min="-1.5" max="1.5" step="0.02" value="0.4">
+      </div>
+      <div class="ctrl">
+        <label>Imag $c_k$: <span id="v-ck">0.00</span></label>
+        <input type="range" id="p-ck" min="-1.5" max="1.5" step="0.02" value="0.0">
+      </div>
+      <div class="ctrl">
+        <label>4D Slice $w$: <span id="v-w">0.00</span></label>
+        <input type="range" id="p-w" min="-1.0" max="1.0" step="0.02" value="0.0">
+      </div>
+
+      <h2>2. Raymarching Engine</h2>
+      <div class="ctrl">
+        <label>Max Iterations: <span id="v-iter">10</span></label>
+        <input type="range" id="p-iter" min="4" max="24" step="1" value="10">
+      </div>
+      <div class="ctrl">
+        <label>Shading Palette</label>
+        <select id="sel-palette">
+          <option value="matrix">Matrix Green ( .:-=+*#%@)</option>
+          <option value="blocks">Density Blocks ( .:░▒▓█)</option>
+          <option value="cyber">Cyberpunk Amber</option>
+          <option value="mono">High-Contrast White</option>
+        </select>
+      </div>
+      <div class="ctrl">
+        <label>Resolution</label>
+        <select id="sel-res">
+          <option value="compact">Compact (80 x 48)</option>
+          <option value="dense" selected>Standard (100 x 60)</option>
+          <option value="ultra">High-Density (120 x 72)</option>
+        </select>
+      </div>
+      <button id="btn-snap">Download ASCII Art (.txt)</button>
+    </div>
+
+    <div class="viewport">
+      <div class="hud" id="hud-stat">FPS: -- | Ray Steps: --</div>
+      <pre id="ascii-canvas"></pre>
+    </div>
+  </div>
+</div>
+

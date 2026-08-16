@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Room Acoustic Convolver & Impulse Response Synth - Quanxs SA Labs</title>
+  <meta name="description" content="100% Client-Side Web Audio Room Acoustic Simulator, Sabine-based Synthetic Impulse Response Generator, and Convolver Reverb Studio.">
+  <meta name="keywords" content="web audio api, impulse response, convolver reverb, sabine formula, room acoustics, sound design">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Dynamic Room Acoustic Convolver & Impulse Response Synth",
+    "url": "https://salabs.quanxs.com/tools/audio-dynamic-convolution-reverb-studio.html",
+    "description": "Interactive Web Audio studio for generating synthetic acoustic room impulse responses and dynamic real-time convolution reverb.",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --accent-hover: #1f6feb;
+      --text: #c9d1d9;
+      --text-bright: #f0f6fc;
+      --success: #2ea043;
+      --warn: #d29922;
+      --danger: #f85149;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 20px; line-height: 1.5; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    header { margin-bottom: 24px; border-bottom: 1px solid var(--border); padding-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+    h1 { color: var(--text-bright); font-size: 1.5rem; }
+    .badge { background: #238636; color: #fff; font-size: 0.75rem; padding: 3px 8px; border-radius: 12px; font-weight: bold; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 18px; margin-bottom: 20px; }
+    .card h2 { font-size: 1.1rem; color: var(--accent); margin-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 6px; }
+    .control-group { margin-bottom: 12px; }
+    label { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px; color: var(--text-bright); }
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+    select, button, input[type="file"] { background: #21262d; border: 1px solid var(--border); color: var(--text-bright); padding: 8px 12px; border-radius: 6px; font-size: 0.9rem; cursor: pointer; }
+    button { background: var(--accent); color: #0d1117; font-weight: bold; border: none; transition: background 0.2s; }
+    button:hover { background: var(--accent-hover); color: #fff; }
+    button.secondary { background: #21262d; color: var(--text); border: 1px solid var(--border); }
+    button.secondary:hover { background: #30363d; color: #fff; }
+    .btn-row { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+    canvas { width: 100%; height: 140px; background: #010409; border: 1px solid var(--border); border-radius: 6px; display: block; margin-top: 8px; }
+    .stat-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; background: #010409; padding: 10px; border-radius: 6px; font-size: 0.8rem; text-align: center; }
+    .stat-val { font-size: 1rem; font-weight: bold; color: var(--accent); }
+    .ad-banner { background: #161b22; border: 1px dashed #30363d; border-radius: 6px; padding: 10px; text-align: center; font-size: 0.75rem; color: #8b949e; margin: 20px 0; }
+  </style>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div>
+      <h1>Dynamic Room Acoustic Convolver & IR Synth</h1>
+      <p style="font-size:0.85rem; color:#8b949e;">100% Pure Client-Side Web Audio Room Acoustics & Impulse Response Synthesizer</p>
+    </div>
+    <span class="badge">SA Labs Pure JS</span>
+  </header>
+
+  <div class="ad-banner">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-9108438313531011"
+         data-ad-slot="auto"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    
+  </div>
+
+  <div class="grid">
+    <div>
+      <div class="card">
+        <h2>1. Room Geometry & Acoustic Physics</h2>
+        <div class="control-group">
+          <label>Room Width: <span id="val-w">8.0 m</span></label>
+          <input type="range" id="param-w" min="2" max="40" step="0.5" value="8">
+        </div>
+        <div class="control-group">
+          <label>Room Length: <span id="val-l">12.0 m</span></label>
+          <input type="range" id="param-l" min="2" max="50" step="0.5" value="12">
+        </div>
+        <div class="control-group">
+          <label>Room Height: <span id="val-h">4.0 m</span></label>
+          <input type="range" id="param-h" min="2" max="20" step="0.5" value="4">
+        </div>
+        <div class="control-group">
+          <label>Surface Absorption (α): <span id="val-alpha">0.20 (Wood/Plaster)</span></label>
+          <input type="range" id="param-alpha" min="0.05" max="0.95" step="0.05" value="0.20">
+        </div>
+        <div class="control-group">
+          <label>High-Frequency Damping: <span id="val-damp">0.65</span></label>
+          <input type="range" id="param-damp" min="0.1" max="0.99" step="0.01" value="0.65">
+        </div>
+        <div class="control-group">
+          <label>Pre-Delay: <span id="val-predelay">20 ms</span></label>
+          <input type="range" id="param-predelay" min="0" max="150" step="1" value="20">
+        </div>
+        <div class="stat-box">
+          <div><div>Volume</div><div class="stat-val" id="stat-vol">384 m³</div></div>
+          <div><div>Surface Area</div><div class="stat-val" id="stat-area">352 m²</div></div>
+          <div><div>Sabine T60</div><div class="stat-val" id="stat-t60">0.88 s</div></div>
+        </div>
+        <div class="btn-row">
+          <button id="btn-gen-ir">Synthesize Impulse Response</button>
+          <button class="secondary" id="btn-export-wav">Download IR WAV</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>2. Audio Source & Convolver Reverb</h2>
+        <div class="control-group">
+          <label>Audio Source</label>
+          <select id="source-type" style="width:100%;">
+            <option value="pluck">Synthesized Acoustic Pluck</option>
+            <option value="snare">Synthesized Drum Click</option>
+            <option value="sine">Harmonic Melody Loop</option>
+            <option value="mic">Live Microphone Input</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label>Dry / Wet Mix: <span id="val-mix">40% Wet</span></label>
+          <input type="range" id="param-mix" min="0" max="1" step="0.02" value="0.4">
+        </div>
+        <div class="control-group">
+          <label>Output Gain: <span id="val-gain">0.8</span></label>
+          <input type="range" id="param-gain" min="0" max="1.5" step="0.05" value="0.8">
+        </div>
+        <div class="btn-row">
+          <button id="btn-play">▶ Play Dry & Wet</button>
+          <button class="secondary" id="btn-stop">■ Stop</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="card">
+        <h2>3. Impulse Response Waveform (Time Domain)</h2>
+        <canvas id="cvs-ir"></canvas>
+      </div>
+
+      <div class="card">
+        <h2>4. Real-time Output Spectrum (FFT)</h2>
+        <canvas id="cvs-fft"></canvas>
+      </div>
+
+      <div class="card">
+        <h2>5. 3D Ray Reflection Schematic</h2>
+        <canvas id="cvs-room"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
