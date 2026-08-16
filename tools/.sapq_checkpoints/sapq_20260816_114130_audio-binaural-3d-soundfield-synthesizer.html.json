@@ -1,0 +1,66 @@
+{
+  "session_id": "sapq_20260816_114130",
+  "target_file": "audio-binaural-3d-soundfield-synthesizer.html",
+  "last_file_hash": "68b7638478c3e932dae43d05cf6e92cac1ff1f2e3be0cf52fd73214f7c421d5f",
+  "global_status": "PATCHING",
+  "resolved_issues": [],
+  "pending_issues": [
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: canvas",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: z",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: x",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: fieldCanvas",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: posX",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: posY",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: posZ",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: freq",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: waveType",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: roomSize",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: toggleBtn",
+      "status": "PENDING"
+    }
+  ],
+  "created_at": "2026-08-16T11:41:30.065171Z",
+  "updated_at": "2026-08-16T11:41:30.083689Z"
+}
