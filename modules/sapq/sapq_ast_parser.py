@@ -20,35 +20,21 @@ class ASTParser:
             with open(target_filepath, 'r', encoding='utf-8', errors='ignore') as f:
                 self.full_content = f.read()
             
-            self.language = 'js'
-            if target_filepath.endswith('.py'):
-                self.language = 'python'
-                self.code = self.full_content
-                import ast as pyast
-                if self.code.strip():
-                    self.ast = pyast.parse(self.code)
+            # Extract JS script contents for HTML files (ignore application/ld+json or non-JS tags)
+            if target_filepath.endswith('.html'):
+                scripts = re.findall(r'<script(?:\s+(?!type=["\']application/ld\+json["\'])[^>]*)?>(.*?)</script>', self.full_content, re.DOTALL)
+                clean_scripts = [s for s in scripts if not s.strip().startswith('{')]
+                self.code = "\n".join(clean_scripts)
             else:
-                # Extract JS script contents for HTML files (ignore application/ld+json or non-JS tags)
-                if target_filepath.endswith('.html'):
-                    scripts = re.findall(r'<script(?:\s+(?!type=["\']application/ld\+json["\'])[^>]*)?>(.*?)</script>', self.full_content, re.DOTALL)
-                    clean_scripts = [s for s in scripts if not s.strip().startswith('{')]
-                    self.code = "\n".join(clean_scripts)
-                else:
-                    self.code = self.full_content
+                self.code = self.full_content
 
-                if self.code.strip():
-                    self.ast = esprima.parseScript(self.code, loc=True, tolerant=True)
+            if self.code.strip():
+                self.ast = esprima.parseScript(self.code, loc=True, tolerant=True)
         except Exception as e:
             self.ast = None
             print(f"AST Parsing Warning for {self.filename}: {e}")
 
     def _traverse(self, node, visitor):
-        if self.language == 'python':
-            import ast as pyast
-            for subnode in pyast.walk(node):
-                visitor(subnode)
-            return
-
         if not node or not hasattr(node, 'type'):
             return
         visitor(node)
@@ -112,52 +98,3 @@ class ASTParser:
 
         self._traverse(self.ast, visitor)
         return mockups
-
-    def get_all_identifier_usages(self):
-        """Extracts a set of all variable identifier names used in the AST, strictly tracking usages (ignoring declarations)."""
-        if not self.ast:
-            return set()
-
-        usages = set()
-
-        def visitor(node):
-            # If the node itself is an Identifier, it might be a usage OR a declaration.
-            # We filter it by looking at parent contexts during traversal. But esprima AST doesn't have parent links easily accessible.
-            # However, we can track actual usage properties from parent nodes like CallExpression, MemberExpression, AssignmentExpression right side, etc.
-            pass
-
-        def advanced_visitor(node):
-            if self.language == 'python':
-                import ast as pyast
-                if isinstance(node, pyast.Name) and isinstance(node.ctx, pyast.Load):
-                    usages.add(node.id)
-                elif isinstance(node, pyast.arg): # function arguments
-                    usages.add(node.arg)
-                return
-
-            if not node or not hasattr(node, 'type'): return
-
-            # 1. Used in assignments (right side)
-            if node.type == 'AssignmentExpression' and node.right.type == 'Identifier':
-                usages.add(node.right.name)
-            # 2. Used in Binary/Logical expressions
-            if node.type in ('BinaryExpression', 'LogicalExpression'):
-                if node.left.type == 'Identifier': usages.add(node.left.name)
-                if node.right.type == 'Identifier': usages.add(node.right.name)
-            # 3. Used in Return statement
-            if node.type == 'ReturnStatement' and node.argument and node.argument.type == 'Identifier':
-                usages.add(node.argument.name)
-            # 4. Used as an argument in a function call
-            if node.type == 'CallExpression':
-                for arg in node.arguments:
-                    if arg.type == 'Identifier':
-                        usages.add(arg.name)
-            # 5. Used in variable declarator initialization (right side)
-            if node.type == 'VariableDeclarator' and node.init and node.init.type == 'Identifier':
-                usages.add(node.init.name)
-            # 6. Used in Member expressions (left side only usually, e.g., obj.prop -> obj is used)
-            if node.type == 'MemberExpression' and node.object.type == 'Identifier':
-                usages.add(node.object.name)
-
-        self._traverse(self.ast, advanced_visitor)
-        return usages

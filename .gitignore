@@ -1,0 +1,4 @@
+.sapq_checkpoints/
+.sapq_logs/
+*.bak_*
+sapq_*.json

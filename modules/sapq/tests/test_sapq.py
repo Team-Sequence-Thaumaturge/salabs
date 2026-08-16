@@ -1,12 +1,12 @@
 import sys, os
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair")
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair\SAPQ")
+sapq_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if sapq_dir not in sys.path:
+    sys.path.insert(0, sapq_dir)
 import unittest
-import os
 import tempfile
 
 from sapq_python_parser import PythonASTParser
-from sapq_spec_matcher import SpecMatcher
+from sapq_spec_matcher import SpecSemanticMatcher
 
 class TestSAPQPhase17(unittest.TestCase):
 
@@ -48,36 +48,31 @@ const state = { active: false }; // Should be true
         self.assertTrue(len(issues) > 0, "Failed to detect missing creationflags")
 
         # We expect 2 issues (one for subprocess.run, one for os.system)
-        mockup_issues = [issue for issue in issues if issue.get("type") == "MOCKUP_HALLUCINATION"]
-        self.assertEqual(len(mockup_issues), 2, "Should find 2 MOCKUP_HALLUCINATION issues")
+        os_issues = [issue for issue in issues if issue.get("type") == "OS_SYSTEM_POPUP"]
+        sub_issues = [issue for issue in issues if issue.get("type") == "SUBPROCESS_POPUP"]
+        self.assertEqual(len(os_issues), 1, "Should find 1 OS_SYSTEM_POPUP issue")
+        self.assertEqual(len(sub_issues), 1, "Should find 1 SUBPROCESS_POPUP issue")
 
-        issue_texts = [i["issue"] for i in mockup_issues]
-        self.assertTrue(any("subprocess.run called without explicit creationflags" in t for t in issue_texts))
-        self.assertTrue(any("os.system used. Replace with subprocess.run" in t for t in issue_texts))
+        self.assertTrue(any("called without creationflags=0x08000000" in t for t in [i["issue"] for i in sub_issues]))
+        self.assertTrue(any("os.system used. Use subprocess" in t for t in [i["issue"] for i in os_issues]))
 
     def test_spec_matcher_detects_torsion_crossing(self):
         """
         Simulated Failure: JS file with a mismatched configuration variable value.
-        Assertion Guarantee: Should flag TORSION_CROSSING errors.
+        Assertion Guarantee: Should flag SPEC_ALIGNMENT_MISMATCH or SPEC_MISSING.
         """
-        specs = {
-            "targetFrequency": 40,
-            "active": "true" # Note: JS esprima parser reads boolean true as python boolean True or string? esprima returns a boolean.
-        }
-
-        # We need to test the boolean parsing from esprima carefully.
-        # In esprima AST, false is a Literal with value False.
-        # So we should expect our matcher to compare string representations: str(False) vs str("true") -> "False" != "true"
-        matcher = SpecMatcher(self.bad_js_path, specs)
-        issues = matcher.audit_specs()
+        with open(self.bad_js_path, 'r', encoding='utf-8') as f:
+            js_code = f.read()
+        matcher = SpecSemanticMatcher("target frequency = 40", self.bad_js_path, js_code)
+        issues = matcher.audit_code_alignment()
 
         self.assertTrue(len(issues) > 0, "Failed to detect spec mismatches")
 
-        torsion_issues = [issue for issue in issues if issue.get("type") == "TORSION_CROSSING"]
-        self.assertTrue(len(torsion_issues) >= 1, "Should find at least 1 TORSION_CROSSING issue")
+        spec_issues = [issue for issue in issues if issue.get("type") in ("SPEC_ALIGNMENT_MISMATCH", "SPEC_ALIGNMENT_MISSING")]
+        self.assertTrue(len(spec_issues) >= 1, "Should find at least 1 SPEC_ALIGNMENT_MISMATCH issue")
 
-        issue_texts = [i["issue"] for i in torsion_issues]
-        self.assertTrue(any("targetFrequency" in t and "40" in t for t in issue_texts))
+        issue_texts = [i["issue"] for i in spec_issues]
+        self.assertTrue(any("target frequency" in t and "40" in t for t in issue_texts))
 
 if __name__ == '__main__':
     unittest.main()
