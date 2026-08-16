@@ -1,0 +1,101 @@
+{
+  "session_id": "sapq_20260816_131144",
+  "target_file": "audio-convolution-reverb-spatial-designer.html",
+  "last_file_hash": "580e692affa45a42116fad8694f0c6afdb2ecb929cdccfddbf03e42cbfa523c9",
+  "global_status": "PATCHING",
+  "resolved_issues": [],
+  "pending_issues": [
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: canvas",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: p",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: spread",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: density",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: damping",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: setParams",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: i",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: left",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: irCanvas",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: presetSelect",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: sourceSelect",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: decayVal",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: decayTime",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: dampVal",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: densityVal",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: spreadVal",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: stereoSpread",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: playBtn",
+      "status": "PENDING"
+    }
+  ],
+  "created_at": "2026-08-16T13:11:44.664432Z",
+  "updated_at": "2026-08-16T13:11:44.682932Z"
+}
