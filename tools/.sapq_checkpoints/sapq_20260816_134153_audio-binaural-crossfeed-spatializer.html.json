@@ -1,0 +1,31 @@
+{
+  "session_id": "sapq_20260816_134153",
+  "target_file": "audio-binaural-crossfeed-spatializer.html",
+  "last_file_hash": "1427cf4e92c7db83cbcc25fab244d74c389c80a9e40d073dcd5b870439bf9645",
+  "global_status": "PATCHING",
+  "resolved_issues": [],
+  "pending_issues": [
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: canvas",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: stopAudio",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: i",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: drawVisualizer",
+      "status": "PENDING"
+    }
+  ],
+  "created_at": "2026-08-16T13:41:53.886695Z",
+  "updated_at": "2026-08-16T13:41:53.900194Z"
+}
