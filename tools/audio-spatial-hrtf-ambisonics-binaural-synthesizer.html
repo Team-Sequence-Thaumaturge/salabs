@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spatial HRTF Ambisonics Binaural Soundstage Synthesizer | Quanxs SA Labs</title>
+  <meta name="description" content="Professional 3D Spatial HRTF Ambisonics Binaural Soundstage Synthesizer with Web Audio API. 100% Client-Side Pure JS.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Spatial HRTF Ambisonics Binaural Soundstage Synthesizer",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-hrtf-ambisonics-binaural-synthesizer.html",
+    "description": "Professional 3D Spatial HRTF Ambisonics Binaural Soundstage Synthesizer powered by Web Audio API and real-time PannerNode 3D spatialization.",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "All"
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --accent: #58a6ff;
+      --accent-hover: #1f6feb;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      padding: 20px;
+    }
+    .container { max-width: 900px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 24px; }
+    h1 { color: #fff; font-size: 1.8rem; margin-bottom: 8px; }
+    p.desc { color: #8b949e; font-size: 0.95rem; }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .control-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    label { display: block; font-size: 0.85rem; color: #8b949e; margin-bottom: 6px; }
+    input[type="range"] { width: 100%; }
+    .btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn.stop { background: #da3633;
+    }
+    .btn.stop:hover { background: #b62324; }
+    canvas {
+      width: 100%;
+      height: 200px;
+      background: #000;
+      border-radius: 6px;
+      display: block;
+      margin-top: 16px;
+    }
+    .nav-link { display: inline-block; margin-top: 16px; color: var(--accent); text-decoration: none; }
+    .nav-link:hover { text-decoration: underline; }
+  </style>
+<script>
+
+    let audioCtx = null;
+    let osc = null;
+    let panner = null;
+    let analyser = null;
+    let isPlaying = false;
+    let isOrbiting = true;
+    let angle = 0;
+
+    const btnToggle = document.getElementById('btnToggle');
+    const btnOrbit = document.getElementById('btnOrbit');
+    const posX = document.getElementById('posX');
+    const posY = document.getElementById('posY');
+    const posZ = document.getElementById('posZ');
+    const freq = document.getElementById('freq');
+    const orbitSpeed = document.getElementById('orbitSpeed');
+    const canvas = document.getElementById('scopeCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function initAudio() {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      osc = audioCtx.createOscillator();
+      panner = audioCtx.createPanner();
+      analyser = audioCtx.createAnalyser();
+
+      panner.panningModel = 'HRTF';
+      panner.distanceModel = 'inverse';
+      panner.refDistance = 1;
+      panner.maxDistance = 10000;
+      panner.rolloffFactor = 1;
+
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(parseFloat(freq.value), audioCtx.currentTime);
+
+      panner.positionX.setValueAtTime(parseFloat(posX.value), audioCtx.currentTime);
+      panner.positionY.setValueAtTime(parseFloat(posY.value), audioCtx.currentTime);
+      panner.positionZ.setValueAtTime(parseFloat(posZ.value), audioCtx.currentTime);
+
+      osc.connect(panner);
+      panner.connect(analyser);
+      analyser.connect(audioCtx.destination);
+      osc.start();
+    }
+
+    btnToggle.addEventListener('click', () => {
+      if (!isPlaying) {
+        if (!audioCtx) initAudio();
+        else if (audioCtx.state === 'suspended') audioCtx.resume();
+        isPlaying = true;
+        btnToggle.textContent = 'Stop 3D Audio Stream';
+        btnToggle.classList.add('stop');
+      } else {
+        if (audioCtx) audioCtx.suspend();
+        isPlaying = false;
+        btnToggle.textContent = 'Start 3D Audio Stream';
+        btnToggle.classList.remove('stop');
+      }
+    });
+
+    btnOrbit.addEventListener('click', () => {
+      isOrbiting = !isOrbiting;
+      btnOrbit.textContent = isOrbiting ? 'Pause Orbit Rotation' : 'Resume Orbit Rotation';
+    });
+
+    freq.addEventListener('input', (e) => {
+      document.getElementById('lblFreq').textContent = `Oscillator Frequency: ${e.target.value} Hz`;
+      if (osc && audioCtx) osc.frequency.setValueAtTime(parseFloat(e.target.value), audioCtx.currentTime);
+    });
+
+    function draw() {
+      requestAnimationFrame(draw);
+      ctx.fillStyle = '#0a0d12';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      if (isPlaying && isOrbiting && panner && audioCtx) {
+        const spd = parseFloat(orbitSpeed.value) * 0.03;
+        angle += spd;
+        const r = 3.0;
+        const x = Math.cos(angle) * r;
+        const z = Math.sin(angle) * r;
+        panner.positionX.setValueAtTime(x, audioCtx.currentTime);
+        panner.positionZ.setValueAtTime(z, audioCtx.currentTime);
+        posX.value = x.toFixed(1);
+        posZ.value = z.toFixed(1);
+        document.getElementById('lblAzimuth').textContent = `Azimuth (X-Position): ${x.toFixed(1)}m`;
+        document.getElementById('lblDistance').textContent = `Distance (Z-Position): ${z.toFixed(1)}m`;
+      }
+
+      // Draw radar soundstage
+      const cx = canvas.width / 2;
+      const cy = canvas.height / 2;
+      ctx.strokeStyle = '#30363d';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 60, 0, Math.PI * 2);
+      ctx.arc(cx, cy, 30, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Listener (center)
+      ctx.fillStyle = '#58a6ff';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Sound source
+      const curX = parseFloat(posX.value) * 18;
+      const curZ = parseFloat(posZ.value) * 18;
+      ctx.fillStyle = '#2ea043';
+      ctx.beginPath();
+      ctx.arc(cx + curX, cy + curZ, 8, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    canvas.width = 600;
+    canvas.height = 200;
+    draw();
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>3D Spatial HRTF Ambisonics Synthesizer</h1>
+      <p class="desc">Interactive 3D Ambisonics Soundstage Generator & Binaural Panner (Pure Client-Side Web Audio API)</p>
+    </header>
+
+    <div class="card">
+      <div class="control-group">
+        <div>
+          <label id="lblAzimuth">Azimuth (X-Position): 0.0m</label>
+          <input type="range" id="posX" min="-5" max="5" step="0.1" value="0">
+        </div>
+        <div>
+          <label id="lblElevation">Elevation (Y-Position): 0.0m</label>
+          <input type="range" id="posY" min="-5" max="5" step="0.1" value="0">
+        </div>
+        <div>
+          <label id="lblDistance">Distance (Z-Position): 2.0m</label>
+          <input type="range" id="posZ" min="-5" max="5" step="0.1" value="2">
+        </div>
+      </div>
+      <div class="control-group">
+        <div>
+          <label id="lblFreq">Oscillator Frequency: 440 Hz</label>
+          <input type="range" id="freq" min="50" max="1200" step="5" value="440">
+        </div>
+        <div>
+          <label id="lblOrbit">Auto-Orbit Speed: 1.0x</label>
+          <input type="range" id="orbitSpeed" min="0" max="5" step="0.1" value="1.0">
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px; margin-top: 10px;">
+        <button class="btn" id="btnToggle">Start 3D Audio Stream</button>
+        <button class="btn" id="btnOrbit">Toggle Orbit Rotation</button>
+      </div>
+      <canvas id="scopeCanvas"></canvas>
+    </div>
+    <a href="../index.html" class="nav-link">← Back to SA Labs Central Dashboard</a>
+  </div>
+
+  
+</body>
+</html>
