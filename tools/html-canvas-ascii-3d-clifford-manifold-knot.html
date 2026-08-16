@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D 클리포드 다양체 매듭 ASCII 렌더러 | SA Labs</title>
+    <meta name="description" content="순수 브라우저 Canvas 기반 4차원 클리포드 토러스 매듭(Clifford Torus Manifold Knot) 실시간 ASCII 투영 인터랙티브 시뮬레이터입니다.">
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "3D 클리포드 다양체 매듭 ASCII 렌더러",
+      "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-clifford-manifold-knot.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "description": "클라이언트 사이드 Canvas 기반 4D 클리포드 토러스 매듭 실시간 3D ASCII 아트 투영기",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <style>
+        :root { --bg: #0d1117; --panel: #161b22; --border: #30363d; --text: #c9d1d9; --accent: #79c0ff; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--text); font-family: monospace; padding: 20px; text-align: center; }
+        .container { max-width: 880px; margin: 0 auto; }
+        header { margin-bottom: 20px; }
+        header h1 { color: #fff; font-size: 1.6rem; margin-bottom: 6px; }
+        header p { color: #8b949e; font-size: 0.9rem; }
+        #asciiCanvas { background: #000; border: 1px solid var(--border); border-radius: 8px; width: 100%; max-width: 760px; height: 420px; font-family: monospace; }
+        .controls { display: flex; justify-content: center; gap: 15px; margin-top: 15px; flex-wrap: wrap; }
+        .ctrl { background: var(--panel); border: 1px solid var(--border); padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; }
+        .ctrl label { display: block; margin-bottom: 4px; color: #8b949e; }
+        input[type=range] { width: 120px; accent-color: var(--accent); }
+    </style>
+<script>
+
+        const canvas = document.getElementById('asciiCanvas');
+        const ctx = canvas.getContext('2d');
+        const speedSlider = document.getElementById('speedSlider');
+        const densitySlider = document.getElementById('densitySlider');
+        const ratioSlider = document.getElementById('ratioSlider');
+
+        const asciiChars = " .,:;i1tfLCG08@";
+        let angleX = 0, angleY = 0, angleZW = 0;
+
+        speedSlider.oninput = () => document.getElementById('speedVal').textContent = speedSlider.value + 'x';
+        densitySlider.oninput = () => document.getElementById('densityVal').textContent = densitySlider.value;
+        ratioSlider.oninput = () => document.getElementById('ratioVal').textContent = ratioSlider.value;
+
+        function render() {
+            ctx.fillStyle = '#05070a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const speed = parseFloat(speedSlider.value);
+            const numPoints = parseInt(densitySlider.value);
+            const p = parseFloat(ratioSlider.value);
+
+            angleX += 0.015 * speed;
+            angleY += 0.02 * speed;
+            angleZW += 0.01 * speed;
+
+            ctx.fillStyle = '#58a6ff';
+            ctx.font = '11px monospace';
+
+            const uStep = (Math.PI * 2) / Math.sqrt(numPoints);
+            const vStep = (Math.PI * 2) / Math.sqrt(numPoints);
+
+            for (let u = 0; u < Math.PI * 2; u += uStep) {
+                for (let v = 0; v < Math.PI * 2; v += vStep) {
+                    // 4D Clifford Torus coordinates (x, y, z, w)
+                    const r = 1.0;
+                    const x4 = r * Math.cos(u * p);
+                    const y4 = r * Math.sin(u * p);
+                    const z4 = r * Math.cos(v + angleZW);
+                    const w4 = r * Math.sin(v + angleZW);
+
+                    // Stereographic projection 4D -> 3D
+                    const d4 = 2.2 - w4;
+                    const x3 = x4 / d4;
+                    const y3 = y4 / d4;
+                    const z3 = z4 / d4;
+
+                    // 3D rotation
+                    const cosX = Math.cos(angleX), sinX = Math.sin(angleX);
+                    const cosY = Math.cos(angleY), sinY = Math.sin(angleY);
+
+                    const yRot = y3 * cosX - z3 * sinX;
+                    const zRot = y3 * sinX + z3 * cosX;
+                    const xRot = x3 * cosY + zRot * sinY;
+                    const finalZ = -x3 * sinY + zRot * cosY;
+
+                    // 3D -> 2D Perspective Screen Projection
+                    const dist = 3.5 + finalZ;
+                    const screenX = canvas.width / 2 + (xRot / dist) * 520;
+                    const screenY = canvas.height / 2 + (yRot / dist) * 520;
+
+                    const charIdx = Math.floor(Math.max(0, Math.min(1, (finalZ + 1.2) / 2.4)) * (asciiChars.length - 1));
+                    const char = asciiChars[charIdx];
+
+                    ctx.fillText(char, screenX, screenY);
+                }
+            }
+
+            requestAnimationFrame(render);
+        }
+
+        render();
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌀 3D Clifford Manifold Knot ASCII Renderer</h1>
+            <p>4D 클리포드 다양체(Clifford Torus Knot) 실시간 3차원 투영 및 고밀도 ASCII 렌더링</p>
+        </header>
+
+        <canvas id="asciiCanvas" width="760" height="420"></canvas>
+
+        <div class="controls">
+            <div class="ctrl">
+                <label>Rotation Speed: <span id="speedVal">1.0x</span></label>
+                <input type="range" id="speedSlider" min="0.1" max="3.0" step="0.1" value="1.0">
+            </div>
+            <div class="ctrl">
+                <label>Manifold Density: <span id="densityVal">1200</span></label>
+                <input type="range" id="densitySlider" min="400" max="2400" step="100" value="1200">
+            </div>
+            <div class="ctrl">
+                <label>4D Projection Ratio: <span id="ratioVal">1.5</span></label>
+                <input type="range" id="ratioSlider" min="0.5" max="3.0" step="0.1" value="1.5">
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>

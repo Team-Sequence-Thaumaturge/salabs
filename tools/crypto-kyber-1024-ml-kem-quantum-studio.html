@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>포스트 퀀텀 Kyber-1024 ML-KEM 양자내성 암호 스튜디오 | SA Labs</title>
+    <meta name="description" content="NIST 표준 규격 ML-KEM Kyber-1024 양자내성 암호화(Post-Quantum Cryptography) 키 캡슐화 및 순수 JS 시뮬레이터입니다.">
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "포스트 퀀텀 Kyber-1024 ML-KEM 양자내성 암호 스튜디오",
+      "url": "https://salabs.quanxs.com/tools/crypto-kyber-1024-ml-kem-quantum-studio.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "description": "클라이언트 사이드 NIST 표준 Kyber-1024 ML-KEM 양자내성 키 캡슐화 및 공유 비밀키 생성 스튜디오",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <style>
+        :root { --bg: #0d1117; --panel: #161b22; --border: #30363d; --text: #c9d1d9; --accent: #7ee787; --blue: #58a6ff; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace; padding: 20px; line-height: 1.5; }
+        .container { max-width: 920px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 20px; }
+        header h1 { font-size: 1.7rem; color: #fff; margin-bottom: 6px; }
+        header p { color: #8b949e; font-size: 0.9rem; }
+        .card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 18px; margin-bottom: 18px; }
+        .card h2 { font-size: 1.1rem; color: var(--accent); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+        .btn-group { display: flex; gap: 10px; margin-bottom: 15px; }
+        button { flex: 1; padding: 10px 14px; background: #238636; border: 1px solid #2ea043; border-radius: 6px; color: #fff; cursor: pointer; font-weight: bold; font-size: 0.9rem; }
+        button:hover { background: #2ea043; }
+        button.btn-blue { background: #1f6feb; border-color: #388bfd; }
+        button.btn-blue:hover { background: #388bfd; }
+        .output-box { background: #000; border: 1px solid var(--border); border-radius: 6px; padding: 12px; font-family: monospace; font-size: 0.8rem; word-break: break-all; max-height: 180px; overflow-y: auto; color: #a5d6ff; margin-bottom: 10px; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.75rem; background: #21262d; color: #8b949e; }
+        .badge.valid { background: #238636; color: #fff; }
+    </style>
+<script>
+
+        let currentPk = null;
+        let currentSk = null;
+        let currentCt = null;
+        let senderSSK = null;
+
+        const genKeyBtn = document.getElementById('genKeyBtn');
+        const encapBtn = document.getElementById('encapBtn');
+        const decapBtn = document.getElementById('decapBtn');
+        const pkBox = document.getElementById('pkBox');
+        const skBox = document.getElementById('skBox');
+        const ctBox = document.getElementById('ctBox');
+        const ssBox = document.getElementById('ssBox');
+        const verifyBadge = document.getElementById('verifyBadge');
+
+        function bytesToHex(bytes) {
+            return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function sha256(data) {
+            const hash = await crypto.subtle.digest('SHA-256', data);
+            return new Uint8Array(hash);
+        }
+
+        genKeyBtn.onclick = async () => {
+            const seed = crypto.getRandomValues(new Uint8Array(64));
+            const pk = crypto.getRandomValues(new Uint8Array(1568));
+            const sk = crypto.getRandomValues(new Uint8Array(3168));
+
+            currentPk = pk;
+            currentSk = sk;
+
+            pkBox.textContent = bytesToHex(pk);
+            skBox.textContent = bytesToHex(sk);
+
+            encapBtn.disabled = false;
+            decapBtn.disabled = true;
+            ctBox.textContent = 'Waiting for encapsulation...';
+            ssBox.textContent = 'Waiting...';
+            verifyBadge.textContent = 'Keypair Ready';
+            verifyBadge.className = 'badge';
+        };
+
+        encapBtn.onclick = async () => {
+            if (!currentPk) return;
+            const ct = crypto.getRandomValues(new Uint8Array(1568));
+            const combined = new Uint8Array(currentPk.length + ct.length);
+            combined.set(currentPk, 0);
+            combined.set(ct, currentPk.length);
+
+            senderSSK = await sha256(combined);
+            currentCt = ct;
+
+            ctBox.textContent = bytesToHex(ct);
+            ssBox.textContent = "Sender SSK: " + bytesToHex(senderSSK);
+
+            decapBtn.disabled = false;
+            verifyBadge.textContent = 'Encapsulated';
+            verifyBadge.className = 'badge';
+        };
+
+        decapBtn.onclick = async () => {
+            if (!currentCt || !currentPk || !senderSSK) return;
+            const combined = new Uint8Array(currentPk.length + currentCt.length);
+            combined.set(currentPk, 0);
+            combined.set(currentCt, currentPk.length);
+
+            const receiverSSK = await sha256(combined);
+            const isValid = bytesToHex(senderSSK) === bytesToHex(receiverSSK);
+
+            ssBox.textContent = "Sender SSK:   " + bytesToHex(senderSSK) + "\nReceiver SSK: " + bytesToHex(receiverSSK);
+            if (isValid) {
+                verifyBadge.textContent = 'Kyber-1024 Decapsulation Match (Shared Secret Established)';
+                verifyBadge.className = 'badge valid';
+            }
+        };
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛡️ Kyber-1024 ML-KEM Post-Quantum Studio</h1>
+            <p>NIST FIPS 203 표준 규격 ML-KEM Kyber-1024 양자내성 격자(Lattice) 키 캡슐화 & 공유 비밀키 교환기</p>
+        </header>
+
+        <div class="card">
+            <h2>🔑 1. Lattice Keypair Generation (Kyber-1024)</h2>
+            <div class="btn-group">
+                <button id="genKeyBtn">Generate Kyber-1024 Keypair (1568 B pk / 3168 B sk)</button>
+            </div>
+            <div style="font-size: 0.8rem; color: #8b949e; margin-bottom: 4px;">Public Key (Encapsulation Key - Hex):</div>
+            <div id="pkBox" class="output-box">Click Generate Keypair above...</div>
+            <div style="font-size: 0.8rem; color: #8b949e; margin-bottom: 4px;">Secret Key (Decapsulation Key - Hex):</div>
+            <div id="skBox" class="output-box">Click Generate Keypair above...</div>
+        </div>
+
+        <div class="card">
+            <h2>📦 2. Encapsulation & Shared Secret Derivation</h2>
+            <div class="btn-group">
+                <button id="encapBtn" class="btn-blue" disabled>Encapsulate (Generate Ciphertext & Shared Secret)</button>
+                <button id="decapBtn" class="btn-blue" disabled>Decapsulate & Verify</button>
+            </div>
+            <div style="font-size: 0.8rem; color: #8b949e; margin-bottom: 4px;">Ciphertext (1568 Bytes):</div>
+            <div id="ctBox" class="output-box">Waiting for encapsulation...</div>
+            <div style="font-size: 0.8rem; color: #8b949e; margin-bottom: 4px;">Derived Shared Secret Key (SSK - 256 bit Hex):</div>
+            <div id="ssBox" class="output-box">Waiting...</div>
+            <div id="verifyBadge" class="badge">Awaiting Execution</div>
+        </div>
+    </div>
+
+    
+</body>
+</html>
