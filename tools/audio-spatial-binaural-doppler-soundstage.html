@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Binaural 3D Doppler Soundstage Studio | Quanxs SA Labs</title>
+  <meta name="description" content="100% Client-Side Web Audio API 3D Binaural Doppler Soundstage Synthesizer and Spatial Motion Studio.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Binaural 3D Doppler Soundstage Studio",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-binaural-doppler-soundstage.html",
+    "description": "Client-side Web Audio API Binaural 3D Doppler soundstage simulator.",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0f141c;
+      --card: #1b222d;
+      --border: #2d3748;
+      --text: #e2e8f0;
+      --heading: #63b3ed;
+      --accent: #3182ce;
+      --accent-hover: #2b6cb0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 20px;
+    }
+    .container { max-width: 850px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 20px; }
+    h1 { color: var(--heading); font-size: 1.7rem; margin-bottom: 6px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    canvas {
+      width: 100%;
+      height: 240px;
+      background: #090d14;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: block;
+      margin-bottom: 15px;
+    }
+    .controls { display: flex; gap: 10px; margin-bottom: 15px; }
+    .btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn.stop { background: #e53e3e; }
+    .btn.stop:hover { background: #c53030; }
+    .slider-group { margin-bottom: 12px; }
+    .slider-group label { display: block; font-size: 0.85rem; color: #a0aec0; margin-bottom: 4px; }
+    input[type="range"] { width: 100%; }
+    .ad-container { margin: 20px 0; text-align: center; }
+  </style>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Binaural 3D Doppler Soundstage Studio</h1>
+      <p style="color: #a0aec0; font-size: 0.9rem;">Interactive 3D Spatial Audio & Orbital Doppler Effect Simulator</p>
+    </header>
+
+    <div class="ad-container">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-9108438313531011"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      
+    </div>
+
+    <div class="card">
+      <canvas id="soundstage"></canvas>
+      <div class="controls">
+        <button class="btn" id="startBtn">▶ Start 3D Orbit Audio</button>
+        <button class="btn stop" id="stopBtn" disabled>⏹ Stop Audio</button>
+      </div>
+
+      <div class="slider-group">
+        <label>Orbit Speed (Speed of Source): <span id="speedVal">1.0</span>x</label>
+        <input type="range" id="speedSlider" min="0.1" max="3.0" step="0.1" value="1.0">
+      </div>
+      <div class="slider-group">
+        <label>Base Frequency: <span id="freqVal">440</span> Hz</label>
+        <input type="range" id="freqSlider" min="150" max="880" step="10" value="440">
+      </div>
+      <div class="slider-group">
+        <label>Orbit Radius: <span id="radiusVal">10</span> m</label>
+        <input type="range" id="radiusSlider" min="3" max="25" step="1" value="10">
+      </div>
+    </div>
+  </div>
+
+  
