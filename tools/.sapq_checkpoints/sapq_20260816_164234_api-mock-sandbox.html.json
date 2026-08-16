@@ -1,0 +1,16 @@
+{
+  "session_id": "sapq_20260816_164234",
+  "target_file": "api-mock-sandbox.html",
+  "last_file_hash": "d451ca81b15b318109a6393517c4f2721e9dea50495961660e435be4193c2b74",
+  "global_status": "PATCHING",
+  "resolved_issues": [],
+  "pending_issues": [
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: runMockRequest",
+      "status": "PENDING"
+    }
+  ],
+  "created_at": "2026-08-16T16:42:34.601419Z",
+  "updated_at": "2026-08-16T16:42:34.605921Z"
+}
