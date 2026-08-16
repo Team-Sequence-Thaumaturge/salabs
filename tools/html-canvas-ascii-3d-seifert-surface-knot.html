@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas ASCII 3D Seifert Surface & Knot Renderer - Quanxs SA Labs</title>
+    <meta name="description" content="Interactive 3D Seifert Surface and Knot geometric visualizer rendered directly in dynamic high-density ASCII art with quaternion rotations.">
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Canvas ASCII 3D Seifert Surface & Knot Renderer",
+      "description": "Parametric 3D Seifert surface and topological knot renderer using pure client-side mathematical algorithms and ASCII projection.",
+      "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-seifert-surface-knot.html",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All"
+    }
+    </script>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+            --border-color: #30363d;
+            --primary: #58a6ff;
+            --text-color: #c9d1d9;
+            --text-heading: #f0f6fc;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px;
+            line-height: 1.5;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 20px; }
+        h1 { color: var(--text-heading); font-size: 1.8rem; margin-bottom: 8px; }
+        p.subtitle { color: #8b949e; font-size: 0.95rem; }
+        .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        #asciiOutput {
+            background: #000;
+            color: #39d353;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 10px;
+            line-height: 10px;
+            letter-spacing: 2px;
+            white-space: pre;
+            padding: 15px;
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            user-select: none;
+            height: 400px;
+        }
+        .control-group { margin-bottom: 15px; }
+        label { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 5px; }
+        input[type="range"], select {
+            width: 100%;
+            background: #21262d;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            border-radius: 4px;
+            padding: 6px;
+        }
+        button {
+            background: var(--primary);
+            color: #0d1117;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+    </style>
+<script>
+
+        const asciiEl = document.getElementById('asciiOutput');
+        let rotA = 0, rotB = 0;
+        const width = 64, height = 36;
+        const charsets = { 
+            matrix: " .:-=+*#%@",
+            unicode: " ░▒▓█",
+            highres: " .'`^\",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$"
+        };
+
+        function render() {
+            const chars = charsets[document.getElementById('charsetSelect').value];
+            const type = document.getElementById('surfaceType').value;
+            const b = Array(width * height).fill(' ');
+            const z = Array(width * height).fill(-1000);
+
+            const uSteps = 90;
+            const vSteps = 24;
+
+            for (let i = 0; i < uSteps; i++) {
+                const u = (i / uSteps) * Math.PI * 2;
+                for (let j = 0; j < vSteps; j++) {
+                    const v = (j / vSteps - 0.5) * 1.5;
+
+                    let x0, y0, z0;
+                    if (type === 'trefoil') {
+                        const r = 2.0 + 0.8 * Math.cos(3 * u);
+                        x0 = r * Math.cos(2 * u) + v * Math.sin(3 * u / 2);
+                        y0 = r * Math.sin(2 * u) + v * Math.cos(3 * u / 2);
+                        z0 = -Math.sin(3 * u) + v * Math.cos(u);
+                    } else if (type === 'figureEight') {
+                        x0 = (2.0 + Math.cos(2 * u)) * Math.cos(3 * u) + v * Math.cos(u);
+                        y0 = (2.0 + Math.cos(2 * u)) * Math.sin(3 * u) + v * Math.sin(u);
+                        z0 = Math.sin(4 * u) + v * Math.sin(2 * u);
+                    } else {
+                        x0 = (2.5 + Math.cos(5 * u)) * Math.cos(2 * u) + v * Math.cos(u);
+                        y0 = (2.5 + Math.cos(5 * u)) * Math.sin(2 * u) + v * Math.sin(u);
+                        z0 = Math.sin(5 * u) + v * Math.cos(3 * u);
+                    }
+
+                    // 3D Rotation Matrix
+                    const cosA = Math.cos(rotA), sinA = Math.sin(rotA);
+                    const cosB = Math.cos(rotB), sinB = Math.sin(rotB);
+
+                    const x1 = x0;
+                    const y1 = y0 * cosA - z0 * sinA;
+                    const z1 = y0 * sinA + z0 * cosA;
+
+                    const x2 = x1 * cosB + z1 * sinB;
+                    const y2 = y1;
+                    const z2 = -x1 * sinB + z1 * cosB + 5.5;
+
+                    const ooz = 1 / z2;
+                    const xp = Math.floor(width / 2 + x2 * ooz * 38);
+                    const yp = Math.floor(height / 2 - y2 * ooz * 22);
+
+                    const luminance = Math.floor(((z1 + 2.5) / 5.0) * (chars.length - 1));
+                    const charIdx = Math.max(0, Math.min(chars.length - 1, luminance));
+
+                    if (xp >= 0 && xp < width && yp >= 0 && yp < height) {
+                        const idx = xp + yp * width;
+                        if (ooz > z[idx]) {
+                            z[idx] = ooz;
+                            b[idx] = chars[charIdx];
+                        }
+                    }
+                }
+            }
+
+            let str = '';
+            for (let k = 0; k < width * height; k++) {
+                str += b[k];
+                if ((k + 1) % width === 0) str += '\n';
+            }
+            asciiEl.textContent = str;
+
+            rotA += 0.02 * parseFloat(document.getElementById('speedX').value);
+            rotB += 0.03 * parseFloat(document.getElementById('speedY').value);
+            requestAnimationFrame(render);
+        }
+
+        document.getElementById('copyBtn').addEventListener('click', () => {
+            navigator.clipboard.writeText(asciiEl.textContent);
+            alert('ASCII snapshot copied to clipboard!');
+        });
+
+        render();
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌀 Canvas ASCII 3D Seifert Surface & Knot Renderer</h1>
+            <p class="subtitle">Parametric Topology & Trefoil Knot Seifert Ribbon ASCII Visualization</p>
+        </header>
+
+        <div class="grid">
+            <div class="card">
+                <pre id="asciiOutput"></pre>
+            </div>
+
+            <div class="card">
+                <h2>Topological Parameters</h2>
+                <div class="control-group">
+                    <label>Manifold Geometry:</label>
+                    <select id="surfaceType">
+                        <option value="trefoil">Trefoil Knot Seifert Ribbon</option>
+                        <option value="figureEight">Figure-Eight Knot Surface</option>
+                        <option value="cinquefoil">Cinquefoil (5,2) Knot Surface</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Rotation Speed X: <span id="speedXVal">1.0x</span></label>
+                    <input type="range" id="speedX" min="0" max="3" step="0.1" value="1.0">
+                </div>
+                <div class="control-group">
+                    <label>Rotation Speed Y: <span id="speedYVal">1.2x</span></label>
+                    <input type="range" id="speedY" min="0" max="3" step="0.1" value="1.2">
+                </div>
+                <div class="control-group">
+                    <label>ASCII Character Density:</label>
+                    <select id="charsetSelect">
+                        <option value="matrix">Matrix Density ( .:-=+*#%@)</option>
+                        <option value="unicode">Unicode Blocks ( ░▒▓█)</option>
+                        <option value="highres">High Precision ( .'`^",:;Il!i><~+_-?][}{1)(|\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$)</option>
+                    </select>
+                </div>
+                <button id="copyBtn">Copy ASCII Frame</button>
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>

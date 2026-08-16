@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML5 Canvas ASCII 3D Henneberg Minimal Surface Studio | Quanxs SA Labs</title>
+  <meta name="description" content="Interactive 3D Henneberg non-orientable minimal surface visualizer rendered in real-time ASCII characters via HTML5 Canvas and mathematical vector projection.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "HTML5 Canvas ASCII 3D Henneberg Minimal Surface Studio",
+    "description": "Real-time 3D Henneberg minimal surface geometric projection rendered in high-density ASCII art with interactive rotation and shading.",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-henneberg-surface.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --accent: #58a6ff;
+      --neon: #58a6ff;
+    }
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #fff;
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+    p {
+      color: #8b949e;
+      font-size: 0.95rem;
+      margin-top: 0;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-size: 0.85rem;
+      color: #8b949e;
+      margin-bottom: 6px;
+    }
+    input[type="range"], select {
+      background: #21262d;
+      color: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px;
+    }
+    pre#asciiCanvas {
+      background: #000;
+      color: var(--neon);
+      font-family: "Courier New", Courier, monospace;
+      font-size: 11px;
+      line-height: 11px;
+      letter-spacing: 2px;
+      padding: 15px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      user-select: none;
+      text-align: center;
+      margin: 0;
+    }
+  </style>
+<script>
+
+    const asciiPre = document.getElementById('asciiCanvas');
+    const speedSlider = document.getElementById('speedSlider');
+    const speedVal = document.getElementById('speedVal');
+    const scaleSlider = document.getElementById('scaleSlider');
+    const scaleVal = document.getElementById('scaleVal');
+    const charSet = document.getElementById('charSet');
+
+    speedSlider.oninput = () => speedVal.innerText = speedSlider.value;
+    scaleSlider.oninput = () => scaleVal.innerText = scaleSlider.value;
+
+    const CHAR_SETS = {
+      dense: " .:-=+*#%@",
+      cyber: " ░▒▓█",
+      matrix: " .:-10"
+    };
+
+    let angleX = 0, angleY = 0, angleZ = 0;
+    const WIDTH = 64;
+    const HEIGHT = 32;
+
+    function render() {
+      const chars = CHAR_SETS[charSet.value];
+      const buffer = new Array(WIDTH * HEIGHT).fill(' ');
+      const zBuffer = new Array(WIDTH * HEIGHT).fill(-Infinity);
+      const scale = parseFloat(scaleSlider.value);
+      const speed = parseFloat(speedSlider.value);
+
+      angleX += 0.02 * speed;
+      angleY += 0.03 * speed;
+      angleZ += 0.01 * speed;
+
+      for (let u = -1.0; u <= 1.0; u += 0.08) {
+        for (let v = -Math.PI / 2; v <= Math.PI / 2; v += 0.12) {
+          const sinhU = Math.sinh(u);
+          const coshU = Math.cosh(u);
+          const sinh2U = Math.sinh(2 * u);
+          const cosh2U = Math.cosh(2 * u);
+          const sinV = Math.sin(v);
+          const cosV = Math.cos(v);
+          const sin2V = Math.sin(2 * v);
+          const cos2V = Math.cos(2 * v);
+
+          let x = 2 * sinhU * cosV - (2 / 3) * Math.sinh(3 * u) * Math.cos(3 * v);
+          let y = 2 * sinhU * sinV + (2 / 3) * Math.sinh(3 * u) * Math.sin(3 * v);
+          let z = 2 * cosh2U * cos2V;
+
+          let y1 = y * Math.cos(angleX) - z * Math.sin(angleX);
+          let z1 = y * Math.sin(angleX) + z * Math.cos(angleX);
+          let x2 = x * Math.cos(angleY) + z1 * Math.sin(angleY);
+          let z2 = -x * Math.sin(angleY) + z1 * Math.cos(angleY);
+          let x3 = x2 * Math.cos(angleZ) - y1 * Math.sin(angleZ);
+          let y3 = x2 * Math.sin(angleZ) + y1 * Math.cos(angleZ);
+
+          const distance = 5.0;
+          const ooz = 1 / (z2 + distance);
+          const xp = Math.floor(WIDTH / 2 + x3 * scale * ooz * 1.8);
+          const yp = Math.floor(HEIGHT / 2 + y3 * scale * ooz);
+
+          if (xp >= 0 && xp < WIDTH && yp >= 0 && yp < HEIGHT) {
+            const idx = xp + yp * WIDTH;
+            if (ooz > zBuffer[idx]) {
+              zBuffer[idx] = ooz;
+              const luminance = Math.min(1.0, Math.max(0, (z2 + 2.0) / 4.0));
+              const charIdx = Math.floor(luminance * (chars.length - 1));
+              buffer[idx] = chars[charIdx];
+            }
+          }
+        }
+      }
+
+      let out = "";
+      for (let i = 0; i < HEIGHT; i++) {
+        out += buffer.slice(i * WIDTH, (i + 1) * WIDTH).join('') + "\n";
+      }
+      asciiPre.innerText = out;
+      requestAnimationFrame(render);
+    }
+
+    render();
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <h1>HTML5 Canvas ASCII 3D Henneberg Minimal Surface</h1>
+    <p>Mathematical non-orientable minimal surface projected dynamically into high-resolution ASCII raster.</p>
+
+    <div class="card">
+      <div class="controls-grid">
+        <div class="control-group">
+          <label>Rotation Speed (<span id="speedVal">1.0</span>x)</label>
+          <input type="range" id="speedSlider" min="0" max="3" step="0.1" value="1.0">
+        </div>
+        <div class="control-group">
+          <label>Surface Scale (<span id="scaleVal">28</span>)</label>
+          <input type="range" id="scaleSlider" min="15" max="45" value="28">
+        </div>
+        <div class="control-group">
+          <label>Shading Gradient</label>
+          <select id="charSet">
+            <option value="dense">Dense (@%#*+=-:. )</option>
+            <option value="cyber">Cyberpunk (█▓▒░ )</option>
+            <option value="matrix">Matrix (01.: )</option>
+          </select>
+        </div>
+      </div>
+
+      <pre id="asciiCanvas"></pre>
+    </div>
+  </div>
+
+  
+</body>
+</html>

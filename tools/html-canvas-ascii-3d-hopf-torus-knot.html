@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D ASCII Hopf Torus Knot Raymarcher | Quanxs SA Labs</title>
+    <meta name="description" content="Interactive 3D mathematical Hopf Torus Knot and 4D stereographic projection rendered via real-time ASCII raymarching engine.">
+    <meta name="keywords" content="ascii 3d, hopf torus, stereographic projection, 4d geometry, raymarching, quanxs sa labs">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "3D ASCII Hopf Torus Knot Raymarcher",
+      "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-hopf-torus-knot.html",
+      "description": "Interactive 3D mathematical Hopf Torus Knot and 4D stereographic projection rendered via real-time ASCII raymarching engine.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Quanxs SA Labs",
+        "url": "https://salabs.quanxs.com"
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --bg: #090d16;
+            --panel: #111827;
+            --accent: #10b981;
+            --accent-glow: rgba(16, 185, 129, 0.25);
+            --text: #e5e7eb;
+            --text-muted: #9ca3af;
+            --border: #1f2937;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'JetBrains Mono', 'Courier New', monospace; }
+        body { background: var(--bg); color: var(--text); padding: 24px; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 960px; width: 100%; display: flex; flex-direction: column; gap: 20px; }
+        header { border-bottom: 1px solid var(--border); padding-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+        h1 { font-size: 1.35rem; color: var(--accent); font-weight: 700; }
+        .viewport { background: #030712; border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        pre { font-size: 11px; line-height: 11px; letter-spacing: -0.5px; color: var(--accent); text-shadow: 0 0 8px var(--accent-glow); user-select: none; }
+        .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+        .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+        .panel h3 { font-size: 0.85rem; color: var(--accent); text-transform: uppercase; }
+        .slider-group { display: flex; flex-direction: column; gap: 6px; }
+        .slider-label { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); }
+        input[type="range"] { accent-color: var(--accent); width: 100%; cursor: pointer; }
+        .btn-group { display: flex; gap: 8px; }
+        button { background: var(--accent); color: #000; border: none; padding: 8px 14px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 0.8rem; }
+        button:hover { filter: brightness(1.2); }
+        .adsense-box { width: 100%; min-height: 90px; background: rgba(255,255,255,0.02); border: 1px dashed var(--border); border-radius: 8px; display: flex; justify-content: center; align-items: center; color: var(--text-muted); font-size: 0.75rem; }
+    </style>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div>
+            <h1>3D ASCII Hopf Torus Knot Raymarcher</h1>
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 4px;">4D-to-3D Stereographic Hopf Fibration Projection in Pure ASCII</p>
+        </div>
+        <div class="btn-group">
+            <button id="btnPause">Pause / Resume</button>
+            <button id="btnReset" style="background:#374151; color:#fff;">Reset Angles</button>
+        </div>
+    </header>
+
+    <div class="adsense-box">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-9108438313531011" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        
+    </div>
+
+    <div class="viewport">
+        <pre id="asciiScreen"></pre>
+    </div>
+
+    <div class="controls">
+        <div class="panel">
+            <h3>Geometric Topology</h3>
+            <div class="slider-group">
+                <div class="slider-label"><span>Hopf p-Folds</span><span id="lblP">3</span></div>
+                <input type="range" id="rngP" min="1" max="8" step="1" value="3">
+            </div>
+            <div class="slider-group">
+                <div class="slider-label"><span>Hopf q-Folds</span><span id="lblQ">2</span></div>
+                <input type="range" id="rngQ" min="1" max="8" step="1" value="2">
+            </div>
+            <div class="slider-group">
+                <div class="slider-label"><span>Tube Thickness</span><span id="lblR">0.28</span></div>
+                <input type="range" id="rngR" min="0.05" max="0.6" step="0.01" value="0.28">
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3>4D Projection & Speed</h3>
+            <div class="slider-group">
+                <div class="slider-label"><span>4D Hyper-Rotation (w)</span><span id="lblSpeedW">1.0x</span></div>
+                <input type="range" id="rngSpeedW" min="0" max="3.0" step="0.1" value="1.0">
+            </div>
+            <div class="slider-group">
+                <div class="slider-label"><span>3D Yaw/Pitch Speed</span><span id="lblSpeed3D">1.0x</span></div>
+                <input type="range" id="rngSpeed3D" min="0" max="3.0" step="0.1" value="1.0">
+            </div>
+            <div class="slider-group">
+                <div class="slider-label"><span>Density Resolution</span><span id="lblRes">Medium</span></div>
+                <input type="range" id="rngRes" min="40" max="80" step="5" value="65">
+            </div>
+        </div>
+    </div>
+</div>
+

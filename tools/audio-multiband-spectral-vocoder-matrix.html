@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Multiband Spectral Vocoder Matrix - Quanxs SA Labs</title>
+    <meta name="description" content="100% Client-Side Multiband Spectral Vocoder Matrix and Voice Formant Synthesizer using Web Audio API. Real-time carrier-modulator synthesis and formant filtering.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Audio Multiband Spectral Vocoder Matrix",
+      "url": "https://salabs.quanxs.com/tools/audio-multiband-spectral-vocoder-matrix.html",
+      "description": "Browser-based 16-band spectral vocoder matrix synthesizer with carrier and modulator frequency shaping.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Quanxs SA Labs"
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #151d30;
+            --accent-color: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            --text-main: #f3f4f6;
+            --text-sub: #9ca3af;
+            --border-color: #1f293d;
+            --success: #10b981;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px 16px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+            max-width: 800px;
+        }
+        .header h1 {
+            font-size: 2rem;
+            color: #60a5fa;
+            margin-bottom: 8px;
+        }
+        .header p {
+            color: var(--text-sub);
+            font-size: 0.95rem;
+        }
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+        }
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .control-group label {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+        }
+        input[type="range"], select {
+            width: 100%;
+            padding: 8px;
+            background: #0f172a;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            border-radius: 6px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: var(--accent-color);
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        button:hover {
+            background-color: #2563eb;
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+        button.stop {
+            background-color: #ef4444;
+        }
+        button.stop:hover {
+            background-color: #dc2626;
+        }
+        .visualizer-container {
+            width: 100%;
+            height: 240px;
+            background: #080c14;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 8px;
+            margin-top: 20px;
+        }
+        .band-slider {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-sub);
+        }
+        .band-slider input {
+            writing-mode: vertical-lr;
+            direction: rtl;
+            height: 100px;
+            margin: 8px 0;
+        }
+        .nav-home {
+            margin-top: 20px;
+            color: #60a5fa;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+    </style>
+<script>
+
+        let audioCtx, osc, lfo, lfoGain, analyser, isRunning = false;
+        let bandFilters = [];
+        const bandFreqs = [150, 250, 400, 600, 850, 1200, 1600, 2200, 2900, 3800, 4800, 6000, 7500, 9200, 11500, 14000];
+
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const carrierWave = document.getElementById('carrierWave');
+        const carrierFreq = document.getElementById('carrierFreq');
+        const carrierFreqVal = document.getElementById('carrierFreqVal');
+        const modulatorFreq = document.getElementById('modulatorFreq');
+        const modFreqVal = document.getElementById('modFreqVal');
+        const qFactor = document.getElementById('qFactor');
+        const qVal = document.getElementById('qVal');
+        const matrixGrid = document.getElementById('matrixGrid');
+        const canvas = document.getElementById('scopeCanvas');
+        const ctx = canvas.getContext('2d');
+
+        bandFreqs.forEach((freq, idx) => {
+            const div = document.createElement('div');
+            div.className = 'band-slider';
+            div.innerHTML = `
+                <span>${freq >= 1000 ? (freq/1000).toFixed(1)+'k' : freq}</span>
+                <input type="range" id="band_${idx}" min="0" max="2" value="1" step="0.05">
+                <span>Band ${idx+1}</span>
+            `;
+            matrixGrid.appendChild(div);
+        });
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        startBtn.addEventListener('click', () => {
+            if (isRunning) return;
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            
+            osc = audioCtx.createOscillator();
+            osc.type = carrierWave.value;
+            osc.frequency.setValueAtTime(parseFloat(carrierFreq.value), audioCtx.currentTime);
+
+            lfo = audioCtx.createOscillator();
+            lfo.type = 'sine';
+            lfo.frequency.setValueAtTime(parseFloat(modulatorFreq.value), audioCtx.currentTime);
+
+            lfoGain = audioCtx.createGain();
+            lfoGain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+            lfo.connect(lfoGain);
+
+            analyser = audioCtx.createAnalyser();
+            analyser.fftSize = 512;
+
+            const masterGain = audioCtx.createGain();
+            masterGain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+
+            bandFilters = [];
+            bandFreqs.forEach((freq, idx) => {
+                const bq = audioCtx.createBiquadFilter();
+                bq.type = 'bandpass';
+                bq.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                bq.Q.setValueAtTime(parseFloat(qFactor.value), audioCtx.currentTime);
+
+                const bandGain = audioCtx.createGain();
+                const sliderVal = parseFloat(document.getElementById(`band_${idx}`).value);
+                bandGain.gain.setValueAtTime(sliderVal, audioCtx.currentTime);
+
+                osc.connect(bq);
+                bq.connect(bandGain);
+                bandGain.connect(masterGain);
+                bandFilters.push({ filter: bq, gain: bandGain });
+
+                document.getElementById(`band_${idx}`).addEventListener('input', (e) => {
+                    if (isRunning) bandGain.gain.setValueAtTime(parseFloat(e.target.value), audioCtx.currentTime);
+                });
+            });
+
+            masterGain.connect(analyser);
+            analyser.connect(audioCtx.destination);
+
+            osc.start();
+            lfo.start();
+            isRunning = true;
+            startBtn.disabled = true;
+            stopBtn.disabled = false;
+            drawVisualizer();
+        });
+
+        stopBtn.addEventListener('click', () => {
+            if (!isRunning) return;
+            osc.stop();
+            lfo.stop();
+            audioCtx.close();
+            isRunning = false;
+            startBtn.disabled = false;
+            stopBtn.disabled = true;
+        });
+
+        carrierWave.addEventListener('change', (e) => {
+            if (isRunning && osc) osc.type = e.target.value;
+        });
+
+        carrierFreq.addEventListener('input', (e) => {
+            carrierFreqVal.textContent = e.target.value;
+            if (isRunning && osc) osc.frequency.setValueAtTime(parseFloat(e.target.value), audioCtx.currentTime);
+        });
+
+        modulatorFreq.addEventListener('input', (e) => {
+            modFreqVal.textContent = e.target.value;
+            if (isRunning && lfo) lfo.frequency.setValueAtTime(parseFloat(e.target.value), audioCtx.currentTime);
+        });
+
+        qFactor.addEventListener('input', (e) => {
+            qVal.textContent = e.target.value;
+            if (isRunning) {
+                bandFilters.forEach(b => b.filter.Q.setValueAtTime(parseFloat(e.target.value), audioCtx.currentTime));
+            }
+        });
+
+        function drawVisualizer() {
+            if (!isRunning) return;
+            requestAnimationFrame(drawVisualizer);
+
+            const bufferLength = analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            analyser.getByteFrequencyData(dataArray);
+
+            ctx.fillStyle = '#080c14';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const barWidth = (canvas.width / bufferLength) * 2.5;
+            let barHeight;
+            let x = 0;
+
+            for (let i = 0; i < bufferLength; i++) {
+                barHeight = (dataArray[i] / 255) * canvas.height;
+                const r = barHeight + 25 * (i / bufferLength);
+                const g = 100 * (i / bufferLength);
+                const b = 255;
+
+                ctx.fillStyle = `rgb(${r},${g},${b})`;
+                ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                x += barWidth + 1;
+            }
+        }
+    
+</script>
+</head>
+<body>
+    <div class="header">
+        <h1>Audio Multiband Spectral Vocoder Matrix</h1>
+        <p>16-Band Real-Time Carrier-Modulator Spectral Formant Matrix (100% Client-Side Pure Web Audio API)</p>
+    </div>
+    <div class="container">
+        <div class="btn-group">
+            <button id="startBtn">▶ Start Synthesizer</button>
+            <button id="stopBtn" class="stop" disabled>⏹ Stop</button>
+        </div>
+        <div class="controls">
+            <div class="control-group">
+                <label for="carrierWave">Carrier Waveform</label>
+                <select id="carrierWave">
+                    <option value="sawtooth">Sawtooth Wave</option>
+                    <option value="square">Square Wave</option>
+                    <option value="triangle">Triangle Wave</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="carrierFreq">Carrier Pitch (Hz): <span id="carrierFreqVal">110</span></label>
+                <input type="range" id="carrierFreq" min="40" max="440" value="110" step="1">
+            </div>
+            <div class="control-group">
+                <label for="modulatorFreq">Modulator LFO Speed (Hz): <span id="modFreqVal">2.5</span></label>
+                <input type="range" id="modulatorFreq" min="0.1" max="20" value="2.5" step="0.1">
+            </div>
+            <div class="control-group">
+                <label for="qFactor">Filter Resonance (Q): <span id="qVal">8.0</span></label>
+                <input type="range" id="qFactor" min="1" max="25" value="8.0" step="0.5">
+            </div>
+        </div>
+        <div class="visualizer-container">
+            <canvas id="scopeCanvas"></canvas>
+        </div>
+        <div class="matrix-grid" id="matrixGrid"></div>
+    </div>
+    <a href="../index.html" class="nav-home">← Back to SALabs Portal Dashboard</a>
+
+    
+</body>
+</html>

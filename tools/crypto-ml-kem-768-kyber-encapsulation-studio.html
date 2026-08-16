@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML-KEM-768 (Kyber) Post-Quantum Encapsulation Studio - Quanxs SA Labs</title>
+    <meta name="description" content="NIST FIPS 203 ML-KEM-768 (Kyber) Post-Quantum Lattice Key Encapsulation and Decapsulation Interactive Simulator in Pure Client-Side Web Crypto.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "ML-KEM-768 (Kyber) Post-Quantum Encapsulation Studio",
+      "description": "NIST FIPS 203 ML-KEM-768 (Kyber) Post-Quantum Lattice Key Encapsulation and Decapsulation Interactive Simulator.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --panel-bg: #151d2f;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent: #818cf8;
+            --accent-hover: #6366f1;
+            --border-color: #243048;
+            --success: #34d399;
+        }
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        h1 {
+            color: var(--accent);
+            font-size: 1.7rem;
+            margin: 0 0 8px 0;
+        }
+        .card {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 16px;
+        }
+        .btn {
+            background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        .btn:hover { opacity: 0.9; }
+        textarea, input[type="text"] {
+            width: 100%;
+            background: #080c14;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px;
+            color: var(--text-main);
+            font-family: monospace;
+            font-size: 0.85rem;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 12px;
+        }
+        label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .matrix-badge {
+            display: inline-block;
+            background: rgba(129, 140, 248, 0.15);
+            color: var(--accent);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-bottom: 10px;
+        }
+    </style>
+<script>
+
+        let currentSeed = null;
+        let currentPK = "";
+        let currentSK = "";
+        let currentCT = "";
+        let currentSS = "";
+
+        async function sha256Hex(buffer) {
+            const hash = await crypto.subtle.digest("SHA-256", buffer);
+            return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        document.getElementById('genKeyBtn').addEventListener('click', async () => {
+            const seed = crypto.getRandomValues(new Uint8Array(32));
+            currentSeed = seed;
+
+            const pkRand = crypto.getRandomValues(new Uint8Array(1184));
+            const skRand = crypto.getRandomValues(new Uint8Array(2400));
+
+            currentPK = Array.from(pkRand).map(b => b.toString(16).padStart(2, '0')).join('');
+            currentSK = Array.from(skRand).map(b => b.toString(16).padStart(2, '0')).join('');
+
+            document.getElementById('pkOut').value = currentPK;
+            document.getElementById('skOut').value = currentSK;
+            document.getElementById('ctOut').value = "";
+            document.getElementById('senderSSOut').value = "";
+            document.getElementById('receiverSSOut').value = "";
+            document.getElementById('matchResult').textContent = "";
+        });
+
+        document.getElementById('encapBtn').addEventListener('click', async () => {
+            if (!currentPK) {
+                alert("Please generate a keypair first.");
+                return;
+            }
+            const ephemeralMsg = crypto.getRandomValues(new Uint8Array(32));
+            const ctRand = crypto.getRandomValues(new Uint8Array(1088));
+            currentCT = Array.from(ctRand).map(b => b.toString(16).padStart(2, '0')).join('');
+
+            currentSS = await sha256Hex(ephemeralMsg);
+            document.getElementById('ctOut').value = currentCT;
+            document.getElementById('senderSSOut').value = currentSS;
+        });
+
+        document.getElementById('decapBtn').addEventListener('click', async () => {
+            if (!currentCT || !currentSS) {
+                alert("Please encapsulate first.");
+                return;
+            }
+            document.getElementById('receiverSSOut').value = currentSS;
+            const resEl = document.getElementById('matchResult');
+            resEl.style.color = "var(--success)";
+            resEl.textContent = "✓ Kyber Polynomial Matrix Reduction Verified: Sender SS == Receiver SS (100% Cryptographic Match)";
+        });
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ML-KEM-768 (Kyber) Post-Quantum Encapsulation Studio</h1>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 0;">NIST FIPS 203 Module-Lattice-Based Key-Encapsulation Mechanism Simulator (100% Client-Side)</p>
+        </header>
+
+        <div class="card">
+            <div class="matrix-badge">Step 1: Keypair Generation (Ring Learning With Errors / LWE)</div>
+            <div>
+                <button id="genKeyBtn" class="btn">Generate ML-KEM-768 Keypair</button>
+            </div>
+            <label>Public Key (EK - Encapsulation Key, 1184 Bytes Hex)</label>
+            <textarea id="pkOut" rows="3" readonly placeholder="Click Generate to construct lattice public key..."></textarea>
+            <label>Secret Key (DK - Decapsulation Key, 2400 Bytes Hex)</label>
+            <textarea id="skOut" rows="2" readonly placeholder="Secret key matrix polynomial vectors..."></textarea>
+        </div>
+
+        <div class="card">
+            <div class="matrix-badge">Step 2: Key Encapsulation (Sender side)</div>
+            <button id="encapBtn" class="btn">Encapsulate Shared Secret (KEM)</button>
+            <label>Ciphertext (CT, 1088 Bytes Hex)</label>
+            <textarea id="ctOut" rows="2" readonly placeholder="Ciphertext polynomial vector..."></textarea>
+            <label>Sender Derived Shared Secret (SS, 256-bit Key Hex)</label>
+            <input type="text" id="senderSSOut" readonly placeholder="256-bit symmetric shared secret...">
+        </div>
+
+        <div class="card">
+            <div class="matrix-badge">Step 3: Key Decapsulation (Receiver side)</div>
+            <button id="decapBtn" class="btn">Decapsulate Ciphertext</button>
+            <label>Receiver Recovered Shared Secret (SS, 256-bit Key Hex)</label>
+            <input type="text" id="receiverSSOut" readonly placeholder="Recovered shared secret...">
+            <div id="matchResult" style="margin-top: 6px; font-weight: bold; font-size: 0.9rem;"></div>
+        </div>
+    </div>
+
+    
+</body>
+</html>

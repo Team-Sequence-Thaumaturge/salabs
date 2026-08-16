@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Canvas ASCII 3D Hyperbolic Polytope - Quanxs SA Labs</title>
+    <meta name="description" content="100% Client-Side Pure JS Canvas ASCII 4D Hyperbolic Polytope & Tesseract Raymarcher Projection Studio.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Canvas ASCII 3D Hyperbolic Polytope",
+      "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-hyperbolic-polytope.html",
+      "description": "Interactive ASCII 4D Hyperbolic Polytope wireframe matrix renderer.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All"
+    }
+    </script>
+    <style>
+        :root {
+            --bg-color: #0b0e14;
+            --card-bg: #151922;
+            --accent: #39c5bb;
+            --accent-glow: rgba(57, 197, 187, 0.4);
+            --text-main: #d1d7e0;
+            --text-muted: #7d8590;
+            --border: #2b3240;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+            background: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 960px;
+            width: 100%;
+        }
+        header {
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 16px;
+        }
+        h1 {
+            color: var(--accent);
+            margin: 0 0 8px 0;
+            font-size: 1.8rem;
+        }
+        p { color: var(--text-muted); margin: 0; font-size: 0.95rem; }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+        }
+        .viewport {
+            background: #000;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            padding: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        pre {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 11px;
+            line-height: 11px;
+            color: #39c5bb;
+            margin: 0;
+            user-select: none;
+        }
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        label {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent);
+        }
+    </style>
+<script>
+
+        const screen = document.getElementById('asciiScreen');
+        const rotXInput = document.getElementById('rotSpeedX');
+        const rotYInput = document.getElementById('rotSpeedY');
+        const curvInput = document.getElementById('hyperbolicCurv');
+        const fovInput = document.getElementById('fovDistance');
+
+        rotXInput.oninput = () => document.getElementById('valX').innerText = rotXInput.value;
+        rotYInput.oninput = () => document.getElementById('valY').innerText = rotYInput.value;
+        curvInput.oninput = () => document.getElementById('valCurv').innerText = curvInput.value;
+        fovInput.oninput = () => document.getElementById('valFov').innerText = fovInput.value;
+
+        const COLS = 72;
+        const ROWS = 36;
+        const ASCII_RAMP = " .:-=+*#%@";
+
+        // Generate 16 vertices of a 4D Hypercube / Tesseract
+        const vertices = [];
+        for (let i = 0; i < 16; i++) {
+            vertices.push([
+                (i & 1 ? 1 : -1),
+                (i & 2 ? 1 : -1),
+                (i & 4 ? 1 : -1),
+                (i & 8 ? 1 : -1)
+            ]);
+        }
+
+        let angleXW = 0;
+        let angleYZ = 0;
+        let angleZW = 0;
+
+        function renderFrame() {
+            const speedX = parseFloat(rotXInput.value) * 0.02;
+            const speedY = parseFloat(rotYInput.value) * 0.02;
+            const curv = parseFloat(curvInput.value);
+            const dist4D = parseFloat(fovInput.value);
+
+            angleXW += speedX;
+            angleYZ += speedY;
+            angleZW += 0.01;
+
+            const buffer = Array(ROWS).fill(null).map(() => Array(COLS).fill(' '));
+            const zBuffer = Array(ROWS).fill(null).map(() => Array(COLS).fill(-Infinity));
+
+            // Rotate and project vertices
+            const projected3D = vertices.map(v => {
+                let [x, y, z, w] = v;
+
+                // XW rotation
+                let cosX = Math.cos(angleXW), sinX = Math.sin(angleXW);
+                let x1 = x * cosX - w * sinX;
+                let w1 = x * sinX + w * cosX;
+
+                // YZ rotation
+                let cosY = Math.cos(angleYZ), sinY = Math.sin(angleYZ);
+                let y1 = y * cosY - z * sinY;
+                let z1 = y * sinY + z * cosY;
+
+                // ZW rotation
+                let cosZ = Math.cos(angleZW), sinZ = Math.sin(angleZW);
+                let z2 = z1 * cosZ - w1 * sinZ;
+                let w2 = z1 * sinZ + w1 * cosZ;
+
+                // 4D to 3D Stereographic Hyperbolic Projection
+                let factor4D = 1.0 / (dist4D - w2);
+                let pX = x1 * factor4D * curv;
+                let pY = y1 * factor4D * curv;
+                let pZ = z2 * factor4D * curv;
+
+                return [pX, pY, pZ];
+            });
+
+            // Draw edges between vertices with Hamming distance 1
+            for (let i = 0; i < 16; i++) {
+                for (let j = i + 1; j < 16; j++) {
+                    let diff = i ^ j;
+                    if ((diff & (diff - 1)) === 0) {
+                        // Single bit difference = edge in 4D hypercube
+                        draw3DLine(projected3D[i], projected3D[j], buffer, zBuffer);
+                    }
+                }
+            }
+
+            screen.innerText = buffer.map(row => row.join('')).join('\n');
+            requestAnimationFrame(renderFrame);
+        }
+
+        function draw3DLine(p1, p2, buffer, zBuffer) {
+            const steps = 30;
+            for (let s = 0; s <= steps; s++) {
+                let t = s / steps;
+                let x = p1[0] * (1 - t) + p2[0] * t;
+                let y = p1[1] * (1 - t) + p2[1] * t;
+                let z = p1[2] * (1 - t) + p2[2] * t;
+
+                // 3D to 2D screen projection
+                let scrX = Math.floor((x / 2.5 + 0.5) * COLS);
+                let scrY = Math.floor((-y / 2.5 + 0.5) * ROWS);
+
+                if (scrX >= 0 && scrX < COLS && scrY >= 0 && scrY < ROWS) {
+                    if (z > zBuffer[scrY][scrX]) {
+                        zBuffer[scrY][scrX] = z;
+                        let charIdx = Math.min(ASCII_RAMP.length - 1, Math.max(0, Math.floor((z + 1.5) * 3)));
+                        buffer[scrY][scrX] = ASCII_RAMP[charIdx];
+                    }
+                }
+            }
+        }
+
+        renderFrame();
+    
+</script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ASCII 3D Hyperbolic Polytope Studio</h1>
+            <p>100% Client-Side Pure JS 4D Matrix Hypercube & Hyperbolic Polytope Projection Engine</p>
+        </header>
+
+        <div class="card">
+            <div class="viewport">
+                <pre id="asciiScreen"></pre>
+            </div>
+
+            <div class="controls-grid">
+                <div class="control-group">
+                    <label for="rotSpeedX">Rotation Speed XW: <span id="valX">1.0</span></label>
+                    <input type="range" id="rotSpeedX" min="0" max="3" value="1.0" step="0.1">
+                </div>
+                <div class="control-group">
+                    <label for="rotSpeedY">Rotation Speed YZ: <span id="valY">1.2</span></label>
+                    <input type="range" id="rotSpeedY" min="0" max="3" value="1.2" step="0.1">
+                </div>
+                <div class="control-group">
+                    <label for="hyperbolicCurv">Hyperbolic Curvature: <span id="valCurv">1.5</span></label>
+                    <input type="range" id="hyperbolicCurv" min="0.5" max="3.0" value="1.5" step="0.1">
+                </div>
+                <div class="control-group">
+                    <label for="fovDistance">4D Camera Distance: <span id="valFov">3.0</span></label>
+                    <input type="range" id="fovDistance" min="1.8" max="5.0" value="3.0" step="0.1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>

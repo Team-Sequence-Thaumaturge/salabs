@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Audio Formant & Spectral Vocoder Matrix Studio | Quanxs SA Labs</title>
+  <meta name="description" content="Real-time Web Audio Formant and Spectral Vocoder Matrix Synthesizer. Route microphone or multi-oscillator carrier signals through bandpass formant resonators in pure client-side JavaScript.">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Web Audio Formant & Spectral Vocoder Matrix Studio",
+    "description": "High-fidelity real-time formant filter and spectral vocoder matrix synthesizer running 100% in browser via Web Audio API.",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-spectral-vocoder-matrix.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --accent: #58a6ff;
+      --success: #238636;
+      --danger: #da3633;
+    }
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #fff;
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+    p {
+      color: #8b949e;
+      font-size: 0.95rem;
+      margin-top: 0;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-size: 0.85rem;
+      color: #8b949e;
+      margin-bottom: 6px;
+    }
+    input[type="range"], select, button {
+      background: #21262d;
+      color: #fff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px;
+      font-size: 0.9rem;
+    }
+    button {
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    button.btn-primary {
+      background: var(--success);
+      border-color: rgba(240,246,252,0.1);
+    }
+    button.btn-primary:hover {
+      background: #2ea043;
+    }
+    button.btn-danger {
+      background: var(--danger);
+    }
+    canvas {
+      width: 100%;
+      height: 180px;
+      background: #000;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      margin-top: 15px;
+    }
+    .matrix-display {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .matrix-bar {
+      flex: 1;
+      height: 60px;
+      background: #21262d;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+    .matrix-fill {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--accent);
+      transition: height 0.05s;
+    }
+  </style>
+<script>
+
+    let audioCtx = null;
+    let osc1 = null, osc2 = null, isPlaying = false;
+    let filters = [];
+    let analyser = null;
+    let animId = null;
+
+    const VOWELS = {
+      A: [800, 1200, 2500, 3500, 4500],
+      E: [400, 2000, 2600, 3600, 4600],
+      I: [280, 2250, 2900, 3700, 4700],
+      O: [500, 900, 2400, 3400, 4400],
+      U: [320, 800, 2200, 3300, 4300]
+    };
+
+    const toggleBtn = document.getElementById('toggleBtn');
+    const carrierType = document.getElementById('carrierType');
+    const vowelPreset = document.getElementById('vowelPreset');
+    const pitchSlider = document.getElementById('pitchSlider');
+    const pitchVal = document.getElementById('pitchVal');
+    const qSlider = document.getElementById('qSlider');
+    const qVal = document.getElementById('qVal');
+    const canvas = document.getElementById('visualizer');
+    const ctx = canvas.getContext('2d');
+
+    pitchSlider.oninput = () => {
+      pitchVal.innerText = pitchSlider.value;
+      if (osc1) osc1.frequency.setValueAtTime(parseFloat(pitchSlider.value), audioCtx.currentTime);
+      if (osc2) osc2.frequency.setValueAtTime(parseFloat(pitchSlider.value) * 1.005, audioCtx.currentTime);
+    };
+
+    qSlider.oninput = () => {
+      qVal.innerText = qSlider.value;
+      filters.forEach(f => f.Q.setValueAtTime(parseFloat(qSlider.value), audioCtx.currentTime));
+    };
+
+    vowelPreset.onchange = () => {
+      updateFormants();
+    };
+
+    function updateFormants() { 
+      if (!audioCtx) return;
+      const freqs = VOWELS[vowelPreset.value];
+      filters.forEach((f, i) => {
+        f.frequency.setTargetAtTime(freqs[i], audioCtx.currentTime, 0.05);
+      });
+    }
+
+    toggleBtn.onclick = async () => {
+      if (!isPlaying) {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') await audioCtx.resume();
+
+        const masterGain = audioCtx.createGain();
+        masterGain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 256;
+
+        osc1 = audioCtx.createOscillator();
+        osc2 = audioCtx.createOscillator();
+        osc1.type = carrierType.value === 'pulse' ? 'sawtooth' : carrierType.value;
+        osc2.type = 'sawtooth';
+        osc1.frequency.setValueAtTime(parseFloat(pitchSlider.value), audioCtx.currentTime);
+        osc2.frequency.setValueAtTime(parseFloat(pitchSlider.value) * 1.005, audioCtx.currentTime);
+
+        const freqs = VOWELS[vowelPreset.value];
+        filters = freqs.map(freq => {
+          const bq = audioCtx.createBiquadFilter();
+          bq.type = 'bandpass';
+          bq.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          bq.Q.setValueAtTime(parseFloat(qSlider.value), audioCtx.currentTime);
+          return bq;
+        });
+
+        const filterSum = audioCtx.createGain();
+        filterSum.gain.setValueAtTime(1.0, audioCtx.currentTime);
+
+        filters.forEach(f => {
+          osc1.connect(f);
+          osc2.connect(f);
+          f.connect(filterSum);
+        });
+
+        filterSum.connect(masterGain);
+        masterGain.connect(analyser);
+        analyser.connect(audioCtx.destination);
+
+        osc1.start();
+        osc2.start();
+
+        isPlaying = true;
+        toggleBtn.innerText = "Stop Vocoder Matrix";
+        toggleBtn.className = "btn-danger";
+        draw();
+      } else {
+        if (osc1) osc1.stop();
+        if (osc2) osc2.stop();
+        isPlaying = false;
+        toggleBtn.innerText = "Start Vocoder Matrix";
+        toggleBtn.className = "btn-primary";
+        cancelAnimationFrame(animId);
+      }
+    };
+
+    function draw() {
+      if (!isPlaying) return;
+      animId = requestAnimationFrame(draw);
+      const bufferLength = analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+      analyser.getByteFrequencyData(dataArray);
+
+      ctx.fillStyle = '#0d1117';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const barWidth = (canvas.width / bufferLength) * 2.5;
+      let x = 0;
+      for (let i = 0; i < bufferLength; i++) {
+        const barHeight = (dataArray[i] / 255) * canvas.height;
+        ctx.fillStyle = `hsl(${i * 4 + 200}, 80%, 50%)`;
+        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+        x += barWidth + 1;
+      }
+    }
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <h1>Web Audio Formant & Spectral Vocoder Matrix</h1>
+    <p>Real-time vocal resonance and multi-band spectral vocoder engine powered by Web Audio API.</p>
+
+    <div class="card">
+      <div class="controls-grid">
+        <div class="control-group">
+          <label>Carrier Source</label>
+          <select id="carrierType">
+            <option value="sawtooth">Sawtooth Wave</option>
+            <option value="square">Square Wave</option>
+            <option value="pulse">Dual Detuned Pulse</option>
+            <option value="noise">White Noise</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label>Formant Preset (Vowel)</label>
+          <select id="vowelPreset">
+            <option value="A">/a/ (Father)</option>
+            <option value="E">/e/ (Bed)</option>
+            <option value="I">/i/ (See)</option>
+            <option value="O">/o/ (Boat)</option>
+            <option value="U">/u/ (Boot)</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label>Carrier Pitch (<span id="pitchVal">130</span> Hz)</label>
+          <input type="range" id="pitchSlider" min="55" max="440" value="130">
+        </div>
+        <div class="control-group">
+          <label>Resonance Q (<span id="qVal">12</span>)</label>
+          <input type="range" id="qSlider" min="2" max="30" value="12">
+        </div>
+      </div>
+
+      <div style="display:flex; gap:10px;">
+        <button id="toggleBtn" class="btn-primary" style="flex:1;">Start Vocoder Matrix</button>
+      </div>
+
+      <canvas id="visualizer"></canvas>
+
+      <label style="margin-top:15px; display:block;">Vocoder Spectral Bands (F1 - F5)</label>
+      <div class="matrix-display" id="matrixBars">
+        <div class="matrix-bar"><div class="matrix-fill" style="height:20%"></div></div>
+        <div class="matrix-bar"><div class="matrix-fill" style="height:45%"></div></div>
+        <div class="matrix-bar"><div class="matrix-fill" style="height:70%"></div></div>
+        <div class="matrix-bar"><div class="matrix-fill" style="height:35%"></div></div>
+        <div class="matrix-bar"><div class="matrix-fill" style="height:15%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  
+</body>
+</html>

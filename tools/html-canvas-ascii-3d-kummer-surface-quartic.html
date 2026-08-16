@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D ASCII Kummer Surface Quartic Engine - Geometric Singularity Visualizer | Quanxs SA Labs</title>
+  <meta name="description" content="Interactive 3D ASCII projection and raymarcher engine for Kummer Surface Quartic Manifold with 16 nodal singularities. 100% Client-Side Pure JS Math Engine.">
+  <meta name="keywords" content="kummer surface, 3d ascii, algebraic geometry, quartic surface, math visualizer, raymarcher, nodal singularity">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "3D ASCII Kummer Surface Quartic Engine",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-kummer-surface-quartic.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript support",
+    "description": "3D ASCII raymarcher and real-time quaternion rotation simulator for the algebraic Kummer Quartic Surface.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Quanxs SA Labs"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #090d13;
+      --card: #121820;
+      --border: #263140;
+      --accent: #58a6ff;
+      --text: #c9d1d9;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: monospace; }
+    body { background: var(--bg); color: var(--text); padding: 16px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+    header { width: 100%; max-width: 1000px; text-align: center; margin-bottom: 16px; }
+    h1 { color: var(--accent); font-size: 1.6rem; margin-bottom: 6px; }
+    .workspace { width: 100%; max-width: 1000px; display: grid; grid-template-columns: 1fr 300px; gap: 16px; }
+    @media(max-width: 850px) { .workspace { grid-template-columns: 1fr; } }
+    .ascii-screen { background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 10px; display: flex; justify-content: center; align-items: center; min-height: 480px; overflow: hidden; }
+    pre#asciiOutput { font-size: 9px; line-height: 9px; letter-spacing: 0.5px; color: #58a6ff; text-shadow: 0 0 4px rgba(88,166,255,0.4); user-select: none; }
+    .panel { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+    .panel h2 { font-size: 1.1rem; color: #f0f6fc; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+    .control { display: flex; flex-direction: column; gap: 4px; }
+    label { font-size: 0.8rem; color: #8b949e; }
+    input[type=range], select, button { width: 100%; padding: 6px 10px; background: #090d13; border: 1px solid var(--border); color: #c9d1d9; border-radius: 4px; }
+    button { background: var(--accent); color: #090d13; font-weight: bold; cursor: border: none; margin-top: 6px; }
+    button:hover { filter: brightness(1.1); }
+    .info-box { font-size: 0.75rem; color: #8b949e; line-height: 1.4; background: rgba(0,0,0,0.3); padding: 8px; border-radius: 4px; }
+    footer { margin-top: 24px; font-size: 0.75rem; color: #484f58; text-align: center; }
+  </style>
+<script>
+
+    const asciiOutput = document.getElementById('asciiOutput');
+    const aRange = document.getElementById('aRange');
+    const aVal = document.getElementById('aVal');
+    const speedRange = document.getElementById('speedRange');
+    const speedVal = document.getElementById('speedVal');
+    const zoomRange = document.getElementById('zoomRange');
+    const zoomVal = document.getElementById('zoomVal');
+    const paletteSelect = document.getElementById('paletteSelect');
+    const themeSelect = document.getElementById('themeSelect');
+    const pauseBtn = document.getElementById('pauseBtn');
+
+    const palettes = {
+      classic: " .:-=+*#%@",
+      dense: " ··::++xxXX$$",
+      matrix: " 0101#@%&",
+      minimal: " .·*#"
+    };
+
+    let rotX = 0, rotY = 0, rotZ = 0;
+    let isPaused = false;
+    const W = 80, H = 45;
+
+    aRange.addEventListener('input', () => aVal.textContent = parseFloat(aRange.value).toFixed(2));
+    speedRange.addEventListener('input', () => speedVal.textContent = parseFloat(speedRange.value).toFixed(1) + 'x');
+    zoomRange.addEventListener('input', () => zoomVal.textContent = parseFloat(zoomRange.value).toFixed(1));
+    themeSelect.addEventListener('change', () => asciiOutput.style.color = themeSelect.value);
+    pauseBtn.addEventListener('click', () => {
+      isPaused = !isPaused;
+      pauseBtn.textContent = isPaused ? 'Resume Rotation' : 'Pause Rotation';
+    });
+
+    function kummerSDF(x, y, z, a2) {
+      const w = 1.0;
+      const x2 = x*x, y2 = y*y, z2 = z*z, w2 = w*w;
+      const s = (3*a2 - w2) / (3 - a2);
+      const left = Math.pow(x2 + y2 + z2 - w2, 2);
+      const right = s * (Math.pow(x - z, 2) - 2*y2) * (Math.pow(x + z, 2) - 2*y2);
+      return Math.abs(left - right) - 0.25;
+    }
+
+    function render() {
+      if (!isPaused) {
+        const spd = parseFloat(speedRange.value) * 0.02;
+        rotX += spd * 0.7;
+        rotY += spd * 1.0;
+        rotZ += spd * 0.5;
+      }
+
+      const a2 = parseFloat(aRange.value);
+      const zoom = parseFloat(zoomRange.value);
+      const pal = palettes[paletteSelect.value];
+      const palLen = pal.length;
+
+      let output = "";
+
+      const cx = Math.cos(rotX), sx = Math.sin(rotX);
+      const cy = Math.cos(rotY), sy = Math.sin(rotY);
+      const cz = Math.cos(rotZ), sz = Math.sin(rotZ);
+
+      for (let j = 0; j < H; j++) {
+        let line = "";
+        const v = (j - H / 2) / (H / 2) * 1.5 / zoom;
+        for (let i = 0; i < W; i++) {
+          const u = (i - W / 2) / (W / 2) * 2.5 / zoom;
+
+          let hit = false;
+          let char = " ";
+          for (let step = 0; step < 24; step++) {
+            const depth = 2.0 - step * 0.15;
+            let rx = u * depth;
+            let ry = v * depth;
+            let rz = depth - 1.0;
+
+            let x1 = rx * cy + rz * sy;
+            let z1 = -rx * sy + rz * cy;
+            let y2 = ry * cx - z1 * sx;
+            let z2 = ry * sx + z1 * cx;
+            let x3 = x1 * cz - y2 * sz;
+            let y3 = x1 * sz + y2 * cz;
+
+            const dist = kummerSDF(x3, y3, z2, a2);
+            if (dist < 0.1) {
+              const shadeIdx = Math.min(palLen - 1, Math.floor((step / 24) * palLen));
+              char = pal[palLen - 1 - shadeIdx];
+              hit = true;
+              break;
+            }
+          }
+          line += char;
+        }
+        output += line + "\n";
+      }
+
+      asciiOutput.textContent = output;
+      requestAnimationFrame(render);
+    }
+
+    render();
+  
+</script>
+</head>
+<body>
+  <header>
+    <h1>3D ASCII Kummer Surface Quartic Engine</h1>
+    <p style="color:#8b949e; font-size:0.9rem;">Quaternion Raymarching & 16-Singularity Real-Time Manifold Renderer</p>
+  </header>
+
+  <div class="workspace">
+    <div class="ascii-screen">
+      <pre id="asciiOutput"></pre>
+    </div>
+
+    <div class="panel">
+      <h2>Surface Controls</h2>
+      <div class="control">
+        <label>Structure Constant $a^2$: <span id="aVal">1.50</span></label>
+        <input type="range" id="aRange" min="1.05" max="2.8" step="0.05" value="1.5">
+      </div>
+      <div class="control">
+        <label>Rotation Speed: <span id="speedVal">1.0x</span></label>
+        <input type="range" id="speedRange" min="0" max="3" step="0.1" value="1.0">
+      </div>
+      <div class="control">
+        <label>FOV / Zoom: <span id="zoomVal">2.2</span></label>
+        <input type="range" id="zoomRange" min="1.0" max="4.0" step="0.1" value="2.2">
+      </div>
+      <div class="control">
+        <label>Glyph Density Palette</label>
+        <select id="paletteSelect">
+          <option value="classic">Classic ( .:-=+*#%@)</option>
+          <option value="dense">Dense ( ··::++xxXX$$)</option>
+          <option value="matrix">Matrix Code ( 0101#@%&)</option>
+          <option value="minimal">Minimal ( .·*#)</option>
+        </select>
+      </div>
+      <div class="control">
+        <label>Color Theme</label>
+        <select id="themeSelect">
+          <option value="#58a6ff">Cyan Blue</option>
+          <option value="#3fb950">Emerald Matrix</option>
+          <option value="#d29922">Amber Gold</option>
+          <option value="#f85149">Ruby Crimson</option>
+          <option value="#bc8cff">Amethyst Purple</option>
+        </select>
+      </div>
+      <button id="pauseBtn">Pause Rotation</button>
+      <div class="info-box">
+        <strong>Equation:</strong> $(x^2+y^2+z^2-w^2)^2 = \frac{3a^2-w^2}{3-a^2}( (x-z)^2 - 2y^2 )( (x+z)^2 - 2y^2 )$<br>
+        Contains exactly 16 nodal double points (Kummer singularities).
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>100% Client-Side Pure JS Math Kernel | Zero External Assets | Quanxs SA Labs</p>
+  </footer>
+
+  
+</body>
+</html>
