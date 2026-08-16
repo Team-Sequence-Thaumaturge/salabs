@@ -4,7 +4,7 @@ from modules.sapq.sapq_arbiter import SAPQArbiter
 
 class TestSAPQArbiter(unittest.TestCase):
     def test_generate_interrogation_dossier(self):
-        arbiter = SAPQArbiter()
+        arbiter = SAPQArbiter(session_id='test_generate')
         baseline_issues = [
             {"role_signature": "READS_STATE:True|WRITES_DOM:True", "original_functions": ["applyTheme"]}
         ]
@@ -22,12 +22,15 @@ class TestSAPQArbiter(unittest.TestCase):
         self.assertEqual(dossier["topological_holes"][1]["issue_type"], "TORSION_CROSSING")
 
     def test_oscillation_circuit_breaker(self):
-        arbiter = SAPQArbiter(max_retries=3)
+        import os
+        if os.path.exists('.sapq_logs/arbiter_test_circuit.json'):
+            os.remove('.sapq_logs/arbiter_test_circuit.json')
+        arbiter = SAPQArbiter(max_retries=3, session_id='test_circuit')
 
-        arbiter.log_patch_attempt(score=50, issues_count=2)
         arbiter.log_patch_attempt(score=50, issues_count=2)
         self.assertFalse(arbiter.check_oscillation())
-
+        arbiter.log_patch_attempt(score=50, issues_count=2)
+        self.assertFalse(arbiter.check_oscillation())
         arbiter.log_patch_attempt(score=50, issues_count=2)
         self.assertTrue(arbiter.check_oscillation())
 

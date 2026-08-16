@@ -133,6 +133,15 @@ class ASTParser:
                     usages.add(node.id)
                 elif isinstance(node, pyast.arg): # function arguments
                     usages.add(node.arg)
+                elif isinstance(node, pyast.FunctionDef):
+                    usages.add(node.name)
+                elif isinstance(node, pyast.ClassDef):
+                    usages.add(node.name)
+                elif isinstance(node, pyast.Call):
+                    if isinstance(node.func, pyast.Name):
+                        usages.add(node.func.id)
+                    elif isinstance(node.func, pyast.Attribute):
+                        usages.add(node.func.attr)
                 return
 
             if not node or not hasattr(node, 'type'): return
