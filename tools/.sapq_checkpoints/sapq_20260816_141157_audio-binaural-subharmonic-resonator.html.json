@@ -1,0 +1,56 @@
+{
+  "session_id": "sapq_20260816_141157",
+  "target_file": "audio-binaural-subharmonic-resonator.html",
+  "last_file_hash": "679842b19ff2c40293de097c7fbacd19055732a32c0cf79a84fa78f6c5233755",
+  "global_status": "PATCHING",
+  "resolved_issues": [],
+  "pending_issues": [
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: canvas",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: x",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: i",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: delta",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: f0",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: drawVisualizer",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: merger",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: applyPreset",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: scopeCanvas",
+      "status": "PENDING"
+    }
+  ],
+  "created_at": "2026-08-16T14:11:57.805183Z",
+  "updated_at": "2026-08-16T14:11:57.825680Z"
+}
