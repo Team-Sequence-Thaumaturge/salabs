@@ -1,0 +1,66 @@
+{
+  "session_id": "sapq_20260816_124139",
+  "target_file": "audio-binaural-hrtf-spatial-room-simulator.html",
+  "last_file_hash": "855bf7c78cfef55c03372b2d0f360eaa9180fae70bed2ceca74cc7e75fbe8abd",
+  "global_status": "PATCHING",
+  "resolved_issues": [],
+  "pending_issues": [
+    {
+      "issue_type": "TORSION_CROSSING",
+      "target_node": "Symbol: canvas",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: reverbInput",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: toggleAudioBtn",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: azimuthVal",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: posX",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: distanceVal",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: posZ",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: elevationVal",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: posY",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: reverbVal",
+      "status": "PENDING"
+    },
+    {
+      "issue_type": "GHOST_NODE",
+      "target_node": "Symbol: reverbWet",
+      "status": "PENDING"
+    }
+  ],
+  "created_at": "2026-08-16T12:41:39.627274Z",
+  "updated_at": "2026-08-16T12:41:39.643773Z"
+}
