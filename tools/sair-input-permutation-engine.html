@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAIR 자연어 입력 경우의 수 분석 엔진 | SA Labs</title>
+  <meta name="description" content="SAIR 자연어 텍스트박스 입력 경우의 수 순열 분석 및 7대 수학 공리 매핑 정적 클라이언트 엔진">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SAIR Input Permutation Engine",
+    "url": "https://salabs.quanxs.com/tools/sair-input-permutation-engine.html",
+    "description": "Client-side permutation analyzer and 7 mathematical axioms mapper for SA-IR text input specifications.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All"
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card: #161b22;
+      --border: #30363d;
+      --primary: #58a6ff;
+      --accent: #2ea043;
+      --text: #c9d1d9;
+      --text-muted: #8b949e;
+      --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      padding: 20px;
+    }
+    .container { max-width: 1000px; margin: 0 auto; }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 { font-size: 1.4rem; color: #f0f6fc; }
+    .badge {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 12px;
+      background: #238636;
+      color: #fff;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    label { display: block; font-weight: 600; margin-bottom: 8px; color: #f0f6fc; }
+    textarea {
+      width: 100%;
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: #c9d1d9;
+      padding: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+    textarea:focus { border-color: var(--primary); outline: none; }
+    .btn-group { display: flex; gap: 10px; margin-bottom: 16px; }
+    button {
+      background: #21262d;
+      border: 1px solid var(--border);
+      color: #c9d1d9;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.2s;
+    }
+    button:hover { background: #30363d; border-color: #8b949e; }
+    button.primary { background: #238636; border-color: #2ea043; color: #fff; }
+    button.primary:hover { background: #2ea043; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+    .output-box {
+      background: #090d13;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      max-height: 320px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+  </style>
+<script>
+
+    const AXIOMS = [
+      { id: 1, name: 'Axiom 1: Equations (등식)', keywords: ['같다', '일치', '동일', '=', '등식', '동치', '수렴'] },
+      { id: 2, name: 'Axiom 2: Inequalities (부등식)', keywords: ['이상', '이하', '초과', '미만', '>', '<', '범위', '한계', '제약'] },
+      { id: 3, name: 'Axiom 3: Calculus (미적분/변화율)', keywords: ['변화율', '미분', '적분', '기울기', '속도', '가속도', '경사', '감쇠율'] },
+      { id: 4, name: 'Axiom 4: Exponentials (지수/로그)', keywords: ['지수', '로그', '감쇠', '폭증', '스케일링', '반감기', '승수'] },
+      { id: 5, name: 'Axiom 5: Set Theory (집합/불리언)', keywords: ['포함', '교집합', '합집합', '불리언', 'OR', 'AND', 'NOT', '여집합'] },
+      { id: 6, name: 'Axiom 6: Complex Numbers (복소수/위상)', keywords: ['복소수', '위상', '진폭', '허수', '주파수', '페이저', '회전'] },
+      { id: 7, name: 'Axiom 7: Quaternions (쿼터니언/4원수)', keywords: ['쿼터니언', '4원수', '3D회전', '오일러', '공간궤적', '텐서'] }
+    ];
+
+    function analyzePermutations() {
+      const text = document.getElementById('inputText').value.trim();
+      if (!text) {
+        alert('입력값을 입력해주세요.');
+        return;
+      }
+      const tokens = text.split(/\s+|[,.!?]+/).filter(Boolean);
+      const ngrams = [];
+      for (let i = 0; i < tokens.length - 1; i++) {
+        ngrams.push(tokens[i] + ' ' + tokens[i+1]);
+      }
+
+      const detectedAxioms = [];
+      AXIOMS.forEach(ax => {
+        const matches = ax.keywords.filter(k => text.includes(k));
+        if (matches.length > 0) {
+          detectedAxioms.push({
+            axiom: ax.name,
+            matchedKeywords: matches,
+            confidenceScore: Math.min(1.0, 0.4 + matches.length * 0.3).toFixed(2)
+          });
+        }
+      });
+
+      const resultTokens = {
+        totalTokens: tokens.length,
+        tokens: tokens,
+        bigramsCount: ngrams.length,
+        bigramsSample: ngrams.slice(0, 10),
+        permutationsEst: Math.min(1000000, factorial(tokens.length))
+      };
+
+      const resultAxioms = {
+        mappedAxiomsCount: detectedAxioms.length,
+        axioms: detectedAxioms,
+        sairRepresentation: detectedAxioms.map(a => '[' + a.axiom.split(':')[0] + '] -> Confidence: ' + a.confidenceScore).join('\n')
+      };
+
+      document.getElementById('tokenOutput').textContent = JSON.stringify(resultTokens, null, 2);
+      document.getElementById('axiomOutput').textContent = JSON.stringify(resultAxioms, null, 2);
+    }
+
+    function factorial(n) {
+      if (n <= 1) return 1;
+      let res = 1; 
+      for (let i = 2; i <= Math.min(n, 12); i++) res *= i;
+      return res;
+    }
+
+    function loadPreset() {
+      document.getElementById('inputText').value = '상태변수 A가 0.85 이상일 때 감쇠율을 2차 함수로 지수 축소하고 쿼터니언 회전을 적용하라.';
+      analyzePermutations();
+    }
+
+    function copyOutput() {
+      const t = document.getElementById('tokenOutput').textContent;
+      const a = document.getElementById('axiomOutput').textContent;
+      navigator.clipboard.writeText(JSON.stringify({ tokens: JSON.parse(t || '{}'), axioms: JSON.parse(a || '{}') }, null, 2))
+        .then(() => alert('클립보드에 복사되었습니다.'));
+    }
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>SAIR 자연어 입력 경우의 수 순열 분석기</h1>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">SA Labs Client-Side Natural Language to Mathematical Axioms Analyzer</p>
+      </div>
+      <span class="badge">100% Client-Side Pure JS</span>
+    </header>
+
+    <div class="card">
+      <label for="inputText">분석할 자연어 / 텍스트박스 입력값</label>
+      <textarea id="inputText" rows="3" placeholder="예: 상태변수 A가 0.85 이상일 때 감쇠율을 2차 함수로 지수 축소하고 쿼터니언 회전을 적용하라."></textarea>
+      
+      <div class="btn-group">
+        <button class="primary" onclick="analyzePermutations()">경우의 수 및 7대 공리 매핑 실행</button>
+        <button onclick="loadPreset()">예시 입력 로드</button>
+        <button onclick="copyOutput()">JSON 복사</button>
+      </div>
+
+      <div class="grid">
+        <div>
+          <label>토큰화 및 N-Gram 순열 분석</label>
+          <div id="tokenOutput" class="output-box">결과가 여기에 표시됩니다.</div>
+        </div>
+        <div>
+          <label>7대 수학 공리 매핑 및 SA-IR 중간 표현식</label>
+          <div id="axiomOutput" class="output-box">공리 매핑 결과가 여기에 표시됩니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</body>
+</html>

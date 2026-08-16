@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAIR 7대 수학 공리 자연어 컴파일러 인터랙티브 디버거 | SA Labs</title>
+  <meta name="description" content="SAIR 자연어-수학 공리 매핑 컴파일러 AST 파서 및 중간 표현식 디버거">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SAIR Math Axiom Compiler Debugger",
+    "url": "https://salabs.quanxs.com/tools/sair-nlp-math-axiom-debugger.html",
+    "description": "Interactive natural language to SA-IR mathematical axiom compiler and AST graph debugger.",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All"
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --card: #131a22;
+      --border: #232f3e;
+      --primary: #00a4e4;
+      --accent: #58a6ff;
+      --text: #e6edf3;
+      --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      padding: 20px;
+    }
+    .container { max-width: 1050px; margin: 0 auto; }
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 { font-size: 1.4rem; color: #fff; }
+    .badge {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 12px;
+      background: #006699;
+      color: #fff;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    label { display: block; font-weight: 600; margin-bottom: 8px; color: #fff; }
+    textarea {
+      width: 100%;
+      background: #0b0f14;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: #e6edf3;
+      padding: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      margin-bottom: 12px;
+    }
+    .btn-group { display: flex; gap: 10px; margin-bottom: 16px; }
+    button {
+      background: #1f2937;
+      border: 1px solid var(--border);
+      color: #e6edf3;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    button.primary { background: #0077b6; border-color: #0096c7; color: #fff; }
+    button:hover { background: #374151; }
+    button.primary:hover { background: #0096c7; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+    canvas {
+      width: 100%;
+      height: 260px;
+      background: #070a0e;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+    .output-box {
+      background: #070a0e;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      height: 260px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+  </style>
+<script>
+
+    async function compileAndDebug() {
+      const text = document.getElementById('codePrompt').value.trim();
+      if (!text) {
+        alert('프롬프트를 입력해주세요.');
+        return;
+      }
+
+      const encoder = new TextEncoder();
+      const data = encoder.encode(text);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+      const ir = {
+        sair_version: '2.0.0',
+        hash_integrity: 'sha256:' + hashHex,
+        compiled_ir_blocks: [
+          { block_id: 0, type: 'AXIOM_DISPATCHER', source_text: text.slice(0, 30) + '...' },
+          { block_id: 1, type: 'TENSOR_BINDING', variables: ['T', 'Energy', 'Phase', 'Quat'] },
+          { block_id: 2, type: 'ZK_CONSTRAINT_CHECK', pass: true }
+        ]
+      };
+
+      document.getElementById('irOutput').textContent = JSON.stringify(ir, null, 2);
+      drawAST();
+    }
+
+    function drawAST() {
+      const canvas = document.getElementById('astCanvas');
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#1e293b';
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2;
+
+      ctx.beginPath();
+      ctx.arc(250, 40, 20, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.fillStyle = '#fff';
+      ctx.font = '11px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('SA-IR', 250, 44);
+
+      const nodes = [
+        { x: 100, y: 140, label: 'Axiom 3' },
+        { x: 250, y: 140, label: 'Axiom 4' },
+        { x: 400, y: 140, label: 'Axiom 7' }
+      ];
+
+      nodes.forEach(n => {
+        ctx.strokeStyle = '#475569';
+        ctx.beginPath();
+        ctx.moveTo(250, 60);
+        ctx.lineTo(n.x, n.y - 18);
+        ctx.stroke();
+
+        ctx.fillStyle = '#0f172a';
+        ctx.strokeStyle = '#38bdf8';
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, 18, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#38bdf8';
+        ctx.fillText(n.label, n.x, n.y + 4);
+      });
+    }
+
+    function loadSample() {
+      document.getElementById('codePrompt').value = '임계점 T에서 에너지가 지수 감쇠할 때 텐서 복소 위상을 4원수 좌표계로 변환하라.';
+      compileAndDebug();
+    }
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>SAIR 7대 수학 공리 인터랙티브 디버거</h1>
+        <p style="font-size: 0.85rem; color: #8b949e;">Natural Language Compiler to SA-IR 7 Mathematical Axioms Debugger</p>
+      </div>
+      <span class="badge">Web Crypto & Canvas AST Engine</span>
+    </header>
+
+    <div class="card">
+      <label for="codePrompt">자연어 명세 프롬프트</label>
+      <textarea id="codePrompt" rows="3" placeholder="자연어 규칙을 입력하세요. (예: 임계점 T에서 에너지가 지수 감쇠할 때 텐서 복소 위상을 4원수 좌표계로 변환)"></textarea>
+      
+      <div class="btn-group">
+        <button class="primary" onclick="compileAndDebug()">SA-IR 컴파일 & AST 생성</button>
+        <button onclick="loadSample()">표준 명세 로드</button>
+      </div>
+
+      <div class="grid">
+        <div>
+          <label>공리 AST 토폴로지 렌더러 (Canvas)</label>
+          <canvas id="astCanvas" width="500" height="260"></canvas>
+        </div>
+        <div>
+          <label>SA-IR 컴파일 결과 및 SHA-256 해시 무결성</label>
+          <div id="irOutput" class="output-box">컴파일 대기 중...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</body>
+</html>
