@@ -1,11 +1,8 @@
-import sys, os
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair")
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair\SAPQ")
 import json
 import unittest
 import tempfile
 import os
-from sapq_dom_relay import SAPQDOMRelay
+from modules.sapq.sapq_dom_relay import SAPQDOMRelay
 
 class TestSAPQDOMRelay(unittest.TestCase):
     def setUp(self):

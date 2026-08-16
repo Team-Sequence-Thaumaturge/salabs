@@ -1,9 +1,6 @@
-import sys, os
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair")
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair\SAPQ")
 import unittest
 import os
-from sapq_ast_parser import ASTParser
+from modules.sapq.sapq_ast_parser import ASTParser
 
 class TestSAPQPythonAST(unittest.TestCase):
     def test_python_ast_extraction(self):

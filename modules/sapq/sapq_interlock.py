@@ -73,3 +73,7 @@ if __name__ == "__main__":
     }
     # Test tripping (will exit 1)
     # interlock.evaluate_audit_report(mock_report)
+
+
+# Backward Compatibility Alias
+SAPQInterlockEngine = SAPQInterlock

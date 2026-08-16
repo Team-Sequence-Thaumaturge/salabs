@@ -1,6 +1,10 @@
 import json
-from .sapq_dom_relay import SAPQDOMRelay
-from .sapq_sandbox_proxy import SAPQSandboxProxy
+try:
+    from .sapq_dom_relay import SAPQDOMRelay
+    from .sapq_sandbox_proxy import SAPQSandboxProxy
+except (ImportError, ValueError):
+    from sapq_dom_relay import SAPQDOMRelay
+    from sapq_sandbox_proxy import SAPQSandboxProxy
 
 class SAPQAgentProtocol:
     """

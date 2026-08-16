@@ -1,8 +1,5 @@
-import sys, os
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair")
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair\SAPQ")
 import unittest
-from sapq_cascade_graph import SAPQCascadeGraph
+from modules.sapq.sapq_cascade_graph import SAPQCascadeGraph
 
 class TestSAPQCascadeGraph(unittest.TestCase):
     def test_blind_interceptor(self):

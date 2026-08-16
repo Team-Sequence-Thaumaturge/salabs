@@ -1,19 +1,10 @@
-import sys, os, time, shutil, unittest, json
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair")
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair\SAPQ")
-
-from sapq_arbiter import SAPQArbiter
+import unittest
+import json
+from modules.sapq.sapq_arbiter import SAPQArbiter
 
 class TestSAPQArbiter(unittest.TestCase):
-    def setUp(self):
-        if os.path.exists(".sapq_logs"):
-            try:
-                shutil.rmtree(".sapq_logs")
-            except Exception:
-                pass
-
     def test_generate_interrogation_dossier(self):
-        arbiter = SAPQArbiter(session_id=f"test_dossier_{int(time.time()*1000)}")
+        arbiter = SAPQArbiter()
         baseline_issues = [
             {"role_signature": "READS_STATE:True|WRITES_DOM:True", "original_functions": ["applyTheme"]}
         ]
@@ -31,7 +22,7 @@ class TestSAPQArbiter(unittest.TestCase):
         self.assertEqual(dossier["topological_holes"][1]["issue_type"], "TORSION_CROSSING")
 
     def test_oscillation_circuit_breaker(self):
-        arbiter = SAPQArbiter(max_retries=3, session_id=f"test_osc_{int(time.time()*1000)}")
+        arbiter = SAPQArbiter(max_retries=3)
 
         arbiter.log_patch_attempt(score=50, issues_count=2)
         arbiter.log_patch_attempt(score=50, issues_count=2)

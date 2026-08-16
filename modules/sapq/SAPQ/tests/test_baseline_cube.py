@@ -1,9 +1,6 @@
-import sys, os
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair")
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair\SAPQ")
 import unittest
 import os
-from sapq_baseline_cube import SAPQBaselineCube
+from modules.sapq.sapq_baseline_cube import SAPQBaselineCube
 
 class TestSAPQBaselineCube(unittest.TestCase):
     def test_semantic_role_preservation(self):

@@ -1,12 +1,9 @@
-import sys, os
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair")
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair\SAPQ")
 import unittest
 import os
 import tempfile
 
-from sapq_python_parser import PythonASTParser
-from sapq_spec_matcher import SpecMatcher
+from modules.sapq.sapq_python_parser import PythonASTParser
+from modules.sapq.sapq_spec_matcher import SpecMatcher
 
 class TestSAPQPhase17(unittest.TestCase):
 

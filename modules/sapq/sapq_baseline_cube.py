@@ -1,6 +1,9 @@
 import os
 import hashlib
-from .sapq_cascade_graph import SAPQCascadeGraph
+try:
+    from .sapq_cascade_graph import SAPQCascadeGraph
+except (ImportError, ValueError):
+    from sapq_cascade_graph import SAPQCascadeGraph
 
 class SAPQBaselineCube:
     """

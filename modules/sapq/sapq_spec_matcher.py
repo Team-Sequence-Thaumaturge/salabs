@@ -118,3 +118,7 @@ if __name__ == "__main__":
     matcher = SpecMatcher(target, specs)
     issues = matcher.audit_specs()
     print(json.dumps(issues, indent=2))
+
+
+# Backward Compatibility Alias for SAPQ 4.0
+SpecSemanticMatcher = SpecMatcher

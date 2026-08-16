@@ -1,13 +1,10 @@
-import sys, os
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair")
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair\SAPQ")
 import json
 import unittest
 import tempfile
 import os
 import urllib.request
-from sapq_sandbox_proxy import SAPQSandboxProxy
-from sapq_agent_protocol import SAPQAgentProtocol
+from modules.sapq.sapq_sandbox_proxy import SAPQSandboxProxy
+from modules.sapq.sapq_agent_protocol import SAPQAgentProtocol
 
 class TestProxyAndProtocol(unittest.TestCase):
     def setUp(self):
