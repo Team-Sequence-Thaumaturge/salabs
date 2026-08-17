@@ -1,31 +1,31 @@
-import sys, os
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair")
-sys.path.insert(0, r"C:\stella.os\Quanxs\sair\SAPQ")
 import unittest
 import os
-from sapq_ast_parser import ASTParser
+import sys
+
+from sapq_python_parser import PythonASTParser
 
 class TestSAPQPythonAST(unittest.TestCase):
-    def test_python_ast_extraction(self):
+    def test_python_ast_subprocess_detection(self):
         code = """
-def test_func(arg1):
-    local_var = 42
-    return arg1 + local_var + global_var
+import subprocess
+import os
+
+def test_func():
+    subprocess.run(["echo", "hello"])
+    os.system("echo popup")
 """
-        with open("dummy_test.py", "w") as f:
+        test_file = "dummy_test_subprocess.py"
+        with open(test_file, "w", encoding="utf-8") as f:
             f.write(code)
 
-        parser = ASTParser("dummy_test.py")
-        usages = parser.get_all_identifier_usages()
-
-        # arg1, local_var, global_var should be in usages.
-        # test_func is the declaration so it shouldn't be counted strictly,
-        # but the AST adapter might grab all. We just care that it finds usages.
-        self.assertTrue("arg1" in usages)
-        self.assertTrue("local_var" in usages)
-        self.assertTrue("global_var" in usages)
-
-        os.remove("dummy_test.py")
+        try:
+            parser = PythonASTParser(test_file)
+            issues = parser.audit_subprocess_calls()
+            self.assertTrue(len(issues) >= 2, "Should find at least 2 subprocess/os.system issues")
+        finally:
+            if os.path.exists(test_file):
+                os.remove(test_file)
 
 if __name__ == '__main__':
+    unittest.main()
     unittest.main()
