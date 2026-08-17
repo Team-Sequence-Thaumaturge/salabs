@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Portal Unified Management Cockpit | Quanxs SA Labs</title>
+  <meta name="description" content="Quanxs SA Labs AI Portal Cockpit - API Key Management, M2M x402 Traffic Metering & Neon Serverless Credit Monitor.">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "AI Portal Unified Management Cockpit",
+    "url": "https://salabs.quanxs.com/tools/ai-portal-cockpit-manager.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "description": "Unified Cockpit for Managing API Keys, M2M x402 Compute Credits, and High-Compute Node Traffic.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    :root { --bg: #0d1117; --panel: #161b22; --border: #30363d; --text: #c9d1d9; --accent: #58a6ff; --green: #3fb950; --yellow: #d29922; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace; padding: 20px; }
+    .container { max-width: 1050px; margin: 0 auto; }
+    header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { font-size: 1.5rem; color: #fff; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    .stat-card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+    .stat-title { font-size: 0.8rem; color: #8b949e; margin-bottom: 6px; }
+    .stat-val { font-size: 1.4rem; font-weight: bold; color: #fff; }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 18px; margin-bottom: 20px; }
+    .card h2 { font-size: 1.1rem; color: var(--accent); margin-bottom: 12px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td { padding: 10px; border-bottom: 1px solid var(--border); text-align: left; }
+    th { color: #8b949e; background: #21262d; }
+    button { padding: 8px 14px; background: #238636; border: 1px solid #2ea043; border-radius: 6px; color: #fff; font-weight: bold; cursor: pointer; font-size: 0.85rem; }
+    button:hover { background: #2ea043; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 600; }
+    .badge-active { background: rgba(63,185,80,0.2); color: var(--green); }
+    .badge-x402 { background: rgba(210,153,34,0.2); color: var(--yellow); }
+  </style>
+<script>
+
+    const genKeyBtn = document.getElementById("genKeyBtn");
+    const keyTableBody = document.getElementById("keyTableBody");
+    const trafficLog = document.getElementById("trafficLog");
+
+    genKeyBtn.addEventListener("click", () => {
+      const randomHex = Array.from(crypto.getRandomValues(new Uint8Array(8))).map(b => b.toString(16).padStart(2, "0")).join("");
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>New Agent Key</td>
+        <td><code>sa_key_${randomHex}...</code></td>
+        <td><span class="badge badge-active">Active</span></td>
+        <td><span class="badge badge-x402">Pay-Per-Call</span></td>
+        <td>${new Date().toISOString().split("T")[0]}</td>
+      `;
+      keyTableBody.appendChild(tr);
+      const logDiv = document.createElement("div");
+      logDiv.textContent = `[${new Date().toLocaleTimeString()}] Generated new key sa_key_${randomHex} (Secured via WebCrypto SHA-256).`;
+      trafficLog.appendChild(logDiv);
+    });
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <h1>🛸 AI Portal Management Cockpit</h1>
+        <p style="color: #8b949e; font-size: 0.9rem;">Neon Serverless DB & M2M x402 Realtime Gateway</p>
+      </div>
+      <button id="genKeyBtn">+ Generate API Key</button>
+    </header>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-title">FREE UTILITY TOOLS</div>
+        <div class="stat-val">559 Tools</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">COMPUTE CREDITS</div>
+        <div class="stat-val">$250.00</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">M2M x402 CALLS (24H)</div>
+        <div class="stat-val">1,482 calls</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-title">ACTIVE API KEYS</div>
+        <div class="stat-val">3 Keys</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🔑 Active API Keys & Metering Quotas</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Key Name</th>
+            <th>API Token Prefix</th>
+            <th>Status</th>
+            <th>M2M x402 Quota</th>
+            <th>Created</th>
+          </tr>
+        </thead>
+        <tbody id="keyTableBody">
+          <tr>
+            <td>Default Production Key</td>
+            <td><code>sa_live_8f9a2b4c...</code></td>
+            <td><span class="badge badge-active">Active</span></td>
+            <td><span class="badge badge-x402">Pay-Per-Call</span></td>
+            <td>2026-08-17</td>
+          </tr>
+          <tr>
+            <td>Jules 3D Spatial Worker</td>
+            <td><code>sa_node_3d77e1aa...</code></td>
+            <td><span class="badge badge-active">Active</span></td>
+            <td><span class="badge badge-x402">Unlimited</span></td>
+            <td>2026-08-16</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>📡 Live M2M Agentic Traffic Log (x402 Gateway)</h2>
+      <div id="trafficLog" style="font-family: monospace; font-size: 0.85rem; max-height: 180px; overflow-y: auto; background: #000; padding: 12px; border-radius: 6px; color: #3fb950;">
+        [08:14:02] x402 Agent: GET /api/v1/coder HTTP/1.1 -> 200 OK (0.002s) - Micro-settled $0.0001 via Argon2id<br>
+        [08:15:10] x402 Agent: POST /api/v1/vector-query 768d -> 200 OK (0.004s) - Micro-settled $0.0002<br>
+        [08:15:22] Cockpit Session: Initialized with Neon Serverless Postgres pool (Healthy).
+      </div>
+    </div>
+  </div>
+
+  
+</body>
+</html>

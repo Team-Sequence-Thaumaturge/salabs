@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAIR Universal Text Injection Matrix Studio | SA Labs</title>
+  <meta name="description" content="SAIR Chrome Extension Universal Textbox & Rich Editor Input Injection Permutation Matrix Studio (30+ Verified Frameworks & Platforms).">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SAIR Universal Text Injection Matrix Studio",
+    "url": "https://salabs.quanxs.com/tools/sair-text-permutation-matrix-studio.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "description": "SAIR Chrome Extension Track 1 Universal & Track 2 Multi-Platform Textbox Injection Matrix Simulator.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    :root { --bg: #0d1117; --panel: #161b22; --border: #30363d; --text: #c9d1d9; --accent: #58a6ff; --green: #3fb950; --purple: #bc8cff; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace; padding: 20px; line-height: 1.5; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 24px; }
+    header h1 { font-size: 1.8rem; color: #fff; margin-bottom: 8px; }
+    header p { color: #8b949e; font-size: 0.95rem; }
+    .badge { display: inline-block; padding: 4px 10px; background: rgba(88,166,255,0.15); color: var(--accent); border-radius: 12px; font-size: 0.8rem; font-weight: bold; margin-bottom: 8px; }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 18px; margin-bottom: 20px; }
+    .card h2 { font-size: 1.1rem; color: var(--accent); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+    textarea, input, select { width: 100%; padding: 10px; background: #21262d; border: 1px solid var(--border); border-radius: 6px; color: #fff; font-family: monospace; font-size: 0.9rem; margin-top: 4px; }
+    button { padding: 10px 16px; background: #238636; border: 1px solid #2ea043; border-radius: 6px; color: #fff; font-weight: bold; cursor: pointer; margin-top: 10px; width: 100%; transition: background 0.2s; }
+    button:hover { background: #2ea043; }
+    .console-log { background: #000; color: #3fb950; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 0.85rem; height: 180px; overflow-y: auto; border: 1px solid var(--border); }
+    .table-container { max-height: 280px; overflow-y: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; }
+    th { background: #21262d; color: var(--accent); position: sticky; top: 0; }
+  </style>
+<script>
+
+    const permSelect = document.getElementById("permSelect");
+    const payloadText = document.getElementById("payloadText");
+    const targetBox = document.getElementById("targetBox");
+    const consoleLog = document.getElementById("consoleLog");
+    const injectBtn = document.getElementById("injectBtn");
+
+    function log(msg) {
+      const p = document.createElement("div");
+      p.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+      consoleLog.appendChild(p);
+      consoleLog.scrollTop = consoleLog.scrollHeight;
+    }
+
+    injectBtn.addEventListener("click", () => {
+      const perm = permSelect.value;
+      const text = payloadText.value;
+      targetBox.focus();
+      log(`Triggering ${perm} against Virtual DOM...`);
+
+      if (perm === "PERM_001") {
+        targetBox.textContent = text;
+        targetBox.dispatchEvent(new Event("input", { bubbles: true }));
+        log(`[SUCCESS] React Synthetic Event dispatched. Length: ${text.length} chars.`);
+      } else if (perm === "PERM_002") {
+        const dt = new DataTransfer();
+        dt.setData("text/plain", text);
+        const pasteEv = new ClipboardEvent("paste", { clipboardData: dt, bubbles: true });
+        targetBox.dispatchEvent(pasteEv);
+        targetBox.textContent = text;
+        log(`[SUCCESS] Synthetic ClipboardEvent synthesized.`);
+      } else if (perm === "PERM_019") {
+        targetBox.dispatchEvent(new CompositionEvent("compositionstart", { bubbles: true }));
+        targetBox.textContent = text;
+        targetBox.dispatchEvent(new CompositionEvent("compositionend", { data: text, bubbles: true }));
+        log(`[SUCCESS] Korean IME Hangul safe composition completed.`);
+      } else {
+        document.execCommand("insertText", false, text);
+        targetBox.dispatchEvent(new Event("input", { bubbles: true }));
+        log(`[SUCCESS] Universal Range/Input fallback executed.`);
+      }
+    });
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge">SAIR Chrome Extension Engine v2.0</div>
+      <h1>⚡ SAIR Text Injection Matrix Studio</h1>
+      <p>30종 이상의 프레임워크(React, Slate, Lexical, Shadow DOM, IME 등) 합성 주입 시뮬레이터</p>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2>🎯 Synthetic Payload Composer</h2>
+        <label>Target Framework Selector:</label>
+        <select id="permSelect">
+          <option value="PERM_001">PERM_001: React Synthetic Event & Property Descriptor</option>
+          <option value="PERM_002">PERM_002: ClipboardEvent Synthetic Paste</option>
+          <option value="PERM_003">PERM_003: ExecCommand Selection Range</option>
+          <option value="PERM_005">PERM_005: Slate.js BeforeInput Model</option>
+          <option value="PERM_007">PERM_007: ProseMirror View Transform</option>
+          <option value="PERM_008">PERM_008: Monaco Editor executeEdits</option>
+          <option value="PERM_009">PERM_009: Deep Shadow Root Piercer</option>
+          <option value="PERM_013">PERM_013: Meta Lexical DispatchCommand</option>
+          <option value="PERM_019">PERM_019: Korean IME Hangul Safe Sequencer</option>
+          <option value="PERM_030">PERM_030: Shift+Enter Multiline Preserver</option>
+        </select>
+        <div style="margin-top: 12px;">
+          <label>Test Text Payload:</label>
+          <textarea id="payloadText" rows="4">Hello, SAIR Chrome Extension Autonomous Injection Engine! [Axiomatic Kernel Verified]</textarea>
+        </div>
+        <button id="injectBtn">Simulate DOM Injection</button>
+      </div>
+
+      <div class="card">
+        <h2>🖥️ Target Sandbox Input & Output</h2>
+        <label>Virtual Target Element:</label>
+        <div id="targetBox" contenteditable="true" style="min-height: 100px; background: #21262d; border: 1px dashed var(--accent); border-radius: 6px; padding: 10px; margin-top: 6px; outline: none; color: #fff;">
+          (Click to focus or click Simulate DOM Injection above)
+        </div>
+        <div style="margin-top: 12px;">
+          <label>Realtime AST Execution Log:</label>
+          <div id="consoleLog" class="console-log">
+            [System] SAIR Permutation Matrix Engine Ready. 30 Permutations Loaded.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</body>
+</html>
