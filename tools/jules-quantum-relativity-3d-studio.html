@@ -1,387 +1,528 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jules Quantum Relativity 3D Studio v2.0</title>
+<!DOCTYPE html>
+<html lang="ko" data-theme="neon">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Jules] Quantum Relativity 3D WebGL Studio</title>
+    <!-- AdSense Tag as required by Execution Guidelines -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+
+    <!-- Schema.org JSON-LD -->
     <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Jules Quantum Relativity 3D Studio v2.0",
-        "softwareVersion": "2.0",
-        "description": "Interactive 3D WebGL particle space curvature field with 24-hour solar angle lighting slider and live semantic color matrix inspector.",
-        "applicationCategory": "DeveloperApplication",
-        "operatingSystem": "Any"
-      }
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Jules Quantum Relativity 3D Studio",
+      "description": "Interactive 3D WebGL particle space curvature field with 24-hour solar angle lighting slider and live semantic color matrix inspector.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All"
+    }
     </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              slate: { 900: "#0f172a" },
-              cyan: { 400: "#00f2fe" },
-              blue: { 400: "#4facfe" },
-            },
-          },
-        },
-      };
-    </script>
-    <style>
-      :root {
-        --bg-main: #0f172a;
-        --text-main: white;
-      }
-      [data-theme="minimal"] {
-        --bg-main: #ffffff;
-        --text-main: #0f172a;
-      }
-      [data-theme="brutalist"] {
-        --bg-main: #ffffff;
-        --text-main: #111111;
-      }
-      body {
-        margin: 0;
-        overflow: hidden;
-        background-color: var(--bg-main);
-        color: var(--text-main);
-        font-family: sans-serif;
-        transition: background-color 0.3s ease, color 0.3s ease;
-      }
-      #canvas-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 1;
-      }
-      #ui-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 10;
-        pointer-events: none;
-        padding: 2rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-      }
-      .panel {
-        pointer-events: auto;
-        background: rgba(15, 23, 42, 0.8);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(0, 242, 254, 0.3);
-        border-radius: 0.5rem;
-        padding: 1.5rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-      }
-      input[type="range"] {
-        accent-color: #00f2fe;
-      }
-    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  </head>
-  <body>
+
+    <style>
+        :root, [data-theme="neon"] {
+            --bg-main: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #050505 100%);
+            --bg-header: rgba(5, 5, 5, 0.6);
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-input: rgba(255, 255, 255, 0.05);
+
+            --border-card: rgba(255, 255, 255, 0.1);
+            --border-input: rgba(255, 255, 255, 0.15);
+
+            /* 가독성 텍스트 맵 */
+            --text-main: #e2e8f0;      /* 기본 텍스트 */
+            --text-prim: #cbd5e1;      /* 입력값/실제 데이터 (무광 실버) */
+            --text-sec: #94a3b8;       /* 라벨/도움말 */
+
+            /* 지시등 시스템 */
+            --accent-cyan: #14b8a6;    /* 시스템 데이터(라벨) 초록 */
+            --action-orange: #f97316;  /* 뇌관 주황 */
+        }
+
+        /* 5번 논의: 드롭다운 메뉴 심연화 (네온 테마 한정 스코프 격리) */
+        [data-theme="neon"] select option { background-color: #0f172a; color: #e2e8f0; }
+
+        /* 2, 3번 논의: 대주제 및 상세 라벨 초록색 통일 */
+        .acc-cyan, h2, label span { color: var(--accent-cyan) !important; }
+
+        /* 4번 논의: 실제 입력 데이터는 무광 실버 텍스트로 처리 */
+        .input-base, select, input[type="text"] { color: var(--text-prim) !important; }
+
+        [data-theme="minimal"] {
+            --bg-main: #ffffff;
+            --bg-header: #ffffff;
+            --bg-left: #f8fafc;
+            --bg-right: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-input: #f8fafc;
+
+            --border-card: #475569;
+            --border-input: #cbd5e1;
+            --border-divider: #e2e8f0;
+            --border-w: 1px;
+            --radius-input: 0.5rem;
+
+            --text-main: #0f172a;
+            --text-prim: #0f172a;
+            --text-sec: #475569;
+            --text-output: rgba(15, 23, 42, 0.85);
+
+            --bg-footer: #ffffff;
+            --text-footer: #475569;
+
+            --accent-cyan: #0891b2;
+            --accent-emerald: #059669;
+            --accent-purple: #7e22ce;
+            --accent-rose: #e11d48;
+            --accent-indigo: #4338ca;
+            --accent-red: #dc2626;
+            --glow-opacity: 0.0;
+        }
+
+        [data-theme="brutalist"] {
+            --bg-main: #ffffff;
+            --bg-header: #ffffff;
+            --bg-left: #ffffff;
+            --bg-right: #ffffff;
+            --bg-card: #ffffff;
+            --bg-input: #f4f4f5;
+
+            --border-card: #111111;
+            --border-input: #111111;
+            --border-divider: #111111;
+            --border-w: 2.5px;
+            --radius-input: 0px;
+
+            --text-main: #111111;
+            --text-prim: #111111;
+            --text-sec: #111111;
+            --text-output: rgba(17, 17, 17, 0.9);
+
+            --bg-footer: #111111;
+            --text-footer: #ffffff;
+
+            --accent-cyan: #111111;
+            --accent-emerald: #111111;
+            --accent-purple: #111111;
+            --accent-rose: #111111;
+            --accent-indigo: #111111;
+            --accent-red: #111111;
+            --glow-opacity: 0.0;
+        }
+
+        [data-theme="brutalist"][data-cyber="true"] {
+            --bg-main: #121212;
+            --bg-header: #121212;
+            --bg-left: #121212;
+            --bg-right: #121212;
+            --bg-card: #1e1e1e;
+            --bg-input: #2d2d2d;
+
+            --border-card: #475569;
+            --border-input: #475569;
+            --border-divider: #475569;
+            --border-w: 2.5px;
+            --radius-input: 0px;
+
+            --text-main: #e2e8f0;
+            --text-prim: #e2e8f0;
+            --text-sec: #94a3b8;
+            --text-output: rgba(226, 232, 240, 0.85);
+
+            --bg-footer: #121212;
+            --text-footer: #94a3b8;
+
+            --accent-cyan: #e2e8f0;
+            --accent-emerald: #e2e8f0;
+            --accent-purple: #e2e8f0;
+            --accent-rose: #e2e8f0;
+            --accent-indigo: #e2e8f0;
+            --accent-red: #e2e8f0;
+            --glow-opacity: 0.0;
+        }
+
+        body {
+            background: var(--bg-main);
+            color: var(--text-main);
+            font-family: monospace;
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .theme-card {
+            background-color: var(--bg-card);
+            border: var(--border-w) solid var(--border-card);
+            border-radius: var(--radius-input);
+            color: var(--text-prim);
+        }
+
+        .theme-input {
+            background-color: var(--bg-input);
+            border: var(--border-w) solid var(--border-input);
+            border-radius: var(--radius-input);
+            color: var(--text-prim);
+        }
+
+        .acc-cyan { color: var(--accent-cyan); }
+
+        #canvas-container {
+            flex: 1;
+            width: 100%;
+            position: relative;
+        }
+
+        #ui-overlay {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 320px;
+            z-index: 10;
+        }
+
+        input[type=range] {
+            width: 100%;
+            accent-color: var(--accent-cyan);
+        }
+
+        .color-swatch {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            display: inline-block;
+            vertical-align: middle;
+            border: 1px solid var(--border-card);
+        }
+    </style>
+</head>
+<body>
+
     <div id="canvas-container"></div>
-    <div id="ui-container">
-      <div class="panel max-w-md">
-        <h1
-          class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-400 mb-2"
-        >
-          Quantum Relativity 3D Studio
-        </h1>
-        <p class="text-sm text-gray-300 mb-4">
-          Interactive WebGL Particle Space Curvature Field
-        </p>
-        <div class="mb-4 flex gap-2">
-          <button onclick="window.setTheme('neon')" class="px-2 py-1 bg-slate-800 text-white rounded text-xs border border-cyan-400 hover:bg-cyan-900 transition-colors">Neon</button>
-          <button onclick="window.setTheme('minimal')" class="px-2 py-1 bg-gray-200 text-slate-900 rounded text-xs border border-gray-400 hover:bg-white transition-colors">Minimal</button>
-          <button onclick="window.setTheme('brutalist')" class="px-2 py-1 bg-black text-white rounded text-xs border-2 border-black font-mono hover:bg-white hover:text-black transition-colors">Brutalist</button>
-        </div>
-        <div class="mb-4">
-          <label class="block text-sm font-medium mb-1"
-            >Time (24-Hour Solar Angle):
-            <span id="time-display" class="text-cyan-400">12:00</span></label
-          >
-          <input
-            type="range"
-            id="time-slider"
-            min="0"
-            max="23"
-            value="12"
-            class="w-full"
-          />
-          <div
-            id="solar-matrix-data"
-            class="text-xs mt-2 text-gray-400 font-mono"
-          ></div>
-        </div>
+
+    <div id="ui-overlay" class="theme-card p-4 space-y-4 shadow-xl backdrop-blur-md">
+        <h2 class="text-lg font-bold acc-cyan border-b border-gray-600 pb-2 mb-4">Quantum Relativity</h2>
+
+        <!-- 24-hour Solar Angle Lighting Slider -->
         <div>
-          <label class="block text-sm font-medium mb-1"
-            >Semantic Color Inspector</label
-          >
-          <input
-            type="color"
-            id="color-picker"
-            value="#ff007f"
-            class="w-full h-10 border-0 rounded bg-transparent cursor-pointer"
-          />
-          <div class="mt-2 text-sm">
-            Detected:
-            <span id="semantic-name" class="font-bold text-cyan-400"
-              >cyberpunk neon pink</span
-            >
-          </div>
-          <div class="mt-1 text-sm">
-            Complementary:
-            <span id="comp-name" class="font-bold text-blue-400"
-              >bright neon green</span
-            >
-          </div>
+            <label class="block text-sm text-sec mb-1">Solar Angle Time: <span id="time-val" class="text-prim font-bold">12:00</span></label>
+            <input type="range" id="solar-slider" min="0" max="23" value="12" step="1">
+            <div class="text-[10px] text-sec mt-1" id="solar-desc">[ 12시 (태양각 고증) ]</div>
         </div>
-      </div>
+
+        <!-- Theme Switcher -->
+        <div>
+            <label class="block text-sm text-sec mb-1">UI Theme</label>
+            <select id="theme-select" class="theme-input w-full p-1 text-sm outline-none">
+                <option value="neon">Neon (Slate Dark)</option>
+                <option value="minimal">Minimal</option>
+                <option value="brutalist">Brutalist</option>
+            </select>
+        </div>
+
+        <!-- Semantic Color Matrix Inspector -->
+        <div class="pt-2 border-t border-gray-600">
+            <h3 class="text-sm font-bold acc-cyan mb-2">Semantic Color Inspector</h3>
+            <div>
+                <label class="block text-xs text-sec mb-1">Input HEX Color</label>
+                <div class="flex gap-2 items-center">
+                    <input type="color" id="color-picker" value="#ff007f" class="theme-input p-0 h-8 w-12 cursor-pointer">
+                    <input type="text" id="color-hex" value="#ff007f" class="theme-input flex-1 p-1 text-sm outline-none uppercase text-center font-bold">
+                </div>
+            </div>
+
+            <div class="mt-3 space-y-2 text-xs">
+                <div class="flex justify-between items-center bg-black/20 p-2 rounded border border-white/10">
+                    <span class="text-sec">Target:</span>
+                    <span id="target-semantic" class="text-prim font-bold text-right w-40 truncate">cyberpunk neon pink</span>
+                </div>
+                <div class="flex justify-between items-center bg-black/20 p-2 rounded border border-white/10">
+                    <span class="text-sec">Complementary:</span>
+                    <div class="flex items-center gap-2">
+                        <span id="comp-swatch" class="color-swatch" style="background-color: #00ff80;"></span>
+                        <span id="comp-semantic" class="text-prim font-bold w-24 truncate text-right">bright neon green</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+
     <script>
-      const timeOptions = [["", "[ 미입력 ] (시간 연산 생략)"], ...Array.from({ length: 24 }, (_, i) => {
-          const h = String(i + 1).padStart(2, '0') + "시";
-          return [h, `[ ${h} (태양각 고증) ]`];
-      }), ["custom", "[ 사용자 설정 ] (자율 입력)"]];
+        const timeOptions = [["", "[ 미입력 ] (시간 연산 생략)"], ...Array.from({ length: 24 }, (_, i) => {
+    const h = String(i).padStart(2, '0') + "시";
+    return [i.toString(), `[ ${h} (태양각 고증) ]`];
+})];
+        const SemanticColorDictionary = [
+    { hex: "#ff0000", name: "vivid crimson red" }, { hex: "#00ff00", name: "bright neon green" },
+    { hex: "#0000ff", name: "deep electric blue" }, { hex: "#ff00ff", name: "vivid magenta pink" },
+    { hex: "#00ffff", name: "bright cyan glowing" }, { hex: "#ffff00", name: "bright lemon yellow" },
+    { hex: "#ffffff", name: "pure platinum white" }, { hex: "#000000", name: "obsidian black" },
+    { hex: "#808080", name: "ash slate gray" }, { hex: "#ff8c00", name: "dark orange sunset" },
+    { hex: "#4b0082", name: "deep indigo violet" }, { hex: "#ffc0cb", name: "soft pastel pink" },
+    { hex: "#ff007f", name: "cyberpunk neon pink" } // 기본값 타겟
+];
+        function hexToRgb(hex) {
+    return [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16)];
+}
 
-      const SemanticColorDictionary = [
-          { hex: "#ff0000", name: "vivid crimson red" }, { hex: "#00ff00", name: "bright neon green" },
-          { hex: "#0000ff", name: "deep electric blue" }, { hex: "#ff00ff", name: "vivid magenta pink" },
-          { hex: "#00ffff", name: "bright cyan glowing" }, { hex: "#ffff00", name: "bright lemon yellow" },
-          { hex: "#ffffff", name: "pure platinum white" }, { hex: "#000000", name: "obsidian black" },
-          { hex: "#808080", name: "ash slate gray" }, { hex: "#ff8c00", name: "dark orange sunset" },
-          { hex: "#4b0082", name: "deep indigo violet" }, { hex: "#ffc0cb", name: "soft pastel pink" },
-          { hex: "#ff007f", name: "cyberpunk neon pink" }
-      ];
+function getSemanticColorName(hex) {
+    let targetRgb = hexToRgb(hex);
+    let closestName = "custom dyed";
+    let minDistance = Infinity;
+    for (let c of SemanticColorDictionary) {
+        let dictRgb = hexToRgb(c.hex);
+        let dist = Math.pow(targetRgb[0] - dictRgb[0], 2) + Math.pow(targetRgb[1] - dictRgb[1], 2) + Math.pow(targetRgb[2] - dictRgb[2], 2);
+        if (dist < minDistance) { minDistance = dist; closestName = c.name; }
+    }
+    return closestName;
+}
+        function hexToHsl(hex) {
+    let [r, g, b] = hexToRgb(hex).map(v => v / 255);
+    let max = Math.max(r, g, b), min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+    if (max === min) { h = s = 0; }
+    else {
+        let d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        switch (max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+    return [h * 360, s, l];
+}
+        function hslToHex(h, s, l) {
+    let r, g, b;
+    h /= 360;
+    if (s === 0) { r = g = b = l; }
+    else {
+        const hue2rgb = (p, q, t) => {
+            if (t < 0) t += 1;
+            if (t > 1) t -= 1;
+            if (t < 1 / 6) return p + (q - p) * 6 * t;
+            if (t < 1 / 2) return q;
+            if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+            return p;
+        };
+        let q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        let p = 2 * l - q;
+        r = hue2rgb(p, q, h + 1 / 3);
+        g = hue2rgb(p, q, h);
+        b = hue2rgb(p, q, h - 1 / 3);
+    }
+    const toHex = x => { const hex = Math.round(x * 255).toString(16); return hex.length === 1 ? '0' + hex : hex; };
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
 
-      function hexToRgb(hex) { return [parseInt(hex.slice(1, 3), 16), parseInt(hex.slice(3, 5), 16), parseInt(hex.slice(5, 7), 16)]; }
 
-      function getSemanticColorName(hex) {
-          let targetRgb = hexToRgb(hex);
-          let closestName = "custom dyed";
-          let minDistance = Infinity;
-          for (let c of SemanticColorDictionary) {
-              let dictRgb = hexToRgb(c.hex);
-              let dist = Math.pow(targetRgb[0] - dictRgb[0], 2) + Math.pow(targetRgb[1] - dictRgb[1], 2) + Math.pow(targetRgb[2] - dictRgb[2], 2);
-              if (dist < minDistance) { minDistance = dist; closestName = c.name; }
-          }
-          return closestName;
-      }
+        // --- 3. UI Interactions ---
+        const colorPicker = document.getElementById('color-picker');
+        const colorHexInput = document.getElementById('color-hex');
+        const targetSemantic = document.getElementById('target-semantic');
+        const compSemantic = document.getElementById('comp-semantic');
+        const compSwatch = document.getElementById('comp-swatch');
 
-      function hexToHsl(hex) {
-          let [r, g, b] = hexToRgb(hex).map(v => v / 255);
-          let max = Math.max(r, g, b), min = Math.min(r, g, b);
-          let h, s, l = (max + min) / 2;
-          if (max === min) { h = s = 0; }
-          else {
-              let d = max - min;
-              s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-              switch (max) {
-                  case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-                  case g: h = (b - r) / d + 2; break;
-                  case b: h = (r - g) / d + 4; break;
-              }
-              h /= 6;
-          }
-          return [h * 360, s * 100, l * 100];
-      }
+        function updateSemanticInspector(hex) {
+            if (!/^#[0-9A-Fa-f]{6}$/i.test(hex)) return;
 
-      function hslToHex(h, s, l) {
-          let r, g, b;
-          h /= 360;
-          s /= 100;
-          l /= 100;
-          if (s === 0) { r = g = b = l; }
-          else {
-              const hue2rgb = (p, q, t) => {
-                  if (t < 0) t += 1;
-                  if (t > 1) t -= 1;
-                  if (t < 1 / 6) return p + (q - p) * 6 * t;
-                  if (t < 1 / 2) return q;
-                  if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-                  return p;
-              };
-              let q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-              let p = 2 * l - q;
-              r = hue2rgb(p, q, h + 1 / 3);
-              g = hue2rgb(p, q, h);
-              b = hue2rgb(p, q, h - 1 / 3);
-          }
-          const toHex = x => { const hex = Math.round(x * 255).toString(16); return hex.length === 1 ? '0' + hex : hex; };
-          return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
-      }
+            let semanticName = getSemanticColorName(hex);
+            targetSemantic.textContent = semanticName;
 
-      function calculateSolarMatrix(locToken, monthToken, timeToken, spaceToken = "") {
-          let hour = parseInt(timeToken);
-          if (isNaN(hour)) hour = 12;
-          let tau = (hour % 24) / 24.0;
-          const geo = {lat: 37.5, alt: 38, alb: 0.15};
-          let detectedAnchor = "STANDARD_DEFAULT (SEOUL)";
-          let dayOfYear = 180;
-          let distance = 1 - 0.0167 * Math.cos(2 * Math.PI * (dayOfYear - 4) / 365);
-          let flux = 1 / (distance * distance);
-          let declination = 23.44 * Math.sin((360 / 365) * (dayOfYear - 81) * (Math.PI / 180));
-          let H = (hour - 12) * 15;
-          let rad = Math.PI / 180;
-          let sinTheta = Math.sin(geo.lat*rad)*Math.sin(declination*rad) + Math.cos(geo.lat*rad)*Math.cos(declination*rad)*Math.cos(H*rad);
-          let theta = Math.asin(sinTheta) / rad;
-          let airMass = 1 / Math.sin(Math.max(0.05, theta * rad));
-          if (theta < 0) airMass = 40.0;
-          let pressureRatio = Math.exp(-geo.alt / 8400);
-          let thermal = (theta - 45) / 100 * flux;
-          let hemisphereFactor = (geo.lat >= 0) ? 1 : -1;
-          if (declination < 0) thermal -= (0.2 * hemisphereFactor);
-          if (declination > 0) thermal += (0.2 * hemisphereFactor);
-          let heatAccumulation = 0.0;
-          if (hour >= 13 && hour <= 18 && thermal > 0.05) { heatAccumulation = (hour - 12) * thermal * geo.alb * 10.0; }
-          return {
-              "Class": "Terrestrial_Simulation", "Semantic_Geo_Anchor": detectedAnchor,
-              "Diurnal_Phase_Tau": parseFloat(tau.toFixed(2)), "Keplerian_Flux": parseFloat(flux.toFixed(3)),
-              "Solar_Elevation_Theta": parseFloat(theta.toFixed(1)), "Air_Mass_AM": parseFloat(airMass.toFixed(2)),
-              "Pressure_Altitude_Ratio": parseFloat(pressureRatio.toFixed(2)), "Thermal_Offset": parseFloat(thermal.toFixed(2)),
-              "Heat_Accumulation_t_minus_1": parseFloat(heatAccumulation.toFixed(2))
-          };
-      }
+            let hsl = hexToHsl(hex);
+            let compHue = (hsl[0] + 180) % 360;
+            let compHex = hslToHex(compHue, hsl[1], hsl[2]);
+            let compName = getSemanticColorName(compHex);
 
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 40;
-        camera.position.y = 20;
-      camera.lookAt(0, 0, 0);
-      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      window.renderer = renderer; // Expose renderer for theme switching
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setClearColor(0x0f172a, 1);
-      document.getElementById('canvas-container').appendChild(renderer.domElement);
+            compSemantic.textContent = compName;
+            compSwatch.style.backgroundColor = compHex;
 
-      window.setTheme = function(themeName) {
-          document.documentElement.setAttribute('data-theme', themeName);
-          if (themeName === 'minimal' || themeName === 'brutalist') {
-              renderer.setClearColor(0xffffff, 1);
-          } else {
-              renderer.setClearColor(0x0f172a, 1);
-          }
-      };
-      const particleCount = 20000;
-      const geometry = new THREE.BufferGeometry();
-      const positions = new Float32Array(particleCount * 3);
-      const colors = new Float32Array(particleCount * 3);
-      const colorBase = new THREE.Color(0x00f2fe);
-      const colorAccent = new THREE.Color(0x4facfe);
-      for (let i = 0; i < particleCount; i++) {
-          const r = 40 * Math.sqrt(Math.random());
-          const theta = Math.random() * 2 * Math.PI;
-          positions[i * 3] = r * Math.cos(theta);
-          positions[i * 3 + 1] = (Math.random() - 0.5) * 2;
-          positions[i * 3 + 2] = r * Math.sin(theta);
-          const mixRatio = Math.random();
-          const mixedColor = colorBase.clone().lerp(colorAccent, mixRatio);
-          colors[i * 3] = mixedColor.r;
-          colors[i * 3 + 1] = mixedColor.g;
-          colors[i * 3 + 2] = mixedColor.b;
-      }
-      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-      const shaderMaterial = new THREE.ShaderMaterial({
-          uniforms: { time: { value: 0.0 }, curvature: { value: 1.0 }, solarTheta: { value: 1.0 } },
+            if (window.uniforms) {
+                let targetRgb = hexToRgb(hex);
+                let compRgb = hexToRgb(compHex);
+                window.uniforms.uColor1.value.setRGB(targetRgb[0]/255, targetRgb[1]/255, targetRgb[2]/255);
+                window.uniforms.uColor2.value.setRGB(compRgb[0]/255, compRgb[1]/255, compRgb[2]/255);
+            }
+        }
+
+        colorPicker.addEventListener('input', (e) => {
+            colorHexInput.value = e.target.value.toUpperCase();
+            updateSemanticInspector(e.target.value);
+        });
+
+        colorHexInput.addEventListener('input', (e) => {
+            let val = e.target.value;
+            if (!val.startsWith('#')) val = '#' + val;
+            if (/^#[0-9A-Fa-f]{6}$/i.test(val)) {
+                colorPicker.value = val;
+                updateSemanticInspector(val);
+            }
+        });
+
+        const solarSlider = document.getElementById('solar-slider');
+        const timeVal = document.getElementById('time-val');
+        const solarDesc = document.getElementById('solar-desc');
+
+        solarSlider.addEventListener('input', (e) => {
+            let hour = parseInt(e.target.value);
+            timeVal.textContent = String(hour).padStart(2, '0') + ':00';
+
+            let option = timeOptions.find(opt => opt[0] === String(hour));
+            if (option) solarDesc.textContent = option[1];
+
+            if (window.uniforms) {
+                let angle = (hour / 24) * Math.PI * 2;
+                angle -= Math.PI / 2;
+
+                let lx = Math.cos(angle);
+                let ly = Math.sin(angle);
+                let lz = 0.5;
+                window.uniforms.uSunDirection.value.set(lx, ly, lz).normalize();
+
+                let intensity = Math.sin((hour / 24) * Math.PI);
+                window.uniforms.uSunIntensity.value = Math.max(0.1, intensity * 2.0);
+            }
+        });
+
+        document.getElementById('theme-select').addEventListener('change', (e) => {
+            document.documentElement.setAttribute('data-theme', e.target.value);
+        });
+
+        // Initialize Inspector
+        updateSemanticInspector(colorPicker.value);
+
+        // --- 4. WebGL Quantum Relativity Curvature Field ---
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.z = 20;
+        camera.position.y = 10;
+        camera.lookAt(0, 0, 0);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        const particleCount = 20000;
+        const geometry = new THREE.IcosahedronGeometry(0.1, 0);
+
+        let initHour = 12;
+        let initAngle = (initHour / 24) * Math.PI * 2 - Math.PI / 2;
+        let initIntensity = Math.sin((initHour / 24) * Math.PI) * 2.0;
+
+        window.uniforms = {
+            uTime: { value: 0 },
+            uColor1: { value: new THREE.Color(colorPicker.value) },
+            uColor2: { value: new THREE.Color(document.getElementById('comp-swatch').style.backgroundColor) },
+            uSunDirection: { value: new THREE.Vector3(Math.cos(initAngle), Math.sin(initAngle), 0.5).normalize() },
+            uSunIntensity: { value: Math.max(0.1, initIntensity) }
+        };
+
+        const material = new THREE.ShaderMaterial({
+            uniforms: window.uniforms,
             vertexShader: `
-              uniform float time;
-              uniform float curvature;
-              uniform float solarTheta;
-              varying vec3 vColor;
-              void main() {
-                  vec3 pos = position;
-                  float dist = length(pos.xz);
-                  pos.y += sin(dist * 0.5 - time * 2.0) * curvature * 2.0;
-                  pos.y += cos(pos.x * 0.2 + time) * 1.5;
-                  pos.y += sin(solarTheta * 0.1) * dist * 0.1;
-                  vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-                  gl_Position = projectionMatrix * mvPosition;
-                    gl_PointSize = max(4.0, 150.0 / -mvPosition.z);
-                  vColor = color;
-              }
+                uniform float uTime;
+
+                varying vec3 vPosition;
+                varying vec3 vNormal;
+                varying float vMixRatio;
+
+                void main() {
+                    vec3 instPos = vec3(instanceMatrix[3][0], instanceMatrix[3][1], instanceMatrix[3][2]);
+
+                    float dist = length(instPos.xz);
+                    float wave = sin(dist * 0.5 - uTime * 2.0) * cos(instPos.x * 0.2 + uTime) * 2.0;
+
+                    vec3 pos = position;
+
+                    vec3 finalPos = instPos;
+                    finalPos.y += wave;
+
+                    vec4 mvPosition = viewMatrix * vec4(finalPos + pos, 1.0);
+                    gl_Position = projectionMatrix * mvPosition;
+
+                    vNormal = normalMatrix * normal;
+                    vPosition = finalPos + pos;
+
+                    vMixRatio = clamp((finalPos.y + 5.0) / 10.0, 0.0, 1.0);
+                }
             `,
             fragmentShader: `
-              varying vec3 vColor;
-              void main() {
-                  float dist = length(gl_PointCoord - vec2(0.5));
-                  if (dist > 0.5) discard;
-                  gl_FragColor = vec4(vColor, 1.0 - (dist * 2.0));
-              }
-            `,
-          transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
-      });
-      const particles = new THREE.Points(geometry, shaderMaterial);
-      scene.add(particles);
-      const clock = new THREE.Clock();
-      let currentCurvature = 1.0;
-      let targetCurvature = 1.0;
-      function animate() {
-          requestAnimationFrame(animate);
-          const elapsedTime = clock.getElapsedTime();
-          currentCurvature += (targetCurvature - currentCurvature) * 0.05;
-          shaderMaterial.uniforms.time.value = elapsedTime;
-          shaderMaterial.uniforms.curvature.value = currentCurvature;
-          particles.rotation.y = elapsedTime * 0.05;
-          renderer.render(scene, camera);
-      }
-      animate();
-      window.addEventListener('resize', () => {
-          camera.aspect = window.innerWidth / window.innerHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(window.innerWidth, window.innerHeight);
-      });
-      const timeSlider = document.getElementById('time-slider');
-      const timeDisplay = document.getElementById('time-display');
-      const solarData = document.getElementById('solar-matrix-data');
-      function updateSolar() {
-          const timeVal = timeSlider.value;
-          let label = "12:00";
-          if (timeVal > 0 && timeVal <= 24) {
-              label = timeOptions[timeVal][1] || `${timeVal.padStart(2, '0')}:00`;
-          } else if (timeVal == 0) {
-              label = timeOptions[0][1];
-          }
-            timeDisplay.innerText = label;
-          const matrix = calculateSolarMatrix('seoul', 'july', timeVal);
-            solarData.innerHTML = `Theta: ${matrix.Solar_Elevation_Theta}°<br>Air Mass: ${matrix.Air_Mass_AM}<br>Flux: ${matrix.Keplerian_Flux}`;
-          shaderMaterial.uniforms.solarTheta.value = matrix.Solar_Elevation_Theta;
-          targetCurvature = 1.0 + Math.sin(matrix.Solar_Elevation_Theta * Math.PI / 180) * 0.5;
-      }
-      timeSlider.addEventListener('input', updateSolar);
-      updateSolar();
-      const colorPicker = document.getElementById('color-picker');
-      const semanticName = document.getElementById('semantic-name');
-      const compName = document.getElementById('comp-name');
-      function updateColor() {
-          const hex = colorPicker.value;
-          semanticName.innerText = getSemanticColorName(hex);
-          const hsl = hexToHsl(hex);
-          const compHue = (hsl[0] + 180) % 360;
-          const compHex = hslToHex(compHue, hsl[1] * 100, hsl[2] * 100);
-          compName.innerText = getSemanticColorName(compHex);
-          const rgb = hexToRgb(hex);
-          colorBase.setRGB(rgb[0]/255, rgb[1]/255, rgb[2]/255);
-          const compRgb = hexToRgb(compHex);
-          colorAccent.setRGB(compRgb[0]/255, compRgb[1]/255, compRgb[2]/255);
-          const colorsAttr = geometry.attributes.color;
-          for (let i = 0; i < particleCount; i++) {
-              const mixRatio = Math.random();
-              const mixedColor = colorBase.clone().lerp(colorAccent, mixRatio);
-              colorsAttr.setXYZ(i, mixedColor.r, mixedColor.g, mixedColor.b);
-          }
-          colorsAttr.needsUpdate = true;
-      }
-      colorPicker.addEventListener('input', updateColor);
-      updateColor();
+                uniform vec3 uColor1;
+                uniform vec3 uColor2;
+                uniform vec3 uSunDirection;
+                uniform float uSunIntensity;
+
+                varying vec3 vPosition;
+                varying vec3 vNormal;
+                varying float vMixRatio;
+
+                void main() {
+                    vec3 normal = normalize(vNormal);
+                    float diff = max(dot(normal, uSunDirection), 0.0);
+
+                    float lighting = 0.2 + diff * uSunIntensity;
+
+                    vec3 baseColor = mix(uColor2, uColor1, vMixRatio);
+
+                    gl_FragColor = vec4(baseColor * lighting, 1.0);
+                }
+            `
+        });
+
+        const instancedMesh = new THREE.InstancedMesh(geometry, material, particleCount);
+
+        const dummy = new THREE.Object3D();
+        const spread = 40;
+
+        for (let i = 0; i < particleCount; i++) {
+            const radius = Math.random() * spread;
+            const theta = Math.random() * Math.PI * 2;
+            const y = (Math.random() - 0.5) * 5;
+
+            dummy.position.set(
+                Math.cos(theta) * radius,
+                y,
+                Math.sin(theta) * radius
+            );
+
+            dummy.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+            const scale = Math.random() * 0.5 + 0.5;
+            dummy.scale.set(scale, scale, scale);
+
+            dummy.updateMatrix();
+            instancedMesh.setMatrixAt(i, dummy.matrix);
+        }
+
+        scene.add(instancedMesh);
+
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const elapsedTime = clock.getElapsedTime();
+            window.uniforms.uTime.value = elapsedTime;
+
+            instancedMesh.rotation.y = elapsedTime * 0.05;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
     </script>
-  </body>
+</body>
 </html>

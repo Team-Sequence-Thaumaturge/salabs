@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jules Master 3D Spatial Engine - All 11 Modules Synthesized</title>
+    <title>Jules Master 3D Spatial Engine - All 12 Modules Synthesized</title>
 
     <!-- Schema.org WebApplication JSON-LD metadata -->
     <script type="application/ld+json">
@@ -197,7 +197,7 @@
           class="text-xl font-bold text-cyan-accent mb-1 flex items-center justify-between"
         >
           Jules Master 3D Engine
-          <span class="badge-synthesized">11 Modules Bound</span>
+          <span class="badge-synthesized">12 Modules Bound</span>
         </h1>
         <p class="text-xs text-slate-400 mb-4">
           Unified Dynamic State Bus Interlock
@@ -302,7 +302,7 @@
 
         <div class="mt-4 pt-3 border-t border-slate-700">
           <div class="text-xs font-semibold text-cyan-accent mb-2">
-            Synthesized 11 Subsystem Modules:
+            Synthesized 12 Subsystem Modules:
           </div>
           <ul class="text-xs text-slate-300 space-y-1">
             <li class="flex justify-between">
@@ -347,6 +347,10 @@
             </li>
             <li class="flex justify-between">
               <span>11. WebXR AR Overlays & ARButton</span
+              ><span class="text-emerald-400">ONLINE</span>
+            </li>
+            <li class="flex justify-between">
+              <span class="text-yellow-300">12. Topological Cognition Core</span
               ><span class="text-emerald-400">ONLINE</span>
             </li>
           </ul>
@@ -444,7 +448,7 @@
         container.innerHTML = "";
         const displayState = {
           engine_status: "SYNTHESIZED_ONLINE",
-          version: "2.0.0-ALL-11-MODULES-BOUND",
+          version: "2.0.0-ALL-12-MODULES-BOUND",
           dynamic_state: GlobalState,
           active_modules: [
             "C++ Physics",
@@ -453,6 +457,7 @@
             "Audio FFT",
             "Thermal Expansion",
             "AST Tree",
+            "Topological Cognition Core",
           ],
         };
         const rootUl = document.createElement("ul");
@@ -470,6 +475,33 @@
         }
       }
       const physics = new PhysicsCore();
+
+      // --- Module 12: Topological Cognition Core ---
+      class TopologicalCognitionCore {
+        constructor() {
+          this.curvature = 0;
+          this.density = 0;
+          this.distortion = 0;
+        }
+
+        update(state, time) {
+          // Dynamic calculation based on GlobalState and time
+          this.density = state.topologyDistance;
+          this.distortion = Math.sin(time) * 0.5 + Math.cos(time * 0.3) * 0.5 + (state.audioFrequency / 1000) * 2;
+          this.curvature = (state.gravity / 9.81) * (1 + Math.sin(time * 0.5) * 0.2);
+        }
+
+        getDepthAt(x, z) {
+           // Deep Gravity Wells (Y-axis sink)
+           const distance = Math.sqrt(x*x + z*z);
+           // Calculate depth based on curvature and distance from origin (or other patterns)
+           const wellDepth = -Math.max(0, (5 - distance) * this.curvature * 0.3);
+           // Add some noise
+           const noise = Math.sin(x * this.distortion) * Math.cos(z * this.distortion) * 0.5;
+           return wellDepth + noise;
+        }
+      }
+      const topoCore = new TopologicalCognitionCore();
 
       // --- 4. Three.js Unified Interlocked Scene ---
       let scene, camera, renderer, controls, mainLight, canvas;
@@ -540,21 +572,88 @@
         scene.add(mainLight);
         scene.add(new THREE.AmbientLight(0x1e293b, 1.5));
 
-        const gridHelper = new THREE.GridHelper(30, 30, 0x00f2fe, 0x1e293b);
-        gridHelper.position.y = -2.5;
-        scene.add(gridHelper);
+        // Advanced Displacement Shader Material for the Grid/Floor
+        const gridUniforms = {
+            time: { value: 0 },
+            curvature: { value: 0 },
+            distortion: { value: 0 },
+            color1: { value: new THREE.Color(0x00f2fe) },
+            color2: { value: new THREE.Color(0x1e293b) }
+        };
 
-        // Floor for shadows and collision
-        const floorGeo = new THREE.PlaneGeometry(30, 30);
-        const floorMat = new THREE.MeshStandardMaterial({
-          color: 0x1e293b,
-          roughness: 0.8,
-          metalness: 0.2,
+        const gridVertShader = `
+            varying vec2 vUv;
+            varying vec3 vPos;
+            uniform float time;
+            uniform float curvature;
+            uniform float distortion;
+
+            void main() {
+                vUv = uv;
+                vPos = position;
+
+                // Add topological displacement based on curvature and distortion
+                // Calculate distance from center
+                float dist = length(position.xy); // XY because plane is rotated
+
+                // Sink into gravity well
+                float depth = -curvature * exp(-dist * dist * 0.05);
+
+                // Add noise/distortion
+                float noise = sin(position.x * 2.0 + time) * cos(position.y * 2.0 + time) * distortion * 0.5;
+
+                vec3 newPos = position;
+                newPos.z += depth + noise; // Z acts as Y after rotation
+
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(newPos, 1.0);
+            }
+        `;
+
+        const gridFragShader = `
+            varying vec2 vUv;
+            varying vec3 vPos;
+            uniform vec3 color1;
+            uniform vec3 color2;
+            uniform float time;
+
+            void main() {
+                // Grid pattern
+                vec2 grid = abs(fract(vUv * 30.0 - 0.5) - 0.5) / fwidth(vUv * 30.0);
+                float line = min(grid.x, grid.y);
+                float alpha = 1.0 - min(line, 1.0);
+
+                // Pulse effect
+                float pulse = (sin(vPos.length() - time * 2.0) + 1.0) * 0.5;
+
+                vec3 finalColor = mix(color2, color1, alpha + pulse * 0.3 * alpha);
+                if (alpha < 0.1) discard; // Make it look like a wireframe
+
+                gl_FragColor = vec4(finalColor, 1.0);
+            }
+        `;
+
+        const gridGeo = new THREE.PlaneGeometry(30, 30, 60, 60); // High segment count for deformation
+        const gridMat = new THREE.ShaderMaterial({
+            uniforms: gridUniforms,
+            vertexShader: gridVertShader,
+            fragmentShader: gridFragShader,
+            transparent: true,
+            side: THREE.DoubleSide,
+            wireframe: false // Handled in fragment shader
         });
+
+        const gridMesh = new THREE.Mesh(gridGeo, gridMat);
+        gridMesh.rotation.x = -Math.PI / 2;
+        gridMesh.position.y = -2.5;
+        scene.add(gridMesh);
+        window.gridUniforms = gridUniforms; // Expose for update
+
+        // Invisible Floor for rigid body collision (stays flat or updates on CPU if needed, we keep it simple for now)
+        const floorGeo = new THREE.PlaneGeometry(30, 30);
+        const floorMat = new THREE.MeshBasicMaterial({ visible: false });
         const floor = new THREE.Mesh(floorGeo, floorMat);
         floor.rotation.x = -Math.PI / 2;
         floor.position.y = -2.5;
-        floor.receiveShadow = true;
         scene.add(floor);
         window.floorMesh = floor;
 
@@ -827,6 +926,11 @@
       };
 
       function animate() {
+        const now = Date.now();
+        const time = now * 0.001;
+        const dt = Math.min((now - lastTime) * 0.001, 0.1);
+        lastTime = now;
+        if (typeof topoCore !== 'undefined') topoCore.update(GlobalState, time);
         // Dynamic iframe canvas size check to prevent 0x0 pixel black screen
         if (renderer && camera && canvas) {
           const targetW = canvas.parentElement
@@ -848,9 +952,13 @@
 
         controls.update();
 
-        const now = Date.now();
-        const time = now * 0.001;
-        const dt = Math.min((now - lastTime) * 0.001, 0.1);
+
+        // Pass Topology Data to Grid Shader
+        if (typeof topoCore !== 'undefined' && window.gridUniforms) {
+            window.gridUniforms.time.value = time;
+            window.gridUniforms.curvature.value = topoCore.curvature;
+            window.gridUniforms.distortion.value = topoCore.distortion;
+        }
 
         // Fetch Live Web Audio FFT Spectrum Frequency with Noise Gate & Scale Pulse
         let currentAmp = 0.0;
@@ -910,16 +1018,29 @@
           );
         }
 
-        // AABB Collision with floor
+        // AABB Collision with topological floor
         const currentRadius = rb.radius * finalScale;
-        if (
-          window.floorMesh &&
-          bouncingSphere.position.y - currentRadius <=
-            window.floorMesh.position.y
-        ) {
-          bouncingSphere.position.y =
-            window.floorMesh.position.y + currentRadius;
+        let floorY = window.floorMesh ? window.floorMesh.position.y : -2.5;
+
+        // Add topological sink depth based on object's XZ position
+        if (typeof topoCore !== 'undefined') {
+            const sinkDepth = topoCore.getDepthAt(bouncingSphere.position.x, bouncingSphere.position.z);
+            floorY += sinkDepth;
+
+            // Add gravity gradient to pull object towards the center of the well
+            const gradX = -bouncingSphere.position.x * 0.05 * topoCore.curvature;
+            const gradZ = -bouncingSphere.position.z * 0.05 * topoCore.curvature;
+            rb.velocity.x += gradX * dt;
+            rb.velocity.z += gradZ * dt;
+        }
+
+        if (bouncingSphere.position.y - currentRadius <= floorY) {
+          bouncingSphere.position.y = floorY + currentRadius;
           rb.velocity.y = Math.abs(rb.velocity.y) * rb.restitution;
+
+          // Apply friction
+          rb.velocity.x *= 0.98;
+          rb.velocity.z *= 0.98;
         }
 
         const solarRad = (GlobalState.solarAngle / 24.0) * Math.PI * 2;
@@ -952,9 +1073,13 @@
 
         // 4. Vector Topology Update
         topologyNodes.forEach(
-          (n) =>
-            (n.position.y =
-              n.userData.baseY + (9.81 - GlobalState.gravity) * 0.2),
+          (n) => {
+              let topoDepth = 0;
+              if (typeof topoCore !== 'undefined') {
+                  topoDepth = topoCore.getDepthAt(n.position.x, n.position.z);
+              }
+              n.position.y = n.userData.baseY + (9.81 - GlobalState.gravity) * 0.2 + topoDepth;
+          }
         );
         if (topologyLinesGroup) {
           topologyLinesGroup.position.y = (9.81 - GlobalState.gravity) * 0.2;

@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SA-IR Quantum Relativity & Solar Angle 3D Spatial Simulator Studio</title>
+
+    <!-- Schema.org WebApplication JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SA-IR Quantum Relativity & Solar Angle 3D Spatial Simulator Studio",
+      "description": "Interactive 3D spatial telemetry simulator and semantic color matrix analyzer for quantum relativity and solar angle visualization.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any"
+    }
+    </script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            850: '#141e33',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                        cyan: {
+                            400: '#00f2fe',
+                        },
+                        blue: {
+                            400: '#4facfe',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #e2e8f0;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+        .neon-text-cyan {
+            text-shadow: 0 0 10px rgba(0, 242, 254, 0.7);
+        }
+        .neon-text-blue {
+            text-shadow: 0 0 10px rgba(79, 172, 254, 0.7);
+        }
+        .panel {
+            background-color: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        input[type=range] {
+            accent-color: #00f2fe;
+        }
+        canvas {
+            image-rendering: optimizeSpeed;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col p-4 overflow-hidden relative">
+    <!-- Background 3D Canvas -->
+    <canvas id="quantum-canvas" class="absolute inset-0 w-full h-full z-0"></canvas>
+
+    <div id="app" class="relative z-10 flex flex-col h-[calc(100vh-2rem)] w-full max-w-7xl mx-auto gap-4 pointer-events-none">
+
+        <!-- Header -->
+        <header class="panel rounded-xl p-4 flex justify-between items-center shrink-0 pointer-events-auto">
+            <div>
+                <h1 class="text-2xl font-bold text-cyan-400 neon-text-cyan">SA-IR Quantum Relativity Studio</h1>
+                <p class="text-sm text-slate-400">3D Spatial Telemetry & Solar Angle Matrix Visualizer</p>
+            </div>
+            <div class="text-right">
+                <div class="text-xs text-slate-500">Node Status</div>
+                <div class="text-blue-400 font-mono text-sm neon-text-blue" id="node-status">3D_ROBOTICS_ARM_ALPHA [ONLINE]</div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
+
+            <!-- Left Column: Controls & Colors -->
+            <div class="flex flex-col gap-4 w-full lg:w-1/3 shrink-0 pointer-events-auto overflow-y-auto pr-2" style="scrollbar-width: thin;">
+
+                <!-- Solar Angle Slider Panel -->
+                <div class="panel rounded-xl p-4">
+                    <h2 class="text-lg font-semibold text-cyan-400 border-b border-cyan-400/30 pb-2 mb-4">Solar Angle Matrix</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-slate-300">Time (00시 ~ 23시)</span>
+                                <span id="time-display" class="font-mono text-cyan-400">12시</span>
+                            </div>
+                            <input type="range" id="time-slider" min="0" max="23" value="12" class="w-full">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 text-xs font-mono bg-slate-850 p-2 rounded border border-slate-700">
+                            <div class="text-slate-400">Solar Elevation:</div>
+                            <div id="solar-elevation" class="text-right text-blue-400">90.0°</div>
+                            <div class="text-slate-400">Keplerian Flux:</div>
+                            <div id="keplerian-flux" class="text-right text-blue-400">1.000</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Color Translator Panel -->
+                <div class="panel rounded-xl p-4">
+                    <h2 class="text-lg font-semibold text-blue-400 border-b border-blue-400/30 pb-2 mb-4">Semantic Color Matrix</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm text-slate-300 mb-1">Target Color (Hex)</label>
+                            <div class="flex gap-2">
+                                <input type="color" id="color-picker" value="#00f2fe" class="h-10 w-16 bg-slate-850 border border-slate-700 rounded cursor-pointer">
+                                <input type="text" id="color-hex" value="#00f2fe" class="flex-1 bg-slate-850 border border-slate-700 rounded px-3 text-sm font-mono text-cyan-400 focus:outline-none focus:border-cyan-400">
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-850 rounded p-3 border border-slate-700 space-y-3">
+                            <div>
+                                <div class="text-xs text-slate-400 mb-1">Semantic Origin</div>
+                                <div id="semantic-name" class="text-sm text-white font-semibold">bright cyan glowing</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 text-xs">
+                                <div>
+                                    <div class="text-slate-500">RGB Vector</div>
+                                    <div id="color-rgb" class="font-mono text-slate-300">[0, 242, 254]</div>
+                                </div>
+                                <div>
+                                    <div class="text-slate-500">HSL Space</div>
+                                    <div id="color-hsl" class="font-mono text-slate-300">[183°, 100%, 50%]</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-850/50 rounded p-3 border border-slate-700/50 relative overflow-hidden">
+                            <div class="absolute inset-0 opacity-10" id="comp-bg"></div>
+                            <div class="relative z-10">
+                                <div class="text-xs text-slate-400 mb-1">Complementary Resonance</div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <div id="comp-semantic" class="text-sm font-semibold" style="color: #fe0c00;">vivid crimson red</div>
+                                    <div id="comp-hex" class="font-mono text-xs px-2 py-1 bg-slate-900 rounded border border-slate-700">#fe0c00</div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-2 text-xs">
+                                    <div>
+                                        <div class="text-slate-500">RGB Vector</div>
+                                        <div id="comp-rgb" class="font-mono text-slate-300">[254, 12, 0]</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-slate-500">Phase Shift</div>
+                                        <div class="font-mono text-slate-300">180°</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Telemetry & Spacer for Canvas -->
+            <div class="flex flex-col gap-4 w-full lg:w-2/3 pointer-events-none">
+
+                <div class="flex-1"></div> <!-- Spacer to allow viewing 3D canvas -->
+
+                <!-- Telemetry Panel -->
+                <div class="panel rounded-xl p-4 pointer-events-auto shrink-0 max-h-64 flex flex-col">
+                    <h2 class="text-lg font-semibold text-cyan-400 border-b border-cyan-400/30 pb-2 mb-2 flex justify-between items-center">
+                        <span>Spatial Telemetry Inspector</span>
+                        <span class="text-xs bg-cyan-900/50 text-cyan-400 px-2 py-1 rounded">LIVE STREAM</span>
+                    </h2>
+                    <div class="flex-1 overflow-y-auto text-xs font-mono bg-slate-950 p-3 rounded border border-slate-800 text-slate-300" style="scrollbar-width: thin;">
+                        <pre id="telemetry-log" class="whitespace-pre-wrap leading-relaxed"></pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Core Math & Interaction Scripts -->
+    <script>
+        // ==========================================
+        // 1. SEMANTIC COLOR TRANSLATOR MATRIX
+        // ==========================================
+        const SemanticColorDictionary = [
+            { hex: "#ff0000", name: "vivid crimson red" }, { hex: "#00ff00", name: "bright neon green" },
+            { hex: "#0000ff", name: "deep electric blue" }, { hex: "#ff00ff", name: "vivid magenta pink" },
+            { hex: "#00ffff", name: "bright cyan glowing" }, { hex: "#ffff00", name: "bright lemon yellow" },
+            { hex: "#ffffff", name: "pure platinum white" }, { hex: "#000000", name: "obsidian black" },
+            { hex: "#808080", name: "ash slate gray" }, { hex: "#ff8c00", name: "dark orange sunset" },
+            { hex: "#4b0082", name: "deep indigo violet" }, { hex: "#ffc0cb", name: "soft pastel pink" },
+            { hex: "#ff007f", name: "cyberpunk neon pink" }, { hex: "#00f2fe", name: "quantum cyan" },
+            { hex: "#4facfe", name: "quantum blue" }
+        ];
+
+        function hexToRgb(hex) {
+            let cleanHex = hex.replace('#', '');
+            if (cleanHex.length === 3) {
+                cleanHex = cleanHex.split('').map(c => c + c).join('');
+            }
+            return [parseInt(cleanHex.slice(0, 2), 16), parseInt(cleanHex.slice(2, 4), 16), parseInt(cleanHex.slice(4, 6), 16)];
+        }
+
+        function getSemanticColorName(hex) {
+            let targetRgb = hexToRgb(hex);
+            let closestName = "custom dyed";
+            let minDistance = Infinity;
+            for (let c of SemanticColorDictionary) {
+                let dictRgb = hexToRgb(c.hex);
+                let dist = Math.pow(targetRgb[0] - dictRgb[0], 2) + Math.pow(targetRgb[1] - dictRgb[1], 2) + Math.pow(targetRgb[2] - dictRgb[2], 2);
+                if (dist < minDistance) { minDistance = dist; closestName = c.name; }
+            }
+            return closestName;
+        }
+
+        function hexToHsl(hex) {
+            let [r, g, b] = hexToRgb(hex).map(v => v / 255);
+            let max = Math.max(r, g, b), min = Math.min(r, g, b);
+            let h = 0, s = 0, l = (max + min) / 2;
+            if (max !== min) {
+                let d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+                }
+                h /= 6;
+            }
+            return [h * 360, s, l];
+        }
+
+        function hslToHex(h, s, l) {
+            let r, g, b;
+            h /= 360;
+            if (s === 0) { r = g = b = l; }
+            else {
+                const hue2rgb = (p, q, t) => {
+                    if (t < 0) t += 1;
+                    if (t > 1) t -= 1;
+                    if (t < 1 / 6) return p + (q - p) * 6 * t;
+                    if (t < 1 / 2) return q;
+                    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+                    return p;
+                };
+                let q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                let p = 2 * l - q;
+                r = hue2rgb(p, q, h + 1 / 3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1 / 3);
+            }
+            const toHex = x => { const hex = Math.round(x * 255).toString(16); return hex.length === 1 ? '0' + hex : hex; };
+            return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+        }
+
+        // ==========================================
+        // 2. CRYPTO & TELEMETRY MOCKUPS
+        // ==========================================
+        async function sha256Mock(text) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(text);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        function formatTelemetryLog(matrix, payload) {
+            const telemetryOutput = `
+{
+  "dataset_name": "${payload.dataset_name}",
+  "timestamp": "${new Date().toISOString()}",
+  "spatial_coordinates": {
+    "x": ${payload.spatial_coordinates.x.toFixed(2)},
+    "y": ${payload.spatial_coordinates.y.toFixed(2)},
+    "z": ${payload.spatial_coordinates.z.toFixed(2)},
+    "quaternion": [${payload.spatial_coordinates.orientation_quaternion.map(n => n.toFixed(4)).join(', ')}]
+  },
+  "telemetry_matrix": [
+    [${matrix[0].map(n => n.toFixed(3)).join(', ')}],
+    [${matrix[1].map(n => n.toFixed(3)).join(', ')}],
+    [${matrix[2].map(n => n.toFixed(3)).join(', ')}]
+  ],
+  "hardware_node": "${payload.hardware_node}",
+  "node_integrity_hash": "${payload.hash.substring(0,16)}..."
+}`;
+            return telemetryOutput.trim();
+        }
+
+        let telemetryInterval;
+        async function updateTelemetry(theta) {
+            // Simulate 3D_ROBOTICS_OPS payload
+            const rad = theta * Math.PI / 180;
+            const cosT = Math.cos(rad);
+            const sinT = Math.sin(rad);
+
+            // Generate a simple rotation matrix based on Solar Elevation
+            const matrix = [
+                [cosT, -sinT, 0],
+                [sinT, cosT, 0],
+                [0, 0, 1]
+            ];
+
+            // Jitter for live feel
+            const jitter = () => (Math.random() - 0.5) * 2.0;
+
+            const basePayload = {
+                dataset_name: "target1_3d_robotics_ops",
+                spatial_coordinates: {
+                    x: 102.4 + jitter(),
+                    y: 45.8 + jitter(),
+                    z: 890.1 + jitter(),
+                    orientation_quaternion: [0, Math.sin(rad/2), 0, Math.cos(rad/2)]
+                },
+                hardware_node: "3D_ROBOTICS_ARM_ALPHA",
+                hash: ""
+            };
+
+            basePayload.hash = await sha256Mock(JSON.stringify(basePayload) + Date.now());
+
+            document.getElementById('telemetry-log').textContent = formatTelemetryLog(matrix, basePayload);
+        }
+
+        // ==========================================
+        // 3. UI BINDINGS & 3D CANVAS RENDERING
+        // ==========================================
+
+        // --- 3D Particle Canvas Engine ---
+        const canvas = document.getElementById('quantum-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let width, height;
+        let particles = [];
+        let time = 0;
+        let currentSolarTheta = 90; // Default elevation (12:00)
+        let particleColor = "rgba(0, 242, 254, 0.5)"; // Default cyan
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initParticles();
+        }
+
+        function initParticles() {
+            particles = [];
+            const numParticles = Math.min((width * height) / 15000, 300);
+            for (let i = 0; i < numParticles; i++) {
+                particles.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    z: Math.random() * 1000, // Depth
+                    size: Math.random() * 2 + 1,
+                    baseSpeed: Math.random() * 0.5 + 0.1
+                });
+            }
+        }
+
+        function render3D() {
+            // Solar Angle determines the 'curvature' gravity and lighting angle
+            ctx.fillStyle = "#0f172a";
+            ctx.fillRect(0, 0, width, height);
+
+            // Draw a subtle horizon based on solar elevation
+            const horizonY = height / 2 + (90 - currentSolarTheta) * 2;
+            const gradient = ctx.createLinearGradient(0, horizonY - 100, 0, height);
+            gradient.addColorStop(0, "rgba(15, 23, 42, 0)");
+
+            // Dynamic horizon glow based on time (elevation)
+            let glowAlpha = Math.max(0, currentSolarTheta / 90) * 0.1;
+            gradient.addColorStop(1, `rgba(0, 242, 254, ${glowAlpha})`);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+
+            time += 0.01;
+            const fov = 300; // Field of view
+
+            ctx.save();
+            ctx.translate(width / 2, height / 2);
+
+            // Sun angle mapped to a 3D light vector
+            const lightAngle = (currentSolarTheta - 90) * (Math.PI / 180);
+
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+
+                // Move towards viewer based on depth
+                p.z -= p.baseSpeed * (Math.max(1, currentSolarTheta / 30));
+
+                if (p.z <= 0) {
+                    p.z = 1000;
+                    p.x = Math.random() * width;
+                    p.y = Math.random() * height;
+                }
+
+                // 3D to 2D projection
+                const scale = fov / (fov + p.z);
+                const x2d = (p.x - width / 2) * scale;
+                const y2d = (p.y - height / 2) * scale;
+
+                // Simulated quantum curvature distortion based on solar angle
+                const distortionX = Math.sin(time + p.y * 0.01) * (90 - Math.abs(currentSolarTheta)) * scale * 0.5;
+                const distortionY = Math.cos(time + p.x * 0.01) * (90 - Math.abs(currentSolarTheta)) * scale * 0.5;
+
+                const projectedX = x2d + distortionX;
+                const projectedY = y2d + distortionY;
+
+                const alpha = Math.min(1, (1000 - p.z) / 1000);
+
+                ctx.beginPath();
+                ctx.arc(projectedX, projectedY, p.size * scale * 2, 0, Math.PI * 2);
+
+                // Light shading simulation based on particle position and light angle
+                ctx.fillStyle = particleColor.replace('0.5', alpha.toString());
+                ctx.fill();
+
+                // Draw connecting 'relativity' web if close
+                if (i % 3 === 0 && p.z < 800) {
+                   for (let j = i + 1; j < particles.length; j+=10) {
+                       let p2 = particles[j];
+                       let dx = p.x - p2.x;
+                       let dy = p.y - p2.y;
+                       let dist = Math.sqrt(dx*dx + dy*dy);
+                       if (dist < 100 && Math.abs(p.z - p2.z) < 100) {
+                           const s2 = fov / (fov + p2.z);
+                           const x2_2d = (p2.x - width/2)*s2;
+                           const y2_2d = (p2.y - height/2)*s2;
+                           ctx.beginPath();
+                           ctx.moveTo(projectedX, projectedY);
+                           ctx.lineTo(x2_2d, y2_2d);
+                           ctx.strokeStyle = particleColor.replace('0.5', (alpha * 0.2).toString());
+                           ctx.lineWidth = scale;
+                           ctx.stroke();
+                       }
+                   }
+                }
+            }
+            ctx.restore();
+            requestAnimationFrame(render3D);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        // --- Color Sync Logic ---
+        function updateColors(hex) {
+            const rgb = hexToRgb(hex);
+            const hsl = hexToHsl(hex);
+            const semanticName = getSemanticColorName(hex);
+
+            document.getElementById('semantic-name').textContent = semanticName;
+            document.getElementById('color-rgb').textContent = `[${rgb.join(', ')}]`;
+            document.getElementById('color-hsl').textContent = `[${Math.round(hsl[0])}°, ${Math.round(hsl[1]*100)}%, ${Math.round(hsl[2]*100)}%]`;
+
+            // Calc complementary
+            let compHue = (hsl[0] + 180) % 360;
+            let compHex = hslToHex(compHue, hsl[1], hsl[2]);
+            let compRgb = hexToRgb(compHex);
+            let compSemantic = getSemanticColorName(compHex);
+
+            document.getElementById('comp-hex').textContent = compHex;
+            document.getElementById('comp-semantic').textContent = compSemantic;
+            document.getElementById('comp-semantic').style.color = compHex;
+            document.getElementById('comp-rgb').textContent = `[${compRgb.join(', ')}]`;
+
+            // Update 3D canvas colors
+            particleColor = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.5)`;
+
+            // Update UI elements to reflect target color
+            document.getElementById('color-hex').style.color = hex;
+            document.getElementById('color-hex').style.borderColor = hex;
+        }
+
+        const colorPicker = document.getElementById('color-picker');
+        const colorHex = document.getElementById('color-hex');
+
+        colorPicker.addEventListener('input', (e) => {
+            const val = e.target.value;
+            colorHex.value = val;
+            updateColors(val);
+        });
+
+        colorHex.addEventListener('input', (e) => {
+            let val = e.target.value;
+            if (/^#[0-9A-F]{6}$/i.test(val)) {
+                colorPicker.value = val;
+                updateColors(val);
+            }
+        });
+
+        // --- Solar Angle Sync Logic ---
+        function updateSolarAngle(hourStr) {
+            let hour = parseInt(hourStr, 10);
+
+            // Basic mockup of Solar Elevation (0시 = -90, 12시 = 90)
+            // A more complex calculation like in Flash.src.js could be used, but this suffices for visualization
+            let theta = (hour - 6) * 15; // 6 AM = 0, 12 PM = 90, 18 PM = 180 (then map back down)
+            if (theta > 90) theta = 180 - theta;
+            if (theta < -90) theta = -180 - theta;
+
+            currentSolarTheta = theta;
+
+            // Mock flux
+            let flux = Math.max(0, Math.sin(theta * Math.PI / 180));
+            if (flux <= 0) flux = 0.05; // Base ambient flux
+
+            document.getElementById('time-display').textContent = `${String(hour).padStart(2, '0')}시`;
+            document.getElementById('solar-elevation').textContent = `${theta.toFixed(1)}°`;
+            document.getElementById('keplerian-flux').textContent = flux.toFixed(3);
+
+            // Trigger telemetry update with new theta
+            updateTelemetry(theta);
+        }
+
+        document.getElementById('time-slider').addEventListener('input', (e) => {
+            updateSolarAngle(e.target.value);
+        });
+
+        // --- Initialization ---
+        resizeCanvas();
+        requestAnimationFrame(render3D);
+        updateColors("#00f2fe");
+        updateSolarAngle("12");
+
+        // Live telemetry loop
+        setInterval(() => {
+            updateTelemetry(currentSolarTheta);
+        }, 100);
+
+    </script>
+</body>
+</html>

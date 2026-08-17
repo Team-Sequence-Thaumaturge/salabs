@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3D Audio Spectrum Synthesizer - Jules Studio - v2.0</title>
+    <title>3D Audio Spectrum Synthesizer - Jules Studio - v3.0</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -33,7 +33,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "3D Audio Spectrum Synthesizer",
-        "softwareVersion": "2.0",
+        "softwareVersion": "3.0",
         "applicationCategory": "MultimediaApplication",
         "operatingSystem": "Web",
         "description": "100% client-side WebGL 3D Audio Frequency Spectrum visualizer with Web Audio API tone generator and 3D particle terrain displacement.",
@@ -43,6 +43,10 @@
         }
       }
     </script>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
     <!-- Google AdSense -->
     <script
@@ -174,9 +178,10 @@
     <!-- UI Overlay -->
     <div id="ui-layer">
       <div class="panel">
-        <h1 class="text-xl font-bold mb-4 text-cyan-400">
-          3D Audio Synthesizer
-        </h1>
+        <h1 class="text-xl font-bold mb-1 text-cyan-400">
+          3D Audio Synthesizer</h1>
+        <p class="text-xs text-blue-400 mb-4 font-mono">v3.0 - Jules Studio</p>
+
 
         <div class="space-y-4">
           <div>
@@ -409,225 +414,105 @@
           );
       });
 
-      // --- WebGL 3D Terrain Setup ---
-      const canvas = document.getElementById("webgl-canvas");
-      const gl =
-        canvas.getContext("webgl", { antialias: true }) ||
-        canvas.getContext("experimental-webgl");
+      // --- Three.js 3D Terrain Setup ---
+      const webglCanvas = document.getElementById("webgl-canvas");
+      const renderer = new THREE.WebGLRenderer({ canvas: webglCanvas, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setClearColor(0x0f172a, 1.0);
 
-      function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        canvas.style.width = window.innerWidth + "px";
-        canvas.style.height = window.innerHeight + "px";
-        gl.viewport(0, 0, canvas.width, canvas.height);
-      }
-      window.addEventListener("resize", resizeCanvas);
-      resizeCanvas();
+      const scene = new THREE.Scene();
 
-      const vsSource = `
-            attribute vec3 aVertexPosition;
-            uniform mat4 uModelViewMatrix;
-            uniform mat4 uProjectionMatrix;
-            uniform float uTime;
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100.0);
+      camera.position.set(0, 1.5, 4.5);
 
-            varying float vHeight;
+      const controls = new THREE.OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.05;
 
-            void main() {
-                vHeight = aVertexPosition.y;
-                vec4 pos = uProjectionMatrix * uModelViewMatrix * vec4(aVertexPosition, 1.0);
-                gl_Position = pos;
-                gl_PointSize = 2.0 + (aVertexPosition.y * 5.0); // Size based on height
-            }
-        `;
-
-      const fsSource = `
-            precision mediump float;
-            varying float vHeight;
-
-            void main() {
-                // Mix between cyan and blue based on height
-                vec3 colorLow = vec3(0.31, 0.67, 0.99); // #4facfe
-                vec3 colorHigh = vec3(0.0, 0.95, 0.99); // #00f2fe
-                vec3 color = mix(colorLow, colorHigh, clamp(vHeight * 2.0, 0.0, 1.0));
-
-                // Soft particle
-                vec2 coord = gl_PointCoord - vec2(0.5);
-                float dist = length(coord);
-                if (dist > 0.5) discard;
-
-                float alpha = (0.5 - dist) * 2.0;
-                gl_FragColor = vec4(color, alpha * 0.8);
-            }
-        `;
-
-      function compileShader(gl, type, source) {
-        const shader = gl.createShader(type);
-        gl.shaderSource(shader, source);
-        gl.compileShader(shader);
-        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-          console.error("Shader compile failed:", gl.getShaderInfoLog(shader));
-          gl.deleteShader(shader);
-          return null;
-        }
-        return shader;
-      }
-
-      const vertexShader = compileShader(gl, gl.VERTEX_SHADER, vsSource);
-      const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, fsSource);
-
-      const shaderProgram = gl.createProgram();
-      gl.attachShader(shaderProgram, vertexShader);
-      gl.attachShader(shaderProgram, fragmentShader);
-      gl.linkProgram(shaderProgram);
-
-      const programInfo = {
-        program: shaderProgram,
-        attribLocations: {
-          vertexPosition: gl.getAttribLocation(
-            shaderProgram,
-            "aVertexPosition",
-          ),
-        },
-        uniformLocations: {
-          projectionMatrix: gl.getUniformLocation(
-            shaderProgram,
-            "uProjectionMatrix",
-          ),
-          modelViewMatrix: gl.getUniformLocation(
-            shaderProgram,
-            "uModelViewMatrix",
-          ),
-          time: gl.getUniformLocation(shaderProgram, "uTime"),
-        },
-      };
+      window.addEventListener("resize", () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
 
       // Grid parameters
       const GRID_W = 64; // Frequency bins
       const GRID_H = 64; // Time history
       const NUM_PARTICLES = GRID_W * GRID_H;
 
-      let positions = new Float32Array(NUM_PARTICLES * 3);
       let history = new Array(GRID_H).fill(new Uint8Array(GRID_W));
 
-      const positionBuffer = gl.createBuffer();
+      const geometry = new THREE.PlaneGeometry(0.04, 0.04);
+
+      // Custom Shader Material for InstancedMesh
+      const material = new THREE.ShaderMaterial({
+        uniforms: {
+          uTime: { value: 0.0 },
+          uColorLow: { value: new THREE.Color("#4facfe") },
+          uColorHigh: { value: new THREE.Color("#00f2fe") }
+        },
+        vertexShader: `
+          varying float vHeight;
+          void main() {
+            // position is the local vertex of the PlaneGeometry
+            // instanceMatrix is automatically injected by THREE for InstancedMesh
+            vec4 worldPos = instanceMatrix * vec4(position, 1.0);
+            vHeight = worldPos.y; // Capture world Y for coloring
+            gl_Position = projectionMatrix * viewMatrix * modelMatrix * worldPos;
+          }
+        `,
+        fragmentShader: `
+          uniform vec3 uColorLow;
+          uniform vec3 uColorHigh;
+          varying float vHeight;
+          void main() {
+            vec3 color = mix(uColorLow, uColorHigh, clamp(vHeight * 2.0, 0.0, 1.0));
+            // Soft circle shape for plane geometry
+            vec2 uv = gl_PointCoord - vec2(0.5); // Not applicable for plane, use standard center dist if needed
+            // But since we use Plane geometry, we can just use simple rendering or texture.
+            // For a soft look on plane:
+            // float dist = length(gl_PointCoord - 0.5); // only for gl.POINTS
+            // Let's just output the color.
+            gl_FragColor = vec4(color, 0.8);
+          }
+        `,
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending
+      });
+
+      const instancedMesh = new THREE.InstancedMesh(geometry, material, NUM_PARTICLES);
+      scene.add(instancedMesh);
+
+      const dummy = new THREE.Object3D();
 
       function updateTerrainData(freqData) {
         // Shift history
         history.pop();
         history.unshift(new Uint8Array(freqData));
 
-        // Build vertices
         let idx = 0;
         for (let z = 0; z < GRID_H; z++) {
           for (let x = 0; x < GRID_W; x++) {
             const normX = (x / (GRID_W - 1)) * 2.0 - 1.0; // -1 to 1
             const normZ = (z / (GRID_H - 1)) * 2.0 - 1.0; // -1 to 1
 
-            // Height from history
             const val = history[z][x] / 255.0;
             const height = val * 0.5;
 
-            positions[idx++] = normX * 4.0; // scale X
-            positions[idx++] = height - 0.2; // Y position
-            positions[idx++] = normZ * 4.0; // scale Z
+            dummy.position.set(normX * 4.0, height - 0.2, normZ * 4.0);
+
+            // Orient plane to face camera roughly or flat up
+            dummy.rotation.x = -Math.PI / 2;
+            dummy.scale.set(1.0 + height * 2.0, 1.0 + height * 2.0, 1.0);
+
+            dummy.updateMatrix();
+            instancedMesh.setMatrixAt(idx++, dummy.matrix);
           }
         }
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-        gl.bufferData(gl.ARRAY_BUFFER, positions, gl.DYNAMIC_DRAW);
+        instancedMesh.instanceMatrix.needsUpdate = true;
       }
-
-      // Simple Matrix Math
-      function perspective(out, fovy, aspect, near, far) {
-        const f = 1.0 / Math.tan(fovy / 2);
-        const nf = 1 / (near - far);
-        out[0] = f / aspect;
-        out[1] = 0;
-        out[2] = 0;
-        out[3] = 0;
-        out[4] = 0;
-        out[5] = f;
-        out[6] = 0;
-        out[7] = 0;
-        out[8] = 0;
-        out[9] = 0;
-        out[10] = (far + near) * nf;
-        out[11] = -1;
-        out[12] = 0;
-        out[13] = 0;
-        out[14] = 2 * far * near * nf;
-        out[15] = 0;
-        return out;
-      }
-
-      function translate(out, a, v) {
-        let x = v[0],
-          y = v[1],
-          z = v[2];
-        out[12] = a[0] * x + a[4] * y + a[8] * z + a[12];
-        out[13] = a[1] * x + a[5] * y + a[9] * z + a[13];
-        out[14] = a[2] * x + a[6] * y + a[10] * z + a[14];
-        out[15] = a[3] * x + a[7] * y + a[11] * z + a[15];
-        return out;
-      }
-
-      function rotateX(out, a, rad) {
-        let s = Math.sin(rad),
-          c = Math.cos(rad);
-        let a10 = a[4],
-          a11 = a[5],
-          a12 = a[6],
-          a13 = a[7];
-        let a20 = a[8],
-          a21 = a[9],
-          a22 = a[10],
-          a23 = a[11];
-        out[4] = a10 * c + a20 * s;
-        out[5] = a11 * c + a21 * s;
-        out[6] = a12 * c + a22 * s;
-        out[7] = a13 * c + a23 * s;
-        out[8] = a20 * c - a10 * s;
-        out[9] = a21 * c - a11 * s;
-        out[10] = a22 * c - a12 * s;
-        out[11] = a23 * c - a13 * s;
-        return out;
-      }
-
-      function rotateY(out, a, rad) {
-        let s = Math.sin(rad),
-          c = Math.cos(rad);
-        let a00 = a[0],
-          a01 = a[1],
-          a02 = a[2],
-          a03 = a[3];
-        let a20 = a[8],
-          a21 = a[9],
-          a22 = a[10],
-          a23 = a[11];
-        out[0] = a00 * c - a20 * s;
-        out[1] = a01 * c - a21 * s;
-        out[2] = a02 * c - a22 * s;
-        out[3] = a03 * c - a23 * s;
-        out[8] = a00 * s + a20 * c;
-        out[9] = a01 * s + a21 * c;
-        out[10] = a02 * s + a22 * c;
-        out[11] = a03 * s + a23 * c;
-        return out;
-      }
-
-      const projectionMatrix = new Float32Array(16);
-      const modelViewMatrix = new Float32Array([
-        1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,
-      ]);
-      const identityMatrix = new Float32Array([
-        1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,
-      ]);
-
-      // Enable blending
-      gl.enable(gl.BLEND);
-      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-      gl.disable(gl.DEPTH_TEST);
 
       // --- 2D FFT Canvas Setup ---
       const fftCanvas = document.getElementById("fft-canvas");
@@ -642,7 +527,6 @@
         let barHeight;
         let x = 0;
 
-        // Draw grid
         fftCtx.strokeStyle = "rgba(0, 242, 254, 0.1)";
         fftCtx.lineWidth = 1;
         for (let i = 0; i < 4; i++) {
@@ -655,20 +539,13 @@
         for (let i = 0; i < dataArray.length; i++) {
           barHeight = (dataArray[i] / 255) * fftCanvas.height;
 
-          // Gradient for bars
-          let grad = fftCtx.createLinearGradient(
-            0,
-            fftCanvas.height,
-            0,
-            fftCanvas.height - barHeight,
-          );
+          let grad = fftCtx.createLinearGradient(0, fftCanvas.height, 0, fftCanvas.height - barHeight);
           grad.addColorStop(0, "#4facfe");
           grad.addColorStop(1, "#00f2fe");
 
           fftCtx.fillStyle = grad;
           fftCtx.fillRect(x, fftCanvas.height - barHeight, barWidth, barHeight);
 
-          // Top cap
           fftCtx.fillStyle = "#fff";
           fftCtx.fillRect(x, fftCanvas.height - barHeight - 2, barWidth, 2);
 
@@ -678,78 +555,36 @@
 
       // --- Render Loop ---
       const freqData = new Uint8Array(GRID_W);
-      let time = 0;
+      let clock = new THREE.Clock();
 
       function render() {
         requestAnimationFrame(render);
-        time += 0.01;
+
+        const time = clock.getElapsedTime();
+        material.uniforms.uTime.value = time;
 
         if (analyser && isPlaying) {
-          // Get FFT data
           const fullData = new Uint8Array(analyser.frequencyBinCount);
           analyser.getByteFrequencyData(fullData);
 
-          // Downsample to GRID_W for 3D
           const step = Math.floor(fullData.length / GRID_W);
           for (let i = 0; i < GRID_W; i++) {
             freqData[i] = fullData[i * step];
           }
 
           updateTerrainData(freqData);
-          drawFFT(fullData.slice(0, 100)); // Draw first 100 bins in 2D
+          drawFFT(fullData.slice(0, 100));
         } else {
-          // Idle state, just zeros
           freqData.fill(0);
           updateTerrainData(freqData);
           drawFFT(new Uint8Array(100));
         }
 
-        // Render WebGL
-        gl.clearColor(0.06, 0.09, 0.16, 1.0); // #0f172a
-        gl.clear(gl.COLOR_BUFFER_BIT);
+        // Slowly rotate scene
+        scene.rotation.y = time * 0.1;
 
-        perspective(
-          projectionMatrix,
-          (45 * Math.PI) / 180,
-          canvas.width / canvas.height,
-          0.1,
-          100.0,
-        );
-
-        // Reset model view matrix
-        for (let i = 0; i < 16; i++) modelViewMatrix[i] = identityMatrix[i];
-
-        // Camera position
-        translate(modelViewMatrix, modelViewMatrix, [0.0, -1.0, -4.5]);
-        rotateX(modelViewMatrix, modelViewMatrix, 0.4);
-        rotateY(modelViewMatrix, modelViewMatrix, time * 0.2); // Slow rotation
-
-        gl.useProgram(programInfo.program);
-
-        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-        gl.vertexAttribPointer(
-          programInfo.attribLocations.vertexPosition,
-          3,
-          gl.FLOAT,
-          false,
-          0,
-          0,
-        );
-        gl.enableVertexAttribArray(programInfo.attribLocations.vertexPosition);
-
-        gl.uniformMatrix4fv(
-          programInfo.uniformLocations.projectionMatrix,
-          false,
-          projectionMatrix,
-        );
-        gl.uniformMatrix4fv(
-          programInfo.uniformLocations.modelViewMatrix,
-          false,
-          modelViewMatrix,
-        );
-        gl.uniform1f(programInfo.uniformLocations.time, time);
-
-        gl.drawArrays(gl.POINTS, 0, NUM_PARTICLES);
+        controls.update();
+        renderer.render(scene, camera);
       }
 
       render();
