@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D 홉프 토러스 매듭 ASCII 렌더러 프로 | Quanxs SA Labs</title>
+  <meta name="description" content="고차원 4D 홉프 파이브레이션(Hopf Fibration) 및 (p,q) 토러스 매듭의 3D 입체 투영 실시간 ASCII 아트 렌더링 엔진입니다.">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "3D Hopf Torus Knot ASCII Raymarcher Pro",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-hopf-torus-knot-pro.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "description": "High-performance 3D Hopf Torus Knot ASCII renderer with real-time quaternion rotation and dynamic illumination shading.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    :root { --bg: #090c10; --panel: #121820; --border: #212936; --text: #c9d5e3; --accent: #00ffcc; --accent2: #ff007f; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace; padding: 20px; line-height: 1.5; }
+    .container { max-width: 1040px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 20px; }
+    header h1 { font-size: 1.8rem; color: #fff; margin-bottom: 6px; text-shadow: 0 0 10px rgba(0,255,204,0.4); }
+    header p { color: #7f93a8; font-size: 0.95rem; }
+    .grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; }
+    @media (max-width: 840px) { .grid { grid-template-columns: 1fr; } }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    .card h2 { font-size: 1.15rem; color: var(--accent); margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .ascii-viewport { background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 12px; height: 420px; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: "Courier New", monospace; font-size: 10px; line-height: 9px; letter-spacing: -0.5px; color: var(--accent); white-space: pre; text-shadow: 0 0 6px rgba(0,255,204,0.5); user-select: none; }
+    .control-group { margin-bottom: 14px; }
+    .control-group label { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px; color: #7f93a8; }
+    input[type=range] { width: 100%; accent-color: var(--accent); }
+    select, button { width: 100%; padding: 9px 12px; background: #1a222e; border: 1px solid var(--border); border-radius: 6px; color: #fff; cursor: pointer; font-size: 0.9rem; margin-top: 4px; }
+    button.btn-primary { background: linear-gradient(135deg, #00bfa5, #00ffcc); color: #000; font-weight: bold; border: none; margin-top: 10px; }
+    button.btn-primary:hover { filter: brightness(1.1); box-shadow: 0 0 12px rgba(0,255,204,0.4); }
+    .badge { display: inline-block; padding: 2px 7px; border-radius: 10px; font-size: 0.75rem; background: #1a222e; color: var(--accent); border: 1px solid var(--border); }
+  </style>
+<script>
+
+    const display = document.getElementById('asciiDisplay');
+    const pqSelect = document.getElementById('pqSelect');
+    const speedSlider = document.getElementById('speedSlider');
+    const speedVal = document.getElementById('speedVal');
+    const psiSlider = document.getElementById('psiSlider');
+    const psiVal = document.getElementById('psiVal');
+    const radiusSlider = document.getElementById('radiusSlider');
+    const radiusVal = document.getElementById('radiusVal');
+    const rampSelect = document.getElementById('rampSelect');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const fpsMeter = document.getElementById('fpsMeter');
+
+    const RAMPS = {
+      cyber: " .·:;+=xX$#@",
+      classic: " .:-=+*#%@",
+      binary: "  01"
+    };
+
+    let p = 3, q = 4;
+    let angleX = 0, angleY = 0, angleZ = 0;
+    let isPaused = false;
+    let lastTime = performance.now();
+    let frameCount = 0;
+
+    const COLS = 76;
+    const ROWS = 42;
+
+    function renderHopfTorus() {
+      const zBuffer = new Array(COLS * ROWS).fill(0);
+      const bBuffer = new Array(COLS * ROWS).fill(' ');
+      const ramp = RAMPS[rampSelect.value] || RAMPS.cyber;
+
+      const r = parseFloat(radiusSlider.value);
+      const psi = parseFloat(psiSlider.value);
+      const R = 1.4;
+
+      const steps = 1440;
+      for (let i = 0; i < steps; i++) {
+        const phi = (i / steps) * Math.PI * 2 * p;
+        const theta = (i / steps) * Math.PI * 2 * q;
+
+        // Hopf Fibration Coordinates in 4D (S3)
+        const x4 = Math.cos(phi) * Math.cos(theta + psi);
+        const y4 = Math.sin(phi) * Math.cos(theta + psi);
+        const z4 = Math.cos(phi) * Math.sin(theta + psi);
+        const w4 = Math.sin(phi) * Math.sin(theta + psi);
+
+        // Stereographic Projection to 3D
+        const denom = 1.0 - w4 * 0.45;
+        let x0 = (x4 * (R + r * Math.cos(theta))) / denom;
+        let y0 = (y4 * (R + r * Math.cos(theta))) / denom;
+        let z0 = (z4 + r * Math.sin(theta)) / denom;
+
+        // 3D Rotation Matrix
+        let x1 = x0 * Math.cos(angleY) + z0 * Math.sin(angleY);
+        let z1 = -x0 * Math.sin(angleY) + z0 * Math.cos(angleY);
+        let y1 = y0 * Math.cos(angleX) - z1 * Math.sin(angleX);
+        let z2 = y0 * Math.sin(angleX) + z1 * Math.cos(angleX);
+
+        // Perspective Projection
+        const dist = 3.8;
+        const ooz = 1 / (z2 + dist);
+        const xp = Math.floor(COLS / 2 + x1 * ooz * 38);
+        const yp = Math.floor(ROWS / 2 - y1 * ooz * 20);
+
+        if (xp >= 0 && xp < COLS && yp >= 0 && yp < ROWS) {
+          const idx = xp + yp * COLS;
+          if (ooz > zBuffer[idx]) {
+            zBuffer[idx] = ooz;
+            // Illumination Normal
+            const lum = Math.max(0, Math.min(1, (z2 + 1.5) / 3.0));
+            const charIdx = Math.floor(lum * (ramp.length - 1));
+            bBuffer[idx] = ramp[charIdx];
+          }
+        }
+      }
+
+      let output = "";
+      for (let k = 0; k < ROWS; k++) {
+        output += bBuffer.slice(k * COLS, (k + 1) * COLS).join('') + "\n";
+      }
+      display.textContent = output;
+    }
+
+    function animate(now) {
+      if (!isPaused) {
+        const speed = parseFloat(speedSlider.value);
+        angleX += 0.02 * speed;
+        angleY += 0.025 * speed;
+      }
+      renderHopfTorus();
+
+      frameCount++;
+      if (now - lastTime >= 1000) {
+        fpsMeter.textContent = frameCount;
+        frameCount = 0;
+        lastTime = now;
+      }
+      requestAnimationFrame(animate);
+    }
+
+    pqSelect.addEventListener('change', () => {
+      const parts = pqSelect.value.split(',');
+      p = parseInt(parts[0]);
+      q = parseInt(parts[1]);
+      document.getElementById('pqBadge').textContent = `p=${p}, q=${q}`;
+    });
+
+    speedSlider.addEventListener('input', () => {
+      speedVal.textContent = parseFloat(speedSlider.value).toFixed(1) + 'x';
+    });
+
+    psiSlider.addEventListener('input', () => {
+      psiVal.textContent = parseFloat(psiSlider.value).toFixed(2) + ' rad';
+    });
+
+    radiusSlider.addEventListener('input', () => {
+      radiusVal.textContent = parseFloat(radiusSlider.value).toFixed(2);
+    });
+
+    pauseBtn.addEventListener('click', () => {
+      isPaused = !isPaused;
+      pauseBtn.textContent = isPaused ? "▶ Resume Rotation" : "⏸ Pause Rotation";
+    });
+
+    requestAnimationFrame(animate);
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🌀 3D Hopf Torus Knot ASCII Raymarcher Pro</h1>
+      <p>4D Hopf Fibration & Stereographic (p,q) Torus Manifold Mathematical ASCII Engine (100% Client-Side Pure JS)</p>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <h2>🖥️ ASCII 3D Manifold Viewport</h2>
+        <div class="ascii-viewport" id="asciiDisplay">Initializing Hopf Raymarcher...</div>
+        <div style="display:flex; justify-content:space-between; margin-top:10px; font-size:0.8rem; color:#7f93a8;">
+          <span>FPS: <strong id="fpsMeter" style="color:var(--accent);">60</strong></span>
+          <span>Points: <strong>1,440</strong></span>
+          <span>Matrix: <strong>4D-to-3D Stereo</strong></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>🎛️ Mathematical Parameters</h2>
+        <div class="control-group">
+          <label><span>Torus Winding (p : q)</span> <span class="badge" id="pqBadge">p=3, q=4</span></label>
+          <select id="pqSelect">
+            <option value="2,3">Trefoil Knot (2, 3)</option>
+            <option value="3,4" selected>Solomon Hopf Knot (3, 4)</option>
+            <option value="3,5">Cinquefoil Knot (3, 5)</option>
+            <option value="5,7">High-Density Hopf Matrix (5, 7)</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label><span>Rotation Speed X-Y</span> <span id="speedVal">1.0x</span></label>
+          <input type="range" id="speedSlider" min="0.1" max="3.0" value="1.0" step="0.1">
+        </div>
+        <div class="control-group">
+          <label><span>4D Hopf Hyper-Angle (ψ)</span> <span id="psiVal">0.00 rad</span></label>
+          <input type="range" id="psiSlider" min="0" max="6.28" value="0.0" step="0.05">
+        </div>
+        <div class="control-group">
+          <label><span>Torus Tube Radius (r)</span> <span id="radiusVal">0.55</span></label>
+          <input type="range" id="radiusSlider" min="0.2" max="1.0" value="0.55" step="0.02">
+        </div>
+        <div class="control-group">
+          <label><span>ASCII Shading Ramp</span> <span class="badge" id="rampBadge">Cyber Matrix</span></label>
+          <select id="rampSelect">
+            <option value="cyber">Cyber Matrix ( .·:;+=xX$#@)</option>
+            <option value="classic">Standard Density ( .:-=+*#%@)</option>
+            <option value="binary">Quantum Binary ( 01)</option>
+          </select>
+        </div>
+        <button id="pauseBtn" class="btn-primary">⏸ Pause / Resume Rotation</button>
+      </div>
+    </div>
+  </div>
+
+  
+</body>
+</html>
