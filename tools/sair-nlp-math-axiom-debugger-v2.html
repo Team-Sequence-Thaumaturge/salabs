@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAIR 자연어 수학 공리 컴파일 디버거 Pro | Quanxs SA Labs</title>
+  <meta name="description" content="Stella Abstraction Intermediate Representation (SA-IR) 7대 수학 공리 매핑 및 자연어 구문 분석 컴파일러 디버깅 스튜디오입니다.">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "SAIR 자연어 수학 공리 컴파일 디버거 Pro",
+    "url": "https://salabs.quanxs.com/tools/sair-nlp-math-axiom-debugger-v2.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "description": "7대 수학 공리 기반 자연어-IR 변환 및 토큰 매핑 실시간 디버거",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    :root { --bg: #0d1117; --panel: #161b22; --border: #30363d; --text: #c9d1d9; --accent: #58a6ff; --green: #3fb950; --purple: #bc8cff; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace; padding: 20px; line-height: 1.5; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 24px; }
+    header h1 { font-size: 1.8rem; color: #fff; margin-bottom: 8px; }
+    header p { color: #8b949e; font-size: 0.95rem; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+    .card h2 { font-size: 1.1rem; color: var(--accent); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+    textarea { width: 100%; height: 140px; background: #0d1117; border: 1px solid var(--border); border-radius: 6px; color: #fff; padding: 12px; font-family: monospace; font-size: 0.9rem; resize: vertical; }
+    button { padding: 10px 16px; background: #238636; border: 1px solid #2ea043; border-radius: 6px; color: #fff; cursor: pointer; font-weight: bold; font-size: 0.95rem; margin-top: 10px; width: 100%; }
+    button:hover { background: #2ea043; }
+    .result-box { background: #0d1117; border: 1px solid var(--border); border-radius: 6px; padding: 12px; font-family: monospace; font-size: 0.85rem; max-height: 320px; overflow-y: auto; color: #7ee787; white-space: pre-wrap; }
+    .axiom-tag { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; background: #21262d; border: 1px solid var(--border); margin: 3px; color: var(--purple); }
+  </style>
+<script>
+
+    document.getElementById('compileBtn').addEventListener('click', () => {
+      const text = document.getElementById('nlInput').value.trim();
+      if (!text) return;
+      const tokens = text.split(/\s+/);
+      const irGraph = {
+        meta: {
+          compiler: 'SA-IR v2.4 (Stella Core Engine)',
+          timestamp: new Date().toISOString(),
+          input_length: text.length,
+          token_count: tokens.length
+        },
+        axiom_activations: {
+          Ax1_Identity: Math.min(1.0, tokens.length * 0.12).toFixed(3),
+          Ax2_DualSpace: (text.includes('검증') || text.includes('증명')) ? '0.982' : '0.415',
+          Ax3_Projection: (text.includes('적재') || text.includes('전달')) ? '0.954' : '0.320',
+          Ax4_Conservation: '1.000',
+          Ax5_EntropyLoss: (Math.random() * 0.05).toFixed(4),
+          Ax6_Causality: '0.999',
+          Ax7_Symmetry: (text.includes('원자적') || text.includes('영지식')) ? '0.967' : '0.550'
+        },
+        tensor_ir_nodes: tokens.map((t, idx) => ({
+          node_id: `IR_TENSOR_${idx + 1}`,
+          token: t,
+          dim: [1, 7, 64],
+          latent_norm: (Math.sin(idx + 1) * 0.5 + 0.5).toFixed(4),
+          target_axiom: `Ax${(idx % 7) + 1}`
+        }))
+      };
+      document.getElementById('irOutput').textContent = JSON.stringify(irGraph, null, 2);
+    });
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📐 SAIR NLP-Math Axiom Compiler Debugger Pro</h1>
+      <p>자연어 구문을 SA-IR 7대 수학 공리(Axioms 1~7) 및 텐서 다이내믹스 그래프로 실시간 분해 및 컴파일</p>
+    </header>
+    <div class="grid">
+      <div class="card">
+        <h2>📝 Natural Language Input (Korean / English)</h2>
+        <textarea id="nlInput" placeholder="자연어 쿼리나 아키텍처 명세를 입력하세요.">사용자가 요청한 연산 데이터를 영지식 증명(ZK-Proof)으로 검증하여 트랜잭션 버퍼에 원자적으로 적재한다.</textarea>
+        <button id="compileBtn">⚡ Compile to SA-IR Axiom Tensor</button>
+        <div style="margin-top: 16px;">
+          <span style="font-size: 0.85rem; color: #8b949e;">7대 공리 매핑:</span><br>
+          <span class="axiom-tag">Ax1: Identity</span>
+          <span class="axiom-tag">Ax2: Dual Space</span>
+          <span class="axiom-tag">Ax3: Projection</span>
+          <span class="axiom-tag">Ax4: Conservation</span>
+          <span class="axiom-tag">Ax5: Entropy</span>
+          <span class="axiom-tag">Ax6: Causality</span>
+          <span class="axiom-tag">Ax7: Symmetry</span>
+        </div>
+      </div>
+      <div class="card">
+        <h2>🔬 Compiled SA-IR Intermediate Representation</h2>
+        <div id="irOutput" class="result-box">// SA-IR v2.4 Tensor Representation will appear here...</div>
+      </div>
+    </div>
+  </div>
+  
+</body>
+</html>

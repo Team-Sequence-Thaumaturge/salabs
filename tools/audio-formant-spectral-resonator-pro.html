@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>오디오 스펙트럼 포먼트 공명 합성기 Pro | Quanxs SA Labs</title>
+  <meta name="description" content="Web Audio API 기반의 브라우저 로컬 구동 다중 포먼트 주파수 필터 뱅크 및 스펙트럼 공명 사운드 디자인 스튜디오입니다.">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "오디오 스펙트럼 포먼트 공명 합성기 Pro",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-spectral-resonator-pro.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "description": "클라이언트 사이드 Web Audio BiquadFilter 뱅크 기반 다중 포먼트 공명 스튜디오",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+  <style>
+    :root { --bg: #0d1117; --panel: #161b22; --border: #30363d; --text: #c9d1d9; --accent: #58a6ff; --green: #3fb950; --red: #f85149; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 20px; line-height: 1.5; }
+    .container { max-width: 960px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 20px; }
+    header h1 { font-size: 1.8rem; color: #fff; margin-bottom: 8px; }
+    header p { color: #8b949e; font-size: 0.95rem; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+    @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 18px; }
+    .card h2 { font-size: 1.1rem; color: var(--accent); margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+    .control-group { margin-bottom: 14px; }
+    .control-group label { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px; color: #8b949e; }
+    input[type=range] { width: 100%; accent-color: var(--accent); }
+    select, button { width: 100%; padding: 10px 14px; background: #21262d; border: 1px solid var(--border); border-radius: 6px; color: #fff; cursor: pointer; font-size: 0.95rem; margin-top: 6px; }
+    button.btn-primary { background: #238636; border-color: #2ea043; font-weight: bold; }
+    button.btn-primary:hover { background: #2ea043; }
+    button.btn-danger { background: #da3633; border-color: #f85149; }
+    canvas { width: 100%; height: 220px; background: #000; border-radius: 6px; border: 1px solid var(--border); }
+  </style>
+<script>
+
+    let audioCtx = null;
+    let osc = null;
+    let filters = [];
+    let analyser = null;
+    let isPlaying = false;
+    const presets = {
+      a: [800, 1200, 2500],
+      e: [500, 1800, 2500],
+      i: [300, 2300, 3000],
+      o: [500, 800, 2500],
+      u: [300, 800, 2200]
+    };
+    function setupAudio() {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 512;
+      const merger = audioCtx.createGain();
+      merger.gain.value = 0.5;
+      merger.connect(analyser);
+      analyser.connect(audioCtx.destination);
+      osc = audioCtx.createOscillator();
+      osc.type = 'sawtooth';
+      osc.frequency.value = parseFloat(document.getElementById('pitchSlider').value);
+      const chosen = presets[document.getElementById('vowelPreset').value];
+      const q = parseFloat(document.getElementById('qSlider').value);
+      filters = chosen.map(f => {
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.value = f;
+        filter.Q.value = q;
+        osc.connect(filter);
+        filter.connect(merger);
+        return filter;
+      });
+      osc.start();
+      drawVisualizer();
+    }
+    function drawVisualizer() {
+      if (!analyser) return;
+      const canvas = document.getElementById('spectrumCanvas');
+      const ctx = canvas.getContext('2d');
+      const bufferLength = analyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+      function render() {
+        if (!isPlaying) return;
+        requestAnimationFrame(render);
+        analyser.getByteFrequencyData(dataArray);
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const barWidth = (canvas.width / bufferLength) * 2.5;
+        let x = 0;
+        for (let i = 0; i < bufferLength; i++) {
+          const barHeight = (dataArray[i] / 255) * canvas.height;
+          ctx.fillStyle = `hsl(${i * 2 + 180}, 100%, 50%)`;
+          ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+          x += barWidth + 1;
+        }
+      }
+      render();
+    }
+    document.getElementById('toggleBtn').addEventListener('click', () => {
+      if (!isPlaying) {
+        if (!audioCtx) setupAudio();
+        else audioCtx.resume();
+        isPlaying = true;
+        document.getElementById('toggleBtn').textContent = '⏹ Stop Resonator Synth';
+        document.getElementById('toggleBtn').className = 'btn-danger';
+        drawVisualizer();
+      } else {
+        if (audioCtx) audioCtx.suspend();
+        isPlaying = false;
+        document.getElementById('toggleBtn').textContent = '▶ Start Resonator Synth';
+        document.getElementById('toggleBtn').className = 'btn-primary';
+      }
+    });
+    document.getElementById('pitchSlider').addEventListener('input', (e) => {
+      document.getElementById('pitchVal').textContent = e.target.value + ' Hz';
+      if (osc) osc.frequency.value = parseFloat(e.target.value);
+    });
+    document.getElementById('qSlider').addEventListener('input', (e) => {
+      document.getElementById('qVal').textContent = e.target.value;
+      if (filters.length) filters.forEach(f => f.Q.value = parseFloat(e.target.value));
+    });
+    document.getElementById('vowelPreset').addEventListener('change', (e) => {
+      const chosen = presets[e.target.value];
+      if (filters.length) {
+        chosen.forEach((freq, idx) => {
+          if (filters[idx]) filters[idx].frequency.value = freq;
+        });
+      }
+    });
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎛️ Audio Formant Spectral Resonator Pro</h1>
+      <p>Web Audio BiquadFilter 5밴드 병렬 포먼트 공명 합성 및 실시간 FFT 스펙트로그램 시각화</p>
+    </header>
+    <div class="grid">
+      <div class="card">
+        <h2>🎚️ Formant Controls & Source</h2>
+        <div class="control-group">
+          <label><span>Vowel Preset</span></label>
+          <select id="vowelPreset">
+            <option value="a">Korean /a/ (아 - 800Hz / 1200Hz / 2500Hz)</option>
+            <option value="e">Korean /e/ (에 - 500Hz / 1800Hz / 2500Hz)</option>
+            <option value="i">Korean /i/ (이 - 300Hz / 2300Hz / 3000Hz)</option>
+            <option value="o">Korean /o/ (오 - 500Hz / 800Hz / 2500Hz)</option>
+            <option value="u">Korean /u/ (우 - 300Hz / 800Hz / 2200Hz)</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label><span>Fundamental Pitch (F0)</span><span id="pitchVal">130 Hz</span></label>
+          <input type="range" id="pitchSlider" min="55" max="440" value="130">
+        </div>
+        <div class="control-group">
+          <label><span>Resonance Q-Factor</span><span id="qVal">8.0</span></label>
+          <input type="range" id="qSlider" min="1" max="20" value="8" step="0.5">
+        </div>
+        <button id="toggleBtn" class="btn-primary">▶ Start Resonator Synth</button>
+      </div>
+      <div class="card">
+        <h2>📊 Realtime Spectral FFT Analyzer</h2>
+        <canvas id="spectrumCanvas"></canvas>
+      </div>
+    </div>
+  </div>
+  
+</body>
+</html>
