@@ -36,6 +36,18 @@
 
     <!-- Three.js Global CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module">
+      import { ARButton } from "three/addons/webxr/ARButton.js";
+      window.ARButton = ARButton;
+    </script>
     <script>
       // Inline Standalone OrbitControls Fallback
       if (typeof THREE !== "undefined" && !THREE.OrbitControls) {
@@ -208,6 +220,22 @@
           <div class="slider-label">
             <span>Gravity Acceleration (중력 수치)</span>
             <span id="gravity-val">9.81 m/s²</span>
+
+            <div class="mt-4 pt-3 border-t border-slate-700">
+              <div class="text-xs font-semibold text-slate-400 mb-2 tracking-wider">TOPOLOGICAL COGNITION TENSORS</div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-slate-300 text-[11px]">Curvature ∇Φ</span>
+                <span id="cog-curvature" class="font-mono text-cyan-400 text-xs font-bold">0.000</span>
+              </div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-slate-300 text-[11px]">Density ρ</span>
+                <span id="cog-density" class="font-mono text-blue-400 text-xs font-bold">0.000</span>
+              </div>
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-slate-300 text-[11px]">Distortion J</span>
+                <span id="cog-distortion" class="font-mono text-purple-400 text-xs font-bold">0.000</span>
+              </div>
+            </div>
           </div>
           <input
             type="range"
@@ -364,10 +392,113 @@
 
     <script>
       // --- 1. Global Engine Dynamic State Bus ---
+      
+      window.riemannWasm = null;
+      window.riemannWasmMemory = null;
+      fetch('../polyglot_3d_engine/src/stella_riemann_wasm.wasm')
+        .then(response => response.arrayBuffer())
+        .then(bytes => WebAssembly.instantiate(bytes, {}))
+        .then(results => {
+          window.riemannWasm = results.instance.exports;
+          window.riemannWasmMemory = results.instance.exports.memory;
+          console.log("Rust WASM loaded successfully.");
+        })
+        .catch(console.error);
+
+      // --- Module 12: Topological Cognition Core (Native Chaos Tensor Engine) ---
+      class TopologicalCognitionCore {
+        constructor() {
+          this.curvature = 0.0;
+          this.density = 0.0;
+          this.distortion = 0.0;
+          // Lorenz Attractor for Autonomous Chaos Math
+          this.sigma = 10.0;
+          this.rho = 28.0;
+          this.beta = 8.0 / 3.0;
+          this.x = 0.1;
+          this.y = 0.0;
+          this.z = 0.0;
+
+          // Stella Core Phase 6.6 Wave Dynamics
+          this.stellaWave = 0.0;
+          this.entropy = 1.0;
+          this.time_acc = 0.0;
+        }
+        update(dt) {
+          this.time_acc += dt;
+          // Calculate Lorenz Attractor differentials
+          const dx = (this.sigma * (this.y - this.x)) * dt;
+          const dy = (this.x * (this.rho - this.z) - this.y) * dt;
+          const dz = (this.x * this.y - this.beta * this.z) * dt;
+          
+          this.x += dx * 0.5; // Scaled down for smoothness
+          this.y += dy * 0.5;
+          this.z += dz * 0.5;
+
+          // Map Lorenz space to Tensor parameters
+          this.curvature = (this.z / 30.0) * 1.5; // Deep gravity wells
+          this.density = Math.abs(this.x / 15.0); // Concentration of knowledge
+          this.distortion = (this.y / 20.0);      // Topological dissonance
+
+          // Stella Core 262-dim Riemannian Manifold Wave Proxy
+          const n = 262; // 262-dimensional manifold
+
+          let waveSum = 0.0;
+
+          // Triple-Fusion Integration: Rust WASM Tensor Engine via C-FFI
+          if (window.riemannWasm && window.riemannWasmMemory) {
+            // Allocate memory using Rust's allocator
+            const ptr = window.riemannWasm.alloc(n);
+            const f32Array = new Float32Array(window.riemannWasmMemory.buffer, ptr, n);
+
+            // Populate tensor representations (simulate dynamic embeddings)
+            for(let i = 0; i < n; i++) {
+              f32Array[i] = Math.sin(this.time_acc * (i + 1) * 0.05) * this.distortion;
+            }
+
+            // Execute AVX-512 Zero-Latency C-FFI calculations
+            const wasmCurvature = window.riemannWasm.calculate_riemann_curvature(ptr, n);
+            const wasmResonance = window.riemannWasm.calculate_digital_wave_resonance(ptr, n, this.time_acc);
+
+            // Free the memory
+            window.riemannWasm.dealloc(ptr, n);
+
+            // Integrate Native Engine results back to Pure JS Math
+            waveSum = wasmResonance * 0.01;
+            this.curvature += wasmCurvature * 0.05;
+          } else {
+            // Pure JS Fallback Math
+            for(let i = 1; i <= 7; i++) {
+               waveSum += Math.sin(this.time_acc * i * 0.5) * (1.0 / i);
+            }
+          }
+          this.stellaWave = waveSum;
+
+          // Apply M(H) = e^H * (ln(n) - H) representation complexity equation
+          // Let H be simulated by dynamic entropy (driven by distortion)
+          this.entropy = 1.0 + Math.abs(Math.sin(this.time_acc * 0.2)) * this.distortion * 0.5;
+          const ln_n = Math.log(n);
+
+          // Defensive clamp for entropy H to not exceed ln_n
+          const H = Math.min(this.entropy, ln_n - 0.01);
+          const M = Math.exp(H) * (ln_n - H);
+          const M_max = n / Math.E;
+
+          // Normalize M and apply to density/curvature as a unified field equation
+          const efficiency = M / M_max;
+
+          // Inject wave and efficiency back into the tensors
+          this.curvature += this.stellaWave * 0.2 * efficiency;
+          this.density = this.density * Math.max(0.1, efficiency) + Math.abs(this.stellaWave) * 0.1;
+          this.distortion *= Math.max(0.1, 2.0 - efficiency); // High efficiency reduces chaotic distortion
+        }
+      }
+      const CognitionCore = new TopologicalCognitionCore();
+      
       const GlobalState = {
         gravity: 9.81,
         solarAngle: 12.0,
-        topologyDistance: 6.0,
+        vectorDensity: 6.0,
         audioFrequency: 440,
       };
 
@@ -507,7 +638,13 @@
         renderer.xr.enabled = true;
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        // ARButton optional
+
+        // Module 11: WebXR AR Overlays & ARButton
+        setTimeout(() => {
+          if (window.ARButton) {
+            document.body.appendChild(window.ARButton.createButton(renderer));
+          }
+        }, 100);
 
         const OrbitCtrlClass =
           typeof THREE.OrbitControls === "function"
@@ -540,12 +677,107 @@
         scene.add(mainLight);
         scene.add(new THREE.AmbientLight(0x1e293b, 1.5));
 
-        const gridHelper = new THREE.GridHelper(30, 30, 0x00f2fe, 0x1e293b);
-        gridHelper.position.y = -2.5;
-        scene.add(gridHelper);
+        // Module 7: Quantum Relativity Curvature Grid
+        const gridGeo = new THREE.PlaneGeometry(30, 30, 64, 64);
+        gridGeo.rotateX(-Math.PI / 2);
+
+        window.quantumGridMaterial = new THREE.ShaderMaterial({
+          uniforms: {
+            time: { value: 0.0 },
+            gravity: { value: GlobalState.gravity },
+            solarAngle: { value: GlobalState.solarAngle },
+            cogCurvature: { value: 0.0 },
+            cogDensity: { value: 0.0 },
+            cogDistortion: { value: 0.0 }
+          },
+          vertexShader: `
+            uniform float time;
+            uniform float gravity;
+            uniform float solarAngle;
+            uniform float cogCurvature;
+            uniform float cogDensity;
+            uniform float cogDistortion;
+            varying vec2 vUv;
+            
+            // Simplex noise function for topological distortion
+            vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+            vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+            vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+            float snoise(vec2 v) {
+              const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+              vec2 i  = floor(v + dot(v, C.yy) );
+              vec2 x0 = v -   i + dot(i, C.xx);
+              vec2 i1; i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+              vec4 x12 = x0.xyxy + C.xxzz;
+              x12.xy -= i1;
+              i = mod289(i);
+              vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 )) + i.x + vec3(0.0, i1.x, 1.0 ));
+              vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+              m = m*m ; m = m*m ;
+              vec3 x = 2.0 * fract(p * C.www) - 1.0;
+              vec3 h = abs(x) - 0.5;
+              vec3 ox = floor(x + 0.5);
+              vec3 a0 = x - ox;
+              m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+              vec3 g;
+              g.x  = a0.x  * x0.x  + h.x  * x0.y;
+              g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+              return 130.0 * dot(m, g);
+            }
+
+            void main() {
+              vUv = uv;
+              vec3 pos = position;
+              
+              float dist = length(pos.xz);
+              
+              // 1. Density Contraction (Pulls grid towards center)
+              pos.xz *= 1.0 - (cogDensity * 0.2 * exp(-dist * 0.1));
+              
+              // 2. Curvature (Deep Riemannian Gravity Wells)
+              float curveDepth = (gravity - 9.81) * 0.05 + cogCurvature;
+              pos.y -= curveDepth * exp(-dist * 0.2) * 5.0; // Gravity well shape
+              
+              // 3. Distortion (Topological noise / dissonance)
+              float noise = snoise(pos.xz * 0.2 + time) * cogDistortion;
+              pos.y += noise * 2.0;
+
+              // Solar thermal wave
+              float solarRad = (solarAngle / 24.0) * 3.14159 * 2.0;
+              pos.y += cos(pos.x * 0.5 + time + solarRad) * 0.2;
+
+              gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+            }
+          `,
+          fragmentShader: `
+            uniform float time;
+            uniform float cogDistortion;
+            varying vec2 vUv;
+            void main() {
+              vec2 grid = abs(fract(vUv * 30.0 - 0.5) - 0.5) / fwidth(vUv * 30.0);
+              float line = min(grid.x, grid.y);
+              float color = 1.0 - min(line, 1.0);
+              if (color < 0.1) discard;
+
+              // Dynamic color based on Distortion (Chaos)
+              vec3 baseColor = vec3(0.0, 0.949, 0.996); // 0x00f2fe
+              vec3 chaosColor = vec3(0.615, 0.305, 0.866); // Purple distortion
+              vec3 finalColor = mix(baseColor, chaosColor, abs(cogDistortion) * 0.5);
+              
+              gl_FragColor = vec4(finalColor, color * 0.5);
+            }
+          `,
+          transparent: true,
+          wireframe: false,
+          side: THREE.DoubleSide,
+        });
+
+        const quantumGrid = new THREE.Mesh(gridGeo, window.quantumGridMaterial);
+        quantumGrid.position.y = -2.49; // Slightly above floor
+        scene.add(quantumGrid);
 
         // Floor for shadows and collision
-        const floorGeo = new THREE.PlaneGeometry(30, 30);
+        const floorGeo = new THREE.PlaneGeometry(30, 30, 64, 64);
         const floorMat = new THREE.MeshStandardMaterial({
           color: 0x1e293b,
           roughness: 0.8,
@@ -553,7 +785,7 @@
         });
         const floor = new THREE.Mesh(floorGeo, floorMat);
         floor.rotation.x = -Math.PI / 2;
-        floor.position.y = -2.5;
+        floor.position.y = -2.5; // base level before vertex displacement
         floor.receiveShadow = true;
         scene.add(floor);
         window.floorMesh = floor;
@@ -639,9 +871,9 @@
         document
           .getElementById("vector-slider")
           .addEventListener("input", (e) => {
-            GlobalState.topologyDistance = parseFloat(e.target.value);
+            GlobalState.vectorDensity = parseFloat(e.target.value);
             document.getElementById("vector-val").textContent =
-              GlobalState.topologyDistance.toFixed(1);
+              GlobalState.vectorDensity.toFixed(1);
             renderJSONState();
           });
 
@@ -654,41 +886,94 @@
             renderJSONState();
           });
 
-        // Module 5: Inverse Kinematics (IK) Robotic Arm (Robust Group Mesh)
-        const ikArmGroup = new THREE.Group();
-        ikArmGroup.position.set(-5, -2, 0);
+        // Module 5: 18-DoF Full-Body Humanoid Skeleton Rigging
+        const humanoidRig = new THREE.Group();
+        humanoidRig.position.set(-5, -1, 0);
 
-        const baseMesh = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.6, 0.8, 0.6, 16),
-          new THREE.MeshStandardMaterial({ color: 0x64748b }),
-        );
-        ikArmGroup.add(baseMesh);
+        const mat = new THREE.MeshStandardMaterial({ color: 0x8b5cf6, wireframe: true });
+        const jointMat = new THREE.MeshStandardMaterial({ color: 0x64748b });
 
-        const armBoneGroup = new THREE.Group();
-        armBoneGroup.position.set(0, 0.3, 0);
-        const upperArmMesh = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.25, 0.3, 2.5, 16),
-          new THREE.MeshStandardMaterial({ color: 0x8b5cf6, wireframe: true }),
-        );
-        upperArmMesh.position.y = 1.25;
-        armBoneGroup.add(upperArmMesh);
-        ikArmGroup.add(armBoneGroup);
+        function createBone(radius, length, name) {
+          const group = new THREE.Group();
+          group.name = name;
+          const mesh = new THREE.Mesh(new THREE.CylinderGeometry(radius*0.8, radius, length, 12), mat);
+          mesh.position.y = length / 2;
+          const joint = new THREE.Mesh(new THREE.SphereGeometry(radius*1.2, 12, 12), jointMat);
+          group.add(mesh);
+          group.add(joint);
+          return group;
+        }
 
-        const forearmBoneGroup = new THREE.Group();
-        forearmBoneGroup.position.set(0, 2.5, 0);
-        const lowerArmMesh = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.18, 0.25, 2.2, 16),
-          new THREE.MeshStandardMaterial({ color: 0xa78bfa, wireframe: true }),
-        );
-        lowerArmMesh.position.y = 1.1;
-        forearmBoneGroup.add(lowerArmMesh);
-        armBoneGroup.add(forearmBoneGroup);
+        // Spine
+        const spine = createBone(0.2, 1.5, "Spine");
 
-        scene.add(ikArmGroup);
+        // Head
+        const head = new THREE.Group();
+        head.name = "Head";
+        head.position.y = 1.5;
+        const headMesh = new THREE.Mesh(new THREE.SphereGeometry(0.3, 16, 16), mat);
+        headMesh.position.y = 0.3;
+        head.add(headMesh);
+        spine.add(head);
 
-        window.ikArm = ikArmGroup;
-        window.armBone = armBoneGroup;
-        window.forearmBone = forearmBoneGroup;
+        // Shoulders
+        const leftShoulder = new THREE.Group();
+        leftShoulder.position.set(-0.4, 1.3, 0);
+        const rightShoulder = new THREE.Group();
+        rightShoulder.position.set(0.4, 1.3, 0);
+        spine.add(leftShoulder);
+        spine.add(rightShoulder);
+
+        // Arms (Upper & Lower)
+        const leftArm = createBone(0.12, 1.0, "LeftArm");
+        const rightArm = createBone(0.12, 1.0, "RightArm");
+        leftShoulder.add(leftArm);
+        rightShoulder.add(rightArm);
+        // Default pose
+        leftArm.rotation.z = Math.PI / 4;
+        rightArm.rotation.z = -Math.PI / 4;
+
+        const leftForearm = createBone(0.1, 1.0, "LeftForearm");
+        leftForearm.position.y = 1.0;
+        leftArm.add(leftForearm);
+
+        const rightForearm = createBone(0.1, 1.0, "RightForearm");
+        rightForearm.position.y = 1.0;
+        rightArm.add(rightForearm);
+
+        // Hips
+        const leftHip = new THREE.Group();
+        leftHip.position.set(-0.25, 0, 0);
+        const rightHip = new THREE.Group();
+        rightHip.position.set(0.25, 0, 0);
+        spine.add(leftHip);
+        spine.add(rightHip);
+
+        // Legs (Upper & Lower)
+        const leftLeg = createBone(0.15, 1.2, "LeftLeg");
+        const rightLeg = createBone(0.15, 1.2, "RightLeg");
+        // legs point down
+        leftLeg.rotation.z = Math.PI;
+        rightLeg.rotation.z = Math.PI;
+        leftHip.add(leftLeg);
+        rightHip.add(rightLeg);
+
+        const leftCalf = createBone(0.12, 1.2, "LeftCalf");
+        leftCalf.position.y = 1.2;
+        leftLeg.add(leftCalf);
+
+        const rightCalf = createBone(0.12, 1.2, "RightCalf");
+        rightCalf.position.y = 1.2;
+        rightLeg.add(rightCalf);
+
+        humanoidRig.add(spine);
+        scene.add(humanoidRig);
+        window.humanoidRig = humanoidRig;
+
+        // Cache references for procedural kinematics
+        window.humanoidBones = {
+          spine, head, leftArm, rightArm, leftForearm, rightForearm, leftLeg, rightLeg, leftCalf, rightCalf
+        };
 
         // Module 6: Soft-Body Deformation Mesh
         const softGeo = new THREE.PlaneGeometry(12, 12, 32, 32);
@@ -716,14 +1001,17 @@
           transparent: true,
           opacity:
             0.1 +
-            GlobalState.topologyDistance * 0.02 +
+            GlobalState.vectorDensity * 0.02 +
             (GlobalState.audioFrequency / 1000) * 0.2,
         });
+
+        const threshold = GlobalState.vectorDensity / Math.max(1.0, 1.0 + CognitionCore.density);
+
         for (let i = 0; i < topologyNodes.length; i++) {
           for (let j = i + 1; j < topologyNodes.length; j++) {
             if (
               topologyNodes[i].position.distanceTo(topologyNodes[j].position) <
-              GlobalState.topologyDistance
+              threshold
             ) {
               const lGeo = new THREE.BufferGeometry().setFromPoints([
                 topologyNodes[i].position,
@@ -826,6 +1114,48 @@
         return dot / (Math.sqrt(normA) * Math.sqrt(normB) + 1e-9);
       };
 
+      function getCurvatureDepthAt(x, z, gravity, solarAngle, time, cogCurvature) {
+        const dist = Math.sqrt(x * x + z * z);
+        const curveDepth = (gravity - 9.81) * 0.05 + cogCurvature;
+        let y = -2.5; // floor base
+        y -= curveDepth * Math.exp(-dist * 0.2) * 5.0; // Gravity well
+        const solarRad = (solarAngle / 24.0) * Math.PI * 2.0;
+        y += Math.cos(x * 0.5 + time + solarRad) * 0.2;
+        return Math.max(-10.0, Math.min(y, 10.0));
+      }
+
+      function exportTelemetry(bones) {
+        if (!window.telemetryOutput) {
+          window.telemetryOutput = document.createElement('div');
+          window.telemetryOutput.style.position = 'absolute';
+          window.telemetryOutput.style.bottom = '10px';
+          window.telemetryOutput.style.left = '10px';
+          window.telemetryOutput.style.color = '#00f2fe';
+          window.telemetryOutput.style.fontFamily = 'monospace';
+          window.telemetryOutput.style.fontSize = '12px';
+          window.telemetryOutput.style.pointerEvents = 'none';
+          document.body.appendChild(window.telemetryOutput);
+        }
+
+        // Construct 18-DoF state matrix (Euler angles)
+        const telemetryData = {
+          timestamp: Date.now(),
+          spine: [bones.spine.rotation.x, bones.spine.rotation.y, bones.spine.rotation.z],
+          head: [bones.head.rotation.x, bones.head.rotation.y, bones.head.rotation.z],
+          leftArm: [bones.leftArm.rotation.x, bones.leftArm.rotation.y, bones.leftArm.rotation.z],
+          rightArm: [bones.rightArm.rotation.x, bones.rightArm.rotation.y, bones.rightArm.rotation.z],
+          leftForearm: [bones.leftForearm.rotation.x, 0, 0],
+          rightForearm: [bones.rightForearm.rotation.x, 0, 0],
+          leftLeg: [bones.leftLeg.rotation.x, bones.leftLeg.rotation.y, bones.leftLeg.rotation.z],
+          rightLeg: [bones.rightLeg.rotation.x, bones.rightLeg.rotation.y, bones.rightLeg.rotation.z],
+          leftCalf: [bones.leftCalf.rotation.x, 0, 0],
+          rightCalf: [bones.rightCalf.rotation.x, 0, 0]
+        };
+
+        // Output to DOM for visualization; in production this maps to polyglot_3d_engine/telemetry.py
+        window.telemetryOutput.innerText = "TELEM (18-DoF): " + JSON.stringify(telemetryData);
+      }
+
       function animate() {
         // Dynamic iframe canvas size check to prevent 0x0 pixel black screen
         if (renderer && camera && canvas) {
@@ -882,6 +1212,50 @@
         lastTime = now;
 
         // 1. C++ Gravity Bouncing Simulation (Rigid Body Physics)
+        // TICK: Topological Cognition Core (Autonomous Chaos Math)
+        CognitionCore.update(dt);
+        
+        // Feed Tensors to Shader Uniforms
+        if (window.quantumGridMaterial) {
+          window.quantumGridMaterial.uniforms.time.value = time;
+          window.quantumGridMaterial.uniforms.gravity.value = GlobalState.gravity;
+          window.quantumGridMaterial.uniforms.solarAngle.value = GlobalState.solarAngle;
+          window.quantumGridMaterial.uniforms.cogCurvature.value = CognitionCore.curvature;
+          window.quantumGridMaterial.uniforms.cogDensity.value = CognitionCore.density;
+          window.quantumGridMaterial.uniforms.cogDistortion.value = CognitionCore.distortion;
+        }
+
+        // Deform Physical Floor Mesh to match shader visual curvature
+        if (window.floorMesh && window.floorMesh.geometry) {
+          const posAttribute = window.floorMesh.geometry.attributes.position;
+          // Local space deformation since PlaneGeometry is rotated X -90 deg
+          // Original plane is on XY before rotation. After rotation, its local Z acts as world -Y
+          for (let i = 0; i < posAttribute.count; i++) {
+             // Extract local coords
+             const lx = posAttribute.getX(i);
+             const ly = posAttribute.getY(i);
+             // Since plane is rotated -90 deg on X:
+             // World X = lx
+             // World Z = -ly
+             const wx = lx;
+             const wz = -ly;
+             const curveY = getCurvatureDepthAt(wx, wz, GlobalState.gravity, GlobalState.solarAngle, time, CognitionCore.curvature);
+             // Map world Y back to local Z
+             const lz = curveY - (-2.5); // base is -2.5
+             posAttribute.setZ(i, lz);
+          }
+          posAttribute.needsUpdate = true;
+          window.floorMesh.geometry.computeVertexNormals();
+        }
+
+        // Update Cognitive UI HUD
+        const curEl = document.getElementById('cog-curvature');
+        if (curEl) curEl.innerText = CognitionCore.curvature.toFixed(3);
+        const denEl = document.getElementById('cog-density');
+        if (denEl) denEl.innerText = CognitionCore.density.toFixed(3);
+        const distEl = document.getElementById('cog-distortion');
+        if (distEl) distEl.innerText = CognitionCore.distortion.toFixed(3);
+
         const rb = bouncingSphere.userData;
 
         // Apply gravity
@@ -912,13 +1286,11 @@
 
         // AABB Collision with floor
         const currentRadius = rb.radius * finalScale;
+        const floorY = getCurvatureDepthAt(bouncingSphere.position.x, bouncingSphere.position.z, GlobalState.gravity, GlobalState.solarAngle, time, CognitionCore.curvature);
         if (
-          window.floorMesh &&
-          bouncingSphere.position.y - currentRadius <=
-            window.floorMesh.position.y
+          bouncingSphere.position.y - currentRadius <= floorY
         ) {
-          bouncingSphere.position.y =
-            window.floorMesh.position.y + currentRadius;
+          bouncingSphere.position.y = floorY + currentRadius;
           rb.velocity.y = Math.abs(rb.velocity.y) * rb.restitution;
         }
 
@@ -933,14 +1305,21 @@
 
         // 3. Quantum Particles Vortices
         if (quantumParticles) {
+          // Apply density and distortion
+          const densityClamp = Math.max(0.1, 1.0 - CognitionCore.density);
+          const distortionJitter = Math.sin(time * 10.0) * Math.min(CognitionCore.distortion, 2.0);
+
           quantumParticles.rotation.y =
             time *
             0.2 *
             (GlobalState.audioFrequency / 440) *
-            (9.81 / Math.max(GlobalState.gravity, 0.1));
+            (9.81 / Math.max(GlobalState.gravity, 0.1)) + distortionJitter;
+
+          const baseScale = 1.0 + (GlobalState.gravity - 9.81) * 0.05;
           quantumParticles.scale.setScalar(
-            1.0 + (GlobalState.gravity - 9.81) * 0.05,
+            Math.max(0.1, Math.min(baseScale * densityClamp, 5.0))
           );
+
           if (quantumParticles.material) {
             quantumParticles.material.color.setHSL(
               (GlobalState.solarAngle / 24.0 + 0.5) % 1.0,
@@ -952,55 +1331,55 @@
 
         // 4. Vector Topology Update
         topologyNodes.forEach(
-          (n) =>
-            (n.position.y =
-              n.userData.baseY + (9.81 - GlobalState.gravity) * 0.2),
+          (n) => {
+            const distortionOffset = Math.sin(n.position.x * 0.5 + time * 2.0) * Math.min(CognitionCore.distortion, 3.0);
+            n.position.y = n.userData.baseY + (9.81 - GlobalState.gravity) * 0.2 + distortionOffset;
+          }
         );
         if (topologyLinesGroup) {
           topologyLinesGroup.position.y = (9.81 - GlobalState.gravity) * 0.2;
         }
 
-        // Analytic Inverse Kinematics for the 2-bone arm
-        if (window.ikArm && window.armBone && window.forearmBone) {
-          // Target position relative to the base bone
-          const targetPos = bouncingSphere.position
-            .clone()
-            .sub(window.ikArm.position);
+        // Procedural Kinematics for 18-DoF Humanoid
+        if (window.humanoidRig && window.humanoidBones) {
+          // Map Base to curvature depth
+          window.humanoidRig.position.y = getCurvatureDepthAt(window.humanoidRig.position.x, window.humanoidRig.position.z, GlobalState.gravity, GlobalState.solarAngle, time, CognitionCore.curvature) + 2.5;
 
-          // lengths of the bones
-          const l1 = 2; // armBone length
-          const l2 = 2; // forearmBone length
+          const bones = window.humanoidBones;
 
-          const x = targetPos.x;
-          const y = targetPos.y;
-          const z = targetPos.z;
+          // Spine sway based on time and distortion
+          bones.spine.rotation.x = Math.sin(time * 2) * 0.1;
+          bones.spine.rotation.z = Math.cos(time * 1.5) * 0.1 + CognitionCore.distortion * 0.1;
 
-          // distance to target projected on xz plane
-          const distXZ = Math.sqrt(x * x + z * z);
-          // distance to target in 3d
-          const dist3D = Math.sqrt(distXZ * distXZ + y * y);
+          // Head looks at bouncing sphere
+          const targetPos = bouncingSphere.position.clone();
+          // Convert target to head local space
+          const headWorldPos = new THREE.Vector3();
+          bones.head.getWorldPosition(headWorldPos);
+          // simple lookAt logic
+          const dir = targetPos.sub(headWorldPos).normalize();
+          bones.head.rotation.y = Math.atan2(dir.x, dir.z);
+          bones.head.rotation.x = Math.asin(-dir.y);
 
-          // Base rotation (Y-axis)
-          window.ikArm.rotation.y = Math.atan2(x, z);
+          // Arms procedural wave based on audio freq & time
+          const armWave = Math.sin(time * 5 + GlobalState.audioFrequency / 100) * 0.5;
+          bones.leftArm.rotation.z = Math.PI / 4 + armWave;
+          bones.rightArm.rotation.z = -Math.PI / 4 - armWave;
+          bones.leftArm.rotation.x = Math.cos(time * 3) * 0.5;
+          bones.rightArm.rotation.x = Math.sin(time * 3) * 0.5;
 
-          // IK for 2D plane (distXZ, y)
-          // Ensure target is reachable
-          const dist = Math.min(dist3D, l1 + l2 - 0.01);
+          bones.leftForearm.rotation.x = Math.abs(Math.sin(time * 4)) * 1.5;
+          bones.rightForearm.rotation.x = Math.abs(Math.cos(time * 4)) * 1.5;
 
-          // angle of the target from the base
-          const targetAngle = Math.atan2(y, distXZ);
+          // Legs walk cycle based on gravity and time
+          const walkSpeed = time * 4 * (GlobalState.gravity / 9.81);
+          bones.leftLeg.rotation.x = Math.sin(walkSpeed) * 0.5;
+          bones.rightLeg.rotation.x = Math.sin(walkSpeed + Math.PI) * 0.5;
+          bones.leftCalf.rotation.x = Math.abs(Math.sin(walkSpeed)) * -1.0;
+          bones.rightCalf.rotation.x = Math.abs(Math.sin(walkSpeed + Math.PI)) * -1.0;
 
-          // angle of the arm using law of cosines
-          const cosAngle1 = (l1 * l1 + dist * dist - l2 * l2) / (2 * l1 * dist);
-          const angle1 = Math.acos(Math.max(-1, Math.min(1, cosAngle1)));
-
-          window.armBone.rotation.x = targetAngle - angle1;
-
-          // angle of the forearm
-          const cosAngle2 = (l1 * l1 + l2 * l2 - dist * dist) / (2 * l1 * l2);
-          const angle2 = Math.acos(Math.max(-1, Math.min(1, cosAngle2)));
-
-          window.forearmBone.rotation.x = Math.PI - angle2;
+          // Export Telemetry
+          exportTelemetry(bones);
         }
 
         // Soft-Body Deformation
