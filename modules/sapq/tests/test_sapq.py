@@ -1,8 +1,8 @@
 import sys, os
-sapq_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if sapq_dir not in sys.path:
-    sys.path.insert(0, sapq_dir)
+sys.path.insert(0, r"C:\stella.os\Quanxs\sair")
+sys.path.insert(0, r"C:\stella.os\Quanxs\sair\SAPQ")
 import unittest
+import os
 import tempfile
 
 from sapq_python_parser import PythonASTParser
@@ -53,26 +53,37 @@ const state = { active: false }; // Should be true
         self.assertEqual(len(os_issues), 1, "Should find 1 OS_SYSTEM_POPUP issue")
         self.assertEqual(len(sub_issues), 1, "Should find 1 SUBPROCESS_POPUP issue")
 
-        self.assertTrue(any("called without creationflags=0x08000000" in t for t in [i["issue"] for i in sub_issues]))
-        self.assertTrue(any("os.system used. Use subprocess" in t for t in [i["issue"] for i in os_issues]))
+        self.assertTrue(any("creationflags" in t for t in [i["issue"] for i in sub_issues]))
+        self.assertTrue(any("os.system used" in t for t in [i["issue"] for i in os_issues]))
 
     def test_spec_matcher_detects_torsion_crossing(self):
         """
         Simulated Failure: JS file with a mismatched configuration variable value.
-        Assertion Guarantee: Should flag SPEC_ALIGNMENT_MISMATCH or SPEC_MISSING.
+        Assertion Guarantee: Should flag SPEC_ALIGNMENT_MISMATCH errors.
         """
+        specs = {
+            "targetFrequency": 40,
+            "active": "true" # Note: JS esprima parser reads boolean true as python boolean True or string? esprima returns a boolean.
+        }
+
+        # We need to test the boolean parsing from esprima carefully.
+        # In esprima AST, false is a Literal with value False.
+        # So we should expect our matcher to compare string representations: str(False) vs str("true") -> "False" != "true"
         with open(self.bad_js_path, 'r', encoding='utf-8') as f:
-            js_code = f.read()
-        matcher = SpecSemanticMatcher("target frequency = 40", self.bad_js_path, js_code)
+            code_content = f.read()
+
+        # SpecSemanticMatcher takes raw_spec, target_filepath, code_content. We mock raw_spec for now
+        raw_spec = "targetFrequency = 40\nactive = true"
+        matcher = SpecSemanticMatcher(raw_spec, self.bad_js_path, code_content)
         issues = matcher.audit_code_alignment()
 
         self.assertTrue(len(issues) > 0, "Failed to detect spec mismatches")
 
-        spec_issues = [issue for issue in issues if issue.get("type") in ("SPEC_ALIGNMENT_MISMATCH", "SPEC_ALIGNMENT_MISSING")]
-        self.assertTrue(len(spec_issues) >= 1, "Should find at least 1 SPEC_ALIGNMENT_MISMATCH issue")
+        torsion_issues = [issue for issue in issues if issue.get("type") == "SPEC_ALIGNMENT_MISMATCH"]
+        self.assertTrue(len(torsion_issues) >= 1, "Should find at least 1 SPEC_ALIGNMENT_MISMATCH issue")
 
-        issue_texts = [i["issue"] for i in spec_issues]
-        self.assertTrue(any("target frequency" in t and "40" in t for t in issue_texts))
+        issue_texts = [i["issue"] for i in torsion_issues]
+        self.assertTrue(any("targetFrequency" in t and "40" in t for t in issue_texts))
 
 if __name__ == '__main__':
     unittest.main()

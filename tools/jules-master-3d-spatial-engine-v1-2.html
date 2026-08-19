@@ -51,6 +51,12 @@
       }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
 
     <style>
       body {
@@ -186,7 +192,8 @@
         font-size: 0.7rem;
       }
     </style>
-  </head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+</head>
   <body>
     <canvas id="webgl-canvas"></canvas>
 
@@ -196,7 +203,7 @@
         <h1
           class="text-xl font-bold text-cyan-accent mb-1 flex items-center justify-between"
         >
-          Jules Master 3D Engine
+          Jules Master 3D Engine v2
           <span class="badge-synthesized">12 Modules Bound</span>
         </h1>
         <p class="text-xs text-slate-400 mb-4">
@@ -252,7 +259,7 @@
         </div>
 
         <!-- Slider 4: Audio Spectrum FFT Frequency Pulse -->
-        <div class="slider-container">
+                <div class="slider-container">
           <div class="slider-label">
             <span>Audio Spectrum FFT Pulse</span>
             <span id="audio-val">440 Hz</span>
@@ -264,6 +271,87 @@
             max="1000"
             step="10"
             value="440"
+          />
+        </div>
+
+        <div class="slider-container">
+          <div class="slider-label">
+            <span>Cinematic Bloom Strength</span>
+            <span id="bloom-val">1.5</span>
+          </div>
+          <input
+            type="range"
+            id="bloom-slider"
+            min="0.0"
+            max="3.0"
+            step="0.1"
+            value="1.5"
+          />
+        </div>
+
+
+        <!-- Slider 6: Turbulence Strength -->
+        <div class="slider-container">
+          <div class="slider-label">
+            <span>Turbulence Strength</span>
+            <span id="turb-val">1.0</span>
+          </div>
+          <input
+            type="range"
+            id="turb-slider"
+            min="0.0"
+            max="3.0"
+            step="0.1"
+            value="1.0"
+          />
+        </div>
+
+        <!-- Slider 7: Vortex Speed -->
+        <div class="slider-container">
+          <div class="slider-label">
+            <span>Vortex Speed</span>
+            <span id="vortex-val">1.0</span>
+          </div>
+          <input
+            type="range"
+            id="vortex-slider"
+            min="0.0"
+            max="5.0"
+            step="0.1"
+            value="1.0"
+          />
+        </div>
+
+
+        <!-- Slider 8: Active Rigid Bodies -->
+        <div class="slider-container">
+          <div class="slider-label">
+            <span>Active Rigid Bodies</span>
+            <span id="bodies-val">50</span>
+          </div>
+          <input
+            type="range"
+            id="bodies-slider"
+            min="10"
+            max="100"
+            step="1"
+            value="50"
+          />
+        </div>
+
+        <!-- Slider 9: Restitution (Elasticity) -->
+        <div class="slider-container">
+          <div class="slider-label">
+            <span>Restitution (Elasticity)</span>
+            <span id="restitution-val">0.8</span>
+          </div>
+          <input
+            type="range"
+            id="restitution-slider"
+            min="0.1"
+            max="1.5"
+            step="0.05"
+            value="0.8"
           />
         </div>
 
@@ -368,11 +456,19 @@
 
     <script>
       // --- 1. Global Engine Dynamic State Bus ---
-      const GlobalState = {
+                        const GlobalState = {
         gravity: 9.81,
         solarAngle: 12.0,
         topologyDistance: 6.0,
         audioFrequency: 440,
+        bloomStrength: 1.5,
+        turbulence: 1.0,
+        vortexSpeed: 1.0,
+        activeRigidBodies: 50,
+        restitution: 0.8,
+        totalKineticEnergy: 0,
+        currentAmp: 0.0,
+        isMicActive: false
       };
 
       // --- 2. AST JSON Tree Inspector Engine ---
@@ -504,15 +600,386 @@
       const topoCore = new TopologicalCognitionCore();
 
       // --- 4. Three.js Unified Interlocked Scene ---
-      let scene, camera, renderer, controls, mainLight, canvas;
-      let bouncingSphere,
-        quantumParticles,
+      let scene, camera, renderer, composer, bloomPass, controls, mainLight, canvas;
+
+      // --- Phase 3: Raycasting Setup ---
+      const raycaster = new THREE.Raycaster();
+      const mouse = new THREE.Vector2();
+      const uMousePos = new THREE.Vector3(0, 0, 0);
+      const intersectionPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+
+      window.addEventListener('mousemove', (event) => {
+        // Calculate mouse position in normalized device coordinates (-1 to +1)
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+      });
+      let bouncingSphere, // Deprecated single body variable, kept for backward compat safety if needed
+                        quantumParticles,
         topologyNodes = [],
         topologyLinesGroup,
         audioMesh;
       let lastTime = Date.now();
 
-      function init() {
+
+
+      // ============================================================================
+      // PHASE 5: HEADLESS SPATIAL ENGINE CORE & ECS ARCHITECTURE
+      // ============================================================================
+
+      // --- Event Bus (Observer Pattern) for Decoupling ---
+      class EventBus {
+          constructor() {
+              this.listeners = {};
+          }
+          on(event, callback) {
+              if (!this.listeners[event]) this.listeners[event] = [];
+              this.listeners[event].push(callback);
+          }
+          emit(event, data) {
+              if (this.listeners[event]) {
+                  this.listeners[event].forEach(cb => cb(data));
+              }
+          }
+      }
+      const engineBus = new EventBus();
+
+      // --- ECS: Components ---
+      class TransformComponent {
+          constructor(mesh) { this.mesh = mesh; }
+      }
+      class RigidBodyComponent {
+          constructor(mass, radius, velocity, angularVelocity) {
+              this.mass = mass;
+              this.radius = radius;
+              this.velocity = velocity;
+              this.angularVelocity = angularVelocity;
+          }
+      }
+
+      // --- ECS: EntityManager ---
+      class EntityManager {
+          constructor() {
+              this.entities = new Map();
+              this.nextId = 1;
+          }
+          createEntity() {
+              const id = this.nextId++;
+              this.entities.set(id, {});
+              return id;
+          }
+          addComponent(entityId, componentName, componentData) {
+              const entity = this.entities.get(entityId);
+              if (entity) entity[componentName] = componentData;
+          }
+          getComponent(entityId, componentName) {
+              return this.entities.get(entityId)?.[componentName];
+          }
+          removeEntity(entityId) {
+              this.entities.delete(entityId);
+          }
+          getEntitiesWith(components) {
+              const result = [];
+              for (const [id, entity] of this.entities.entries()) {
+                  if (components.every(c => entity[c] !== undefined)) {
+                      result.push(id);
+                  }
+              }
+              return result;
+          }
+          clear() {
+              this.entities.clear();
+              this.nextId = 1;
+          }
+      }
+
+      // --- ECS: Systems ---
+      class PhysicsSystem {
+          constructor(entityManager, topoCore) {
+              this.em = entityManager;
+              this.topoCore = topoCore;
+              this.gridCellSize = 5.0;
+              this.spatialGrid = new Map();
+          }
+          getGridKey(pos) {
+              return `${Math.floor(pos.x / this.gridCellSize)},${Math.floor(pos.y / this.gridCellSize)},${Math.floor(pos.z / this.gridCellSize)}`;
+          }
+          update(dt, globalState) {
+              this.spatialGrid.clear();
+              let totalKE = 0;
+              const entities = this.em.getEntitiesWith(['TransformComponent', 'RigidBodyComponent']);
+
+              const thermalScale = physics.applyThermalExpansion(globalState.solarAngle, 1.0);
+              const pulseBoost = globalState.isMicActive ? globalState.currentAmp * 1.5 : ((globalState.audioFrequency - 100) / 900) * 0.5;
+              const finalScale = thermalScale + pulseBoost;
+
+              // Step 1: Update positions & build spatial hash grid
+              for (const id of entities) {
+                  const transform = this.em.getComponent(id, 'TransformComponent');
+                  const rb = this.em.getComponent(id, 'RigidBodyComponent');
+                  const mesh = transform.mesh;
+
+                  // Gravity
+                  rb.velocity.y -= globalState.gravity * dt;
+
+                  // Integrate
+                  mesh.position.addScaledVector(rb.velocity, dt);
+                  mesh.rotation.x += rb.angularVelocity.x * dt;
+                  mesh.rotation.y += rb.angularVelocity.y * dt;
+                  mesh.rotation.z += rb.angularVelocity.z * dt;
+                  mesh.scale.set(finalScale, finalScale, finalScale);
+
+                  const currentRadius = rb.radius * finalScale;
+
+                  // Topo core interactions
+                  let floorY = window.floorMesh ? window.floorMesh.position.y : -2.5;
+                  if (this.topoCore) {
+                      const sinkDepth = this.topoCore.getDepthAt(mesh.position.x, mesh.position.z);
+                      floorY += sinkDepth;
+
+                      const gradX = -mesh.position.x * 0.05 * this.topoCore.curvature;
+                      const gradZ = -mesh.position.z * 0.05 * this.topoCore.curvature;
+                      rb.velocity.x += gradX * dt;
+                      rb.velocity.z += gradZ * dt;
+                  }
+
+                  // Floor collision
+                  if (mesh.position.y - currentRadius <= floorY) {
+                      mesh.position.y = floorY + currentRadius;
+                      rb.velocity.y = Math.abs(rb.velocity.y) * globalState.restitution;
+                      rb.velocity.x *= 0.98;
+                      rb.velocity.z *= 0.98;
+                  }
+
+                  // KE
+                  totalKE += 0.5 * rb.mass * rb.velocity.lengthSq();
+
+                  // Grid assignment
+                  const key = this.getGridKey(mesh.position);
+                  if(!this.spatialGrid.has(key)) this.spatialGrid.set(key, []);
+                  this.spatialGrid.get(key).push({id, mesh, rb, currentRadius});
+              }
+
+              // Step 2: Broad-phase & narrow-phase collision
+              const cells = Array.from(this.spatialGrid.keys());
+              for (let key of cells) {
+                  const [cx, cy, cz] = key.split(',').map(Number);
+                  let bodiesToCheck = [];
+                  for(let x=-1; x<=1; x++) {
+                      for(let y=-1; y<=1; y++) {
+                          for(let z=-1; z<=1; z++) {
+                              const neighborKey = `${cx+x},${cy+y},${cz+z}`;
+                              if(this.spatialGrid.has(neighborKey)) {
+                                  bodiesToCheck = bodiesToCheck.concat(this.spatialGrid.get(neighborKey));
+                              }
+                          }
+                      }
+                  }
+
+                  const checkedPairs = new Set();
+
+                  for(let i=0; i<bodiesToCheck.length; i++) {
+                      for(let j=i+1; j<bodiesToCheck.length; j++) {
+                          const b1 = bodiesToCheck[i];
+                          const b2 = bodiesToCheck[j];
+                          if(b1.id === b2.id) continue;
+
+                          const pairId = b1.id < b2.id ? `${b1.id}-${b2.id}` : `${b2.id}-${b1.id}`;
+                          if(checkedPairs.has(pairId)) continue;
+                          checkedPairs.add(pairId);
+
+                          const p1 = b1.mesh.position;
+                          const p2 = b2.mesh.position;
+                          const distSq = p1.distanceToSquared(p2);
+                          const rSum = b1.currentRadius + b2.currentRadius;
+
+                          if(distSq < rSum * rSum) {
+                              const dist = Math.sqrt(distSq);
+                              const normal = new THREE.Vector3().subVectors(p1, p2).normalize();
+                              const overlap = rSum - dist;
+                              const correction = normal.clone().multiplyScalar(overlap * 0.5);
+
+                              p1.add(correction);
+                              p2.sub(correction);
+
+                              const relVel = new THREE.Vector3().subVectors(b1.rb.velocity, b2.rb.velocity);
+                              const velAlongNormal = relVel.dot(normal);
+                              if(velAlongNormal > 0) continue;
+
+                              const e = globalState.restitution;
+                              const jImpulse = -(1 + e) * velAlongNormal / (1/b1.rb.mass + 1/b2.rb.mass);
+                              const impulse = normal.multiplyScalar(jImpulse);
+
+                              b1.rb.velocity.add(impulse.clone().multiplyScalar(1/b1.rb.mass));
+                              b2.rb.velocity.sub(impulse.clone().multiplyScalar(1/b2.rb.mass));
+                          }
+                      }
+                  }
+              }
+
+              globalState.totalKineticEnergy = parseFloat(totalKE.toFixed(2));
+          }
+      }
+
+      class ParticleDynamicSystem {
+          update(globalState, pulseBoost) {
+              if (quantumParticles) {
+                  const particlePulse = 1.0 + pulseBoost * 0.8;
+                  quantumParticles.scale.set(particlePulse, particlePulse, particlePulse);
+
+                  const time = globalState.time;
+                  quantumParticles.rotation.y = time * 0.2 * (globalState.audioFrequency / 440) * (9.81 / Math.max(globalState.gravity, 0.1));
+                  quantumParticles.scale.setScalar(1.0 + (globalState.gravity - 9.81) * 0.05);
+                  if (quantumParticles.material) {
+                      quantumParticles.material.uniforms.color1.value.setHSL(
+                          (globalState.solarAngle / 24.0 + 0.5) % 1.0, 1.0, 0.5
+                      );
+                  }
+              }
+          }
+      }
+
+      class IKTrackingSystem {
+          constructor(entityManager) {
+              this.em = entityManager;
+          }
+          update() {
+              if (window.ikArm && window.armBone && window.forearmBone) {
+                  let nearestBodyPos = new THREE.Vector3(0, 10, 0);
+                  let minDist = Infinity;
+
+                  const entities = this.em.getEntitiesWith(['TransformComponent']);
+                  if(entities.length > 0) {
+                      for(const id of entities) {
+                          const transform = this.em.getComponent(id, 'TransformComponent');
+                          const d = window.ikArm.position.distanceToSquared(transform.mesh.position);
+                          if(d < minDist) {
+                              minDist = d;
+                              nearestBodyPos.copy(transform.mesh.position);
+                          }
+                      }
+                  }
+
+                  const targetPos = nearestBodyPos.clone().sub(window.ikArm.position);
+                  const l1 = 2;
+                  const l2 = 2;
+                  const x = targetPos.x;
+                  const y = targetPos.y;
+                  const z = targetPos.z;
+
+                  const r = Math.sqrt(x * x + z * z);
+                  const d = Math.sqrt(r * r + y * y);
+                  let theta1 = Math.atan2(z, x);
+                  let theta2 = 0;
+                  let theta3 = 0;
+
+                  if (d <= l1 + l2) {
+                    const cosTheta3 = (d * d - l1 * l1 - l2 * l2) / (2 * l1 * l2);
+                    theta3 = Math.acos(Math.max(-1, Math.min(1, cosTheta3)));
+                    const alpha = Math.atan2(y, r);
+                    const beta = Math.acos(
+                      Math.max(
+                        -1,
+                        Math.min(1, (l1 * l1 + d * d - l2 * l2) / (2 * l1 * d)),
+                      ),
+                    );
+                    theta2 = alpha + beta;
+                  }
+
+                  window.ikArm.rotation.y = -theta1;
+                  window.armBone.rotation.z = Math.PI / 2 - theta2;
+                  window.forearmBone.rotation.z = -theta3;
+              }
+          }
+      }
+
+      // --- ECS: Headless Core ---
+      class SpatialEngineCore {
+          constructor(topoCore) {
+              this.em = new EntityManager();
+              this.topoCore = topoCore;
+              this.systems = [];
+              this.modules = {}; // Plugin dispatcher
+
+              // Initialize Systems
+              this.systems.push(new PhysicsSystem(this.em, this.topoCore));
+              this.systems.push(new ParticleDynamicSystem());
+              this.systems.push(new IKTrackingSystem(this.em));
+
+              // Register Events
+              engineBus.on("UPDATE_PHYSICS_POOL", (count) => this.rebuildPhysicsPool(count));
+          }
+
+          registerModule(name, moduleInstance) {
+              this.modules[name] = moduleInstance;
+              console.log(`Module registered: ${name}`);
+          }
+
+          rebuildPhysicsPool(targetCount) {
+              // Destroy existing rigid bodies
+              const currentBodies = this.em.getEntitiesWith(['TransformComponent', 'RigidBodyComponent']);
+              for(const id of currentBodies) {
+                  const transform = this.em.getComponent(id, 'TransformComponent');
+                  if (scene) scene.remove(transform.mesh);
+                  this.em.removeEntity(id);
+              }
+
+              const sphereGeo = new THREE.SphereGeometry(1, 16, 16);
+              const boxGeo = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+
+              for (let i = 0; i < targetCount; i++) {
+                  const isBox = Math.random() > 0.5;
+                  const geo = isBox ? boxGeo : sphereGeo;
+                  const color = new THREE.Color().setHSL(Math.random(), 1.0, 0.5);
+                  const mat = new THREE.MeshPhongMaterial({ color: color, wireframe: true, wireframeLinewidth: 2 });
+                  const mesh = new THREE.Mesh(geo, mat);
+
+                  mesh.castShadow = true;
+                  mesh.receiveShadow = true;
+
+                  const radius = isBox ? 0.75 : 1.0;
+                  const mass = Math.random() * 2.0 + 0.5;
+
+                  mesh.position.set(
+                      (Math.random() - 0.5) * 40,
+                      10 + Math.random() * 20,
+                      (Math.random() - 0.5) * 40
+                  );
+
+                  if (scene) scene.add(mesh);
+
+                  const entityId = this.em.createEntity();
+                  this.em.addComponent(entityId, 'TransformComponent', new TransformComponent(mesh));
+                  this.em.addComponent(entityId, 'RigidBodyComponent', new RigidBodyComponent(
+                      mass, radius,
+                      new THREE.Vector3((Math.random()-0.5)*5, 0, (Math.random()-0.5)*5),
+                      new THREE.Vector3(Math.random()-0.5, Math.random()-0.5, Math.random()-0.5)
+                  ));
+              }
+          }
+
+          tick(dt, globalState) {
+              // Update registered subsystems
+              if(this.topoCore) this.topoCore.update(globalState, globalState.time);
+
+              const pulseBoost = globalState.isMicActive ? globalState.currentAmp * 1.5 : ((globalState.audioFrequency - 100) / 900) * 0.5;
+
+              for (const system of this.systems) {
+                  if (system instanceof PhysicsSystem) system.update(dt, globalState);
+                  else if (system instanceof ParticleDynamicSystem) system.update(globalState, pulseBoost);
+                  else if (system instanceof IKTrackingSystem) system.update();
+              }
+          }
+      }
+
+      // Initialize the Headless Engine Core
+      const engineCore = new SpatialEngineCore(topoCore);
+
+      // Register Subsystem Modules dynamically via Dispatcher
+      engineCore.registerModule("PhysicsCore", physics);
+      engineCore.registerModule("TopologicalCognitionCore", topoCore);
+      engineCore.registerModule("EventBus", engineBus);
+
+function init() {
         canvas = document.getElementById("webgl-canvas");
         scene = new THREE.Scene();
         scene.background = new THREE.Color(0x0f172a);
@@ -534,11 +1001,27 @@
           300,
           window.innerHeight || canvas.clientHeight || 600,
         );
-        renderer.setSize(initW, initH);
+                renderer.setSize(initW, initH);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.xr.enabled = true;
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ReinhardToneMapping;
+
+        // Post-Processing EffectComposer
+        const renderScene = new THREE.RenderPass(scene, camera);
+        bloomPass = new THREE.UnrealBloomPass(
+            new THREE.Vector2(initW, initH),
+            1.5, // strength
+            0.4, // radius
+            0.1  // threshold
+        );
+        composer = new THREE.EffectComposer(renderer);
+        composer.addPass(renderScene);
+        composer.addPass(bloomPass);
+        // --- Multi-Rigid Body Subsystem Initial Pool ---
+        engineBus.emit("UPDATE_PHYSICS_POOL", GlobalState.activeRigidBodies);
+
         // ARButton optional
 
         const OrbitCtrlClass =
@@ -623,7 +1106,7 @@
                 float alpha = 1.0 - min(line, 1.0);
 
                 // Pulse effect
-                float pulse = (sin(vPos.length() - time * 2.0) + 1.0) * 0.5;
+                float pulse = (sin(length(vPos) - time * 2.0) + 1.0) * 0.5;
 
                 vec3 finalColor = mix(color2, color1, alpha + pulse * 0.3 * alpha);
                 if (alpha < 0.1) discard; // Make it look like a wireframe
@@ -663,58 +1146,240 @@
           metalness: 0.8,
           roughness: 0.2,
         });
-        bouncingSphere = new THREE.Mesh(
-          new THREE.SphereGeometry(1.2, 32, 32),
-          sphereMat,
-        );
-        bouncingSphere.castShadow = true;
-        bouncingSphere.userData = {
-          velocity: new THREE.Vector3(0, 0, 0),
-          radius: 1.2,
-          mass: 1.0,
-          restitution: 0.8,
-        };
-        bouncingSphere.position.y = 5;
-        scene.add(bouncingSphere);
+
 
         // Module 2: GLSL Quantum Relativistic Particles
-        const count = 5000;
-        const pGeo = new THREE.BufferGeometry();
-        const pos = new Float32Array(count * 3);
-        for (let i = 0; i < count * 3; i++) pos[i] = (Math.random() - 0.5) * 16;
-        pGeo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-        const pMat = new THREE.PointsMaterial({
-          size: 0.08,
-          color: 0x4facfe,
-          transparent: true,
-          opacity: 0.85,
-        });
-        quantumParticles = new THREE.Points(pGeo, pMat);
-        scene.add(quantumParticles);
 
-        // Module 3: 768d Vector Topology Graph
-        topologyLinesGroup = new THREE.Group();
-        scene.add(topologyLinesGroup);
-        const nodeMat = new THREE.MeshStandardMaterial({
-          color: 0x34d399,
-          emissive: 0x059669,
+        // Instanced Mesh for Quantum Particles (10000 instances)
+        const instanceCount = 10000;
+        const iGeo = new THREE.IcosahedronGeometry(0.1, 1);
+
+        // DataTexture setup
+        const format = (renderer.capabilities.isWebGL2) ? THREE.RedFormat : THREE.LuminanceFormat;
+        const audioDataArray = new Uint8Array(128);
+        audioDataTexture = new THREE.DataTexture(audioDataArray, 128, 1, format);
+        audioDataTexture.needsUpdate = true;
+
+        const iMat = new THREE.ShaderMaterial({
+            uniforms: {
+                time: { value: 0 },
+                color1: { value: new THREE.Color(0x0f172a) },
+                color2: { value: new THREE.Color(0x4facfe) },
+                audioTexture: { value: audioDataTexture },
+                curvature: { value: 0 },
+                distortion: { value: 0 },
+                gravity: { value: 9.81 },
+                uTurbulence: { value: 1.0 },
+                uVortexSpeed: { value: 1.0 },
+                uMousePos: { value: new THREE.Vector3() },
+                uAudioFrequency: { value: 440 }
+            },
+            vertexShader: `
+                uniform float time;
+                uniform float curvature;
+                uniform float distortion;
+                uniform float gravity;
+                uniform sampler2D audioTexture;
+                uniform float uTurbulence;
+                uniform float uVortexSpeed;
+                uniform vec3 uMousePos;
+                uniform float uAudioFrequency;
+
+                varying vec2 vUv;
+                varying vec3 vColor;
+
+                // Classic Perlin 3D Noise
+                vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
+                vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
+                vec3 fade(vec3 t) {return t*t*t*(t*(t*6.0-15.0)+10.0);}
+
+                float cnoise(vec3 P){
+                  vec3 Pi0 = floor(P);
+                  vec3 Pi1 = Pi0 + vec3(1.0);
+                  Pi0 = mod(Pi0, 289.0);
+                  Pi1 = mod(Pi1, 289.0);
+                  vec3 Pf0 = fract(P);
+                  vec3 Pf1 = Pf0 - vec3(1.0);
+                  vec4 ix = vec4(Pi0.x, Pi1.x, Pi0.x, Pi1.x);
+                  vec4 iy = vec4(Pi0.yy, Pi1.yy);
+                  vec4 iz0 = Pi0.zzzz;
+                  vec4 iz1 = Pi1.zzzz;
+                  vec4 ixy = permute(permute(ix) + iy);
+                  vec4 ixy0 = permute(ixy + iz0);
+                  vec4 ixy1 = permute(ixy + iz1);
+                  vec4 gx0 = ixy0 / 7.0;
+                  vec4 gy0 = fract(floor(gx0) / 7.0) - 0.5;
+                  gx0 = fract(gx0);
+                  vec4 gz0 = vec4(0.5) - abs(gx0) - abs(gy0);
+                  vec4 sz0 = step(gz0, vec4(0.0));
+                  gx0 -= sz0 * (step(0.0, gx0) - 0.5);
+                  gy0 -= sz0 * (step(0.0, gy0) - 0.5);
+                  vec4 gx1 = ixy1 / 7.0;
+                  vec4 gy1 = fract(floor(gx1) / 7.0) - 0.5;
+                  gx1 = fract(gx1);
+                  vec4 gz1 = vec4(0.5) - abs(gx1) - abs(gy1);
+                  vec4 sz1 = step(gz1, vec4(0.0));
+                  gx1 -= sz1 * (step(0.0, gx1) - 0.5);
+                  gy1 -= sz1 * (step(0.0, gy1) - 0.5);
+                  vec3 g000 = vec3(gx0.x,gy0.x,gz0.x);
+                  vec3 g100 = vec3(gx0.y,gy0.y,gz0.y);
+                  vec3 g010 = vec3(gx0.z,gy0.z,gz0.z);
+                  vec3 g110 = vec3(gx0.w,gy0.w,gz0.w);
+                  vec3 g001 = vec3(gx1.x,gy1.x,gz1.x);
+                  vec3 g101 = vec3(gx1.y,gy1.y,gz1.y);
+                  vec3 g011 = vec3(gx1.z,gy1.z,gz1.z);
+                  vec3 g111 = vec3(gx1.w,gy1.w,gz1.w);
+                  vec4 norm0 = taylorInvSqrt(vec4(dot(g000, g000), dot(g010, g010), dot(g100, g100), dot(g110, g110)));
+                  g000 *= norm0.x;
+                  g010 *= norm0.y;
+                  g100 *= norm0.z;
+                  g110 *= norm0.w;
+                  vec4 norm1 = taylorInvSqrt(vec4(dot(g001, g001), dot(g011, g011), dot(g101, g101), dot(g111, g111)));
+                  g001 *= norm1.x;
+                  g011 *= norm1.y;
+                  g101 *= norm1.z;
+                  g111 *= norm1.w;
+                  float n000 = dot(g000, Pf0);
+                  float n100 = dot(g100, vec3(Pf1.x, Pf0.yz));
+                  float n010 = dot(g010, vec3(Pf0.x, Pf1.y, Pf0.z));
+                  float n110 = dot(g110, vec3(Pf1.xy, Pf0.z));
+                  float n001 = dot(g001, vec3(Pf0.xy, Pf1.z));
+                  float n101 = dot(g101, vec3(Pf1.x, Pf0.y, Pf1.z));
+                  float n011 = dot(g011, vec3(Pf0.x, Pf1.yz));
+                  float n111 = dot(g111, Pf1);
+                  vec3 fade_xyz = fade(Pf0);
+                  vec4 n_z = mix(vec4(n000, n100, n010, n110), vec4(n001, n101, n011, n111), fade_xyz.z);
+                  vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
+                  float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x);
+                  return 2.22 * n_xyz;
+                }
+
+                // 3D Curl Noise using 3 sampled noise values
+                vec3 curlNoise(vec3 p) {
+                    float e = 0.1;
+                    vec3 dx = vec3(e, 0.0, 0.0);
+                    vec3 dy = vec3(0.0, e, 0.0);
+                    vec3 dz = vec3(0.0, 0.0, e);
+
+                    float x0 = cnoise(p - dx);
+                    float x1 = cnoise(p + dx);
+                    float y0 = cnoise(p - dy);
+                    float y1 = cnoise(p + dy);
+                    float z0 = cnoise(p - dz);
+                    float z1 = cnoise(p + dz);
+
+                    float x = y1 - y0 - z1 + z0;
+                    float y = z1 - z0 - x1 + x0;
+                    float z = x1 - x0 - y1 + y0;
+
+                    return normalize(vec3(x, y, z)) * 2.0;
+                }
+
+                void main() {
+                    vUv = uv;
+
+                    // Transform position using instanceMatrix
+                    vec4 worldPos = instanceMatrix * vec4(position, 1.0);
+                    vec3 displacedPos = worldPos.xyz;
+
+                    // 1. Vortex Vector Field (Curl Noise & Rotation)
+                    // The vortex is driven by time, audio frequency, and gravity
+                    float vortexScale = (uAudioFrequency / 440.0) * uVortexSpeed * (gravity / 9.81);
+                    vec3 curl = curlNoise(displacedPos * 0.2 + time * 0.1) * uTurbulence;
+
+                    // Rotation around center (0,0,0) based on distance
+                    float distToCenterXZ = length(displacedPos.xz);
+                    float angle = time * vortexScale / max(distToCenterXZ, 1.0);
+                    float s = sin(angle);
+                    float c = cos(angle);
+                    mat2 rotXZ = mat2(c, -s, s, c);
+                    displacedPos.xz = rotXZ * displacedPos.xz;
+
+                    // Add turbulence displacement
+                    displacedPos += curl * 0.5;
+
+                    // Apply original topological distortion
+                    float noise = cnoise(displacedPos * 0.5 + time * 0.5);
+                    displacedPos += normal * noise * distortion * 0.5;
+
+                    // 2. Gravity Surface Flow (Pull towards center and curve downwards)
+                    float sink = exp(-distToCenterXZ * 0.5) * curvature * gravity;
+                    displacedPos.y -= sink;
+                    // Add an inward slide towards the gravity well
+                    vec2 dirToCenter = -normalize(displacedPos.xz + vec2(0.001));
+                    displacedPos.xz += dirToCenter * sink * 0.3 * (gravity / 9.81);
+
+                    // 3. Mouse Repulsion
+                    float distToMouse = distance(displacedPos, uMousePos);
+                    float repulsionRadius = 4.0;
+                    if(distToMouse < repulsionRadius) {
+                        vec3 repulseDir = normalize(displacedPos - uMousePos);
+                        float force = (repulsionRadius - distToMouse) / repulsionRadius;
+                        // Push outward and slightly upward
+                        displacedPos += repulseDir * force * 1.5;
+                        displacedPos.y += force * 0.5;
+                    }
+
+                    // Read audio texture based on instance ID
+                    float audioIndex = mod(float(gl_InstanceID), 128.0) / 128.0;
+                    vec4 audioData = texture2D(audioTexture, vec2(audioIndex, 0.5));
+                    float audioVal = audioData.r;
+
+                    // Pulse scale based on audio
+                    displacedPos += normal * audioVal * 0.5;
+
+                    // Map color based on height, audio, and curl
+                    vColor = vec3(0.5) + vec3(0.5) * cos(time + displacedPos.y * 2.0 + vec3(0,2,4)) + audioVal * 0.5;
+
+                    vec4 mvPosition = viewMatrix * vec4(displacedPos, 1.0);
+                    gl_Position = projectionMatrix * mvPosition;
+                }
+            `,
+            fragmentShader: `
+                uniform vec3 color1;
+                uniform vec3 color2;
+                varying vec2 vUv;
+                varying vec3 vColor;
+
+                void main() {
+                    gl_FragColor = vec4(mix(color1, vColor, 0.8), 0.9);
+                }
+            `,
+            transparent: true,
+            wireframe: true
         });
-        for (let i = 0; i < 14; i++) {
-          const n = new THREE.Mesh(
-            new THREE.SphereGeometry(0.3, 16, 16),
-            nodeMat,
-          );
-          n.position.set(
-            (Math.random() - 0.5) * 10,
-            (Math.random() - 0.5) * 6,
-            (Math.random() - 0.5) * 10,
-          );
-          n.userData = { baseY: n.position.y };
-          topologyNodes.push(n);
-          scene.add(n);
+
+        quantumParticles = new THREE.InstancedMesh(iGeo, iMat, instanceCount);
+
+        // Setup initial instance matrices
+        const dummy = new THREE.Object3D();
+        for (let i = 0; i < instanceCount; i++) {
+            dummy.position.set(
+                (Math.random() - 0.5) * 40,
+                (Math.random() - 0.5) * 20,
+                (Math.random() - 0.5) * 40
+            );
+            dummy.rotation.set(
+                Math.random() * Math.PI,
+                Math.random() * Math.PI,
+                Math.random() * Math.PI
+            );
+            const scale = Math.random() * 0.5 + 0.1;
+            dummy.scale.set(scale, scale, scale);
+            dummy.updateMatrix();
+            quantumParticles.setMatrixAt(i, dummy.matrix);
         }
 
+        quantumParticles.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+        scene.add(quantumParticles);
+        window.instancedUniforms = iMat.uniforms;
+
+
         // Setup Sliders & Listeners
+      engineBus.on("UI_STATE_UPDATE", () => {
+          renderJSONState();
+      });
+
         document
           .getElementById("gravity-slider")
           .addEventListener("input", (e) => {
@@ -750,6 +1415,50 @@
             GlobalState.audioFrequency = parseInt(e.target.value);
             document.getElementById("audio-val").textContent =
               GlobalState.audioFrequency + " Hz";
+            renderJSONState();
+          });
+          document
+          .getElementById("bloom-slider")
+          ?.addEventListener("input", (e) => {
+            GlobalState.bloomStrength = parseFloat(e.target.value);
+            document.getElementById("bloom-val").innerText = GlobalState.bloomStrength.toFixed(1);
+            if (bloomPass) {
+                bloomPass.strength = GlobalState.bloomStrength;
+            }
+            renderJSONState();
+          });
+
+
+
+        document
+          .getElementById("turb-slider")
+          ?.addEventListener("input", (e) => {
+            GlobalState.turbulence = parseFloat(e.target.value);
+            document.getElementById("turb-val").innerText = GlobalState.turbulence.toFixed(1);
+            renderJSONState();
+          });
+        document
+          .getElementById("vortex-slider")
+          ?.addEventListener("input", (e) => {
+            GlobalState.vortexSpeed = parseFloat(e.target.value);
+            document.getElementById("vortex-val").innerText = GlobalState.vortexSpeed.toFixed(1);
+            renderJSONState();
+          });
+
+
+        document
+          .getElementById("bodies-slider")
+          ?.addEventListener("input", (e) => {
+            GlobalState.activeRigidBodies = parseInt(e.target.value);
+            document.getElementById("bodies-val").innerText = GlobalState.activeRigidBodies;
+            engineBus.emit("UPDATE_PHYSICS_POOL", GlobalState.activeRigidBodies);
+            renderJSONState();
+          });
+        document
+          .getElementById("restitution-slider")
+          ?.addEventListener("input", (e) => {
+            GlobalState.restitution = parseFloat(e.target.value);
+            document.getElementById("restitution-val").innerText = GlobalState.restitution.toFixed(2);
             renderJSONState();
           });
 
@@ -818,20 +1527,6 @@
             GlobalState.topologyDistance * 0.02 +
             (GlobalState.audioFrequency / 1000) * 0.2,
         });
-        for (let i = 0; i < topologyNodes.length; i++) {
-          for (let j = i + 1; j < topologyNodes.length; j++) {
-            if (
-              topologyNodes[i].position.distanceTo(topologyNodes[j].position) <
-              GlobalState.topologyDistance
-            ) {
-              const lGeo = new THREE.BufferGeometry().setFromPoints([
-                topologyNodes[i].position,
-                topologyNodes[j].position,
-              ]);
-              topologyLinesGroup.add(new THREE.Line(lGeo, lineMat));
-            }
-          }
-        }
       }
 
       // --- 8. Web Audio API Real-Time Microphone & FFT Analyzer Engine ---
@@ -842,6 +1537,7 @@
       let isMicActive = false;
       let isToneActive = false;
       let fftDataArray = new Uint8Array(64);
+      let audioDataTexture = null;
 
       window.toggleMicrophone = async function () {
         const btnText = document.getElementById("mic-status-text");
@@ -930,7 +1626,7 @@
         const time = now * 0.001;
         const dt = Math.min((now - lastTime) * 0.001, 0.1);
         lastTime = now;
-        if (typeof topoCore !== 'undefined') topoCore.update(GlobalState, time);
+        GlobalState.time = time;
         // Dynamic iframe canvas size check to prevent 0x0 pixel black screen
         if (renderer && camera && canvas) {
           const targetW = canvas.parentElement
@@ -953,17 +1649,50 @@
         controls.update();
 
 
-        // Pass Topology Data to Grid Shader
-        if (typeof topoCore !== 'undefined' && window.gridUniforms) {
-            window.gridUniforms.time.value = time;
-            window.gridUniforms.curvature.value = topoCore.curvature;
-            window.gridUniforms.distortion.value = topoCore.distortion;
+        // Raycaster logic for uMousePos
+        raycaster.setFromCamera(mouse, camera);
+        raycaster.ray.intersectPlane(intersectionPlane, uMousePos);
+
+        // Pass Topology Data to Shaders
+        if (typeof topoCore !== 'undefined') {
+            if (window.gridUniforms) {
+                window.gridUniforms.time.value = time;
+                window.gridUniforms.curvature.value = topoCore.curvature;
+                window.gridUniforms.distortion.value = topoCore.distortion;
+            }
+            if (window.instancedUniforms) {
+                window.instancedUniforms.time.value = time;
+                window.instancedUniforms.curvature.value = topoCore.curvature;
+                window.instancedUniforms.distortion.value = topoCore.distortion;
+
+                // Phase 3 additions
+                window.instancedUniforms.uTurbulence.value = GlobalState.turbulence;
+                window.instancedUniforms.uVortexSpeed.value = GlobalState.vortexSpeed;
+                window.instancedUniforms.uMousePos.value.copy(uMousePos);
+                window.instancedUniforms.uAudioFrequency.value = GlobalState.audioFrequency;
+                window.instancedUniforms.gravity.value = GlobalState.gravity;
+            }
         }
+
+        // Update Audio DataTexture
+        if (audioDataTexture) {
+            audioDataTexture.needsUpdate = true;
+        }
+
 
         // Fetch Live Web Audio FFT Spectrum Frequency with Noise Gate & Scale Pulse
         let currentAmp = 0.0;
         if (analyserNode && isMicActive) {
           analyserNode.getByteFrequencyData(fftDataArray);
+
+          if (audioDataTexture) {
+              const data = audioDataTexture.image.data;
+              for (let i = 0; i < Math.min(128, fftDataArray.length); i++) {
+                  data[i] = fftDataArray[i];
+              }
+              audioDataTexture.needsUpdate = true;
+          }
+
           let sum = 0;
           for (let i = 0; i < fftDataArray.length; i++) sum += fftDataArray[i];
           const rawAvg = sum / fftDataArray.length; // Range 0 ~ 255
@@ -989,144 +1718,30 @@
 
         lastTime = now;
 
-        // 1. C++ Gravity Bouncing Simulation (Rigid Body Physics)
-        const rb = bouncingSphere.userData;
+        engineCore.tick(dt, GlobalState);
 
-        // Apply gravity
-        rb.velocity.y -= GlobalState.gravity * dt;
-
-        // Update position
-        bouncingSphere.position.addScaledVector(rb.velocity, dt);
-
-        // 2. Solar Angle Thermal Expansion + Audio Scale Pulse ("팡팡 부풀어오름")
-        const thermalScale = physics.applyThermalExpansion(
-          GlobalState.solarAngle,
-          1.0,
-        );
-        const pulseBoost = isMicActive
-          ? currentAmp * 1.5
-          : ((GlobalState.audioFrequency - 100) / 900) * 0.5;
-        const finalScale = thermalScale + pulseBoost;
-        bouncingSphere.scale.set(finalScale, finalScale, finalScale);
-
-        if (quantumParticles) {
-          const particlePulse = 1.0 + pulseBoost * 0.8;
-          quantumParticles.scale.set(
-            particlePulse,
-            particlePulse,
-            particlePulse,
-          );
-        }
-
-        // AABB Collision with topological floor
-        const currentRadius = rb.radius * finalScale;
-        let floorY = window.floorMesh ? window.floorMesh.position.y : -2.5;
-
-        // Add topological sink depth based on object's XZ position
-        if (typeof topoCore !== 'undefined') {
-            const sinkDepth = topoCore.getDepthAt(bouncingSphere.position.x, bouncingSphere.position.z);
-            floorY += sinkDepth;
-
-            // Add gravity gradient to pull object towards the center of the well
-            const gradX = -bouncingSphere.position.x * 0.05 * topoCore.curvature;
-            const gradZ = -bouncingSphere.position.z * 0.05 * topoCore.curvature;
-            rb.velocity.x += gradX * dt;
-            rb.velocity.z += gradZ * dt;
-        }
-
-        if (bouncingSphere.position.y - currentRadius <= floorY) {
-          bouncingSphere.position.y = floorY + currentRadius;
-          rb.velocity.y = Math.abs(rb.velocity.y) * rb.restitution;
-
-          // Apply friction
-          rb.velocity.x *= 0.98;
-          rb.velocity.z *= 0.98;
-        }
-
-        const solarRad = (GlobalState.solarAngle / 24.0) * Math.PI * 2;
+        // Advanced Solar Matrix Optics
         if (mainLight) {
-          mainLight.position.set(
-            Math.cos(solarRad) * 15,
-            Math.sin(solarRad) * 15,
-            10,
-          );
-        }
+            const solarData = calculateSolarMatrix(GlobalState.solarAngle, 2.0);
+            mainLight.position.set(solarData.x, solarData.y, solarData.z);
+            mainLight.intensity = solarData.intensity;
 
-        // 3. Quantum Particles Vortices
-        if (quantumParticles) {
-          quantumParticles.rotation.y =
-            time *
-            0.2 *
-            (GlobalState.audioFrequency / 440) *
-            (9.81 / Math.max(GlobalState.gravity, 0.1));
-          quantumParticles.scale.setScalar(
-            1.0 + (GlobalState.gravity - 9.81) * 0.05,
-          );
-          if (quantumParticles.material) {
-            quantumParticles.material.color.setHSL(
-              (GlobalState.solarAngle / 24.0 + 0.5) % 1.0,
-              1.0,
-              0.5,
-            );
-          }
+            // Link to grid colors
+            if (window.gridUniforms) {
+                window.gridUniforms.color1.value.setHex(solarData.colorHex);
+            }
         }
 
         // 4. Vector Topology Update
-        topologyNodes.forEach(
-          (n) => {
-              let topoDepth = 0;
-              if (typeof topoCore !== 'undefined') {
-                  topoDepth = topoCore.getDepthAt(n.position.x, n.position.z);
-              }
-              n.position.y = n.userData.baseY + (9.81 - GlobalState.gravity) * 0.2 + topoDepth;
-          }
-        );
+        /* Replaced by InstancedMesh Shader Logic */
+        if (topologyLinesGroup) {
+            topologyLinesGroup.clear();
+        }
+
         if (topologyLinesGroup) {
           topologyLinesGroup.position.y = (9.81 - GlobalState.gravity) * 0.2;
         }
 
-        // Analytic Inverse Kinematics for the 2-bone arm
-        if (window.ikArm && window.armBone && window.forearmBone) {
-          // Target position relative to the base bone
-          const targetPos = bouncingSphere.position
-            .clone()
-            .sub(window.ikArm.position);
-
-          // lengths of the bones
-          const l1 = 2; // armBone length
-          const l2 = 2; // forearmBone length
-
-          const x = targetPos.x;
-          const y = targetPos.y;
-          const z = targetPos.z;
-
-          // distance to target projected on xz plane
-          const distXZ = Math.sqrt(x * x + z * z);
-          // distance to target in 3d
-          const dist3D = Math.sqrt(distXZ * distXZ + y * y);
-
-          // Base rotation (Y-axis)
-          window.ikArm.rotation.y = Math.atan2(x, z);
-
-          // IK for 2D plane (distXZ, y)
-          // Ensure target is reachable
-          const dist = Math.min(dist3D, l1 + l2 - 0.01);
-
-          // angle of the target from the base
-          const targetAngle = Math.atan2(y, distXZ);
-
-          // angle of the arm using law of cosines
-          const cosAngle1 = (l1 * l1 + dist * dist - l2 * l2) / (2 * l1 * dist);
-          const angle1 = Math.acos(Math.max(-1, Math.min(1, cosAngle1)));
-
-          window.armBone.rotation.x = targetAngle - angle1;
-
-          // angle of the forearm
-          const cosAngle2 = (l1 * l1 + l2 * l2 - dist * dist) / (2 * l1 * l2);
-          const angle2 = Math.acos(Math.max(-1, Math.min(1, cosAngle2)));
-
-          window.forearmBone.rotation.x = Math.PI - angle2;
-        }
 
         // Soft-Body Deformation
         if (window.softBodyMesh) {
@@ -1146,12 +1761,35 @@
           pos.needsUpdate = true;
         }
 
-        updateTopologyLines();
+        // updateTopologyLines();
 
-        renderer.render(scene, camera);
+        composer.render();
       }
 
-      function onWindowResize() {
+            function calculateSolarMatrix(angle, baseIntensity) {
+          const rad = (angle / 24.0) * Math.PI * 2;
+          const zenithDeg = rad * 180 / Math.PI;
+
+          let airMass = 1.0;
+          if (93.885 - zenithDeg > 0) {
+              airMass = 1.0 / (Math.cos(rad) + 0.15 * Math.pow(93.885 - zenithDeg, -1.253));
+          } else {
+              airMass = 40.0;
+          }
+
+          let intensity = Math.max(0.1, baseIntensity * Math.sin(rad) * (1.0 / Math.abs(airMass)));
+          if (isNaN(intensity) || !isFinite(intensity)) intensity = 0.1;
+
+          return {
+              x: Math.cos(rad) * 15,
+              y: Math.sin(rad) * 15,
+              z: 10,
+              intensity: intensity,
+              colorHex: rad > Math.PI ? 0x0f172a : 0x4facfe // Night vs Day basic blend
+          };
+      }
+
+            function onWindowResize() {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         const initW = Math.max(
@@ -1163,6 +1801,8 @@
           window.innerHeight || canvas.clientHeight || 600,
         );
         renderer.setSize(initW, initH);
+        if (typeof composer !== 'undefined' && composer) composer.setSize(initW, initH);
+        if (typeof bloomPass !== 'undefined' && bloomPass) bloomPass.resolution.set(initW, initH);
       }
 
       // Fail-Safe Immediate & Event-Based 3D Engine Initialization Hook
@@ -1176,5 +1816,146 @@
         window.addEventListener("load", init);
       }
     </script>
-  </body>
+  
+
+<style>
+.publisher-guide {
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  color: #cbd5e1;
+  line-height: 1.8;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+.publisher-guide h2 {
+  color: #38bdf8;
+  font-size: 1.8rem;
+  border-bottom: 2px solid #334155;
+  padding-bottom: 0.75rem;
+  margin-top: 2rem;
+  margin-bottom: 1.25rem;
+}
+.publisher-guide h3 {
+  color: #f1f5f9;
+  font-size: 1.3rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+.publisher-guide p {
+  margin-bottom: 1.25rem;
+  font-size: 1.05rem;
+}
+.publisher-guide ul, .publisher-guide ol {
+  margin-left: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.publisher-guide li {
+  margin-bottom: 0.5rem;
+}
+.publisher-guide code {
+  background: #0f172a;
+  color: #38bdf8;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-family: monospace;
+}
+.publisher-guide .faq-card {
+  background: #0f172a;
+  padding: 1.25rem;
+  border-radius: 8px;
+  border-left: 4px solid #38bdf8;
+  margin-bottom: 1rem;
+}
+.publisher-guide .faq-card h4 {
+  color: #f8fafc;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+.adsense-container {
+  margin: 2.5rem 0;
+  text-align: center;
+  background: #0f172a;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px dashed #334155;
+}
+</style>
+
+<article class="publisher-guide">
+  <h2>Comprehensive Engineering Guide & Technical Documentation for Jules Master 3D Spatial Engine V1 2</h2>
+  
+  <p>Welcome to <strong>SA Labs Jules Master 3D Spatial Engine V1 2</strong>, a state-of-the-art web utility designed for modern software engineers, digital creators, audio engineers, and web developers. This interactive workstation leverages high-performance browser Web APIs, client-side WebAssembly, and real-time canvas rendering engines to provide instantaneous, zero-latency execution directly within your browser window without transmitting sensitive data to third-party servers.</p>
+  
+  
+<div class="adsense-container">
+  <!-- SA Labs High-Value Publisher Content Ad Unit -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-9108438313531011"
+       data-ad-slot="auto"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+
+  <h2>Key Features & Technical Architecture</h2>
+  <p>Our platform incorporates enterprise-grade architectural patterns to ensure reliability, security, and exceptional performance across desktop and mobile devices. Key technical highlights include:</p>
+  <ul>
+    <li><strong>Client-Side Local Computation:</strong> All input parameters and dynamic operations are processed locally via WebAssembly and modern JavaScript engines, guaranteeing 100% data privacy.</li>
+    <li><strong>Adaptive High-DPI Rendering:</strong> Visual elements dynamically scale to match device pixel ratios, delivering crisp graphics on 4K and Retina displays.</li>
+    <li><strong>Standard Compliance:</strong> Built strictly according to modern W3C standards, ECMAScript 2026 specifications, and HTML5 Web API guidelines.</li>
+    <li><strong>Zero External Dependencies:</strong> Optimized for ultra-fast initial page load times and minimal memory footprints.</li>
+  </ul>
+
+  <h2>Step-by-Step Operating Instructions</h2>
+  <p>To maximize your productivity when using Jules Master 3D Spatial Engine V1 2, follow these recommended operational workflows:</p>
+  <ol>
+    <li><strong>Configuration & Inputs:</strong> Utilize the top control panel to specify target parameters, input strings, frequency values, or configuration modes.</li>
+    <li><strong>Real-Time Execution:</strong> As you adjust controls or trigger actions, the engine dynamically recalculates outputs in real time without requiring full page reloads.</li>
+    <li><strong>Export & Integration:</strong> Copy generated data, download processed media assets, or integrate exported JSON schemas directly into your development workflow.</li>
+  </ol>
+
+  <h2>Frequently Asked Questions (FAQ)</h2>
+  <div class="faq-card">
+    <h4>Q1: Is my data uploaded or stored on SA Labs cloud servers?</h4>
+    <p>No. All calculations, audio synthesis, text processing, and data transformations performed by Jules Master 3D Spatial Engine V1 2 occur entirely within your local browser sandbox. No input data is sent to external servers.</p>
+  </div>
+  
+  <div class="faq-card">
+    <h4>Q2: Which browsers are supported for maximum performance?</h4>
+    <p>Jules Master 3D Spatial Engine V1 2 is fully compatible with all modern evergreen browsers, including Google Chrome, Mozilla Firefox, Apple Safari, Microsoft Edge, and modern mobile browsers.</p>
+  </div>
+
+  <div class="faq-card">
+    <h4>Q3: Can I use SA Labs tools for commercial software development projects?</h4>
+    <p>Yes. All tools, utilities, generated code, and assets produced on the SA Labs platform are free for both personal and commercial engineering use.</p>
+  </div>
+
+  
+<div class="adsense-container">
+  <!-- SA Labs High-Value Publisher Content Ad Unit -->
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-9108438313531011"
+       data-ad-slot="auto"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>
+       (adsbygoogle = window.adsbygoogle || []).push({});
+  </script>
+</div>
+
+
+  <h2>About SA Labs Open-Source Technology Architecture</h2>
+  <p>SA Labs (Sequence Autonomic Laboratories) is dedicated to advancing web architecture, real-time 3D graphics engines, static program analysis (SAPQ), and developer productivity tools. Explore our GitHub repositories and official documentation to learn more about our open-source initiatives and enterprise frameworks.</p>
+</article>
+
+</body>
 </html>

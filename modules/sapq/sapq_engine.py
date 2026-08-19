@@ -120,6 +120,8 @@ class SAPQEngine:
         # SAPQ 3.5 Fusion: Bring in AST Context to cross-verify zombie nodes
         ast_parser = ASTParser(self.filepath)
         ast_usages = ast_parser.get_all_identifier_usages()
+        scope_undeclared_symbols = ast_parser.detect_scope_undeclared_symbols()
+        function_declarations = ast_parser.get_function_declarations()
 
         # Zombie Nodes
         for symbol, line_num in forward_symbols.items():
@@ -139,6 +141,11 @@ class SAPQEngine:
                 def_line = forward_symbols[symbol]
                 # If reference is inside a function or event handler in HTML, skip static torsion warning
                 if ref_line < def_line:
+                    # P1 Fix: FunctionDeclaration hoisting false positive removal using AST
+                    status = "UNVERIFIED"
+                    if symbol in function_declarations:
+                        status = "REFUTED" # Valid hoisting confirmed by AST Tri-State Judgment
+
                     ref_code = self.lines[ref_line - 1] if ref_line <= len(self.lines) else ""
                     # Check if reference is inside script function scope
                     if not ('document.getElementById' in ref_code and 'function' in self.full_content_raw):
@@ -146,7 +153,8 @@ class SAPQEngine:
                             "symbol": symbol,
                             "def_line": def_line,
                             "ref_line": ref_line,
-                            "issue": f"TORSION_CROSSING: Referenced at line {ref_line} before declaration at line {def_line}"
+                            "issue": f"TORSION_CROSSING: Referenced at line {ref_line} before declaration at line {def_line}",
+                            "status": status
                         })
 
         # Phase 18: EVENT_TARGET_MISMATCH check
@@ -209,6 +217,11 @@ except (ImportError, ValueError):
     from sapq_causality import CausalityContradictionEngine
     from sapq_dom_relay import SAPQDOMRelay
 
+try:
+    from multi_vector_parser import MultiVectorCrossParsingAuditEngine
+except ImportError:
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+    from multi_vector_parser import MultiVectorCrossParsingAuditEngine
 
 def audit_file(filepath, session_id=None, baseline_filepath=None, audit_only=False):
     checkpoint_mgr = CheckpointManager(filepath, session_id=session_id)
@@ -261,7 +274,16 @@ def audit_file(filepath, session_id=None, baseline_filepath=None, audit_only=Fal
     engine = SAPQEngine(filepath)
     report = engine.execute_vector_end_trajectory_linking()
 
-    # Phase 20: Dual Mode - Hyper-Isomorphic Baseline Auditor
+    # Integrate MultiVectorCrossParsingAuditEngine
+    mv_engine = MultiVectorCrossParsingAuditEngine(filepath)
+    mv_report = mv_engine.execute_vector_end_trajectory_linking()
+
+    report["semantic_contradictions"] = mv_report.get("semantic_contradictions", [])
+    report["async_timing_contradictions"] = mv_report.get("async_timing_contradictions", [])
+    report["intent_mismatches"] = mv_report.get("intent_mismatches", [])
+
+
+    # 6. Phase 20: Baseline Cube (if exists)
     if baseline_filepath and os.path.exists(baseline_filepath):
         cube = SAPQBaselineCube(baseline_filepath=baseline_filepath, target_filepath=filepath)
         topological_holes = cube.audit_topological_holes()
@@ -328,6 +350,24 @@ def audit_file(filepath, session_id=None, baseline_filepath=None, audit_only=Fal
     else:
         report["interlock_status"] = "PASSED"
 
+    # Recalculate total score integrating all submodules
+    valid_discontinuities = [d for d in report.get("discontinuities_detected", []) if d.get("status") != "REFUTED"]
+    total_penalty = (
+        len(valid_discontinuities) * 10 +
+        len(report.get("zombie_nodes_detected", [])) * 2 +
+        len(report.get("event_target_mismatches", [])) * 20 +
+        len(report.get("causality_contradictions", [])) * 15 +
+        len(report.get("mockup_hallucinations", [])) * 25 +
+        len(report.get("missing_intended_features", [])) * 30 +
+        len(report.get("cascade_graph_issues", [])) * 15 +
+        len(report.get("python_subprocess_issues", [])) * 25 +
+        len(report.get("llm_audit_issues", [])) * 20 +
+        len(report.get("scope_undeclared_symbols", [])) * 25 +
+        len(report.get("semantic_contradictions", [])) * 5 +
+        len(report.get("async_timing_contradictions", [])) * 15 +
+        len(report.get("intent_mismatches", [])) * 20
+    )
+    report["audit_integrity_score"] = max(0, 100 - total_penalty)
 
     # Inject Preflight results into report
     report["preflight_status"] = "PASSED"
@@ -398,7 +438,3 @@ def audit_directory(dirpath, audit_only=False):
                 results.append(rep)
 
     return results
-
-
-# Backward Compatibility Alias
-MultiVectorCrossParsingAuditEngine = SAPQEngine

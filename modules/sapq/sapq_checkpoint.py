@@ -15,12 +15,13 @@ class CheckpointManager:
 
     STATES = ["PENDING", "ANALYZING", "PATCHING", "VERIFYING", "COMPLETED", "RECOVERING", "FAILED", "RULE_CONFLICT_PAUSE"]
 
-    def __init__(self, target_filepath, session_id=None):
+    def __init__(self, target_filepath, session_id=None, audit_only=False):
         self.filepath = target_filepath
         self.filename = os.path.basename(target_filepath)
         self.session_id = session_id or f"sapq_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         self.checkpoint_dir = os.path.join(os.path.dirname(target_filepath), ".sapq_checkpoints")
         self.checkpoint_file = os.path.join(self.checkpoint_dir, f"{self.session_id}_{self.filename}.json")
+        self.audit_only = audit_only
 
         self.state_data = {
             "session_id": self.session_id,
@@ -33,7 +34,7 @@ class CheckpointManager:
             "updated_at": datetime.utcnow().isoformat() + "Z"
         }
 
-        if not os.path.exists(self.checkpoint_dir):
+        if not self.audit_only and not os.path.exists(self.checkpoint_dir):
             os.makedirs(self.checkpoint_dir, exist_ok=True)
 
     def _calculate_hash(self):
@@ -48,6 +49,8 @@ class CheckpointManager:
 
     def create_backup(self):
         """Creates a backup of the target file."""
+        if self.audit_only:
+            return None
         if not os.path.exists(self.filepath):
             return None
         backup_name = f"{self.filename}.bak_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
@@ -57,6 +60,8 @@ class CheckpointManager:
 
     def load_checkpoint(self):
         """Loads an existing checkpoint if it exists."""
+        if self.audit_only:
+            return False
         if os.path.exists(self.checkpoint_file):
             try:
                 with open(self.checkpoint_file, 'r', encoding='utf-8') as f:
@@ -69,8 +74,9 @@ class CheckpointManager:
     def save_checkpoint(self):
         """Saves current state to the checkpoint file."""
         self.state_data["updated_at"] = datetime.utcnow().isoformat() + "Z"
-        with open(self.checkpoint_file, 'w', encoding='utf-8') as f:
-            json.dump(self.state_data, f, indent=2)
+        if not self.audit_only:
+            with open(self.checkpoint_file, 'w', encoding='utf-8') as f:
+                json.dump(self.state_data, f, indent=2)
 
     def update_status(self, new_status, update_hash=True):
         """Updates the global status and optionally the file hash."""

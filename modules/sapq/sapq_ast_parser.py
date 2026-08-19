@@ -316,7 +316,8 @@ class ASTParser:
                     issues.append({
                         'symbol': n.name,
                         'line': line_num,
-                        'issue': f"SCOPE_UNDECLARED_SYMBOL: '{n.name}' is used but not declared (ReferenceError Trap)"
+                        'issue': f"SCOPE_UNDECLARED_SYMBOL: '{n.name}' is used but not declared (ReferenceError Trap)",
+                        'status': 'CONFIRMED'
                     })
 
             # Check usages where identifiers appear explicitly!
@@ -360,6 +361,26 @@ class ASTParser:
 
         visit(self.ast, Scope(scope_type='function'))
         return issues
+
+    def get_function_declarations(self):
+        """Extracts a set of all function names declared via FunctionDeclaration."""
+        if not self.ast or self.language != 'js':
+            return set()
+
+        funcs = set()
+        def visitor(node):
+            if not node or not hasattr(node, 'type'): return
+            if node.type == 'FunctionDeclaration' and getattr(node, 'id', None):
+                funcs.add(node.id.name)
+            for key, value in vars(node).items():
+                if isinstance(value, list):
+                    for item in value:
+                        visitor(item)
+                elif hasattr(value, 'type'):
+                    visitor(value)
+
+        visitor(self.ast)
+        return funcs
 
     def get_all_identifier_usages(self):
         """Extracts a set of all variable identifier names used in the AST, strictly tracking usages (ignoring declarations)."""
@@ -409,3 +430,12 @@ class ASTParser:
 
         self._traverse(self.ast, advanced_visitor)
         return usages
+
+
+# Backward compatibility alias
+
+
+# Backward compatibility aliases
+ASTMultiVectorParser = ASTParser
+SAPQASTParser = ASTParser
+MultiVectorCrossParsingAuditEngine = ASTParser

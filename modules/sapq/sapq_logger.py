@@ -9,14 +9,15 @@ class SAPQLogger:
     - Used for post-mortem debugging to trace when and where an AI agent introduced a regression.
     """
 
-    def __init__(self, target_filepath, session_id):
+    def __init__(self, target_filepath, session_id, audit_only=False):
         self.filepath = target_filepath
         self.filename = os.path.basename(target_filepath)
         self.session_id = session_id
+        self.audit_only = audit_only
 
         # Determine log directory relative to the target file or use a global one
         self.log_dir = os.path.join(os.path.dirname(target_filepath), ".sapq_logs")
-        if not os.path.exists(self.log_dir):
+        if not self.audit_only and not os.path.exists(self.log_dir):
             os.makedirs(self.log_dir, exist_ok=True)
 
         # Daily log file
@@ -24,6 +25,8 @@ class SAPQLogger:
         self.log_file = os.path.join(self.log_dir, f"sapq_audit_{date_str}.jsonl")
 
     def _write_log(self, event_type, details):
+        if self.audit_only:
+            return
         log_entry = {
             "timestamp": datetime.utcnow().isoformat() + "Z",
             "session_id": self.session_id,

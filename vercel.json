@@ -2,28 +2,14 @@
   "version": 2,
   "cleanUrls": true,
   "trailingSlash": false,
-  "redirects": [
+  "rewrites": [
     {
       "source": "/ads.txt",
-      "has": [
-        {
-          "type": "host",
-          "value": "quanxs.com"
-        }
-      ],
-      "destination": "https://salabs.quanxs.com/ads.txt",
-      "permanent": true
+      "destination": "/ads.txt"
     },
     {
-      "source": "/ads.txt",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.quanxs.com"
-        }
-      ],
-      "destination": "https://salabs.quanxs.com/ads.txt",
-      "permanent": true
+      "source": "/sitemap.xml",
+      "destination": "/sitemap.xml"
     }
   ],
   "headers": [

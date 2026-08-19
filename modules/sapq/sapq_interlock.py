@@ -8,8 +8,18 @@ class InterlockCircuitBreaker:
     - Telegram Alert Dispatch: Dispatch detailed trace log of failed audit.
     """
 
+    class DeploymentBlocked(Exception):
+        pass
+
     @staticmethod
-    def evaluate_audit_results(results):
+    def evaluate_audit_report(report, strict_mode=True):
+        """
+        Evaluate a single audit report from SAPQ engine and decide whether to break the circuit.
+        """
+        return InterlockCircuitBreaker.evaluate_audit_results([report], strict_mode=strict_mode)
+
+    @staticmethod
+    def evaluate_audit_results(results, strict_mode=True):
         """
         Evaluate full audit results from SAPQ engines and decide whether to break the circuit.
         """
@@ -18,9 +28,10 @@ class InterlockCircuitBreaker:
 
         for res in results:
             # Check Level 1-4 contradictions
-            if res.get("discontinuities_detected") or res.get("zombie_nodes_detected") or res.get("index_desync_warnings") or res.get("closed_loop_warnings"):
+            valid_discontinuities = [d for d in res.get("discontinuities_detected", []) if d.get("status") != "REFUTED"]
+            if valid_discontinuities or res.get("zombie_nodes_detected") or res.get("index_desync_warnings") or res.get("closed_loop_warnings") or res.get("scope_undeclared_symbols") or res.get("async_timing_contradictions") or res.get("semantic_contradictions") or res.get("intent_mismatches"):
                 has_critical_errors = True
-                trace_log.append(f"Level 1-4 Contradiction found in {res.get('target_file')}")
+                trace_log.append(f"Level 1-4 Contradiction (or Scope Undeclared Symbols, Async Timing Race) found in {res.get('target_file')}")
 
             # Check Phase 15/16 (Mockup/Hallucination)
             if res.get("mockups_detected"):
@@ -42,14 +53,25 @@ class InterlockCircuitBreaker:
                 has_critical_errors = True
                 trace_log.append(f"SPEC_ALIGNMENT_MISMATCH found in {res.get('target_file')}")
 
+            if res.get("event_target_mismatches"):
+                has_critical_errors = True
+                trace_log.append(f"EVENT_TARGET_MISMATCH found in {res.get('target_file')}")
+
+            if res.get("cascade_graph_issues"):
+                has_critical_errors = True
+                trace_log.append(f"CASCADE_GRAPH_ISSUE found in {res.get('target_file')}")
+
         if has_critical_errors:
             InterlockCircuitBreaker.dispatch_telegram_alert(trace_log)
             print("\n🚨 [CIRCUIT BREAKER TRIGGERED] Deployment blocked due to critical SAPQ audit failures:")
             for log in trace_log:
                 print(f"  - {log}")
-            sys.exit(1)
+            if strict_mode:
+                raise InterlockCircuitBreaker.DeploymentBlocked("SAPQ Deployment Audit Failed")
+            return False
         else:
             print("✅ [CIRCUIT BREAKER] All checks passed. Deployment may proceed.")
+            return True
 
     @staticmethod
     def dispatch_telegram_alert(trace_log):

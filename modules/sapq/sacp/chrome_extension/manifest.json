@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "SA-CP Sovereign Antigravity Co-Pilot",
+  "version": "1.0.0",
+  "description": "100% Private, 0-Cost Direct AI Co-Pilot Extension for SA Labs Ecosystem",
+  "permissions": [
+    "sidePanel",
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:8899/*",
+    "http://localhost:8899/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "action": {
+    "default_title": "Open SA-CP Co-Pilot Side Panel"
+  }
+}
