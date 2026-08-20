@@ -35,7 +35,7 @@ class SAPQEngine:
         
     def parse_phase_1_forward(self):
         tokens = []
-        pattern_def = re.compile(r'(?:function\s+([a-zA-Z0-9_$]+)|const\s+([a-zA-Z0-9_$]+)|let\s+([a-zA-Z0-9_$]+)|var\s+([a-zA-Z0-9_$]+))')
+        pattern_def = re.compile(r'(?:function\s+([a-zA-Z0-9_$]+)|const\s+([a-zA-Z0-9_$]+)|let\s+([a-zA-Z0-9_$]+)|var\s+([a-zA-Z0-9_$]+)|def\s+([a-zA-Z0-9_$]+)|class\s+([a-zA-Z0-9_$]+))')
         pattern_id = re.compile(r'id=["\']([a-zA-Z0-9_$]+)["\']')
         for idx, line in enumerate(self.lines):
             match = pattern_def.search(line)
@@ -61,7 +61,7 @@ class SAPQEngine:
         }
 
         # We need to strip out function and variable declarations to avoid parsing a declaration as a usage.
-        pattern_decl_strip = re.compile(r'(?:function|const|let|var)\s+([a-zA-Z0-9_$]+)')
+        pattern_decl_strip = re.compile(r'(?:function|const|let|var|def|class)\s+([a-zA-Z0-9_$]+)')
 
         for idx in range(self.total_lines - 1, -1, -1):
             line = self.lines[idx]
@@ -209,6 +209,7 @@ try:
     from .sapq_anti_mockup import AntiMockupDepthEngine
     from .sapq_causality import CausalityContradictionEngine
     from .sapq_dom_relay import SAPQDOMRelay
+    from .sapq_spatial_projector import SpatialProjector
 except (ImportError, ValueError):
     from sapq_baseline_cube import SAPQBaselineCube
     from sapq_llm_auditor import DualLLMAuditor
@@ -216,6 +217,7 @@ except (ImportError, ValueError):
     from sapq_anti_mockup import AntiMockupDepthEngine
     from sapq_causality import CausalityContradictionEngine
     from sapq_dom_relay import SAPQDOMRelay
+    from sapq_spatial_projector import SpatialProjector
 
 try:
     from multi_vector_parser import MultiVectorCrossParsingAuditEngine
@@ -224,8 +226,8 @@ except ImportError:
     from multi_vector_parser import MultiVectorCrossParsingAuditEngine
 
 def audit_file(filepath, session_id=None, baseline_filepath=None, audit_only=False):
-    checkpoint_mgr = CheckpointManager(filepath, session_id=session_id)
-    logger = SAPQLogger(filepath, session_id=checkpoint_mgr.session_id)
+    checkpoint_mgr = CheckpointManager(filepath, session_id=session_id, audit_only=audit_only)
+    logger = SAPQLogger(filepath, session_id=checkpoint_mgr.session_id, audit_only=audit_only)
 
     logger.log_session_start()
 
@@ -271,16 +273,12 @@ def audit_file(filepath, session_id=None, baseline_filepath=None, audit_only=Fal
         }
 
     # Proceed to Phase 1-4 analysis
-    engine = SAPQEngine(filepath)
+    engine = MultiVectorCrossParsingAuditEngine(filepath)
     report = engine.execute_vector_end_trajectory_linking()
 
-    # Integrate MultiVectorCrossParsingAuditEngine
-    mv_engine = MultiVectorCrossParsingAuditEngine(filepath)
-    mv_report = mv_engine.execute_vector_end_trajectory_linking()
-
-    report["semantic_contradictions"] = mv_report.get("semantic_contradictions", [])
-    report["async_timing_contradictions"] = mv_report.get("async_timing_contradictions", [])
-    report["intent_mismatches"] = mv_report.get("intent_mismatches", [])
+    report["semantic_contradictions"] = report.get("semantic_contradictions", [])
+    report["async_timing_contradictions"] = report.get("async_timing_contradictions", [])
+    report["intent_mismatches"] = report.get("intent_mismatches", [])
 
 
     # 6. Phase 20: Baseline Cube (if exists)
@@ -394,6 +392,13 @@ def audit_file(filepath, session_id=None, baseline_filepath=None, audit_only=Fal
     else:
         # Assuming the next step for an AI would be patching
         if not audit_only: checkpoint_mgr.update_status("PATCHING")
+
+    # Integrate 3D Spatial Topology Projection (AIT Architecture Blueprint Phase)
+    try:
+        projector = SpatialProjector(filepath)
+        report["spatial_topology"] = projector.generate_tensors()
+    except Exception as e:
+        report["spatial_topology_error"] = str(e)
 
     return report
 

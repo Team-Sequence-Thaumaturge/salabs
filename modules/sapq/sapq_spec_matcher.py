@@ -34,9 +34,9 @@ class SpecMatcher:
                 code_val = match.group(1).strip('\'"')
                 if str(code_val).lower() != str(spec_val).lower():
                     issues.append({
-                        "type": "TORSION_CROSSING",
+                        "type": "SPEC_ALIGNMENT_MISMATCH",
                         "file": self.filepath,
-                        "issue": f"SPEC_ALIGNMENT_MISMATCH / TORSION_CROSSING: Mismatched spec {var_name} (expected {spec_val}, got {code_val})"
+                        "issue": f"SPEC_ALIGNMENT_MISMATCH: Mismatched spec {var_name} (expected {spec_val}, got {code_val})"
                     })
             else:
                 issues.append({

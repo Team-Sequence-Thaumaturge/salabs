@@ -12,8 +12,11 @@ class CausalityContradictionEngine:
         self.filename = os.path.basename(target_filepath)
         try:
             with open(target_filepath, 'r', encoding='utf-8', errors='ignore') as f:
+                self.full_content = f.read()
+                f.seek(0)
                 self.lines = [line.rstrip() for line in f.readlines()]
         except FileNotFoundError:
+            self.full_content = ""
             self.lines = []
 
     def audit_causality(self):
@@ -47,15 +50,12 @@ class CausalityContradictionEngine:
 
         # 3. Direct State/Intent Contradiction (Mismatched schema)
         # Look for conflicting state declarations or invalid state mutations that violate systemic causality
-        pattern_contradict = re.compile(r'(?:state\.active\s*=\s*true;.*disabled\s*=\s*true)|(?:disabled\s*=\s*true;.*state\.active\s*=\s*true)')
-        for idx, line in enumerate(self.lines):
-            if pattern_contradict.search(line):
-                contradictions.append({
-                    "type": "CAUSAL_CONTRADICTION",
-                    "line": idx + 1,
-                    "issue": "CAUSALITY_CONTRADICTION: Upstream Cause and Downstream Effect conflict in state/intent (e.g. active vs disabled).",
-                    "code_snippet": line.strip()[:80]
-                })
+        pattern_contradict = re.compile(r'(?:state\.active\s*=\s*true;.*?disabled\s*=\s*true)|(?:disabled\s*=\s*true;.*?state\.active\s*=\s*true)', re.DOTALL)
+        if pattern_contradict.search(self.full_content):
+            contradictions.append({
+                "type": "CAUSAL_CONTRADICTION",
+                "issue": "CAUSALITY_CONTRADICTION: Upstream Cause and Downstream Effect conflict in state/intent (e.g. active vs disabled)."
+            })
 
         return contradictions
 

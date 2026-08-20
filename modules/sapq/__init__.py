@@ -14,5 +14,7 @@ from .sapq_sandbox_proxy import SAPQSandboxProxy
 from .sapq_dom_relay import SAPQDOMRelay
 from .sapq_baseline_cube import SAPQBaselineCube
 from .sapq_arbiter import SAPQArbiter
+from .sapq_spatial_projector import SpatialProjector
 
-MultiVectorCrossParsingAuditEngine = SAPQEngine
+
+from .multi_vector_parser import MultiVectorCrossParsingAuditEngine

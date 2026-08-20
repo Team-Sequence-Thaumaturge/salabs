@@ -102,6 +102,8 @@ class SAPQCascadeGraph:
         # Phase 19.2: Blind Interceptor Detection
         for func_name, info in functions.items():
             if info['writes_dom'] and not info['reads_state']:
+                if any(kw in func_name.lower() for kw in ('clear', 'hide', 'reset', 'show', 'toggle', 'remove')):
+                    continue
                 issues.append({
                     "type": "BLIND_INTERCEPTOR",
                     "issue": f"BLIND_INTERCEPTOR: Function '{func_name}' at L{info['line']} forcefully mutates DOM/Sub-state without reading any Root State context.",

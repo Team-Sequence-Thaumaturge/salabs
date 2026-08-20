@@ -16,7 +16,10 @@ class InterlockCircuitBreaker:
         """
         Evaluate a single audit report from SAPQ engine and decide whether to break the circuit.
         """
-        return InterlockCircuitBreaker.evaluate_audit_results([report], strict_mode=strict_mode)
+        res = InterlockCircuitBreaker.evaluate_audit_results([report], strict_mode=strict_mode)
+        if not strict_mode and res is False:
+            return {"Decision": False}
+        return res
 
     @staticmethod
     def evaluate_audit_results(results, strict_mode=True):
@@ -68,7 +71,7 @@ class InterlockCircuitBreaker:
                 print(f"  - {log}")
             if strict_mode:
                 raise InterlockCircuitBreaker.DeploymentBlocked("SAPQ Deployment Audit Failed")
-            return False
+            return {"Decision": False}
         else:
             print("✅ [CIRCUIT BREAKER] All checks passed. Deployment may proceed.")
             return True

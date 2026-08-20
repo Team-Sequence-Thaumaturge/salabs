@@ -438,4 +438,8 @@ class ASTParser:
 # Backward compatibility aliases
 ASTMultiVectorParser = ASTParser
 SAPQASTParser = ASTParser
-MultiVectorCrossParsingAuditEngine = ASTParser
+
+try:
+    from .multi_vector_parser import MultiVectorCrossParsingAuditEngine
+except ImportError:
+    from multi_vector_parser import MultiVectorCrossParsingAuditEngine

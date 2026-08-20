@@ -34,7 +34,7 @@ class SAPQPreflightGuard:
         """Helper to remove strings and comments to accurately count braces."""
         # Strip strings first so URLs in strings (like 'http://') don't get treated as comments
         code = re.sub(r'(["\'])(?:(?=(\\?))\2.)*?\1', '', code)
-        code = re.sub(r'`[^`]*`', '', code)
+        code = re.sub(r'`(?:\\`|[^`])*`', '', code)
 
         # Strip Python specific comments and docstrings if applicable
         if self.filepath.endswith('.py'):

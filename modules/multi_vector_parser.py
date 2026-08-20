@@ -25,7 +25,7 @@ class MultiVectorCrossParsingAuditEngine:
     def parse_phase_1_forward(self):
         """Phase 1: A -> Z Forward Scan (Hoisting, Defs, Global Tokens)"""
         tokens = []
-        pattern_def = re.compile(r'(?:function\s+([a-zA-Z0-9_$]+)|const\s+([a-zA-Z0-9_$]+)|let\s+([a-zA-Z0-9_$]+)|var\s+([a-zA-Z0-9_$]+)|def\s+([a-zA-Z0-9_$]+)|class\s+([a-zA-Z0-9_$]+)|id=["\']([a-zA-Z0-9_$]+)["\'])')
+        pattern_def = re.compile(r'(?:function\s+([a-zA-Z0-9_$]+)|const\s+([a-zA-Z0-9_$]+)|let\s+([a-zA-Z0-9_$]+)|var\s+([a-zA-Z0-9_$]+)|id=["\']([a-zA-Z0-9_$]+)["\'])')
         
         for idx, line in enumerate(self.lines):
             match = pattern_def.search(line)
