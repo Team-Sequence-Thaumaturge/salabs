@@ -39,7 +39,6 @@ window.addEventListener('message', (event) => {
 
         const { specText, imageBase64, targetTabId } = event.data;
 
-        // Guaranteed OS Clipboard Population on User Click Event
         if (specText && navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
             try {
                 navigator.clipboard.writeText(specText).then(() => {
