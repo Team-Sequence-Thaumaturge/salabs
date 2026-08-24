@@ -8,7 +8,10 @@ window.__SAIR_EXT__ = true;
 let lastInjectTime = 0;
 
 window.addEventListener('message', (event) => {
+    if (window.location.origin !== 'null' && event.origin !== window.location.origin) return;
     if (!event.data) return;
+
+    const targetOrigin = window.location.origin === 'null' ? '*' : window.location.origin;
 
     if (event.data.type === 'SAIR_TRIGGER_SCAN_TABS') {
         try {
@@ -16,16 +19,16 @@ window.addEventListener('message', (event) => {
                 chrome.runtime.sendMessage({ action: 'SAIR_SCAN_TARGET_TABS' }, (response) => {
                     const err = chrome.runtime.lastError;
                     if (!err && response && response.success) {
-                        window.postMessage({ type: 'SAIR_SCAN_TABS_RESULT', success: true, tabs: response.tabs }, '*');
+                        window.postMessage({ type: 'SAIR_SCAN_TABS_RESULT', success: true, tabs: response.tabs }, targetOrigin);
                     } else {
-                        window.postMessage({ type: 'SAIR_SCAN_TABS_RESULT', success: false, tabs: [] }, '*');
+                        window.postMessage({ type: 'SAIR_SCAN_TABS_RESULT', success: false, tabs: [] }, targetOrigin);
                     }
                 });
             } else {
-                window.postMessage({ type: 'SAIR_SCAN_TABS_RESULT', success: false, tabs: [] }, '*');
+                window.postMessage({ type: 'SAIR_SCAN_TABS_RESULT', success: false, tabs: [] }, targetOrigin);
             }
         } catch(e) {
-            window.postMessage({ type: 'SAIR_SCAN_TABS_RESULT', success: false, tabs: [] }, '*');
+            window.postMessage({ type: 'SAIR_SCAN_TABS_RESULT', success: false, tabs: [] }, targetOrigin);
         }
     }
 
@@ -57,19 +60,19 @@ window.addEventListener('message', (event) => {
                 }, (response) => {
                     const err = chrome.runtime.lastError;
                     if (err) {
-                        window.postMessage({ type: 'SAIR_AUTO_INJECT_RESULT', success: false, error: '익스텐션 백그라운드 연결이 초기화되었습니다. SAIR 탭을 F5(새로고침) 해 주세요.' }, '*');
+                        window.postMessage({ type: 'SAIR_AUTO_INJECT_RESULT', success: false, error: '익스텐션 백그라운드 연결이 초기화되었습니다. SAIR 탭을 F5(새로고침) 해 주세요.' }, targetOrigin);
                     } else if (response && response.success) {
-                        window.postMessage({ type: 'SAIR_AUTO_INJECT_RESULT', success: true, tabTitle: response.tabTitle }, '*');
+                        window.postMessage({ type: 'SAIR_AUTO_INJECT_RESULT', success: true, tabTitle: response.tabTitle }, targetOrigin);
                     } else {
-                        window.postMessage({ type: 'SAIR_AUTO_INJECT_RESULT', success: false, error: response?.error || 'Target tab not found' }, '*');
+                        window.postMessage({ type: 'SAIR_AUTO_INJECT_RESULT', success: false, error: response?.error || 'Target tab not found' }, targetOrigin);
                     }
                 });
             } else {
-                window.postMessage({ type: 'SAIR_AUTO_INJECT_RESULT', success: false, error: '크롬 익스텐션 컨텍스트가 비활성화되었습니다. SAIR 탭을 F5(새로고침) 해 주세요!' }, '*');
+                window.postMessage({ type: 'SAIR_AUTO_INJECT_RESULT', success: false, error: '크롬 익스텐션 컨텍스트가 비활성화되었습니다. SAIR 탭을 F5(새로고침) 해 주세요!' }, targetOrigin);
             }
         } catch(e) {
             console.warn("[SAIR Bridge Error Handled]:", e);
-            window.postMessage({ type: 'SAIR_AUTO_INJECT_RESULT', success: false, error: '익스텐션 연결 예외 발생. SAIR 탭을 F5(새로고침) 해 주세요!' }, '*');
+            window.postMessage({ type: 'SAIR_AUTO_INJECT_RESULT', success: false, error: '익스텐션 연결 예외 발생. SAIR 탭을 F5(새로고침) 해 주세요!' }, targetOrigin);
         }
     }
 });
