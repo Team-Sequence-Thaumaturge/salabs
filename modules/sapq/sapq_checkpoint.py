@@ -73,10 +73,18 @@ class CheckpointManager:
 
     def save_checkpoint(self):
         """Saves current state to the checkpoint file."""
+        import tempfile
         self.state_data["updated_at"] = datetime.utcnow().isoformat() + "Z"
         if not self.audit_only:
-            with open(self.checkpoint_file, 'w', encoding='utf-8') as f:
-                json.dump(self.state_data, f, indent=2)
+            dir_name = os.path.dirname(self.checkpoint_file)
+            fd, tmp_path = tempfile.mkstemp(dir=dir_name)
+            try:
+                with os.fdopen(fd, 'w', encoding='utf-8') as f:
+                    json.dump(self.state_data, f, indent=2)
+                os.replace(tmp_path, self.checkpoint_file)
+            except Exception as e:
+                os.remove(tmp_path)
+                raise e
 
     def update_status(self, new_status, update_hash=True):
         """Updates the global status and optionally the file hash."""

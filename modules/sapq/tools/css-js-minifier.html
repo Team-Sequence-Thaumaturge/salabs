@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS & JS Code Minifier & Beautifier - SA Labs</title>
+  <meta name="description" content="Minify and beautify CSS and JavaScript code in realtime with byte reduction analytics. Pure client-side tool by SA Labs.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "CSS JS Minifier and Beautifier",
+    "url": "https://salabs.quanxs.com/tools/css-js-minifier.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All"
+  }
+  </script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #151d30;
+      --border: #23314d;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --success: #22c55e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+    header { background: rgba(21, 29, 48, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { font-size: 1.25rem; font-weight: 700; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    header nav a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
+    header nav a:hover { color: var(--accent); }
+    .main-container { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; padding: 1.5rem 2rem; max-width: 1800px; margin: 0 auto; width: 100%; }
+    @media (max-width: 1024px) { .main-container { grid-template-columns: 1fr; } }
+    .pane { display: flex; flex-direction: column; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+    .pane-header { background: #111827; padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-size: 0.875rem; font-weight: 600; color: var(--text-muted); flex-wrap: wrap; gap: 0.5rem; }
+    .toolbar { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .btn { background: #1e293b; color: var(--text); border: 1px solid var(--border); padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+    .btn:hover { background: var(--border); color: var(--accent); }
+    .btn-primary { background: var(--accent); color: #0b0f19; border: none; font-weight: 600; }
+    .btn-primary:hover { background: var(--accent-hover); color: #fff; }
+    textarea { flex: 1; width: 100%; min-height: 550px; background: transparent; color: #a7f3d0; border: none; padding: 1.25rem; font-family: 'Fira Code', monospace; font-size: 0.9rem; line-height: 1.6; resize: none; outline: none; }
+    .status-bar { padding: 0.5rem 1.25rem; font-size: 0.8rem; border-top: 1px solid var(--border); background: #090d16; color: var(--success); font-weight: 500; }
+    footer { text-align: center; padding: 1rem; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border); background: var(--card-bg); }
+  </style>
+<!-- SAPQ Hoisted Script Gate -->
+
+<!-- SAPQ v2.0 Hoisted Script Gate -->
+
+<!-- SAPQ v2.0 Hoisted Script Gate -->
+<script>
+
+
+
+
+// SAPQ Hoisted Function Declarations
+function calculateReductionRatio(originalSize, minifiedSize) {
+  if (originalSize === 0) return 0;
+  const savedBytes = originalSize - minifiedSize;
+  const percentage = (savedBytes / originalSize) * 100;
+  return percentage.toFixed(1);
+}
+
+// SAPQ Sequential Execution
+
+    const sampleCSS = `/* Header Navigation Styles */
+header {
+  background-color: rgba(21, 29, 48, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #23314d;
+  padding: 1rem 2rem;
+}
+
+header h1 {
+  font-size: 1.25rem;
+  color: #38bdf8;
+}`;
+
+    const sampleJS = `// Calculate analytics ratio
+`;
+
+    function init() {
+      document.getElementById('input-text').value = sampleCSS;
+    function minifyCode() {
+      const src = document.getElementById('input-text').value;
+      if (!src) return;
+      // Multi-line comment removal & whitespace minification
+      let minified = src
+        .replace(/\/\*[\s\S]*?\*\//g, '')
+        .replace(/\/\/.*/g, '')
+        .replace(/\s+/g, ' ')
+        .replace(/\s*([{}:;,=()+-\/*])\s*/g, '$1')
+        .trim();
+
+      const outEl = document.getElementById('output-text');
+      outEl.value = minified;
+
+      const origB = new TextEncoder().encode(src).length;
+      const minB = new TextEncoder().encode(minified).length;
+      const saved = origB > 0 ? (((origB - minB) / origB) * 100).toFixed(1) : 0;
+
+      document.getElementById('output-status').textContent = `✓ Minified Size: ${minified.length} chars (${minB} bytes) — Saved ${saved}% bytes!`;
+    }
+      minifyCode();
+    }
+
+    function updateStats() {
+      const val = document.getElementById('input-text').value;
+      const bytes = new TextEncoder().encode(val).length;
+      document.getElementById('input-status').textContent = `Input Size: ${val.length} chars (${bytes} bytes)`;
+    }
+
+
+    function beautifyCode() {
+      const src = document.getElementById('input-text').value;
+      if (!src) return;
+
+      let beautified = src
+        .replace(/\s*\{\s*/g, ' {\n  ')
+        .replace(/\s*;\s*/g, ';\n  ')
+        .replace(/\s*\}\s*/g, '\n}\n');
+
+      const outEl = document.getElementById('output-text');
+      outEl.value = beautified.trim();
+
+      const origB = new TextEncoder().encode(src).length;
+      const beauB = new TextEncoder().encode(beautified).length;
+      document.getElementById('output-status').textContent = `✓ Beautified Size: ${beautified.length} chars (${beauB} bytes)`;
+    }
+
+    function loadSampleCSS() { document.getElementById('input-text').value = sampleCSS; updateStats(); minifyCode(); }
+    function loadSampleJS() { document.getElementById('input-text').value = sampleJS; updateStats(); minifyCode(); }
+    function clearInput() { document.getElementById('input-text').value = ''; document.getElementById('output-text').value = ''; updateStats(); }
+    function copyOutput() { navigator.clipboard.writeText(document.getElementById('output-text').value).then(() => alert('📋 Output copied!')); }
+
+    window.onload = init;
+  
+
+</script>
+</head>
+<body>
+  <header>
+    <h1>⚡ CSS & JS Code Minifier / Beautifier</h1>
+    <nav><a href="../index.html">← Back to Portal Dashboard</a></nav>
+  </header>
+
+  <main class="main-container">
+    <div class="pane">
+      <div class="pane-header">
+        <span>INPUT CODE (CSS or JS)</span>
+        <div class="toolbar">
+          <button class="btn" onclick="loadSampleCSS()">Sample CSS</button>
+          <button class="btn" onclick="loadSampleJS()">Sample JS</button>
+          <button class="btn" onclick="clearInput()">Clear</button>
+        </div>
+      </div>
+      <textarea id="input-text" placeholder="Paste CSS or JavaScript code here..." oninput="updateStats()"></textarea>
+      <div class="status-bar" id="input-status">Input Size: 0 Bytes</div>
+    </div>
+
+    <div class="pane">
+      <div class="pane-header">
+        <span>PROCESSED OUTPUT</span>
+        <div class="toolbar">
+          <button class="btn btn-primary" onclick="minifyCode()">Minify Code</button>
+          <button class="btn btn-primary" onclick="beautifyCode()">Beautify Code</button>
+          <button class="btn" onclick="copyOutput()">📋 Copy Code</button>
+        </div>
+      </div>
+      <textarea id="output-text" readonly placeholder="Result will appear here..."></textarea>
+      <div class="status-bar" id="output-status">Output Size: 0 Bytes</div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 SA Labs (`salabs.quanxs.com`) - High Performance Client-Side Utilities</p>
+  </footer>
+
+  
+</body>
+</html>

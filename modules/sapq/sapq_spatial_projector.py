@@ -10,14 +10,128 @@ except ImportError:
     sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
     from multi_vector_parser import MultiVectorCrossParsingAuditEngine
 
+import numpy as np
+
 class SpatialProjector:
     """
     SpatialProjector: Maps AIT Architecture Blueprints into 3D Spatial Tensors.
     Converts V1~V4 parsing node data into GPGPU serializable JSON/Float32Array dicts.
     """
-    def __init__(self, target_filepath):
+    def __init__(self, target_filepath=None, gamma=0.5, epsilon=0.01, beta_torsion=0.1):
         self.target_filepath = target_filepath
-        self.engine = MultiVectorCrossParsingAuditEngine(target_filepath)
+        if target_filepath:
+            self.engine = MultiVectorCrossParsingAuditEngine(target_filepath)
+
+        self.gamma = gamma
+        self.epsilon = epsilon
+        self.beta_torsion = beta_torsion
+        self.x_sink = np.array([10.0, 10.0, 5.0]) # Target critical Gravity Sink
+
+    def get_potential(self, x, s, d):
+        """
+        Compute Potential Scalar Field Phi(x)
+        """
+        dist_sq = np.sum((x - self.x_sink)**2)
+        phi = (self.gamma * s * d) / (dist_sq + self.epsilon)
+        return phi
+
+    def get_potential_gradient(self, x, s, d):
+        """
+        Calculate Partial Derivatives del(Phi) / del(x^sigma)
+        """
+        dist_sq = np.sum((x - self.x_sink)**2)
+        denominator = (dist_sq + self.epsilon)**2
+        grad = -2.0 * self.gamma * s * d * (x - self.x_sink) / (denominator + 1e-12)
+        return grad
+
+    def get_christoffel_symbols(self, x, s, d):
+        """
+        Evaluate symmetric Levi-Civita Connection symbols gamma^lambda_mu_nu
+        """
+        grad = self.get_potential_gradient(x, s, d) # 3-dim vector
+        gamma_symbols = np.zeros((3, 3, 3)) # [lambda, mu, nu]
+        eta = np.eye(3) # Flat Euclidean metric
+
+        for lam in range(3):
+            for mu in range(3):
+                for nu in range(3):
+                    # - ( delta^lam_mu * d_nu(Phi) + delta^lam_nu * d_mu(Phi) - eta_mu_nu * d^lam(Phi) )
+                    term1 = (1.0 if lam == mu else 0.0) * grad[nu]
+                    term2 = (1.0 if lam == nu else 0.0) * grad[mu]
+                    term3 = eta[mu, nu] * grad[lam] # eta^lam_sigma * d_sigma(Phi)
+                    gamma_symbols[lam, mu, nu] = -(term1 + term2 - term3)
+
+        return gamma_symbols
+
+    def get_contorsion_symbols(self, x, s, d, c):
+        """
+        Evaluate Contorsion symbols K^lambda_mu_nu mapped from Taint Severity Tensors
+        """
+        T = np.zeros((3, 3, 3)) # Torsion Tensor [lambda, mu, nu]
+        # Map indices: 0->S, 1->D, 2->C
+        T[0, 1, 2] = self.beta_torsion * c
+        T[0, 2, 1] = -self.beta_torsion * c
+        T[1, 2, 0] = self.beta_torsion * d
+        T[1, 0, 2] = -self.beta_torsion * d
+        T[2, 0, 1] = self.beta_torsion * s
+        T[2, 1, 0] = -self.beta_torsion * s
+
+        K = np.zeros((3, 3, 3)) # Contorsion Tensor [lambda, mu, nu]
+        for lam in range(3):
+            for mu in range(3):
+                for nu in range(3):
+                    # K^lam_mu_nu = 1/2 * ( T^lam_mu_nu - T_mu^lam_nu - T_nu^lam_mu )
+                    # Under diagonal conformal metric raising/lowering
+                    K[lam, mu, nu] = 0.5 * (T[lam, mu, nu] - T[mu, lam, nu] - T[nu, lam, mu])
+
+        return K
+
+    def compute_autoparallel_path(self, start_pos, velocity, s, d, c, step_size=0.01, steps=200):
+        """
+        RK4 integrator to solve the autoparallel trajectory equations:
+        d2x/ds2 = - (gamma + K) * dx/ds * dx/ds
+        """
+        state = np.zeros(6) # [x, y, z, vx, vy, vz]
+        state[0:3] = start_pos
+        state[3:6] = velocity
+
+        path_points = []
+        path_points.append(np.copy(state[0:3]))
+
+        def derivatives(curr_state):
+            x_val = curr_state[0:3]
+            v_val = curr_state[3:6]
+
+            gamma = self.get_christoffel_symbols(x_val, s, d)
+            K = self.get_contorsion_symbols(x_val, s, d, c)
+            gamma_total = gamma + K # Combined non-symmetric connection
+
+            ax_ay_az = np.zeros(3)
+            for lam in range(3):
+                acc_sum = 0.0
+                for mu in range(3):
+                    for nu in range(3):
+                        acc_sum += gamma_total[lam, mu, nu] * v_val[mu] * v_val[nu]
+                ax_ay_az[lam] = -acc_sum
+
+            dstateds = np.zeros(6)
+            dstateds[0:3] = v_val
+            dstateds[3:6] = ax_ay_az
+            return dstateds
+
+        curr_s = 0.0
+        for _ in range(steps):
+            # RK4 Integration steps
+            k1 = derivatives(state)
+            k2 = derivatives(state + (step_size/2.0)*k1)
+            k3 = derivatives(state + (step_size/2.0)*k2)
+            k4 = derivatives(state + step_size*k3)
+
+            state += (step_size/6.0) * (k1 + 2.0*k2 + 2.0*k3 + k4)
+            path_points.append(np.copy(state[0:3]))
+            curr_s += step_size
+
+        return path_points
 
     def _deterministic_hash(self, text):
         """Generates a deterministic float between 0 and 1 from a string to avoid Math.random()."""
@@ -73,9 +187,21 @@ class SpatialProjector:
         discriminant = trace**2 - 4*det
 
         if discriminant > 0:
-            sigma_core = (trace + math.sqrt(discriminant)) / 2
+            sigma1 = (trace + math.sqrt(discriminant)) / 2
+            sigma2 = (trace - math.sqrt(discriminant)) / 2
         else:
-            sigma_core = trace / 2
+            sigma1 = trace / 2
+            sigma2 = trace / 2
+
+        # SVD Saliency Accretion (Top 10% Truncation, >= 90% energy)
+        total_energy = sigma1**2 + sigma2**2
+        acc_energy = 0
+        sigma_core = 0
+        for s in [sigma1, sigma2]:
+            acc_energy += s**2
+            sigma_core += s
+            if total_energy > 0 and (acc_energy / total_energy) >= 0.90:
+                break
 
         saliency_factor = sigma_core / (sigma_core + 1.0) if sigma_core > 0 else 0.5
 
@@ -112,7 +238,11 @@ class SpatialProjector:
             if symbol in disc_map:
                 def_line = disc_map[symbol].get("def_line", 0)
                 ref_line = disc_map[symbol].get("ref_line", 0)
-                torsion = 5.0 * abs(ref_line - def_line) / max(1, self.engine.total_lines)
+                # T_{\mu\nu}^{\lambda} = \Gamma_{\mu\nu}^{\lambda} - \Gamma_{\nu\mu}^{\lambda} - \gamma_{\mu\nu}^{\lambda}
+                gamma_mu_nu = ref_line / max(1, self.engine.total_lines)
+                gamma_nu_mu = def_line / max(1, self.engine.total_lines)
+                connection_coef = (gamma_mu_nu - gamma_nu_mu) * 0.1
+                torsion = 5.0 * abs(gamma_mu_nu - gamma_nu_mu - connection_coef)
 
             # Apply Wave Mechanics interference to disturbed position
             interference = math.cos(anchor_x - anchor_y + phase_lag)

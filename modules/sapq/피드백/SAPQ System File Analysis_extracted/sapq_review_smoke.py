@@ -1,12 +1,15 @@
 from __future__ import annotations
+import sys, os
+sys.path.insert(0, r'C:\stella\project\sandbox\salabs-jules-sandbox\modules\sapq')
+
 
 import json
 import shutil
 from pathlib import Path
 
-from upload.sapq_engine import audit_file
+from sapq_engine import audit_file
 
-ROOT = Path('/home/ubuntu/sapq_review_fixtures')
+ROOT = Path('C:/stella/project/sandbox/salabs-jules-sandbox/temp_sapq_review_fixtures')
 if ROOT.exists():
     shutil.rmtree(ROOT)
 ROOT.mkdir(parents=True)

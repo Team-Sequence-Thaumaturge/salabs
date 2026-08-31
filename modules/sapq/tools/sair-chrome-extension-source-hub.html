@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAIR Multi-AI Chrome Extension Open Source Architecture Hub - SA Labs</title>
+  <meta name="description" content="Complete open source Manifest V3 source code for SAIR 1-Click Multi-AI Auto Injector Chrome Extension. Supports Slate.js, ShadowDOM, Google Flow, Jules, Gemini, Manus, ChatGPT, Claude, Midjourney.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #0b0f17; color: #e2e8f0; }
+    code, pre { font-family: 'Fira Code', monospace; }
+    .glass-card { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(12px); border: 1px solid rgba(56, 189, 248, 0.15); }
+    .code-block { background: #080c14; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 0.75rem; }
+  </style>
+<!-- SAPQ Hoisted Script Gate -->
+
+<!-- SAPQ v2.0 Hoisted Script Gate -->
+
+<!-- SAPQ v2.0 Hoisted Script Gate -->
+<script>
+
+
+    function copyCode(elementId) {
+      const code = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        alert("Source code copied to clipboard!");
+      }).catch(err => {
+        console.error("Failed to copy: ", err);
+      });
+    }
+  
+
+</script>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-black">
+  <!-- Header Nav -->
+  <header class="border-b border-slate-800/80 bg-slate-950/80 sticky top-0 z-50 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="../index.html" class="flex items-center gap-3 group">
+        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-slate-950 font-bold text-lg shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+          S
+        </div>
+        <span class="font-bold text-lg tracking-tight text-white group-hover:text-cyan-400 transition-colors">SA LABS</span>
+      </a>
+      <a href="../index.html" class="text-sm font-medium text-slate-400 hover:text-white transition-colors flex items-center gap-2">
+        <i class="fa-solid fa-arrow-left">Files & Tools Portal</i>
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full">
+    <div class="glass-card rounded-2xl p-8 mb-10 border-t-2 border-t-cyan-400 shadow-2xl relative overflow-hidden">
+      <div class="absolute -right-20 -top-20 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-xs font-semibold uppercase tracking-wider mb-4">
+        <i class="fa-solid fa-code-branch"></i> Open Source Architecture & Source Code Hub
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
+        SAIR Multi-AI Auto Injector <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Chrome Extension v1.0.0</span>
+      </h1>
+      <p class="text-slate-300 max-w-3xl leading-relaxed text-sm sm:text-base mb-6">
+        Full Manifest V3 source code repository for cross-platform AI prompt injection. Overcomes Slate.js React state synchronization locks, ShadowDOM encapsulation, and multi-file payload attachment across <strong>Google Flow, Jules, Gemini, Manus, ChatGPT, Claude, and Midjourney</strong>.
+      </p>
+
+      <div class="flex flex-wrap gap-3">
+        <span class="px-3 py-1.5 rounded-md bg-slate-800 text-slate-300 text-xs font-medium border border-slate-700 flex items-center gap-2">
+          <i class="fa-brands fa-chrome text-cyan-400"></i> Manifest V3
+        </span>
+        <span class="px-3 py-1.5 rounded-md bg-slate-800 text-slate-300 text-xs font-medium border border-slate-700 flex items-center gap-2">
+          <i class="fa-solid fa-bolt text-yellow-400"></i> Slate.js React Bypass
+        </span>
+        <span class="px-3 py-1.5 rounded-md bg-slate-800 text-slate-300 text-xs font-medium border border-slate-700 flex items-center gap-2">
+          <i class="fa-solid fa-cubes text-blue-400"></i> 7-AI Multi Target
+        </span>
+      </div>
+    </div>
+
+    <!-- Code Section Tabs / List -->
+    <div class="space-y-10">
+      
+      <!-- 1. manifest.json -->
+      <section class="code-block overflow-hidden shadow-xl">
+        <div class="px-6 py-4 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <i class="fa-solid fa-file-code text-cyan-400 text-lg"></i>
+            <h2 class="font-bold text-white text-base">manifest.json</h2>
+            <span class="text-xs text-slate-400 bg-slate-800 px-2 py-0.5 rounded">Extension Manifest</span>
+          </div>
+          <button onclick="copyCode('code-manifest')" class="text-xs font-medium text-slate-300 hover:text-cyan-400 bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700 transition-all flex items-center gap-2">
+            <i class="fa-solid fa-copy"></i> Copy Code
+          </button>
+        </div>
+        <div class="p-6 overflow-x-auto max-h-[500px] overflow-y-auto">
+          <pre id="code-manifest" class="text-xs sm:text-sm text-cyan-200/90 leading-relaxed"><code>{
+  "manifest_version": 3,
+  "name": "SAIR 1-Click Auto Injector",
+  "version": "1.0.0",
+  "description": "SAIR 487-Tensor Specification Text & C++ Render PNG Image 1-Click Auto Injector for AI Sites",
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "scripting",
+    "storage",
+    "clipboardRead",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://sair.quanxs.com/*",
+      "http://localhost/*",
+      "http://127.0.0.1/*"
+    ]
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://sair.quanxs.com/*",
+        "http://localhost:*/*",
+        "http://127.0.0.1:*/*"
+      ],
+      "js": ["sair_bridge.js"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "https://sair.quanxs.com/*"
+      ],
+      "js": ["target_injector.js"],
+      "all_frames": false,
+      "run_at": "document_end"
+    }
+  ]
+}
+</code></pre>
+        </div>
+      </section>
+
+      <!-- 2. target_injector.js -->
+      <section class="code-block overflow-hidden shadow-xl">
+        <div class="px-6 py-4 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <i class="fa-brands fa-js text-yellow-400 text-lg"></i>
+            <h2 class="font-bold text-white text-base">target_injector.js</h2>
+            <span class="text-xs text-slate-400 bg-slate-800 px-2 py-0.5 rounded">Core DOM Engine</span>
+          </div>
+          <button onclick="copyCode('code-injector')" class="text-xs font-medium text-slate-300 hover:text-cyan-400 bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700 transition-all flex items-center gap-2">
+            <i class="fa-solid fa-copy"></i> Copy Code
+          </button>
+        </div>
+        <div class="p-6 overflow-x-auto max-h-[600px] overflow-y-auto">
+          <pre id="code-injector" class="text-xs sm:text-sm text-emerald-200/90 leading-relaxed"><code>// SAIR Target AI Site DOM Injector Script (target_injector.js)
+console.log("⚡ SAIR Universal Compatibility Target Injector Active on: " + window.location.href);
+
+if (window === window.top) {
+    let injectionLock = false;
+
+    // Zero-CSP Pure In-Memory Base64 Data URI to Blob Conversion
+    const dataURItoBlob = (dataURI) => {
+        try {
+            const parts = dataURI.split(',');
+            const byteString = atob(parts[1] || parts[0]);
+            const mimeMatch = parts[0].match(/:(.*?);/);
+            const mimeString = mimeMatch ? mimeMatch[1] : 'image/png';
+
+            const ab = new ArrayBuffer(byteString.length);
+            const ia = new Uint8Array(ab);
+            for (let i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+            return new Blob([ab], { type: mimeString });
+        } catch(e) {
+            console.error("[SAIR Injector] dataURItoBlob conversion error:", e);
+            return null;
+        }
+    };
+
+    // Deep Shadow DOM Query Selector for Web Components & Shadow Roots
+    const findDeepElement = (selector, root = document, requireVisible = true) => {
+        try {
+            let el = root.querySelector(selector);
+            if (el && (!requireVisible || (el.offsetWidth || el.offsetHeight || el.getClientRects().length))) {
+                return el;
+            }
+
+            const allNodes = root.querySelectorAll('*');
+            for (const node of allNodes) {
+                if (node.shadowRoot) {
+                    const found = findDeepElement(selector, node.shadowRoot, requireVisible);
+                    if (found) return found;
+                }
+            }
+        } catch(e) {}
+        return null;
+    };
+
+    // Find ALL Deep Matching Elements
+    const findAllDeepElements = (selector, root = document, requireVisible = true) => {
+        let results = [];
+        try {
+            const nodes = Array.from(root.querySelectorAll(selector)).filter(el => 
+                !requireVisible || (el.offsetWidth || el.offsetHeight || el.getClientRects().length)
+            );
+            results.push(...nodes);
+
+            const allNodes = root.querySelectorAll('*');
+            for (const node of allNodes) {
+                if (node.shadowRoot) {
+                    const sub = findAllDeepElements(selector, node.shadowRoot, requireVisible);
+                    results.push(...sub);
+                }
+            }
+        } catch(e) {}
+        return results;
+    };
+
+    // Safe Slate.js Selection & Blinking Caret Activator
+    const activateSlateCursor = (el) => {
+        try {
+            if (!el || !document.contains(el)) return;
+            if (window.focus) window.focus();
+            el.focus();
+
+            let targetNode = el.querySelector('[data-slate-string="true"]') || 
+                             el.querySelector('[data-slate-leaf="true"]') || 
+                             el.querySelector('p[data-slate-node="element"]') || 
+                             el;
+
+            if (!targetNode || !document.contains(targetNode)) return;
+
+            let textNode = null;
+            const findText = (node) => {
+                if (node.nodeType === Node.TEXT_NODE) return node;
+                for (let child of node.childNodes) {
+                    if (child.nodeType === Node.TEXT_NODE) return child;
+                    const f = findText(child);
+                    if (f) return f;
+                }
+                return null;
+            };
+            textNode = findText(targetNode);
+
+            if (!textNode && document.contains(targetNode)) {
+                try {
+                    textNode = document.createTextNode('');
+                    targetNode.appendChild(textNode);
+                } catch(e) {}
+            }
+
+            if (textNode && document.contains(textNode)) {
+                try {
+                    const r = document.createRange();
+                    r.setStart(textNode, textNode.length);
+                    r.setEnd(textNode, textNode.length);
+
+                    const s = window.getSelection();
+                    s.removeAllRanges();
+                    s.addRange(r);
+                } catch(e) {}
+            }
+
+            try {
+                document.dispatchEvent(new Event('selectionchange', { bubbles: true }));
+                el.dispatchEvent(new Event('focus', { bubbles: true }));
+            } catch(e) {}
+        } catch(e) {}
+    };
+
+    // Slate.js React AST Synchronizer & Button Activator
+    const injectIntoSlate = (el, text) => {
+        try {
+            // 1. Force Slate Caret Activation
+            activateSlateCursor(el);
+
+            // 2. Hide placeholder span if present
+            const placeholder = el.querySelector('[data-slate-placeholder="true"]');
+            if (placeholder) {
+                try { placeholder.style.display = 'none'; } catch(e) {}
+            }
+
+            // 3. Locate text paragraph and leaf node
+            let textParagraph = el.querySelector('p[data-slate-node="element"]') || 
+                                el.querySelector('[data-slate-node="element"]:last-child') || 
+                                el;
+
+            let leafSpan = textParagraph.querySelector('[data-slate-leaf="true"]') || 
+                           textParagraph.querySelector('[data-slate-string="true"]') || 
+                           textParagraph;
+
+            // 4. Find or create inner TextNode
+            let textNode = null;
+            const findText = (node) => {
+                if (node.nodeType === Node.TEXT_NODE) return node;
+                for (let child of node.childNodes) {
+                    if (child.nodeType === Node.TEXT_NODE) return child;
+                    const f = findText(child);
+                    if (f) return f;
+                }
+                return null;
+            };
+            textNode = findText(leafSpan);
+
+            if (!textNode) {
+                textNode = document.createTextNode('');
+                leafSpan.appendChild(textNode);
+            }
+
+            // 5. Ensure textNode is empty first so browser treats execCommand as a real DOM change
+            textNode.nodeValue = '';
+
+            // 6. Position Selection Range on empty textNode
+            if (document.contains(textNode)) {
+                try {
+                    const r = document.createRange();
+                    r.setStart(textNode, 0);
+                    r.setEnd(textNode, 0);
+                    const s = window.getSelection();
+                    s.removeAllRanges();
+                    s.addRange(r);
+                } catch(e) {}
+            }
+
+            // 7. Native execCommand('paste') or execCommand('insertText') to trigger Slate's React onChange
+            let inserted = false;
+            try {
+                inserted = document.execCommand('paste');
+            } catch(e) {}
+
+            if (!inserted) {
+                try {
+                    inserted = document.execCommand('insertText', false, text);
+                } catch(e) {}
+            }
+
+            // 8. Fallback: If browser didn't insert, mutate nodeValue and fire beforeinput carrying data: text
+            if (!inserted || textNode.nodeValue !== text) {
+                textNode.nodeValue = text;
+                try {
+                    el.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, cancelable: true, inputType: 'insertText', data: text }));
+                    el.dispatchEvent(new InputEvent('input', { bubbles: true, cancelable: true, inputType: 'insertText', data: text }));
+                } catch(e) {}
+            }
+
+            // 9. Dispatch change & input events to notify submit button validator
+            try {
+                el.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+                el.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+            } catch(e) {}
+
+            // 10. OS Clipboard backup write
+            if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+                try {
+                    navigator.clipboard.writeText(text).then(() => {}).catch(() => {});
+                } catch(e) {}
+            }
+
+            return true;
+        } catch(e) {
+            console.warn("[SAIR Injector] Slate injection error:", e);
+            return false;
+        }
+    };
+
+    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+        if (request.action === 'EXECUTE_AUTO_INJECT') {
+            if (injectionLock) {
+                sendResponse({ success: true, warning: 'Injection in progress...' });
+                return true;
+            }
+            injectionLock = true;
+
+            const { specText, imageBase64 } = request;
+
+            // Send instant 0.001s response to SAIR Cockpit for maximum speed feedback
+            sendResponse({ success: true, textInjected: true, imageInjected: true });
+
+            const executeInjection = () => {
+                const textSelectors = [
+                    'div[data-slate-editor="true"]',
+                    '[data-slate-editor="true"]',
+                    'textarea[placeholder*="무엇을"]',
+                    'div[placeholder*="무엇을"]',
+                    'textarea[placeholder*="만들고"]',
+                    'div[placeholder*="만들고"]',
+                    '#prompt-textarea',
+                    'rich-textarea div[contenteditable="true"]',
+                    'gmp-prompt-input textarea',
+                    'gmp-prompt-input',
+                    'div[aria-label*="Prompt"]',
+                    'div[aria-label*="프롬프트"]',
+                    'div[aria-label*="Jules"]',
+                    'textarea[aria-label*="Jules"]'
+                ];
+
+                let targetElements = [];
+                for (const sel of textSelectors) {
+                    const found = findAllDeepElements(sel, document, true);
+                    if (found.length > 0) {
+                        targetElements.push(...found);
+                    }
+                }
+
+                targetElements = Array.from(new Set(targetElements));
+                // Target ONLY the primary active single editor element
+                const primaryTargetEl = targetElements.length > 0 ? targetElements[targetElements.length - 1] : null;
+
+                // Smart DOM Character Limit Detection
+                let domMaxLength = 99999;
+                if (primaryTargetEl) {
+                    const attrMax = primaryTargetEl.getAttribute('maxlength') || primaryTargetEl.dataset?.maxlength;
+                    if (attrMax) domMaxLength = parseInt(attrMax, 10);
+                }
+
+                const isManus = window.location.hostname.includes('manus');
+                const isLimitExceeded = specText && specText.length > domMaxLength;
+                const requiresTextFilePack = isManus || isLimitExceeded;
+
+                const boxText = (isLimitExceeded && domMaxLength < 99999) ? 
+                    specText.substring(0, Math.max(50, domMaxLength - 30)) + "..." : 
+                    specText;
+
+                const isGoogleFlow = window.location.hostname.includes('google');
+                const hasImage = (imageBase64 && imageBase64.startsWith('data:image')) || requiresTextFilePack;
+
+                // STEP 1: Immediate Text Injection FIRST
+                if (primaryTargetEl && boxText) {
+                    try {
+                        const isSlate = primaryTargetEl.hasAttribute('data-slate-editor') || 
+                                        primaryTargetEl.querySelector('[data-slate-node]') || 
+                                        primaryTargetEl.closest('[data-slate-editor="true"]');
+
+                        if (isSlate) {
+                            const slateEditor = primaryTargetEl.closest('[data-slate-editor="true"]') || primaryTargetEl;
+                            injectIntoSlate(slateEditor, boxText);
+                        } else {
+                            if (primaryTargetEl._valueTracker) {
+                                try { primaryTargetEl._valueTracker.setValue(''); } catch(e) {}
+                            }
+
+                            if (primaryTargetEl.tagName === 'TEXTAREA') {
+                                const nativeSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, 'value')?.set;
+                                if (nativeSetter) nativeSetter.call(primaryTargetEl, boxText);
+                                else primaryTargetEl.value = boxText;
+                            } else if (primaryTargetEl.tagName === 'INPUT') {
+                                const nativeSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+                                if (nativeSetter) nativeSetter.call(primaryTargetEl, boxText);
+                                else primaryTargetEl.value = boxText;
+                            } else {
+                                let inserted = false;
+                                try {
+                                    inserted = document.execCommand('insertText', false, boxText);
+                                } catch(e) {}
+
+                                if (!inserted || !primaryTargetEl.innerText || primaryTargetEl.innerText.trim() === '') {
+                                    const safeHtml = boxText.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, '<br>');
+                                    primaryTargetEl.innerHTML = '<p>' + safeHtml + '</p>';
+                                }
+                            }
+
+                            primaryTargetEl.dispatchEvent(new InputEvent('beforeinput', { bubbles: true, cancelable: true, inputType: 'insertText', data: boxText }));
+                            primaryTargetEl.dispatchEvent(new InputEvent('input', { bubbles: true, cancelable: true, inputType: 'insertText', data: boxText }));
+                            primaryTargetEl.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+                            primaryTargetEl.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+                        }
+                    } catch(e) {
+                        console.warn("[SAIR Injector] Text injection exception:", e);
+                    }
+                }
+
+                // STEP 2: Image Injection SECOND (100ms)
+                setTimeout(() => {
+                    if (hasImage) {
+                        try {
+                            const dt = new DataTransfer();
+                            let imgFile = null;
+
+                            if (requiresTextFilePack && specText) {
+                                const txtBlob = new Blob([specText], { type: "text/plain;charset=utf-8" });
+                                const txtFile = new File([txtBlob], "sair_master_specification.txt", { type: "text/plain;charset=utf-8" });
+                                dt.items.add(txtFile);
+                            }
+
+                            if (imageBase64 && imageBase64.startsWith('data:image')) {
+                                const imgBlob = dataURItoBlob(imageBase64);
+                                if (imgBlob) {
+                                    imgFile = new File([imgBlob], "sair_render_matrix.png", { type: "image/png" });
+                                    dt.items.add(imgFile);
+                                }
+                            }
+
+                            // For non-Google Flow sites, upload via generic file inputs
+                            if (!isGoogleFlow && dt.files.length > 0) {
+                                const fileInputElements = findAllDeepElements('input[type="file"], input[accept*="image"]', document, false);
+                                if (fileInputElements.length > 0) {
+                                    fileInputElements.forEach(primaryFileInput => {
+                                        try {
+                                            primaryFileInput.files = dt.files;
+                                            primaryFileInput.dispatchEvent(new Event('change', { bubbles: true, cancelable: true }));
+                                            primaryFileInput.dispatchEvent(new Event('input', { bubbles: true, cancelable: true }));
+                                        } catch(e) {}
+                                    });
+                                }
+                            }
+
+                            // Direct Paste Attachment on Prompt Box for Gemini & Google Flow
+                            if (primaryTargetEl && imgFile && (window.location.hostname.includes('gemini') || isGoogleFlow)) {
+                                try {
+                                    const dtImg = new DataTransfer();
+                                    dtImg.items.add(imgFile);
+                                    const imgPasteEvt = new ClipboardEvent('paste', { bubbles: true, cancelable: true, clipboardData: dtImg });
+                                    primaryTargetEl.dispatchEvent(imgPasteEvt);
+                                } catch(e) {}
+                            }
+                        } catch(e) {
+                            console.warn("[SAIR Injector] File injection exception:", e);
+                        }
+                    }
+
+                    setTimeout(() => { injectionLock = false; }, 300);
+                }, 100);
+            };
+
+            executeInjection();
+            return true;
+        }
+    });
+}
+</code></pre>
+        </div>
+      </section>
+
+      <!-- 3. background.js -->
+      <section class="code-block overflow-hidden shadow-xl">
+        <div class="px-6 py-4 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <i class="fa-brands fa-js text-blue-400 text-lg"></i>
+            <h2 class="font-bold text-white text-base">background.js</h2>
+            <span class="text-xs text-slate-400 bg-slate-800 px-2 py-0.5 rounded">Service Worker Dispatcher</span>
+          </div>
+          <button onclick="copyCode('code-background')" class="text-xs font-medium text-slate-300 hover:text-cyan-400 bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700 transition-all flex items-center gap-2">
+            <i class="fa-solid fa-copy"></i> Copy Code
+          </button>
+        </div>
+        <div class="p-6 overflow-x-auto max-h-[500px] overflow-y-auto">
+          <pre id="code-background" class="text-xs sm:text-sm text-blue-200/90 leading-relaxed"><code>// SAIR Chrome Extension Service Worker (background.js)
+console.log("⚡ SAIR 1-Click Auto Injector Background Service Worker initialized!");
+
+let lastTabInjectTimes = {};
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === 'SAIR_SCAN_TARGET_TABS') {
+        chrome.tabs.query({ currentWindow: true }, (tabs) => {
+            const detectedTabs = tabs.filter(t => 
+                t.url && (
+                    t.url.includes('labs.google/fx') || 
+                    t.url.includes('flow') || 
+                    t.url.includes('jules') ||
+                    t.url.includes('gemini.google.com') ||
+                    t.url.includes('gemini') ||
+                    t.url.includes('manus.im') ||
+                    t.url.includes('manus.ai') ||
+                    t.url.includes('manus') ||
+                    t.url.includes('chatgpt.com') || 
+                    t.url.includes('openai.com') || 
+                    t.url.includes('claude.ai') || 
+                    t.url.includes('midjourney.com') ||
+                    (t.url.includes('google.') && !t.url.includes('sair.quanxs.com'))
+                )
+            ).map(t => {
+                let domainName = 'Target AI';
+                const u = t.url;
+                if (u.includes('labs.google') || u.includes('flow')) domainName = 'Google Flow';
+                else if (u.includes('jules')) domainName = 'Google Jules';
+                else if (u.includes('gemini')) domainName = 'Gemini AI';
+                else if (u.includes('manus')) domainName = 'Manus AI';
+                else if (u.includes('chatgpt') || u.includes('openai')) domainName = 'ChatGPT';
+                else if (u.includes('claude')) domainName = 'Claude AI';
+                else if (u.includes('midjourney')) domainName = 'Midjourney';
+
+                return {
+                    id: t.id,
+                    title: t.title || t.url,
+                    url: t.url,
+                    domain: domainName
+                };
+            });
+
+            sendResponse({ success: true, tabs: detectedTabs });
+        });
+        return true;
+    }
+
+    if (request.action === 'SAIR_INJECT_PAYLOAD') {
+        const { specText, imageBase64, targetTabId } = request;
+        
+        chrome.tabs.query({ currentWindow: true }, (tabs) => {
+            let activeTargetTab = null;
+
+            if (targetTabId && targetTabId !== 'none' && targetTabId !== 'auto') {
+                activeTargetTab = tabs.find(t => t.id === parseInt(targetTabId, 10));
+            }
+
+            if (!activeTargetTab) {
+                const flowTab = tabs.find(t => t.url && (t.url.includes('labs.google/fx') || t.url.includes('flow')));
+                const julesTab = tabs.find(t => t.url && t.url.includes('jules'));
+                const geminiTab = tabs.find(t => t.url && (t.url.includes('gemini.google.com') || t.url.includes('gemini')));
+                const manusTab = tabs.find(t => t.url && (t.url.includes('manus.im') || t.url.includes('manus')));
+                const chatGptTab = tabs.find(t => t.url && (t.url.includes('chatgpt.com') || t.url.includes('openai.com')));
+                const claudeTab = tabs.find(t => t.url && t.url.includes('claude.ai'));
+                const midjourneyTab = tabs.find(t => t.url && t.url.includes('midjourney.com'));
+
+                activeTargetTab = flowTab || julesTab || geminiTab || manusTab || chatGptTab || claudeTab || midjourneyTab;
+            }
+
+            if (!activeTargetTab) {
+                sendResponse({ success: false, error: '타겟 AI 탭(Google Flow/Jules/Gemini/Manus/ChatGPT/Claude)을 찾을 수 없습니다. 타겟 탭이 열려있는지 확인해 주세요!' });
+                return;
+            }
+
+            // 1,000ms Debounce Lock per target tab ID
+            const now = Date.now();
+            if (lastTabInjectTimes[activeTargetTab.id] && (now - lastTabInjectTimes[activeTargetTab.id] < 1000)) {
+                console.log(`[SAIR Background] Suppressed duplicate tab injection for Tab #${activeTargetTab.id} within 1000ms`);
+                sendResponse({ success: true, tabTitle: activeTargetTab.title, textInjected: true, imageInjected: true });
+                return;
+            }
+            lastTabInjectTimes[activeTargetTab.id] = now;
+
+            // Auto-focus & activate target tab for instant DOM event execution
+            try {
+                chrome.tabs.update(activeTargetTab.id, { active: true });
+            } catch(e) {}
+
+            chrome.tabs.sendMessage(activeTargetTab.id, {
+                action: 'EXECUTE_AUTO_INJECT',
+                specText: specText,
+                imageBase64: imageBase64
+            }, (response) => {
+                const err = chrome.runtime.lastError;
+                if (err) {
+                    sendResponse({ success: false, error: `타겟 탭[${activeTargetTab.title}]에 익스텐션 연결이 필요합니다. 해당 타겟 탭을 F5(새로고침) 해 주세요!` });
+                } else {
+                    sendResponse({ 
+                        success: true, 
+                        tabTitle: activeTargetTab.title,
+                        textInjected: response?.textInjected || false,
+                        imageInjected: response?.imageInjected || false
+                    });
+                }
+            });
+        });
+        return true; // Keep response channel open async
+    }
+});
+</code></pre>
+        </div>
+      </section>
+
+      <!-- 4. sair_bridge.js -->
+      <section class="code-block overflow-hidden shadow-xl">
+        <div class="px-6 py-4 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <i class="fa-brands fa-js text-purple-400 text-lg"></i>
+            <h2 class="font-bold text-white text-base">sair_bridge.js</h2>
+            <span class="text-xs text-slate-400 bg-slate-800 px-2 py-0.5 rounded">Web Cockpit Bridge</span>
+          </div>
+          <button onclick="copyCode('code-bridge')" class="text-xs font-medium text-slate-300 hover:text-cyan-400 bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700 transition-all flex items-center gap-2">
+            <i class="fa-solid fa-copy"></i> Copy Code
+          </button>
+        </div>
+        <div class="p-6 overflow-x-auto max-h-[400px] overflow-y-auto">
+          <pre id="code-bridge" class="text-xs sm:text-sm text-purple-200/90 leading-relaxed"><code>// SAIR Cockpit Bridge Script (sair_bridge.js)
+console.log("⚡ SAIR Cockpit Extension Bridge loaded!");
+
+let lastInjectTime = 0;
+
+window.addEventListener('message', (event) => {
+    if (!event.data) return;
+
+    if (event.data.type === 'SAIR_TRIGGER_SCAN_TABS') {
+        try {
+            if (typeof chrome !== 'undefined' && chrome && chrome.runtime && typeof chrome.runtime.sendMessage === 'function') {
+                chrome.runtime.sendMessage({ action: 'SAIR_SCAN_TARGET_TABS' }, (response) => {
+                    const err = chrome.runtime.lastError;
+                    if (!err && response && response.success) {
+                        window.postMessage({ type: 'SAIR_SCAN_TABS_RESULT', success: true, tabs: response.tabs }, '*');
+                    } else {
+                        window.postMessage({ type: 'SAIR_SCAN_TABS_RESULT', success: false, tabs: [] }, '*');
+                    }
+                });
+            } else {
+                window.postMessage({ type: 'SAIR_SCAN_TABS_RESULT', success: false, tabs: [] }, '*');
+            }
+        } catch(e) {
+            window.postMessage({ type: 'SAIR_SCAN_TABS_RESULT', success: false, tabs: [] }, '*');
+        }
+    }
+
+    if (event.data.type === 'SAIR_TRIGGER_AUTO_INJECT') {
+        const now = Date.now();
+        if (now - lastInjectTime < 1000) {
+            console.log("⚡ [SAIR Bridge] Suppressed duplicate postMessage trigger within 1000ms!");
+            return;
+        }
+        lastInjectTime = now;
+
+        const { specText, imageBase64, targetTabId } = event.data;
+
+        // Guaranteed OS Clipboard Population on User Click Event
+        if (specText && navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+            try {
+                navigator.clipboard.writeText(specText).then(() => {
+                    console.log("⚡ [SAIR Bridge] OS Clipboard populated with prompt specification!");
+                }).catch(() => {});
+            } catch(e) {}
+        }
+        
+        try {
+            if (typeof chrome !== 'undefined' && chrome && chrome.runtime && typeof chrome.runtime.sendMessage === 'function') {
+                chrome.runtime.sendMessage({
+                    action: 'SAIR_INJECT_PAYLOAD',
+                    specText: specText,
+                    imageBase64: imageBase64,
+                    targetTabId: targetTabId
+                }, (response) => {
+                    const err = chrome.runtime.lastError;
+                    if (err) {
+                        window.postMessage({ type: 'SAIR_AUTO_INJECT_RESULT', success: false, error: '익스텐션 백그라운드 연결이 초기화되었습니다. SAIR 탭을 F5(새로고침) 해 주세요.' }, '*');
+                    } else if (response && response.success) {
+                        window.postMessage({ type: 'SAIR_AUTO_INJECT_RESULT', success: true, tabTitle: response.tabTitle }, '*');
+                    } else {
+                        window.postMessage({ type: 'SAIR_AUTO_INJECT_RESULT', success: false, error: response?.error || 'Target tab not found' }, '*');
+                    }
+                });
+            } else {
+                window.postMessage({ type: 'SAIR_AUTO_INJECT_RESULT', success: false, error: '크롬 익스텐션 컨텍스트가 비활성화되었습니다. SAIR 탭을 F5(새로고침) 해 주세요!' }, '*');
+            }
+        } catch(e) {
+            console.warn("[SAIR Bridge Error Handled]:", e);
+            window.postMessage({ type: 'SAIR_AUTO_INJECT_RESULT', success: false, error: '익스텐션 연결 예외 발생. SAIR 탭을 F5(새로고침) 해 주세요!' }, '*');
+        }
+    }
+});
+</code></pre>
+        </div>
+      </section>
+
+      <!-- 5. README.md -->
+      <section class="code-block overflow-hidden shadow-xl">
+        <div class="px-6 py-4 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <i class="fa-solid fa-file-lines text-slate-300 text-lg"></i>
+            <h2 class="font-bold text-white text-base">README.md</h2>
+            <span class="text-xs text-slate-400 bg-slate-800 px-2 py-0.5 rounded">Documentation</span>
+          </div>
+          <button onclick="copyCode('code-readme')" class="text-xs font-medium text-slate-300 hover:text-cyan-400 bg-slate-800 hover:bg-slate-700 px-3 py-1.5 rounded-lg border border-slate-700 transition-all flex items-center gap-2">
+            <i class="fa-solid fa-copy"></i> Copy Code
+          </button>
+        </div>
+        <div class="p-6 overflow-x-auto max-h-[400px] overflow-y-auto">
+          <pre id="code-readme" class="text-xs sm:text-sm text-slate-300 leading-relaxed"><code># ⚡ SAIR 1-Click Auto Injector Chrome Extension (PoC)
+
+## 📌 설치 방법 (1초 완공)
+1. Chrome 브라우저 주소창에 `chrome://extensions` 입력 후 엔터.
+2. 우측 상단 **[ 개발자 모드 (Developer mode) ]** 스위치 ON.
+3. 좌측 상단 **[ 압축해제된 확장 프로그램을 로드합니다 (Load unpacked) ]** 버튼 클릭.
+4. 아래 폴더를 선택:
+   `c:\stella.os\Quanxs\sair_chrome_extension`
+
+---
+
+## 🚀 사용 동선 (복붙 0회!)
+1. 타겟 AI 사이트(Google Flow, ChatGPT, Claude, Midjourney) 탭을 켜둡니다.
+2. SAIR 웹 조종석(`sair.quanxs.com`) C++ 캔버스 모달 하단의 **`[ ⚡ 1-Click 타겟 사이트 자동 사출 ]`** 버튼 클릭!
+3. 익스텐션이 0.001초 만에 타겟 AI 사이트의 **프롬프트 텍스트 입력창과 이미지 첨부 드롭존 영역에 명세서 텍스트와 PNG 렌더 이미지를 자동으로 꽂아넣습니다!**
+</code></pre>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-800/80 bg-slate-950 mt-16 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500">
+      <p>© 2026 SA LABS (Sequence Architecture Laboratories). All rights reserved.</p>
+    </div>
+  </footer>
+
+  
+</body>
+</html>

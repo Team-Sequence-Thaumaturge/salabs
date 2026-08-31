@@ -1,7 +1,9 @@
 import re, os
 
 class SpecMatcher:
-    def __init__(self, arg1, arg2=None, code_content=None):
+    def __init__(self, arg1, arg2=None, code_content=None, specs=None, **kwargs):
+        if specs is not None and arg2 is None:
+            arg2 = specs
         if isinstance(arg1, str) and (isinstance(arg2, dict) or arg2 is None):
             self.filepath = arg1
             self.specs = arg2 or {}

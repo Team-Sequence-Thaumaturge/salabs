@@ -1,12 +1,15 @@
 from __future__ import annotations
+import sys, os
+sys.path.insert(0, r'C:\stella\project\sandbox\salabs-jules-sandbox\modules\sapq')
+
 
 import json
 from pathlib import Path
 
-from upload.sapq_ast_parser import ASTParser
-from upload.sapq_dom_relay import SAPQDOMRelay
+from sapq_ast_parser import ASTParser
+from sapq_dom_relay import SAPQDOMRelay
 
-ROOT = Path('/home/ubuntu/sapq_review_fixtures')
+ROOT = Path('C:/stella/project/sandbox/salabs-jules-sandbox/temp_sapq_review_fixtures')
 python_fixture = ROOT / 'unused_python_function.py'
 html_fixture = ROOT / 'missing_dom_target.html'
 

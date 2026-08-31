@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAPQ v1.0 - Sequence Autonomic Parsing & QA Contradiction Auditor</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "SAPQ Engine - Multi-Directional Interleaved Cross-Parsing Auditor",
+      "description": "Standalone Multi-Directional Interleaved Cross-Parsing Audit Engine"
+    }
+    </script>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #00ffcc;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+        }
+        .cockpit-panel {
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        #dropZone {
+            border: 2px dashed #00ffcc;
+            border-radius: 8px;
+            padding: 40px 20px;
+            text-align: center;
+            color: #aaa;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        #dropZone.dragover {
+            background-color: rgba(0, 255, 204, 0.1);
+            border-color: #ffffff;
+            color: #ffffff;
+        }
+        #codeInput {
+            width: 100%;
+            height: 300px;
+            background-color: #121212;
+            color: #00ffcc;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 10px;
+            font-family: inherit;
+            resize: vertical;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #00ffcc;
+            color: #000000;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #00ccaa;
+        }
+        button:disabled {
+            background-color: #555;
+            color: #888;
+            cursor: not-allowed;
+        }
+        #vectorCanvas {
+            width: 100%;
+            max-width: 1160px;
+            height: 400px;
+            background-color: #121212;
+            border: 1px solid #444;
+            border-radius: 4px;
+            margin: 0 auto;
+            display: block;
+        }
+        #results {
+            margin-top: 20px;
+        }
+        .score-badge {
+            font-size: 2em;
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #121212;
+            border: 1px solid #444;
+        }
+        .score-high { color: #00ffcc; border-color: #00ffcc; }
+        .score-med { color: #ffcc00; border-color: #ffcc00; }
+        .score-low { color: #ff3333; border-color: #ff3333; }
+
+        .issue-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .issue-item {
+            background-color: #333;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-left: 4px solid #ff3333;
+            border-radius: 4px;
+        }
+        .issue-ghost { border-left-color: #ffcc00; }
+        .issue-loop { border-left-color: #ff9900; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Code QA & Contradiction Auditor</h1>
+
+        <div class="cockpit-panel">
+            <div id="dropZone">
+                Drop files here to audit or click to select
+                <input type="file" id="fileInput" style="display: none;">
+            </div>
+            <textarea id="codeInput" placeholder="Paste your code here..."></textarea>
+
+            <div class="btn-group">
+                <button id="runAudit">Run Multi-Vector Audit</button>
+                <button id="exportJsonBtn" disabled>Export JSON</button>
+                <button id="exportMdBtn" disabled>Export Markdown</button>
+            </div>
+        </div>
+
+        <div class="cockpit-panel">
+            <h2 style="color: #00ffcc; margin-top: 0;">Vector End Stage Visualizer</h2>
+            <canvas id="vectorCanvas" width="1160" height="400"></canvas>
+        </div>
+
+        <div class="cockpit-panel" id="resultsContainer" style="display: none;">
+            <h2 style="color: #00ffcc; margin-top: 0;">Audit Report</h2>
+            <div id="results"></div>
+        </div>
+    </div>
+
+    <script>
+        function parsePhase1Forward(lines) {
+            const tokens = [];
+            const patternDef = /(?:function\s+([a-zA-Z0-9_$]+)|const\s+([a-zA-Z0-9_$]+)|let\s+([a-zA-Z0-9_$]+)|var\s+([a-zA-Z0-9_$]+)|id=["']([a-zA-Z0-9_$]+)["'])/;
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                const match = line.match(patternDef);
+                if (match) {
+                    let symbol = null;
+                    for (let j = 1; j < match.length; j++) {
+                        if (match[j] !== undefined) {
+                            symbol = match[j];
+                            break;
+                        }
+                    }
+                    if (symbol) {
+                        tokens.push({
+                            line: i + 1,
+                            symbol: symbol,
+                            type: "FORWARD_DEF",
+                            code_snippet: line.trim().substring(0, 80)
+                        });
+                    }
+                }
+            }
+            return tokens;
+        }
+
+        function parsePhase2Backward(lines) {
+            const tokens = [];
+            const patternUsage = /(?:document\.getElementById\(["']([a-zA-Z0-9_$]+)["']\)|window\.([a-zA-Z0-9_$]+)|([a-zA-Z0-9_$]+)\()/;
+
+            for (let i = lines.length - 1; i >= 0; i--) {
+                const line = lines[i];
+                const match2 = line.match(patternUsage);
+                if (match2) {
+                    let symbol = null;
+                    for (let j = 1; j < match2.length; j++) {
+                        if (match2[j] !== undefined) {
+                            symbol = match2[j];
+                            break;
+                        }
+                    }
+                    if (symbol) {
+                        const keywords = ['if', 'for', 'while', 'switch', 'catch', 'function', 'return'];
+                        if (!keywords.includes(symbol)) {
+                            tokens.push({
+                                line: i + 1,
+                                symbol: symbol,
+                                type: "BACKWARD_REF",
+                                code_snippet: line.trim().substring(0, 80)
+                            });
+                        }
+                    }
+                }
+            }
+            return tokens;
+        }
+
+        function parsePhase3SkipForward(lines) {
+            const tokens = [];
+            for (let i = 0; i < lines.length; i += 2) {
+                const line = lines[i];
+                if (line.includes('=') || line.includes('->') || line.includes('onchange') || line.includes('onclick')) {
+                    tokens.push({
+                        line: i + 1,
+                        type: "SKIP_FORWARD_STATE",
+                        code_snippet: line.trim().substring(0, 80)
+                    });
+                }
+            }
+            return tokens;
+        }
+
+        function parsePhase4SkipBackward(lines) {
+            const tokens = [];
+            let startIdx = (lines.length - 1) % 2 === 1 ? lines.length - 1 : lines.length - 2;
+            for (let i = startIdx; i >= 0; i -= 2) {
+                const line = lines[i];
+                if (line.includes('addEventListener') || line.includes('postMessage') || line.includes('setTimeout') || line.includes('setInterval')) {
+                    tokens.push({
+                        line: i + 1,
+                        type: "SKIP_BACKWARD_EVENT",
+                        code_snippet: line.trim().substring(0, 80)
+                    });
+                }
+            }
+            return tokens;
+        }
+
+        function executeVectorEndTrajectoryLinking(lines, filename) {
+            const v1_forward = parsePhase1Forward(lines);
+            const v2_backward = parsePhase2Backward(lines);
+            const v3_skip_forward = parsePhase3SkipForward(lines);
+            const v4_skip_backward = parsePhase4SkipBackward(lines);
+
+            const forward_symbols = {};
+            v1_forward.forEach(t => { forward_symbols[t.symbol] = t.line; });
+
+            const backward_symbols = {};
+            v2_backward.forEach(t => { backward_symbols[t.symbol] = t.line; });
+
+            const discontinuities = [];
+            const zombie_nodes = [];
+            const closed_loops = [];
+
+            // 1. Check Zombie Nodes
+            for (const symbol in forward_symbols) {
+                const line_num = forward_symbols[symbol];
+                if (!(symbol in backward_symbols) && !symbol.startsWith('btn_') && symbol.length > 3) {
+                    zombie_nodes.push({
+                        symbol: symbol,
+                        defined_line: line_num,
+                        issue: "GHOST_NODE (Defined in V1 forward pass, but never referenced in V2 backward pass)"
+                    });
+                }
+            }
+
+            // 2. Check Discontinuity Lines
+            for (const symbol in backward_symbols) {
+                const ref_line = backward_symbols[symbol];
+                if (symbol in forward_symbols) {
+                    const def_line = forward_symbols[symbol];
+                    if (ref_line < def_line) {
+                        discontinuities.push({
+                            symbol: symbol,
+                            def_line: def_line,
+                            ref_line: ref_line,
+                            issue: `TORSION_CROSSING: Referenced at line ${ref_line} before declaration at line ${def_line}`
+                        });
+                    }
+                }
+            }
+
+            // 3. Check Event Loop Closed Loop Anomalies
+            const event_lines = v4_skip_backward.map(t => t.line);
+            if (event_lines.length > 20) {
+                closed_loops.push({
+                    count: event_lines.length,
+                    issue: "HIGH_EVENT_DENSITY: High frequency event triggers detected across skip-backward trajectory"
+                });
+            }
+
+            // Phase 13.4 Level 2: Semantic State & Tensor Matrix Contradiction (Mockup/Dummy Check)
+            const semantic_contradictions = [];
+            const pattern_dummy = /(?:Math\.random\(\)|setTimeout\s*\(\s*function\s*\(\)\s*\{|setTimeout\s*\(\s*\(\)\s*=>\s*\{)/;
+            lines.forEach((line, idx) => {
+                if (pattern_dummy.test(line)) {
+                    semantic_contradictions.push({
+                        line: idx + 1,
+                        issue: "DUMMY_STATE_CONTRADICTION: Potential mockup or fake state (Math.random / dummy setTimeout)",
+                        code_snippet: line.trim().substring(0, 80)
+                    });
+                }
+            });
+
+            // Phase 13.4 Level 3: Asynchronous Event Loop Timing Contradiction
+            const async_timing_contradictions = [];
+            lines.forEach((line, idx) => {
+                if (line.includes("await") && line.includes(".then(")) {
+                    async_timing_contradictions.push({
+                        line: idx + 1,
+                        issue: "ASYNC_TIMING_RACE: Mixing await and .then() implies a timing or promise dead-lock contradiction",
+                        code_snippet: line.trim().substring(0, 80)
+                    });
+                }
+            });
+
+            // Phase 13.4 Level 4: Intent/Spec Alignment Contradiction (INTENT_MISMATCH)
+            const intent_mismatches = [];
+            if (v1_forward.length < 5 && lines.length > 100) {
+                intent_mismatches.push({
+                    issue: "INTENT_MISMATCH: Large file with suspiciously few structural definitions, suggesting partial implementation or scope reduction."
+                });
+            }
+
+            // Phase 14: Systemic Causality Contradiction Audit (CAUSALITY_CONTRADICTION)
+            const causality_contradictions = [];
+            const hasPayment = lines.some(l => l.includes("processPayment") || l.includes("L402"));
+            const hasSettlement = lines.some(l => l.includes("finalizeSettlement") || l.includes("crypto.subtle"));
+            if (hasPayment && !hasSettlement) {
+                causality_contradictions.push({
+                    issue: "CAUSAL_BREAK: Trigger A (Payment) found, but downstream Effect C (Settlement) is missing.",
+                    type: "CAUSAL_BREAK"
+                });
+            }
+            const hasTopology = lines.some(l => l.includes("renderTopology") || l.includes("drawNodes"));
+            const hasCoreInit = lines.some(l => l.includes("initCognitionCore") || l.includes("fetchGlobalState"));
+            if (hasTopology && !hasCoreInit) {
+                causality_contradictions.push({
+                    issue: "CAUSAL_INVERSION: Downstream Effect C (Topology Render) active without Upstream Trigger A (Cognition Core Init).",
+                    type: "CAUSAL_INVERSION"
+                });
+            }
+
+            // Phase 15: Anti-Mockup & Intent Coverage Depth Audit Engine
+            const mockup_hallucinations = [];
+            const pattern_fake_crypto = /(?:return\s+["']mock_signature["'])|(?:return\s+["']eyJhbGciOiJIUzI1Ni["'])|(?:Math\.random\(\).*signature)|(?:generateSignature.*\{\s*return\s+["']0x)/;
+            const pattern_dummy_api = /(?:setTimeout\s*\(\s*\(\)\s*=>\s*\{\s*resolve\()|(?:setTimeout\s*\(\s*function\(\)\s*\{\s*resolve\()/;
+            const pattern_fake_payment = /(?:function\s+processPayment.*\s*return\s+true;)|(?:const\s+status\s*=\s*["']success["'];\s*return\s+status;)/;
+
+            lines.forEach((line, idx) => {
+                if (pattern_fake_crypto.test(line)) {
+                    mockup_hallucinations.push({ type: "MOCKUP_HALLUCINATION (FAKE_CRYPTO)", line: idx + 1, issue: "Hardcoded signature or Math.random() used instead of WebCrypto API." });
+                }
+                if (pattern_dummy_api.test(line)) {
+                    mockup_hallucinations.push({ type: "MOCKUP_HALLUCINATION (DUMMY_API)", line: idx + 1, issue: "setTimeout with resolve() found, simulating a fake backend response." });
+                }
+                if (pattern_fake_payment.test(line)) {
+                    mockup_hallucinations.push({ type: "MOCKUP_HALLUCINATION (FAKE_PAYMENT)", line: idx + 1, issue: "Payment function returns a hardcoded 'true' or 'success' string without dynamic validation." });
+                }
+            });
+
+            let endpointMentions = 0;
+            let fetchCalls = 0;
+            lines.forEach(line => {
+                if (line.includes("/api/v1/") || line.includes("Endpoint")) endpointMentions++;
+                if (line.includes("fetch(")) fetchCalls++;
+            });
+            if (endpointMentions > 3 && fetchCalls < (endpointMentions / 2)) {
+                mockup_hallucinations.push({ type: "SCOPE_REDUCTION", issue: `Mentions ~${endpointMentions} endpoints, but only implements ~${fetchCalls} active fetch calls. Suspicious AI scope reduction.` });
+            }
+
+            const score = Math.max(0, 100 - (discontinuities.length * 10 + zombie_nodes.length * 2 + semantic_contradictions.length * 5 + intent_mismatches.length * 20 + causality_contradictions.length * 15 + mockup_hallucinations.length * 25));
+
+            const report = {
+                target_file: filename,
+                total_lines: lines.length,
+                audit_integrity_score: score,
+                vector_nodes: {
+                    V1_Forward_Count: v1_forward.length,
+                    V2_Backward_Count: v2_backward.length,
+                    V3_Skip_Forward_Count: v3_skip_forward.length,
+                    V4_Skip_Backward_Count: v4_skip_backward.length
+                },
+                discontinuities_detected: discontinuities.slice(0, 10),
+                zombie_nodes_detected: zombie_nodes.slice(0, 10),
+                closed_loop_warnings: closed_loops,
+                semantic_contradictions: semantic_contradictions.slice(0, 10),
+                async_timing_contradictions: async_timing_contradictions.slice(0, 10),
+                intent_mismatches: intent_mismatches,
+                causality_contradictions: causality_contradictions,
+                mockup_hallucinations: mockup_hallucinations,
+                v1_forward: v1_forward,
+                v2_backward: v2_backward,
+                v3_skip_forward: v3_skip_forward,
+                v4_skip_backward: v4_skip_backward
+            };
+
+            return report;
+        }
+
+        // Global report variable
+        let lastReport = null;
+
+        function drawVectorEndStage(report) {
+            const canvas = document.getElementById('vectorCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Background
+            ctx.fillStyle = '#121212';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            if (!report) return;
+
+            const padding = 50;
+            const width = canvas.width - (padding * 2);
+            const height = canvas.height - (padding * 2);
+
+            // Draw axes and labels
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+
+            ctx.fillStyle = '#888';
+            ctx.font = '12px Courier New';
+            ctx.fillText('Line Number / Time', canvas.width / 2, canvas.height - 20);
+
+            const columns = [
+                { x: padding + width * 0.1, label: 'V1 (A->Z)', nodes: report.v1_forward },
+                { x: padding + width * 0.35, label: 'V2 (Z->A)', nodes: report.v2_backward },
+                { x: padding + width * 0.6, label: 'V3 (Skip Fwd)', nodes: report.v3_skip_forward },
+                { x: padding + width * 0.85, label: 'V4 (Skip Bwd)', nodes: report.v4_skip_backward }
+            ];
+
+            // Draw Column Labels
+            ctx.fillStyle = '#00ffcc';
+            ctx.font = '14px Courier New';
+            columns.forEach(col => {
+                ctx.fillText(col.label, col.x - 30, padding - 20);
+            });
+
+            // Map line numbers to Y coordinates
+            function getY(line) {
+                if (report.total_lines === 0) return padding;
+                return padding + (line / report.total_lines) * height;
+            }
+
+            // Draw Trajectory Lines First (so they are under nodes)
+            ctx.lineWidth = 2;
+
+            // Normal Connections V1 -> V2
+            ctx.strokeStyle = '#00ff00';
+            report.v1_forward.forEach(n1 => {
+                const n2 = report.v2_backward.find(n => n.symbol === n1.symbol);
+                if (n2 && n1.line <= n2.line) { // Normal order
+                    ctx.beginPath();
+                    ctx.moveTo(columns[0].x, getY(n1.line));
+                    ctx.lineTo(columns[1].x, getY(n2.line));
+                    ctx.stroke();
+                }
+            });
+
+            // Discontinuities (Torsion Crossings)
+            ctx.strokeStyle = '#ff3333';
+            ctx.setLineDash([5, 5]);
+            report.discontinuities_detected.forEach(d => {
+                ctx.beginPath();
+                ctx.moveTo(columns[0].x, getY(d.def_line));
+                ctx.lineTo(columns[1].x, getY(d.ref_line));
+                ctx.stroke();
+            });
+            ctx.setLineDash([]);
+
+            // Draw Nodes
+            columns.forEach(col => {
+                col.nodes.forEach(node => {
+                    const y = getY(node.line);
+
+                    // Check if node is a ghost/zombie
+                    let isZombie = false;
+                    if (col.label.includes('V1')) {
+                        isZombie = report.zombie_nodes_detected.some(z => z.symbol === node.symbol);
+                    }
+
+                    ctx.beginPath();
+                    ctx.arc(col.x, y, 6, 0, Math.PI * 2);
+
+                    if (isZombie) {
+                        ctx.fillStyle = '#ffcc00'; // Yellow for ghost
+                    } else {
+                        ctx.fillStyle = '#00ffcc'; // Default cyan
+                    }
+
+                    ctx.fill();
+                    ctx.strokeStyle = '#000';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                });
+            });
+        }
+
+        function renderResults(report) {
+            const resultsDiv = document.getElementById('results');
+            const container = document.getElementById('resultsContainer');
+
+            container.style.display = 'block';
+
+            let scoreClass = 'score-low';
+            if (report.audit_integrity_score >= 90) scoreClass = 'score-high';
+            else if (report.audit_integrity_score >= 70) scoreClass = 'score-med';
+
+            let html = `
+                <div class="score-badge ${scoreClass}">
+                    Audit Integrity Score: ${report.audit_integrity_score}/100
+                </div>
+
+                <p>Target File: <strong>${report.target_file}</strong> (${report.total_lines} lines)</p>
+                <p>Vector Nodes Generated: V1: ${report.vector_nodes.V1_Forward_Count}, V2: ${report.vector_nodes.V2_Backward_Count}, V3: ${report.vector_nodes.V3_Skip_Forward_Count}, V4: ${report.vector_nodes.V4_Skip_Backward_Count}</p>
+            `;
+
+            if (report.discontinuities_detected.length > 0) {
+                html += `<h3 style="color:#ff3333;">TORSION_CROSSINGS (${report.discontinuities_detected.length})</h3>
+                <ul class="issue-list">`;
+                report.discontinuities_detected.forEach(d => {
+                    html += `<li class="issue-item">
+                        <strong>${d.symbol}</strong> - ${d.issue}
+                    </li>`;
+                });
+                html += `</ul>`;
+            }
+
+            if (report.zombie_nodes_detected.length > 0) {
+                html += `<h3 style="color:#ffcc00;">GHOST_NODES (${report.zombie_nodes_detected.length})</h3>
+                <ul class="issue-list">`;
+                report.zombie_nodes_detected.forEach(z => {
+                    html += `<li class="issue-item issue-ghost">
+                        <strong>${z.symbol}</strong> - ${z.issue} (Line ${z.defined_line})
+                    </li>`;
+                });
+                html += `</ul>`;
+            }
+
+            if (report.closed_loop_warnings.length > 0) {
+                html += `<h3 style="color:#ff9900;">CLOSED_LOOP WARNINGS (${report.closed_loop_warnings.length})</h3>
+                <ul class="issue-list">`;
+                report.closed_loop_warnings.forEach(c => {
+                    html += `<li class="issue-item issue-loop">
+                        ${c.issue} (Events: ${c.count})
+                    </li>`;
+                });
+                html += `</ul>`;
+            }
+
+            if (report.semantic_contradictions && report.semantic_contradictions.length > 0) {
+                html += `<h3 style="color:#ff9933;">SEMANTIC CONTRADICTIONS (${report.semantic_contradictions.length})</h3>
+                <ul class="issue-list">`;
+                report.semantic_contradictions.forEach(s => {
+                    html += `<li class="issue-item">
+                        <strong>Line ${s.line}</strong>: ${s.issue}<br>
+                        <code>${s.code_snippet}</code>
+                    </li>`;
+                });
+                html += `</ul>`;
+            }
+
+            if (report.async_timing_contradictions && report.async_timing_contradictions.length > 0) {
+                html += `<h3 style="color:#cc33ff;">ASYNC TIMING CONTRADICTIONS (${report.async_timing_contradictions.length})</h3>
+                <ul class="issue-list">`;
+                report.async_timing_contradictions.forEach(a => {
+                    html += `<li class="issue-item">
+                        <strong>Line ${a.line}</strong>: ${a.issue}<br>
+                        <code>${a.code_snippet}</code>
+                    </li>`;
+                });
+                html += `</ul>`;
+            }
+
+            if (report.intent_mismatches && report.intent_mismatches.length > 0) {
+                html += `<h3 style="color:#ff3366;">INTENT MISMATCHES (${report.intent_mismatches.length})</h3>
+                <ul class="issue-list">`;
+                report.intent_mismatches.forEach(m => {
+                    html += `<li class="issue-item">
+                        <strong>${m.issue}</strong>
+                    </li>`;
+                });
+                html += `</ul>`;
+            }
+
+            if (report.causality_contradictions && report.causality_contradictions.length > 0) {
+                html += `<h3 style="color:#ff4444;">CAUSALITY CONTRADICTIONS (${report.causality_contradictions.length})</h3>
+                <ul class="issue-list">`;
+                report.causality_contradictions.forEach(c => {
+                    html += `<li class="issue-item">
+                        <strong>[${c.type}]</strong>: ${c.issue}
+                    </li>`;
+                });
+                html += `</ul>`;
+            }
+
+            if (report.mockup_hallucinations && report.mockup_hallucinations.length > 0) {
+                html += `<h3 style="color:#ff0055;">MOCKUP & SCOPE REDUCTION (${report.mockup_hallucinations.length})</h3>
+                <ul class="issue-list">`;
+                report.mockup_hallucinations.forEach(m => {
+                    html += `<li class="issue-item">
+                        <strong>[${m.type}]</strong>: ${m.issue} ${m.line ? '(Line ' + m.line + ')' : ''}
+                    </li>`;
+                });
+                html += `</ul>`;
+            }
+
+            resultsDiv.innerHTML = html;
+        }
+
+        // Export Functions
+        function exportJSON() {
+            if (!lastReport) return;
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(lastReport, null, 2));
+            const dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", `audit_report_${lastReport.target_file}.json`);
+            dlAnchorElem.click();
+        }
+
+        function exportMarkdown() {
+            if (!lastReport) return;
+            let md = `# AI Code QA Audit Report\n\n`;
+            md += `- **Target File**: ${lastReport.target_file}\n`;
+            md += `- **Integrity Score**: ${lastReport.audit_integrity_score}/100\n`;
+            md += `- **Total Lines**: ${lastReport.total_lines}\n\n`;
+
+            md += `## TORSION_CROSSINGS\n`;
+            lastReport.discontinuities_detected.forEach(d => {
+                md += `- \`${d.symbol}\`: ${d.issue}\n`;
+            });
+
+            md += `\n## GHOST_NODES\n`;
+            lastReport.zombie_nodes_detected.forEach(z => {
+                md += `- \`${z.symbol}\`: ${z.issue} (Line ${z.defined_line})\n`;
+            });
+
+            md += `\n## CLOSED_LOOP WARNINGS\n`;
+            lastReport.closed_loop_warnings.forEach(c => {
+                md += `- ${c.issue} (Events: ${c.count})\n`;
+            });
+
+            if (lastReport.semantic_contradictions && lastReport.semantic_contradictions.length > 0) {
+                md += `\n## SEMANTIC_CONTRADICTIONS\n`;
+                lastReport.semantic_contradictions.forEach(s => {
+                    md += `- Line ${s.line}: ${s.issue}\n`;
+                });
+            }
+
+            if (lastReport.async_timing_contradictions && lastReport.async_timing_contradictions.length > 0) {
+                md += `\n## ASYNC_TIMING_CONTRADICTIONS\n`;
+                lastReport.async_timing_contradictions.forEach(a => {
+                    md += `- Line ${a.line}: ${a.issue}\n`;
+                });
+            }
+
+            if (lastReport.intent_mismatches && lastReport.intent_mismatches.length > 0) {
+                md += `\n## INTENT_MISMATCHES\n`;
+                lastReport.intent_mismatches.forEach(m => {
+                    md += `- ${m.issue}\n`;
+                });
+            }
+
+            if (lastReport.causality_contradictions && lastReport.causality_contradictions.length > 0) {
+                md += `\n## CAUSALITY_CONTRADICTIONS\n`;
+                lastReport.causality_contradictions.forEach(c => {
+                    md += `- [${c.type}]: ${c.issue}\n`;
+                });
+            }
+
+            if (lastReport.mockup_hallucinations && lastReport.mockup_hallucinations.length > 0) {
+                md += `\n## MOCKUP_HALLUCINATIONS_AND_SCOPE_REDUCTION\n`;
+                lastReport.mockup_hallucinations.forEach(m => {
+                    md += `- [${m.type}]: ${m.issue} ${m.line ? '(Line ' + m.line + ')' : ''}\n`;
+                });
+            }
+
+            const dataStr = "data:text/markdown;charset=utf-8," + encodeURIComponent(md);
+            const dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", `audit_report_${lastReport.target_file}.md`);
+            dlAnchorElem.click();
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropZone = document.getElementById('dropZone');
+            const fileInput = document.getElementById('fileInput');
+            const codeInput = document.getElementById('codeInput');
+            const runAuditBtn = document.getElementById('runAudit');
+            const exportJsonBtn = document.getElementById('exportJsonBtn');
+            const exportMdBtn = document.getElementById('exportMdBtn');
+
+            let currentFilename = "pasted_code.js";
+
+            dropZone.addEventListener('click', () => fileInput.click());
+
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('dragover');
+            });
+
+            dropZone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+            });
+
+            function handleFile(file) {
+                currentFilename = file.name;
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    codeInput.value = e.target.result;
+                    dropZone.innerHTML = `Loaded: <strong>${file.name}</strong> <br> <span style="font-size:0.8em;color:#888;">(Click to change)</span>`;
+                };
+                reader.readAsText(file);
+            }
+
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+                if (e.dataTransfer.files.length) {
+                    handleFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length) {
+                    handleFile(e.target.files[0]);
+                }
+            });
+
+            runAuditBtn.addEventListener('click', () => {
+                const code = codeInput.value;
+                if (!code.trim()) {
+                    alert("Please paste code or drop a file first.");
+                    return;
+                }
+
+                const lines = code.split('\n');
+                lastReport = executeVectorEndTrajectoryLinking(lines, currentFilename);
+
+                renderResults(lastReport);
+                drawVectorEndStage(lastReport);
+
+                exportJsonBtn.disabled = false;
+                exportMdBtn.disabled = false;
+            });
+
+            exportJsonBtn.addEventListener('click', exportJSON);
+            exportMdBtn.addEventListener('click', exportMarkdown);
+
+            // Initial empty canvas
+            drawVectorEndStage(null);
+        });
+    </script>
+</body>
+</html>

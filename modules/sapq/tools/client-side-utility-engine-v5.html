@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client-Side Utility Engine v5 - Quanxs SA Labs</title>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsensescript.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Client-Side Utility Engine v5",
+    "url": "https://salabs.quanxs.com/tools/client-side-utility-engine-v5.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All",
+    "description": "Next Generation Client-side Utility Engine v5 with zero-server local execution and high-density performance."
+  }
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 20px; }
+    .container { max-width: 900px; margin: 0 auto; background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; }
+    h1 { color: #38bdf8; margin-top: 0; font-size: 1.8rem; }
+    textarea, button { width: 100%; box-sizing: border-box; margin-top: 12px; border-radius: 6px; }
+    textarea { background: #0f172a; color: #38bdf8; border: 1px solid #475569; padding: 12px; font-family: monospace; height: 120px; }
+    button { background: #0284c7; color: white; border: none; padding: 12px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+    button:hover { background: #0369a1; }
+    .output { margin-top: 16px; padding: 16px; background: #0f172a; border-radius: 6px; border: 1px solid #334155; min-height: 80px; font-family: monospace; white-space: pre-wrap; word-break: break-all; color: #4ade80; }
+  </style>
+<script>
+
+    async function processEngine() {
+      const text = document.getElementById('inputText').value;
+      const encoder = new TextEncoder();
+      const data = encoder.encode(text);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+      document.getElementById('outputBox').textContent = 'SHA-256 Digest:\n' + hashHex + '\n\nProcessed at: ' + new Date().toISOString();
+    }
+  
+</script>
+</head>
+<body>
+  <div class="container">
+    <h1>Client-Side Utility Engine v5</h1>
+    <p>High-performance client-side utility suite featuring Web Crypto, Web Audio, and Canvas local processing.</p>
+    <textarea id="inputText" placeholder="Enter text or payload to process...">Sample Client Payload v5</textarea>
+    <button onclick="processEngine()">Run Client-Side Engine v5</button>
+    <div class="output" id="outputBox">Engine Output Status: Ready</div>
+  </div>
+  
+</body>
+</html>

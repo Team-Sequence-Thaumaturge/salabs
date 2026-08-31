@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown to HTML Realtime Previewer - SA Labs</title>
+  <meta name="description" content="Convert Markdown to HTML with realtime live preview, syntax highlighting, and 1-click HTML code export. Pure client-side tool by SA Labs.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Markdown to HTML Realtime Previewer",
+    "url": "https://salabs.quanxs.com/tools/markdown-html-previewer.html",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "All"
+  }
+  </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #151d30;
+      --border: #23314d;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-hover: #0284c7;
+      --success: #22c55e;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: rgba(21, 29, 48, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    header nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    header nav a:hover { color: var(--accent); }
+
+    .main-container {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      padding: 1.5rem 2rem;
+      max-width: 1800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    @media (max-width: 1024px) {
+      .main-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .editor-pane, .preview-pane {
+      display: flex;
+      flex-direction: column;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .pane-header {
+      background: #111827;
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn {
+      background: #1e293b;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: var(--border);
+      color: var(--accent);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0b0f19;
+      border: none;
+      font-weight: 600;
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      color: #fff;
+    }
+
+    textarea {
+      flex: 1;
+      width: 100%;
+      min-height: 550px;
+      background: transparent;
+      color: var(--text);
+      border: none;
+      padding: 1.25rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      resize: none;
+      outline: none;
+    }
+
+    .tab-content {
+      flex: 1;
+      padding: 1.5rem;
+      overflow-y: auto;
+      min-height: 550px;
+      max-height: 75vh;
+    }
+
+    /* GitHub Markdown Custom Render Styling */
+    .markdown-body {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #e2e8f0;
+    }
+    .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4 {
+      color: var(--accent);
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.3rem;
+    }
+    .markdown-body h1 { font-size: 1.8rem; }
+    .markdown-body h2 { font-size: 1.4rem; }
+    .markdown-body h3 { font-size: 1.15rem; }
+    .markdown-body p { margin-bottom: 1rem; }
+    .markdown-body code {
+      background: #0f172a;
+      color: #f43f5e;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85em;
+    }
+    .markdown-body pre {
+      background: #090d16;
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      overflow-x: auto;
+      margin-bottom: 1rem;
+    }
+    .markdown-body pre code {
+      background: transparent;
+      color: #38bdf8;
+      padding: 0;
+    }
+    .markdown-body blockquote {
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+    .markdown-body ul, .markdown-body ol {
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .markdown-body table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+    }
+    .markdown-body th, .markdown-body td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 1rem;
+      text-align: left;
+    }
+    .markdown-body th {
+      background: #1e293b;
+      color: var(--accent);
+    }
+    .markdown-body a {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    #raw-html-output {
+      width: 100%;
+      height: 100%;
+      background: #090d16;
+      color: #a7f3d0;
+      border: none;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.85rem;
+      padding: 1rem;
+      white-space: pre-wrap;
+      word-break: break-all;
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+  </style>
+<!-- SAPQ Hoisted Script Gate -->
+
+<!-- SAPQ v2.0 Hoisted Script Gate -->
+
+<!-- SAPQ v2.0 Hoisted Script Gate -->
+<script>
+
+
+
+
+// SAPQ Hoisted Function Declarations
+function calculateSum(a, b) {
+  console.log("Calculating sum...");
+  return a + b;
+}
+
+// SAPQ Sequential Execution
+
+    const defaultSample = `# 🚀 Markdown to HTML Converter
+
+Welcome to **SA Labs** realtime Markdown previewer!
+
+## Features
+- **Realtime Preview**: As you type, rendered HTML updates instantly.
+- **Full GFM Support**: Headings, lists, code blocks, tables, blockquotes, and strikethroughs.
+- **Export Ready**: Copy formatted HTML with 1-click.
+
+### Code Block Example
+\`\`\`javascript
+
+\`\`\`
+
+### Task Checklist
+- [x] High-performance rendering with marked.js
+- [x] Full mobile responsive layout
+- [x] Schema.org structured metadata
+
+> "Quality is not an act, it is a habit." — Aristotle
+`;
+
+    let activeTab = 'preview';
+
+    function init() {
+      document.getElementById('md-input').value = defaultSample;
+    function updatePreview() {
+      const src = document.getElementById('md-input').value;
+      const html = marked.parse(src);
+      document.getElementById('rendered-preview').innerHTML = html;
+      document.getElementById('raw-html-output').textContent = html;
+    }
+      updatePreview();
+    }
+
+
+    function switchTab(tab) {
+      activeTab = tab;
+      const renderEl = document.getElementById('rendered-preview');
+      const codeEl = document.getElementById('raw-html-output');
+      const btnPrev = document.getElementById('btn-tab-preview');
+      const btnCode = document.getElementById('btn-tab-code');
+
+      if (tab === 'preview') {
+        renderEl.style.display = 'block';
+        codeEl.style.display = 'none';
+        btnPrev.className = 'btn btn-primary';
+        btnCode.className = 'btn';
+      } else {
+        renderEl.style.display = 'none';
+        codeEl.style.display = 'block';
+        btnPrev.className = 'btn';
+        btnCode.className = 'btn btn-primary';
+      }
+    }
+
+    function loadSampleMarkdown() {
+      document.getElementById('md-input').value = defaultSample;
+      updatePreview();
+    }
+
+    function clearMarkdown() {
+      document.getElementById('md-input').value = '';
+      updatePreview();
+    }
+
+    function copyHTMLOutput() {
+      const src = document.getElementById('md-input').value;
+      const html = marked.parse(src);
+      navigator.clipboard.writeText(html).then(() => {
+        alert("📋 Formatted HTML code copied to clipboard!");
+      }).catch(err => {
+        console.error("Copy failed", err);
+      });
+    }
+
+    window.onload = init;
+  
+
+</script>
+</head>
+<body>
+  <header>
+    <h1>📝 Markdown to HTML Realtime Previewer</h1>
+    <nav>
+      <a href="../index.html">← Back to Portal Dashboard</a>
+    </nav>
+  </header>
+
+  <main class="main-container">
+    <div class="editor-pane">
+      <div class="pane-header">
+        <span>MARKDOWN EDITOR</span>
+        <div class="toolbar">
+          <button class="btn" onclick="loadSampleMarkdown()">Sample Markdown</button>
+          <button class="btn" onclick="clearMarkdown()">Clear</button>
+        </div>
+      </div>
+      <textarea id="md-input" placeholder="# Type your Markdown here..." oninput="updatePreview()"></textarea>
+    </div>
+
+    <div class="preview-pane">
+      <div class="pane-header">
+        <div>
+          <button class="btn btn-primary" id="btn-tab-preview" onclick="switchTab('preview')">Live Render Preview</button>
+          <button class="btn" id="btn-tab-code" onclick="switchTab('code')">Raw HTML Code</button>
+        </div>
+        <div class="toolbar">
+          <button class="btn btn-primary" onclick="copyHTMLOutput()">📋 Copy HTML</button>
+        </div>
+      </div>
+      <div class="tab-content markdown-body" id="rendered-preview"></div>
+      <pre id="raw-html-output"></pre>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 SA Labs (`salabs.quanxs.com`) - High Performance Client-Side Utilities</p>
+  </footer>
+
+  
+</body>
+</html>
