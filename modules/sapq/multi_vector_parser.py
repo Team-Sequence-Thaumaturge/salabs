@@ -6,8 +6,6 @@ import time
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-
-
 class MultiVectorCrossParsingAuditEngine:
     """
     다방향 교차 파싱 기반 코드 무결성 자동 검수 엔진 (Multi-Directional Interleaved Cross-Parsing Audit Engine)
@@ -167,31 +165,12 @@ class MultiVectorCrossParsingAuditEngine:
                  "issue": "INTENT_MISMATCH: Large file with suspiciously few structural definitions, suggesting partial implementation or scope reduction."
              })
 
-        # Phase 25.0: AST Taint & Security Smell Scanner
-        try:
-            try:
-                from sapq_ast_parser import ASTParser
-                from sapq_security_guard import SAPQSecurityGuard
-            except ImportError:
-                from .sapq_ast_parser import ASTParser
-                from .sapq_security_guard import SAPQSecurityGuard
-            ast_parser = ASTParser(self.filepath)
-            security_guard = SAPQSecurityGuard(self.filepath, ast_parser)
-            security_report = security_guard.analyze()
-            security_score = security_report["security_health_score"]
-            security_issues = security_report["issues"]
-        except Exception:
-            security_score = 100
-            security_issues = []
-
-        security_deduction = 100 - security_score
-        score = max(0, 100 - (len(discontinuities) * 10 + len(zombie_nodes) * 2 + len(semantic_contradictions) * 5 + len(intent_mismatches) * 20 + security_deduction))
+        score = max(0, 100 - (len(discontinuities) * 10 + len(zombie_nodes) * 2 + len(semantic_contradictions) * 5 + len(intent_mismatches) * 20))
 
         report = {
             "target_file": self.filename,
             "total_lines": self.total_lines,
             "audit_integrity_score": score,
-            "security_health_score": security_score,
             "vector_nodes": {
                 "V1_Forward_Count": len(v1_forward),
                 "V2_Backward_Count": len(v2_backward),
@@ -203,8 +182,7 @@ class MultiVectorCrossParsingAuditEngine:
             "closed_loop_warnings": closed_loops,
             "semantic_contradictions": semantic_contradictions[:10],
             "async_timing_contradictions": async_timing_contradictions[:10],
-            "intent_mismatches": intent_mismatches,
-            "security_issues": security_issues[:10]
+            "intent_mismatches": intent_mismatches
         }
 
         return report

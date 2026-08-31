@@ -9,17 +9,11 @@ try:
     from .sapq_checkpoint import CheckpointManager
     from .sapq_logger import SAPQLogger
     from .sapq_ast_parser import ASTParser
-    from .sapq_security_guard import SAPQSecurityGuard
-    from .omni_ingestor import OmniIngestor
-    from .omni_workslop_guard import OmniWorkslopGuard
 except (ImportError, ValueError):
     from sapq_preflight import SAPQPreflightGuard
     from sapq_checkpoint import CheckpointManager
     from sapq_logger import SAPQLogger
     from sapq_ast_parser import ASTParser
-    from sapq_security_guard import SAPQSecurityGuard
-    from omni_ingestor import OmniIngestor
-    from omni_workslop_guard import OmniWorkslopGuard
 
 sys.stdout.reconfigure(encoding='utf-8')
 
@@ -332,33 +326,6 @@ def audit_file(filepath, session_id=None, baseline_filepath=None, audit_only=Fal
         if runtime_errors:
             report["runtime_console_errors"] = runtime_errors
 
-
-        # Phase 24: BigQuery & DB Parsing Rule Validator (Static AST)
-    bq_issues = []
-
-    # We load the full content correctly since engine.full_content_raw doesn't exist
-    with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
-        file_text = f.read().lower()
-
-    if "bigquery" in file_text or "db" in file_text:
-        # Check AST for static DB usages via security guard if it were implemented,
-        # but fallback to heuristic for now
-        if "google.cloud.bigquery" not in file_text and "bigquery.client" not in file_text:
-            pass # Could be just a comment
-
-        if "query(" in file_text and "params=" not in file_text and "job_config=" not in file_text:
-            bq_issues.append("BIGQUERY_UNSAFE_QUERY: BigQuery execution without parameterized queries or job config.")
-
-    if bq_issues:
-        report["bigquery_parsing_issues"] = bq_issues
-
-    # Phase 25.0: AST Taint & Security Smell Scanner
-    ast_parser = ASTParser(filepath)
-    security_guard = SAPQSecurityGuard(filepath, ast_parser)
-    security_report = security_guard.analyze()
-    report["security_guard_issues"] = security_report["issues"]
-    report["security_health_score"] = getattr(security_guard, 'security_health_score', security_report["security_health_score"])
-
     # Recalculate score based on all unified detections
     deductions = 0
     deductions += len(report.get("discontinuities_detected", [])) * 10
@@ -369,7 +336,6 @@ def audit_file(filepath, session_id=None, baseline_filepath=None, audit_only=Fal
     deductions += len(report.get("causality_contradictions", [])) * 15
     deductions += len(report.get("spec_mismatches", [])) * 25
     deductions += len(report.get("runtime_console_errors", [])) * 10
-    deductions += len(report.get("bigquery_parsing_issues", [])) * 20
 
     report["audit_integrity_score"] = max(0, 100 - deductions)
 
@@ -397,14 +363,9 @@ def audit_file(filepath, session_id=None, baseline_filepath=None, audit_only=Fal
         len(report.get("scope_undeclared_symbols", [])) * 25 +
         len(report.get("semantic_contradictions", [])) * 5 +
         len(report.get("async_timing_contradictions", [])) * 15 +
-        len(report.get("intent_mismatches", [])) * 20 +
-        len(report.get("bigquery_parsing_issues", [])) * 20
+        len(report.get("intent_mismatches", [])) * 20
     )
-
-    # Calculate security deductions based on the Security Guard report
-    security_deduction = 100 - report.get("security_health_score", 100)
-
-    report["audit_integrity_score"] = max(0, 100 - total_penalty - security_deduction)
+    report["audit_integrity_score"] = max(0, 100 - total_penalty)
 
     # Inject Preflight results into report
     report["preflight_status"] = "PASSED"
@@ -440,41 +401,6 @@ def audit_file(filepath, session_id=None, baseline_filepath=None, audit_only=Fal
         report["spatial_topology_error"] = str(e)
 
     return report
-
-def audit_omni_stream(data, mime_type):
-    """
-    Omni-SAPQ Phase 3: Workslop & Semantic Leaching Guard
-    Routes multi-modal data through OmniIngestor and audits via OmniWorkslopGuard.
-    """
-    try:
-        S_matrix, invariants = OmniIngestor.ingest(data, mime_type)
-
-        # In a real integration, OmniIngestor should return the BaseTensorState object itself.
-        # But to avoid breaking the interface tuple return, we recreate the duck-typed object.
-        class _DynamicTensorState:
-            def __init__(self, s, inv):
-                self.S_matrix = s
-                self.invariants = inv
-
-        tensor_state = _DynamicTensorState(S_matrix, invariants)
-        workslop_report = OmniWorkslopGuard.audit(tensor_state, data, mime_type)
-    except Exception as e:
-        workslop_report = {
-            "workslop_index": 1.0,
-            "semantic_leach_score": 1.0,
-            "torsion_deviation": 1.0,
-            "issues": [{"type": "INGESTION_ERROR", "details": str(e)}]
-        }
-
-    return {
-        "security_health_score": 100 - (workslop_report.get("workslop_index", 0.0) * 100),
-        "workslop_metrics": {
-            "index": workslop_report.get("workslop_index", 0.0),
-            "leach_score": workslop_report.get("semantic_leach_score", 0.0),
-            "torsion_deviation": workslop_report.get("torsion_deviation", 0.0)
-        },
-        "issues": workslop_report.get("issues", [])
-    }
 
 def audit_directory(dirpath, audit_only=False):
     results = []

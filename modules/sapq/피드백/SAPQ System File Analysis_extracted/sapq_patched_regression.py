@@ -1,17 +1,14 @@
 from __future__ import annotations
-import sys, os
-sys.path.insert(0, r'C:\stella\project\sandbox\salabs-jules-sandbox\modules\sapq')
-
 
 import json
 import shutil
 from pathlib import Path
 
-from sapq_ast_parser import ASTParser
-from sapq_engine import audit_file
-from sapq_interlock import SAPQInterlock
+from sapq_patched.sapq_ast_parser import ASTParser
+from sapq_patched.sapq_engine import audit_file
+from sapq_patched.sapq_interlock import SAPQInterlock
 
-ROOT = Path('C:/stella/project/sandbox/salabs-jules-sandbox/temp_sapq_patched_fixtures')
+ROOT = Path('/home/ubuntu/sapq_patched_fixtures')
 if ROOT.exists():
     shutil.rmtree(ROOT)
 ROOT.mkdir(parents=True)

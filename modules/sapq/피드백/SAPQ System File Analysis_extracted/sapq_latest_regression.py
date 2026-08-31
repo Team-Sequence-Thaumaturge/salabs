@@ -1,7 +1,4 @@
 from __future__ import annotations
-import sys, os
-sys.path.insert(0, r'C:\stella\project\sandbox\salabs-jules-sandbox\modules\sapq')
-
 
 import contextlib
 import io
@@ -9,12 +6,12 @@ import json
 import shutil
 from pathlib import Path
 
-from sapq_ast_parser import ASTParser
-from sapq_engine import audit_file
-from sapq_interlock import InterlockCircuitBreaker
-from sapq_spec_matcher import SpecSemanticMatcher
+from sapq_latest.sapq_ast_parser import ASTParser
+from sapq_latest.sapq_engine import audit_file
+from sapq_latest.sapq_interlock import InterlockCircuitBreaker
+from sapq_latest.sapq_spec_matcher import SpecSemanticMatcher
 
-ROOT = Path('C:/stella/project/sandbox/salabs-jules-sandbox/temp_sapq_latest_fixtures')
+ROOT = Path('/home/ubuntu/sapq_latest_fixtures')
 if ROOT.exists():
     shutil.rmtree(ROOT)
 ROOT.mkdir(parents=True)
