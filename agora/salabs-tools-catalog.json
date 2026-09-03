@@ -1,0 +1,4062 @@
+[
+  {
+    "slug": "ai-portal-cockpit-manager",
+    "title": "AI Portal Unified Management Cockpit | Quanxs SA Labs",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/ai-portal-cockpit-manager.html",
+    "description": "Quanxs SA Labs AI Portal Cockpit - API Key Management, M2M x402 Traffic Metering & Neon Serverless Credit Monitor."
+  },
+  {
+    "slug": "api-mock-sandbox",
+    "title": "API Mock & REST Request Sandbox",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/api-mock-sandbox.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "ascii-art-text-generator",
+    "title": "ASCII Art Banner Generator",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/ascii-art-text-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-ambience-generator",
+    "title": "Audio Ambient Noise Generator",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-ambience-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-ambience-rain-synth",
+    "title": "Audio Procedural Rain Ambience Synth",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-ambience-rain-synth.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-binaural-3d-soundfield-synthesizer",
+    "title": "3D Binaural Soundfield Synthesizer & Spatial HRTF Room Simulator",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-binaural-3d-soundfield-synthesizer.html",
+    "description": "Professional client-side 3D Binaural Soundfield Synthesizer with spatial HRTF positioning, multi-node reverberation, and"
+  },
+  {
+    "slug": "audio-binaural-beats-studio",
+    "title": "Audio Binaural Beats Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-binaural-beats-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-binaural-crossfeed-spatializer",
+    "title": "Binaural Crossfeed & Headphone Spatializer | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-binaural-crossfeed-spatializer.html",
+    "description": "Real-time client-side binaural crossfeed and headphone spatialization studio using Web Audio API for natural acoustic ro"
+  },
+  {
+    "slug": "audio-binaural-hrtf-spatial-room-simulator",
+    "title": "3D Binaural HRTF Spatial Room Simulator",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-binaural-hrtf-spatial-room-simulator.html",
+    "description": "Interactive 3D Binaural HRTF Spatial Audio and Acoustic Room Impulse Simulator built with 100% client-side Web Audio API"
+  },
+  {
+    "slug": "audio-binaural-subharmonic-resonator",
+    "title": "Binaural Sub",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-binaural-subharmonic-resonator.html",
+    "description": "Professional client-side binaural sub-harmonic resonator & bass frequency exciter. Dual sub-octave oscillators (f/2, f/4"
+  },
+  {
+    "slug": "audio-biquad-filter-studio",
+    "title": "Audio Biquad Filter Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-biquad-filter-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-bpm-metronome",
+    "title": "Audio BPM Metronome",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-bpm-metronome.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-chords-frequency-generator",
+    "title": "Web Audio Multi",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-chords-frequency-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-chorus-flanger-studio",
+    "title": "Audio Chorus & Multi",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-chorus-flanger-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-compressor-limiter-studio",
+    "title": "Audio Dynamics Compressor & Limiter Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-compressor-limiter-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-convolution-reverb-spatial-designer",
+    "title": "Convolution Reverb & Spatial IR Studio | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-convolution-reverb-spatial-designer.html",
+    "description": "Real-time Web Audio API Convolution Reverb and Synthetic Impulse Response (IR) Designer. Design room acoustics, decay, e"
+  },
+  {
+    "slug": "audio-delay-feedback-studio",
+    "title": "Audio Delay & Feedback Echo Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-delay-feedback-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-distortion-bitcrusher-studio",
+    "title": "Audio Bitcrusher & Lo",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-distortion-bitcrusher-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-distortion-overdrive-studio",
+    "title": "Audio WaveShaper Distortion Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-distortion-overdrive-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-dynamic-convolution-reverb-studio",
+    "title": "Dynamic Room Acoustic Convolver & Impulse Response Synth",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-dynamic-convolution-reverb-studio.html",
+    "description": "100% Client-Side Web Audio Room Acoustic Simulator, Sabine-based Synthetic Impulse Response Generator, and Convolver Rev"
+  },
+  {
+    "slug": "audio-envelope-adsr-studio",
+    "title": "Audio ADSR Envelope Synth Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-envelope-adsr-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-envelope-follower-modulator",
+    "title": "Audio Envelope Follower & VCA Peak Modulator",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-envelope-follower-modulator.html",
+    "description": "100% Client-Side Pure Web Audio API Dynamic Envelope Follower & VCA Peak Modulator Studio by Quanxs SA Labs."
+  },
+  {
+    "slug": "audio-envelope-generator-studio",
+    "title": "Audio ADSR Envelope Generator Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-envelope-generator-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-envelope-shaper-studio",
+    "title": "Audio Envelope Shaper Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-envelope-shaper-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-equalizer-studio",
+    "title": "Audio 5",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-equalizer-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-formant-eq-synthesizer-engine",
+    "title": "Web Audio API Formant EQ & Synthesizer Engine",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-eq-synthesizer-engine.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-formant-pitch-tracker-pro",
+    "title": "Audio Formant Pitch Tracker Pro | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-pitch-tracker-pro.html",
+    "description": "Professional client-side real-time vocal pitch and formant frequency analyzer using Web Audio API and YIN auto-correlati"
+  },
+  {
+    "slug": "audio-formant-pitch-tracker",
+    "title": "Audio Formant Pitch Tracker",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-pitch-tracker.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-formant-spectral-envelope-morpher",
+    "title": "Audio Formant Spectral Envelope Morpher | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-spectral-envelope-morpher.html",
+    "description": "Web Audio API 기반 실시간 포먼트 필터 뱅크 및 스펙트럼 인벨로프 모퍼 스튜디오"
+  },
+  {
+    "slug": "audio-formant-spectral-resonator-pro",
+    "title": "오디오 스펙트럼 포먼트 공명 합성기 Pro | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-spectral-resonator-pro.html",
+    "description": "Web Audio API 기반의 브라우저 로컬 구동 다중 포먼트 주파수 필터 뱅크 및 스펙트럼 공명 사운드 디자인 스튜디오입니다."
+  },
+  {
+    "slug": "audio-formant-spectral-resonator",
+    "title": "Audio Formant Spectral Resonator Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-spectral-resonator.html",
+    "description": "Professional client-side Web Audio Formant Spectral Resonator & Vowel Filter Studio. 100% local browser execution."
+  },
+  {
+    "slug": "audio-formant-spectral-synthesizer-pro",
+    "title": "Formant Spectral Synthesizer Pro",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-spectral-synthesizer-pro.html",
+    "description": "Professional client-side formant vowel and spectral audio synthesizer using Web Audio API and real-time canvas visualize"
+  },
+  {
+    "slug": "audio-formant-spectral-vocoder-matrix",
+    "title": "Web Audio Formant & Spectral Vocoder Matrix Studio | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-spectral-vocoder-matrix.html",
+    "description": "Real-time Web Audio Formant and Spectral Vocoder Matrix Synthesizer. Route microphone or multi-oscillator carrier signal"
+  },
+  {
+    "slug": "audio-formant-spectral-vocoder-pro",
+    "title": "오디오 포먼트 스펙트럴 보코더 프로 | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-spectral-vocoder-pro.html",
+    "description": "순수 Web Audio API 기반 16-밴드 대역 필터 및 포먼트 모핑 스펙트럴 보코더 프로페셔널 스튜디오입니다. 100% 브라우저 로컬 구동."
+  },
+  {
+    "slug": "audio-formant-vocal-filter-studio",
+    "title": "Audio Formant Vocal Filter Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-vocal-filter-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-formant-vowel-filter-pro",
+    "title": "Audio Formant Vowel Filter Pro Studio | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-vowel-filter-pro.html",
+    "description": "Professional client-side audio vowel formant filter and speech synthesis resonator using Web Audio API. Zero server depe"
+  },
+  {
+    "slug": "audio-formant-vowel-filter-studio",
+    "title": "Audio Formant Vowel Filter Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-vowel-filter-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-formant-vowel-filter-v10002",
+    "title": "Audio Formant Vowel Filter Studio v10002 | SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v10002.html",
+    "description": "100% Client-Side Web Audio API BiquadFilter Formant Vowel Acoustic Synthesizer v10002"
+  },
+  {
+    "slug": "audio-formant-vowel-filter-v12",
+    "title": "Audio Formant Vowel Filter v12 Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v12.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-formant-vowel-filter-v18",
+    "title": "Audio Formant Vowel Filter v18 Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v18.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-formant-vowel-filter-v2002",
+    "title": "Audio Formant Vowel Filter Engine v2002 | SA Labs Developer Utilities",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v2002.html",
+    "description": "100% Client-Side Web Audio API Formant Vowel Filter Engine v2002 for developer sound synthesis and DSP processing."
+  },
+  {
+    "slug": "audio-formant-vowel-filter-v3001",
+    "title": "Audio Formant Vowel Filter v3001 Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v3001.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-formant-vowel-filter-v4500",
+    "title": "Realtime Web Audio Formant Vowel Filter v4500 Studio | SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v4500.html",
+    "description": "100% Client-Side Web Audio API Formant Vowel Filter v4500 DSP Studio with Zero-Server Latency."
+  },
+  {
+    "slug": "audio-formant-vowel-filter-v5005",
+    "title": "Audio Formant Vowel Filter v5005 Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-vowel-filter-v5005.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-formant-vowel-filter",
+    "title": "Audio Formant Vowel Filter",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-vowel-filter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-formant-vowel-shaper-v40",
+    "title": "Web Audio Realtime Formant Vowel Filter Studio v40 | SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-vowel-shaper-v40.html",
+    "description": "100% Client-Side Web Audio API Formant Vowel Filter & Peak Resonance Shaper v40."
+  },
+  {
+    "slug": "audio-formant-vowel-shaper",
+    "title": "Audio Formant Vowel Pitch Shaper",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-vowel-shaper.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-formant-vowel-shifter",
+    "title": "Audio Formant Vowel Pitch Shifter",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-vowel-shifter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-formant-vowel-synthesizer",
+    "title": "Audio Formant Vowel Synthesizer",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-formant-vowel-synthesizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-frequency-analyzer",
+    "title": "Audio Frequency Analyzer & FFT Visualizer",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-frequency-analyzer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-granular-cloud-synthesizer",
+    "title": "Granular Cloud & Texture Synthesizer | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-granular-cloud-synthesizer.html",
+    "description": "Real-time client-side Granular Cloud & Texture Synthesizer using Web Audio API and HTML5 Canvas. Create ambient soundsca"
+  },
+  {
+    "slug": "audio-granular-stretcher-studio",
+    "title": "Audio Granular Time",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-granular-stretcher-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-granular-synth-studio",
+    "title": "Audio Granular Synthesizer Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-granular-synth-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-granular-texture-generator",
+    "title": "Web Audio Granular Texture & Ambient Sound Generator | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-granular-texture-generator.html",
+    "description": "100% 브라우저 로컬 구동 Web Audio 실시간 그래뉼러 텍스처 및 앰비언트 사운드 제너레이터. 입자 밀도, 피치 지터, 스테레오 확산 및 엔벨로프 모핑 지원."
+  },
+  {
+    "slug": "audio-granular-time-pitch-stretcher",
+    "title": "Granular Time & Pitch Stretcher Studio | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-granular-time-pitch-stretcher.html",
+    "description": "Professional client-side Web Audio API granular synthesis time-stretcher and pitch-shifter with real-time grain cloud vi"
+  },
+  {
+    "slug": "audio-lowpass-highpass-filter-studio",
+    "title": "Audio Lowpass & Highpass Filter Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-lowpass-highpass-filter-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-mid-side-spatial-processor",
+    "title": "Audio Mid/Side Spatial Processor",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-mid-side-spatial-processor.html",
+    "description": "100% Client-Side Pure JS Audio Mid/Side Spatial Processor & Stereo Balance Studio using Web Audio API."
+  },
+  {
+    "slug": "audio-multi-band-compressor-studio",
+    "title": "3",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-multi-band-compressor-studio.html",
+    "description": "100% Client-Side 3-Band Audio Dynamics Multiband Compressor Studio using Web Audio API BiquadFilter crossover and Dynami"
+  },
+  {
+    "slug": "audio-multi-track-soundstage-mixer",
+    "title": "Multi",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-multi-track-soundstage-mixer.html",
+    "description": "100% Client-Side Web Audio API Multi-Track Soundstage Synthesizer & Mixer. Control frequency, waveforms, individual pann"
+  },
+  {
+    "slug": "audio-multiband-dynamic-spectral-shaper",
+    "title": "오디오 멀티밴드 다이내믹 스펙트럼 쉐이퍼 스튜디오 | SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-multiband-dynamic-spectral-shaper.html",
+    "description": "순수 Web Audio API 기반 3밴드 크로스오버 및 멀티밴드 다이내믹 스펙트럼 쉐이핑, 하모닉 트랜지언트 밸런스 제어 툴입니다."
+  },
+  {
+    "slug": "audio-multiband-spectral-vocoder-matrix",
+    "title": "Audio Multiband Spectral Vocoder Matrix",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-multiband-spectral-vocoder-matrix.html",
+    "description": "100% Client-Side Multiband Spectral Vocoder Matrix and Voice Formant Synthesizer using Web Audio API. Real-time carrier-"
+  },
+  {
+    "slug": "audio-noise-generator",
+    "title": "Audio Noise Generator Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-noise-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-noise-suppression-studio",
+    "title": "Audio Noise Suppression Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-noise-suppression-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-overdrive-fuzz-studio",
+    "title": "Audio WaveShaper Overdrive Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-overdrive-fuzz-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-phase-vocoder-formant-resonator",
+    "title": "Option PH: Phase Vocoder & Formant Resonator Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-phase-vocoder-formant-resonator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-phaser-flanger-studio",
+    "title": "Audio Phaser & Flanger FX Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-phaser-flanger-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-phaser-stereo-panner",
+    "title": "Audio Phaser & Stereo Panner Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-phaser-stereo-panner.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-ping-pong-delay-studio",
+    "title": "Audio Ping",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-ping-pong-delay-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-pink-brown-noise-generator",
+    "title": "Audio Pink & Brown Noise Generator Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-pink-brown-noise-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-pink-noise-generator",
+    "title": "Audio Pink & Brown Noise Generator",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-pink-noise-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-reverb-convolver-studio",
+    "title": "Audio Convolver & Impulse Reverb Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-reverb-convolver-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-reverb-impulse-response-studio",
+    "title": "Audio Impulse Response Reverb Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-reverb-impulse-response-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-ring-modulator-studio",
+    "title": "Audio Ring Modulator Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-ring-modulator-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-ring-modulator-synth",
+    "title": "Audio Ring Modulator Synth",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-ring-modulator-synth.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spatial-3d-ambisonic-binaural-decoder",
+    "title": "3D 앰비소닉스 바이노럴 디코더 | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-3d-ambisonic-binaural-decoder.html",
+    "description": "1차/2차 앰비소닉스 구면 조화함수 기반 3D 공간 음향 바이노럴 가상화 디코더 및 사운드 필드 시뮬레이터 (100% 클라이언트 로컬 구동)"
+  },
+  {
+    "slug": "audio-spatial-3d-audio-panner",
+    "title": "Audio 3D Spatial Position Panner",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-3d-audio-panner.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spatial-3d-audio-reverb",
+    "title": "3D Spatial Audio Reverb Simulator",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-3d-audio-reverb.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spatial-3d-binaural-beat-studio",
+    "title": "Audio 3D Spatial Binaural Beat Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-3d-binaural-beat-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spatial-3d-binaural-convolution-reverb",
+    "title": "3D Binaural Convolution Reverb Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-3d-binaural-convolution-reverb.html",
+    "description": "Client-side 3D Spatial Binaural Impulse Response & Convolution Reverb Studio with synthetic HRIR acoustics simulation an"
+  },
+  {
+    "slug": "audio-spatial-3d-binaural-doppler-simulator",
+    "title": "3D 공간 음향 도플러 효과 시뮬레이터 | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-3d-binaural-doppler-simulator.html",
+    "description": "웹 브라우저에서 실시간으로 3D 공간 음향 및 이동 음원의 도플러 효과(Doppler Effect)를 시뮬레이션하고 청취하는 100% 클라이언트 사이드 오디오 엔진 도구입니다."
+  },
+  {
+    "slug": "audio-spatial-3d-binaural-hrtf-convolver",
+    "title": "3D Spatial Binaural HRTF Convolver Studio | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-3d-binaural-hrtf-convolver.html",
+    "description": "Professional 100% client-side 3D spatial binaural HRTF convolver studio using Web Audio API for immersive spatial acoust"
+  },
+  {
+    "slug": "audio-spatial-3d-binaural-panner",
+    "title": "3D Binaural Panner Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-3d-binaural-panner.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spatial-3d-binaural-room-simulator",
+    "title": "3D Binaural Room Impulse & Acoustic Simulator | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-3d-binaural-room-simulator.html",
+    "description": "Simulate real-time 3D binaural room acoustics, wall reflections, and reverberant spatial impulse responses directly in y"
+  },
+  {
+    "slug": "audio-spatial-3d-environment-panner",
+    "title": "Audio 3D Environment Spatializer",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-3d-environment-panner.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spatial-3d-headphone-panner",
+    "title": "Audio 3D Headphone Binaural Panner Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-3d-headphone-panner.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spatial-3d-reverb-studio",
+    "title": "Audio 3D Reverb & HRTF Panner Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-3d-reverb-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spatial-3d-reverberator",
+    "title": "3D Spatial Reverberator Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-3d-reverberator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spatial-ambisonics-studio",
+    "title": "Audio Ambisonics Spatial Sound Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-ambisonics-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spatial-binaural-doppler-soundstage",
+    "title": "Binaural 3D Doppler Soundstage Studio | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-binaural-doppler-soundstage.html",
+    "description": "100% Client-Side Web Audio API 3D Binaural Doppler Soundstage Synthesizer and Spatial Motion Studio."
+  },
+  {
+    "slug": "audio-spatial-binaural-synthesizer",
+    "title": "3D Spatial Binaural Sound Synthesizer",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-binaural-synthesizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spatial-hrtf-ambisonics-binaural-synthesizer",
+    "title": "Spatial HRTF Ambisonics Binaural Soundstage Synthesizer | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-hrtf-ambisonics-binaural-synthesizer.html",
+    "description": "Professional 3D Spatial HRTF Ambisonics Binaural Soundstage Synthesizer with Web Audio API. 100% Client-Side Pure JS."
+  },
+  {
+    "slug": "audio-spatial-hrtf-binaural-soundscape-designer",
+    "title": "HRTF Binaural 3D Soundscape Designer",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-hrtf-binaural-soundscape-designer.html",
+    "description": "Design and simulate 3D binaural soundscapes with HRTF spatial panning, room impulse reverberation, and dynamic sound pos"
+  },
+  {
+    "slug": "audio-spatial-hrtf-binaural-studio",
+    "title": "HRTF 3D Binaural Spatial Audio Studio | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-hrtf-binaural-studio.html",
+    "description": "Simulate real-time 3D spatial audio positioning and HRTF binaural sound localization with Web Audio API. 100% client-sid"
+  },
+  {
+    "slug": "audio-spatial-panner-studio",
+    "title": "Audio 3D Spatial Panner Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-panner-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spatial-panning-visualizer",
+    "title": "Audio Spatial Panning & HRTF Visualizer",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spatial-panning-visualizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spectral-equalizer-studio",
+    "title": "Web Audio 10",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-equalizer-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spectral-freeze-grain-synthesizer",
+    "title": "Audio Spectral Freeze & Granular Synthesizer Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-freeze-grain-synthesizer.html",
+    "description": "Client-side Web Audio API spectral freeze, FFT buffer capture, and micro-sound granular synthesizer with pitch, jitter, "
+  },
+  {
+    "slug": "audio-spectral-freeze-granular-reverb",
+    "title": "Audio Spectral Freeze & Granular Reverb Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-freeze-granular-reverb.html",
+    "description": "Realtime Web Audio API spectral freeze, granular buffer scrubber, and binaural spatial reverb engine. 100% client-side p"
+  },
+  {
+    "slug": "audio-spectral-freeze-reverb-studio",
+    "title": "Audio Spectral Freeze & Reverb Soundfield Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-freeze-reverb-studio.html",
+    "description": "100% Client-Side Pure Web Audio API Spectral Freeze and Infinite Reverb Soundfield Studio. Zero-server local real-time b"
+  },
+  {
+    "slug": "audio-spectral-freeze-synthesizer",
+    "title": "Audio Spectral Freeze Synthesizer",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-freeze-synthesizer.html",
+    "description": "100% Client-Side Pure Web Audio API Realtime FFT Spectral Freeze & Harmonic Drone Ambient Synthesizer."
+  },
+  {
+    "slug": "audio-spectral-harmonizer-studio",
+    "title": "Audio Multi",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-harmonizer-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spectral-morphing-synthesizer",
+    "title": "Spectral Morphing Synthesizer | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-morphing-synthesizer.html",
+    "description": "100% Client-Side Web Audio Spectral Morphing Synthesizer. Real-time Fourier harmonic additive synthesis, waveform interp"
+  },
+  {
+    "slug": "audio-spectral-noise-canceller-v2",
+    "title": "Audio Spectral Noise Canceller v2 | SA Labs Developer Utilities",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-noise-canceller-v2.html",
+    "description": "100% Client-Side Web Audio API Spectral Noise Suppression & Noise Gate Engine for developer DSP processing."
+  },
+  {
+    "slug": "audio-spectral-noise-gate-multiband-expander",
+    "title": "Multi",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-noise-gate-multiband-expander.html",
+    "description": "Professional client-side multi-band spectral noise gate and dynamic expander studio powered by pure Web Audio API and HT"
+  },
+  {
+    "slug": "audio-spectral-noise-gate-multiband",
+    "title": "Multi",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-noise-gate-multiband.html",
+    "description": "Real-time client-side multi-band spectral noise gate and audio dynamics processor powered by Web Audio API."
+  },
+  {
+    "slug": "audio-spectral-noise-gate-studio",
+    "title": "Audio Spectral Noise Gate Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-noise-gate-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spectral-pitch-autotune-harmonizer",
+    "title": "Audio Spectral Autotune & Harmonizer Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-pitch-autotune-harmonizer.html",
+    "description": "Free online client-side audio autotune, real-time pitch corrector, and multi-voice harmonizer with formant preservation "
+  },
+  {
+    "slug": "audio-spectral-pitch-tracker",
+    "title": "Audio Realtime Pitch Tracker",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-pitch-tracker.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spectral-subbass-fuzzer",
+    "title": "Audio Subbass Fuzzer & Sub",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-subbass-fuzzer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spectral-subtraction-denoiser",
+    "title": "Audio Spectral Noise Reducer Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-subtraction-denoiser.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spectral-transient-shaper-studio",
+    "title": "오디오 스펙트럼 트랜지언트 쉐이퍼 스튜디오 | SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-transient-shaper-studio.html",
+    "description": "순수 Web Audio API 기반의 브라우저 로컬 오디오 스펙트럼 트랜지언트 어택/서스테인 쉐이퍼 및 다이내믹 주파수 제어 툴입니다."
+  },
+  {
+    "slug": "audio-spectral-transient-shaper",
+    "title": "Audio Spectral Transient Shaper & Dynamic Attack Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-transient-shaper.html",
+    "description": "Free online client-side audio transient shaper and dynamic attack/sustain spectral separator powered by Web Audio API an"
+  },
+  {
+    "slug": "audio-spectral-vocoder-formant",
+    "title": "Audio Spectral Formant Vocoder",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-vocoder-formant.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spectral-vocoder-phase-vocoder",
+    "title": "Audio Phase Vocoder & Pitch Multiplier Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-vocoder-phase-vocoder.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spectral-vocoder-studio",
+    "title": "Audio Spectral Vocoder Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-vocoder-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spectral-vocoder-synthesizer",
+    "title": "Audio Spectral Vocoder Synthesizer",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectral-vocoder-synthesizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-spectrum-waterfall-visualizer",
+    "title": "Audio 3D Spectrogram & Waterfall Visualizer",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-spectrum-waterfall-visualizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-stereo-phase-correlation-meter",
+    "title": "Stereo Phase Correlation Meter & Goniometer | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-stereo-phase-correlation-meter.html",
+    "description": "100% Client-Side Web Audio Real-time Stereo Phase Correlation Meter, Lissajous Polar Vector Goniometer, and Mid/Side (M/"
+  },
+  {
+    "slug": "audio-stereo-widener-matrix",
+    "title": "Stereo Widener & M/S Matrix Studio | Quanxs SA Labs",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-stereo-widener-matrix.html",
+    "description": "Professional client-side stereo widener and Mid/Side (M/S) matrix audio processor with real-time Lissajous phase vectors"
+  },
+  {
+    "slug": "audio-sub-bass-booster",
+    "title": "Audio Sub",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-sub-bass-booster.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-sub-bass-enhancer-studio",
+    "title": "Audio Sub",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-sub-bass-enhancer-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-sub-bass-harmonic-generator",
+    "title": "Audio Sub",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-sub-bass-harmonic-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-sub-bass-synthesizer",
+    "title": "Audio Sub",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-sub-bass-synthesizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-sub-harmonic-synthesizer",
+    "title": "Audio Sub",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-sub-harmonic-synthesizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-sub-synth-oscillator",
+    "title": "Audio Sub",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-sub-synth-oscillator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-sub-synth-subbass",
+    "title": "Audio Sub",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-sub-synth-subbass.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-subharmonic-synthesizer-studio",
+    "title": "Subharmonic Synthesizer Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-subharmonic-synthesizer-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-synth-keyboard",
+    "title": "Web Audio Synthesizer & Piano Keyboard",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-synth-keyboard.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-synthesizer-waveform-visualizer",
+    "title": "Web Audio Multi",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-synthesizer-waveform-visualizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-tone-frequency-generator",
+    "title": "Web Audio Tone & Frequency Generator",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-tone-frequency-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-tremolo-vibrato-studio",
+    "title": "Audio Tremolo & Vibrato Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-tremolo-vibrato-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-vocoder-synthesis-studio",
+    "title": "Audio Vocoder Synthesis Studio",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-vocoder-synthesis-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-voice-formant-pitch-shifter",
+    "title": "Audio Voice Formant Pitch Shifter v4",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-voice-formant-pitch-shifter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-voice-pitch-autotune",
+    "title": "Realtime Web Audio Auto",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-voice-pitch-autotune.html",
+    "description": "100% Client-Side Web Audio API Pitch Correction and Auto-Tune Studio with Chromatic Scale Snapping."
+  },
+  {
+    "slug": "audio-voice-pitch-detector",
+    "title": "Audio Voice Pitch Detector",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-voice-pitch-detector.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-voice-pitch-shifter",
+    "title": "Audio Voice Pitch Shifter",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-voice-pitch-shifter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-voice-pitch-vibrato-studio",
+    "title": "Audio Voice Pitch Vibrato Studio | SA Labs Developer Utilities",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-voice-pitch-vibrato-studio.html",
+    "description": "100% Client-Side Web Audio API Voice Pitch & Vibrato Modulation Studio for DSP developers and audio engineers."
+  },
+  {
+    "slug": "audio-voice-recorder",
+    "title": "Audio Voice Recorder & Visualizer",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-voice-recorder.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-voice-vibrato-tremolo",
+    "title": "Audio Voice Vibrato & Tremolo Studio | SA Labs Developer Utilities",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-voice-vibrato-tremolo.html",
+    "description": "100% Client-Side Web Audio API Voice Vibrato & Tremolo Modulator Studio for DSP audio processing."
+  },
+  {
+    "slug": "audio-waveform-analyzer",
+    "title": "Audio Waveform Visualizer & Frequency Analyzer",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-waveform-analyzer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "audio-white-noise-generator",
+    "title": "Audio Noise Synthesizer (White/Pink/Brown)",
+    "category": "audio_dsp_spatial",
+    "url": "https://salabs.quanxs.com/tools/audio-white-noise-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "base64-image-encoder",
+    "title": "Base64 Image Encoder & Data URL Generator",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/base64-image-encoder.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "base64-jwt-decoder",
+    "title": "Base64 & JWT Decoder",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/base64-jwt-decoder.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "browser-memory-leak-detector",
+    "title": "Browser Memory Heap Inspector",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/browser-memory-leak-detector.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "browser-performance-timer",
+    "title": "Browser Performance & Navigation Timing Benchmarker",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/browser-performance-timer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "btoa-atob-converter",
+    "title": "Base64 String Encoder & Decoder (btoa / atob)",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/btoa-atob-converter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "chmod-calculator",
+    "title": "Chmod Permissions Calculator & Visualizer",
+    "category": "math_scientific",
+    "url": "https://salabs.quanxs.com/tools/chmod-calculator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "client-side-utility-engine-v2",
+    "title": "Next Generation Client",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/client-side-utility-engine-v2.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "client-side-utility-engine-v3",
+    "title": "Next Generation Client",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/client-side-utility-engine-v3.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "client-side-utility-engine-v4",
+    "title": "Option NW: Next Generation Client",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/client-side-utility-engine-v4.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "client-side-utility-engine-v5",
+    "title": "Next Generation Client",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/client-side-utility-engine-v5.html",
+    "description": "100% Client-Side Pure JS Utility Engine v5 for developer operations with zero-server execution."
+  },
+  {
+    "slug": "client-side-utility-engine",
+    "title": "Next Generation Client",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/client-side-utility-engine.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "color-contrast-accessibility-checker",
+    "title": "WCAG Color Contrast & Accessibility Checker",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/color-contrast-accessibility-checker.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "color-converter-contrast",
+    "title": "Color Code Converter & WCAG Contrast Inspector",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/color-converter-contrast.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "color-converter",
+    "title": "Color Code Converter & Inspector",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/color-converter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "color-palette-generator",
+    "title": "CSS Color Palette & Gradient Studio",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/color-palette-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "color-rgb-hsl-picker",
+    "title": "RGB & HSL Color Picker Inspector",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/color-rgb-hsl-picker.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "cookie-header-parser",
+    "title": "HTTP Cookie & Header String Parser",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/cookie-header-parser.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "cron-generator",
+    "title": "Cron Expression Generator",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/cron-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-aes-cbc-pbkdf2-encryptor",
+    "title": "Web Crypto AES",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-aes-cbc-pbkdf2-encryptor.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-aes-ctr-encryptor",
+    "title": "Web Crypto AES",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-aes-ctr-encryptor.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-aes-gcm-encryption",
+    "title": "Web Crypto AES",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-aes-gcm-encryption.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-aes-gcm-vault-engine",
+    "title": "Web Crypto AES",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-aes-gcm-vault-engine.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-aes-kw-key-wrap",
+    "title": "Web Crypto AES",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-aes-kw-key-wrap.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-aes-siv-authenticated-cipher",
+    "title": "AES",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-aes-siv-authenticated-cipher.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-argon2-id-kdf-simulator",
+    "title": "Argon2id Key Derivation & Benchmark Studio | Quanxs SA Labs",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-argon2-id-kdf-simulator.html",
+    "description": "100% Client-Side Pure JS Argon2id (RFC 9106) Memory-Hard Key Derivation Function Simulator, Salt Generator, and Paramete"
+  },
+  {
+    "slug": "crypto-bip39-mnemonic-validator",
+    "title": "Crypto BIP",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-bip39-mnemonic-validator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-bls-threshold-signature-studio",
+    "title": "BLS Threshold Signature & Key Aggregation Studio | Quanxs SA Labs",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-bls-threshold-signature-studio.html",
+    "description": "100% Client-Side Pure Web Crypto BLS Threshold Signature (t-of-n) and Key Aggregation Verification Studio. Zero server l"
+  },
+  {
+    "slug": "crypto-bls12-381-pairing-studio",
+    "title": "BLS12",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-bls12-381-pairing-studio.html",
+    "description": "100% Client-Side BLS12-381 Bilinear Pairing and Threshold Signature Aggregation Studio with Zero-Knowledge Setup verific"
+  },
+  {
+    "slug": "crypto-bulletproofs-plus-zk-range-prover",
+    "title": "Bulletproofs+ ZK Range Proof Studio | Quanxs SA Labs",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-bulletproofs-plus-zk-range-prover.html",
+    "description": "Bulletproofs+ Zero-Knowledge Range Proof Generator & Verifier. 100% Client-Side Pure Web Crypto."
+  },
+  {
+    "slug": "crypto-chacha20-poly1305-authenticated-cipher",
+    "title": "ChaCha20",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-authenticated-cipher.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-chacha20-poly1305-key-derivation",
+    "title": "Web Crypto ChaCha20 Key Derivation Studio",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-key-derivation.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-chacha20-poly1305-key-generator",
+    "title": "Web Crypto ChaCha20",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-key-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-chacha20-poly1305-session-cipher",
+    "title": "ChaCha20",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-session-cipher.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-chacha20-poly1305-tester",
+    "title": "Web Crypto AES",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-tester.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-chacha20-poly1305-vault",
+    "title": "Web Crypto Stream Vault",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-chacha20-poly1305-vault.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-dilithium-signature-studio",
+    "title": "Post",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-dilithium-signature-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-ecc-secp256k1-key-generator",
+    "title": "Web Crypto ECDSA P",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-ecc-secp256k1-key-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-ecdsa-p256-signer",
+    "title": "Web Crypto ECDSA P",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-ecdsa-p256-signer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-ecdsa-p384-key-generator",
+    "title": "Web Crypto ECDSA P",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-ecdsa-p384-key-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-ecdsa-p384-signature-studio",
+    "title": "Option PI: Web Crypto ECDSA P",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-ecdsa-p384-signature-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-ecdsa-p384-studio",
+    "title": "Crypto ECDSA P",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-ecdsa-p384-studio.html",
+    "description": "100% Client-Side Web Crypto SubtleCrypto ECDSA P-384 Key Pair Generation & SHA-384 Digital Signature Studio."
+  },
+  {
+    "slug": "crypto-ecdsa-secp256k1-verifier",
+    "title": "Web Crypto ECDSA P",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-ecdsa-secp256k1-verifier.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-ed25519-key-generator",
+    "title": "Web Crypto Ed25519 & ECDSA Signature Studio",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-ed25519-key-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-ed25519-key-pair-studio",
+    "title": "Ed25519 & RSA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-ed25519-key-pair-studio.html",
+    "description": "100% Client-side Web Crypto API Ed25519 & RSA-PSS cryptographic key pair generator, signing, and signature verification "
+  },
+  {
+    "slug": "crypto-ed25519-signature-validator",
+    "title": "Web Crypto Ed25519 Signature Validator",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-ed25519-signature-validator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-elgamal-homomorphic-encryption",
+    "title": "ElGamal Homomorphic Encryption Studio",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-elgamal-homomorphic-encryption.html",
+    "description": "100% Client-Side Pure JS ElGamal Multiplicative & Additive Homomorphic Encryption Engine."
+  },
+  {
+    "slug": "crypto-falcon-1024-lattice-signature-studio",
+    "title": "Post",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-falcon-1024-lattice-signature-studio.html",
+    "description": "Interactive NIST Post-Quantum Cryptography Falcon-1024 lattice signature generator, NTRU polynomial sampler, and FFT nor"
+  },
+  {
+    "slug": "crypto-falcon-1024-post-quantum-vault",
+    "title": "Falcon",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-falcon-1024-post-quantum-vault.html",
+    "description": "NIST Post-Quantum Cryptography Falcon-1024 and NTRU Lattice Signature Simulator. Zero-server client-side lattice Gaussia"
+  },
+  {
+    "slug": "crypto-falcon-512-lattice-signature-studio",
+    "title": "Falcon",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-falcon-512-lattice-signature-studio.html",
+    "description": "100% Client-Side Post-Quantum Lattice Signature (Falcon-512 Simulation) generator and cryptographic verifier."
+  },
+  {
+    "slug": "crypto-falcon-post-quantum-inspector",
+    "title": "Post",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-falcon-post-quantum-inspector.html",
+    "description": "Explore and inspect NIST Post-Quantum Falcon-512 and Falcon-1024 lattice-based signature key structures, NTRU polynomial"
+  },
+  {
+    "slug": "crypto-falcon-shake256-post-quantum-vault",
+    "title": "Crypto Falcon",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-falcon-shake256-post-quantum-vault.html",
+    "description": "Web Crypto SubtleCrypto 기반 Falcon-1024 양자내성 격자 서명 시뮬레이션 및 검증 볼트"
+  },
+  {
+    "slug": "crypto-falcon-shake256-signature-verifier",
+    "title": "Post",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-falcon-shake256-signature-verifier.html",
+    "description": "100% Client-Side Pure Web Crypto & SHAKE256 Post-Quantum Falcon Lattice Signature Verifier by Quanxs SA Labs."
+  },
+  {
+    "slug": "crypto-hkdf-expand-extract-studio",
+    "title": "Web Crypto HKDF Key Derivation Studio",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hkdf-expand-extract-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hkdf-key-derivation",
+    "title": "Web Crypto HKDF Key Derivation Studio",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hkdf-key-derivation.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hkdf-sha256-expander",
+    "title": "Web Crypto HKDF SHA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hkdf-sha256-expander.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hkdf-sha256-key-derivation",
+    "title": "Web Crypto HKDF SHA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hkdf-sha256-key-derivation.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hkdf-sha256-streaming-derivation",
+    "title": "Web Crypto HKDF",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hkdf-sha256-streaming-derivation.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hkdf-sha384-derivation-studio",
+    "title": "Web Crypto HKDF",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hkdf-sha384-derivation-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hkdf-sha384-key-derivation",
+    "title": "Web Crypto HKDF",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hkdf-sha384-key-derivation.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hkdf-sha512-derivation",
+    "title": "Web Crypto HKDF",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hkdf-sha512-derivation.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hkdf-sha512-key-derivation-studio",
+    "title": "Web Crypto HKDF",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hkdf-sha512-key-derivation-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hkdf-sha512-key-derivation",
+    "title": "Web Crypto HKDF SHA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hkdf-sha512-key-derivation.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hkdf-stream-cipher",
+    "title": "HKDF Key Derivation & Stream Cipher Studio",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hkdf-stream-cipher.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hmac-sha1-validator",
+    "title": "Web Crypto HMAC SHA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hmac-sha1-validator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hmac-sha256-streaming-verifier",
+    "title": "Web Crypto Streaming Chunk HMAC Verifier",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hmac-sha256-streaming-verifier.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hmac-sha256-validator",
+    "title": "Web Crypto HMAC SHA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hmac-sha256-validator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hmac-sha3-512-validator",
+    "title": "Web Crypto HMAC SHA3",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hmac-sha3-512-validator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hmac-sha3-tester",
+    "title": "Web Crypto HMAC SHA256 / SHA512 Calculator",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hmac-sha3-tester.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hmac-sha384-authenticator",
+    "title": "Web Crypto HMAC SHA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hmac-sha384-authenticator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hmac-sha384-validator",
+    "title": "Web Crypto HMAC SHA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hmac-sha384-validator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hmac-sha384-verifier",
+    "title": "HMAC SHA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hmac-sha384-verifier.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hmac-sha512-calculator",
+    "title": "Web Crypto HMAC SHA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hmac-sha512-calculator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hmac-sha512-validator",
+    "title": "Web Crypto HMAC SHA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hmac-sha512-validator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-hmac-sha512-verifier",
+    "title": "Web Crypto HMAC SHA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-hmac-sha512-verifier.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-kyber-1024-ml-kem-quantum-studio",
+    "title": "포스트 퀀텀 Kyber",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-kyber-1024-ml-kem-quantum-studio.html",
+    "description": "NIST 표준 규격 ML-KEM Kyber-1024 양자내성 암호화(Post-Quantum Cryptography) 키 캡슐화 및 순수 JS 시뮬레이터입니다."
+  },
+  {
+    "slug": "crypto-kyber-kem-post-quantum-simulator",
+    "title": "ML",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-kyber-kem-post-quantum-simulator.html",
+    "description": "NIST 표준 포스트 퀀텀 암호화 ML-KEM (Kyber-768) 키 캡슐화 메커니즘(KEM) 및 다항식 링 R_q 산술 연산 클라이언트 시뮬레이터"
+  },
+  {
+    "slug": "crypto-kyber-ml-kem-encapsulator",
+    "title": "Post",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-kyber-ml-kem-encapsulator.html",
+    "description": "NIST FIPS 203 ML-KEM / CRYSTALS-Kyber-768 Post-Quantum Key Encapsulation Mechanism simulator and inspector running 100% "
+  },
+  {
+    "slug": "crypto-kyber-post-quantum-tester",
+    "title": "Post",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-kyber-post-quantum-tester.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-merkle-tree-proof-generator",
+    "title": "Merkle Tree Proof Generator & Verifier",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-merkle-tree-proof-generator.html",
+    "description": "100% Client-Side Web Crypto SubtleCrypto SHA-256 Merkle Tree Hash Tree Builder and Cryptographic Inclusion Proof Audit V"
+  },
+  {
+    "slug": "crypto-ml-kem-768-kyber-encapsulation-studio",
+    "title": "ML",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-ml-kem-768-kyber-encapsulation-studio.html",
+    "description": "NIST FIPS 203 ML-KEM-768 (Kyber) Post-Quantum Lattice Key Encapsulation and Decapsulation Interactive Simulator in Pure "
+  },
+  {
+    "slug": "crypto-mldsa-post-quantum-signature-studio",
+    "title": "ML",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-mldsa-post-quantum-signature-studio.html",
+    "description": "Client-side NIST FIPS 204 ML-DSA (Module-Lattice Digital Signature Algorithm / CRYSTALS-Dilithium) post-quantum keypair "
+  },
+  {
+    "slug": "crypto-paillier-homomorphic-encryption-studio",
+    "title": "Paillier Homomorphic Encryption Studio | Quanxs SA Labs",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-paillier-homomorphic-encryption-studio.html",
+    "description": "100% Client-Side Paillier Homomorphic Encryption and Additive Cipher Studio using Pure JavaScript BigInt arithmetic."
+  },
+  {
+    "slug": "crypto-pbes2-pbkdf2-encryptor",
+    "title": "Web Crypto PBES2 PBKDF2 Password Encryptor",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-pbes2-pbkdf2-encryptor.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-pbkdf2-hasher-studio",
+    "title": "Web Crypto PBKDF2 Password Hasher Studio",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-pbkdf2-hasher-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-pbkdf2-key-derivation",
+    "title": "Web Crypto PBKDF2 Key Derivation",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-pbkdf2-key-derivation.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-pbkdf2-salt-generator",
+    "title": "Web Crypto PBKDF2 Key & Salt Generator",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-pbkdf2-salt-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-poseidon-hash-zk-sponge",
+    "title": "Zero",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-poseidon-hash-zk-sponge.html",
+    "description": "Free online client-side ZK-SNARK friendly Poseidon hash function, Sponge permutation state analyzer, and Galois field ar"
+  },
+  {
+    "slug": "crypto-post-quantum-classic-mceliece-simulator",
+    "title": "Post",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-post-quantum-classic-mceliece-simulator.html",
+    "description": "Interactive client-side simulator for Post-Quantum Classic McEliece code-based public-key cryptosystem with Goppa matrix"
+  },
+  {
+    "slug": "crypto-post-quantum-hqc-kem-simulator",
+    "title": "Post",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-post-quantum-hqc-kem-simulator.html",
+    "description": "100% Client-Side Pure JavaScript Hamming Quasi-Cyclic (HQC) Post-Quantum Cryptography Key Encapsulation Mechanism Simula"
+  },
+  {
+    "slug": "crypto-post-quantum-ntru-encryptor",
+    "title": "양자 내성 격자 암호 NTRU 암복호화 시뮬레이터 | Quanxs SA Labs",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-post-quantum-ntru-encryptor.html",
+    "description": "양자 컴퓨터의 쇼어 알고리즘 공격에 안전한 격자 기반(Lattice-based) 양자 내성 암호 NTRU의 다항식 환(Polynomial Ring) 연산 및 공개키/비밀키 암복호화 과정을 100% 브라우저 순수 자바"
+  },
+  {
+    "slug": "crypto-random-token-generator",
+    "title": "Web Crypto Secure Random Token Generator",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-random-token-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-ring-lwe-post-quantum-key-exchange",
+    "title": "Post",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-ring-lwe-post-quantum-key-exchange.html",
+    "description": "100% Client-Side Post-Quantum Ring Learning With Errors (Ring-LWE) Key Exchange & Polynomial Lattice Arithmetic Simulato"
+  },
+  {
+    "slug": "crypto-rsa-oaep-encryptor",
+    "title": "RSA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-rsa-oaep-encryptor.html",
+    "description": "100% Client-Side Web Crypto API RSA-OAEP Key Pair Generator, Public Key Encryption, and Private Key Decryption Studio."
+  },
+  {
+    "slug": "crypto-rsa-pss-signature-studio",
+    "title": "RSA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-rsa-pss-signature-studio.html",
+    "description": "100% Client-Side Web Crypto SubtleCrypto RSA-PSS 2048/4096-bit Key Generator, Signer, and Signature Verifier."
+  },
+  {
+    "slug": "crypto-rsa-signature-verifier",
+    "title": "Web Crypto RSA Signature Verifier",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-rsa-signature-verifier.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-schnorr-secp256k1-verifier",
+    "title": "Web Crypto Schnorr secp256k1 Verifier",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-schnorr-secp256k1-verifier.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-schnorr-taproot-bip340-studio",
+    "title": "BIP",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-schnorr-taproot-bip340-studio.html",
+    "description": "100% Client-side BIP-340 Schnorr signature generator, Taproot tag derivation, and verification studio in pure JavaScript"
+  },
+  {
+    "slug": "crypto-secp256k1-ecdsa-signer",
+    "title": "Web Crypto SECP256k1 ECDSA Signer",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-secp256k1-ecdsa-signer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-secp256k1-keypair-generator",
+    "title": "Web Crypto EC Keypair Generator",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-secp256k1-keypair-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-secp256k1-keypair-studio",
+    "title": "Web Crypto SECP256k1 Keypair Generator",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-secp256k1-keypair-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-secp256k1-schnorr-bip340-verifier",
+    "title": "BIP340 Schnorr Signature Verifier",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-bip340-verifier.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-secp256k1-schnorr-signature-verifier",
+    "title": "Crypto Secp256k1 Schnorr Signature Verifier Studio",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-signature-verifier.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-secp256k1-schnorr-signature",
+    "title": "Web Crypto Secp256k1 Schnorr Signature Inspector",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-signature.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-secp256k1-schnorr-v10002",
+    "title": "Crypto Secp256k1 Schnorr Signature Studio v10002 | SA Labs",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v10002.html",
+    "description": "100% Client-Side Web Crypto Subtle Digest Secp256k1 Schnorr Digital Signature Studio v10002"
+  },
+  {
+    "slug": "crypto-secp256k1-schnorr-v11",
+    "title": "Crypto Secp256k1 Schnorr Signature v11 Studio",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v11.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-secp256k1-schnorr-v2002",
+    "title": "Crypto Secp256k1 Schnorr Signer Engine v2002 | SA Labs Developer Utilities",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v2002.html",
+    "description": "100% Client-Side Pure JS Secp256k1 Schnorr Signature and Verification Engine v2002. Zero server transmission."
+  },
+  {
+    "slug": "crypto-secp256k1-schnorr-v3001",
+    "title": "Crypto Secp256k1 Schnorr Verifier v3001",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v3001.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-secp256k1-schnorr-v4",
+    "title": "Crypto Secp256k1 Schnorr Signature v4 Studio",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v4.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-secp256k1-schnorr-v4500",
+    "title": "Web Crypto Secp256k1 Schnorr Studio v4500 | SA Labs",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v4500.html",
+    "description": "100% Client-Side Web Crypto Secp256k1 Schnorr Key & Hash Verification Studio v4500."
+  },
+  {
+    "slug": "crypto-secp256k1-schnorr-v50",
+    "title": "Crypto Secp256k1 Schnorr v50 Studio",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v50.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-secp256k1-schnorr-v5005",
+    "title": "Crypto Secp256k1 Schnorr Signature v5005 Studio",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-secp256k1-schnorr-v5005.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-secp256k1-signature-inspector",
+    "title": "Web Crypto SECP256k1 Signature Inspector",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-secp256k1-signature-inspector.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-shamir-secret-sharing-studio",
+    "title": "Shamir Secret Sharing & Key Splitting Studio",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-shamir-secret-sharing-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-slh-dsa-sphincs-signature-studio",
+    "title": "Crypto SLH",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-slh-dsa-sphincs-signature-studio.html",
+    "description": "100% Client-Side Pure Web Crypto API SLH-DSA (FIPS 205) Stateless Hash-Based Post-Quantum Digital Signature Studio."
+  },
+  {
+    "slug": "crypto-sphincs-plus-post-quantum-verifier",
+    "title": "Post",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-sphincs-plus-post-quantum-verifier.html",
+    "description": "100% Client-side stateless hash-based post-quantum signature structure inspector and format validator."
+  },
+  {
+    "slug": "crypto-sphincs-plus-sha256-post-quantum-prover",
+    "title": "SPHINCS+ Post",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-sphincs-plus-sha256-post-quantum-prover.html",
+    "description": "Client-side SPHINCS+ Post-Quantum Stateless Hash-Based Digital Signature Simulator & WOTS+ Key Prover using Web Crypto S"
+  },
+  {
+    "slug": "crypto-sphincs-post-quantum-studio",
+    "title": "SPHINCS+ Post",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-sphincs-post-quantum-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-sphincs-shake256-post-quantum-vault",
+    "title": "Crypto SPHINCS+ SHAKE",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-sphincs-shake256-post-quantum-vault.html",
+    "description": "Client-side Post-Quantum cryptography simulator and validator for stateless hash-based signature scheme SPHINCS+ SHAKE-2"
+  },
+  {
+    "slug": "crypto-subtle-aes-ctr-cipher",
+    "title": "Web Crypto SubtleCrypto AES",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-subtle-aes-ctr-cipher.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-subtle-digest-calculator",
+    "title": "Web Crypto SubtleDigest Multi",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-subtle-digest-calculator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-subtle-ecdsa-secp256k1-signer",
+    "title": "Web Crypto SubtleCrypto ECDSA Signer",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-subtle-ecdsa-secp256k1-signer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-subtle-hkdf-sha512-derivation",
+    "title": "Web Crypto HKDF SHA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-subtle-hkdf-sha512-derivation.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-subtle-pbkdf2-hmac-sha512",
+    "title": "Web Crypto SubtleCrypto PBKDF2 HMAC",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-subtle-pbkdf2-hmac-sha512.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-subtle-rsa-oaep-cipher",
+    "title": "Web Crypto RSA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-subtle-rsa-oaep-cipher.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-subtle-rsa-oaep-encryptor",
+    "title": "Web Crypto RSA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-subtle-rsa-oaep-encryptor.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-subtle-rsa-pss-signature-validator",
+    "title": "Web Crypto RSA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-subtle-rsa-pss-signature-validator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-subtle-rsa-pss-signer",
+    "title": "Web Crypto RSA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-subtle-rsa-pss-signer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-threshold-bls-aggregate-signature-studio",
+    "title": "Threshold BLS Multi",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-threshold-bls-aggregate-signature-studio.html",
+    "description": "100% 브라우저 로컬 구동 암호학 BLS 임계 다중 서명 & 집계 서명(Aggregate Signature) 생성 및 일괄 검증 스튜디오."
+  },
+  {
+    "slug": "crypto-x25519-ecdh-exchange",
+    "title": "X25519 Elliptic Curve Key Exchange Studio",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-x25519-ecdh-exchange.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-x25519-key-exchange",
+    "title": "Web Crypto X25519 Key Generator",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-x25519-key-exchange.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-x25519-keypair-generator",
+    "title": "Web Crypto X25519 Keypair Generator",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-x25519-keypair-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-x509-cert-parser",
+    "title": "X.509 Certificate & ASN.1 Inspector",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-x509-cert-parser.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "crypto-zk-bulletproofs-aggregation-verifier",
+    "title": "ZK Bulletproofs Aggregation & Range Proof Verifier",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-zk-bulletproofs-aggregation-verifier.html",
+    "description": "Zero-Knowledge Bulletproofs range proof aggregator and cryptographic verifier running 100% client-side with Web Crypto A"
+  },
+  {
+    "slug": "crypto-zk-bulletproofs-inner-product-verifier",
+    "title": "Web Crypto 영지식 불릿프루프스(Bulletproofs) 내적 증명 검증기 | SA Labs",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-zk-bulletproofs-inner-product-verifier.html",
+    "description": "순수 Web Crypto SubtleCrypto 및 BigInt 기반 제로지식 불릿프루프스(Bulletproofs) 내적 논증(Inner-Product Argument) 실시간 증명 및 검증 스튜디오입니다."
+  },
+  {
+    "slug": "crypto-zk-bulletproofs-range-verifier",
+    "title": "ZK Bulletproofs Range Proof Simulator & Verifier | Quanxs SA Labs",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-zk-bulletproofs-range-verifier.html",
+    "description": "Simulate Zero-Knowledge Bulletproofs range proofs (0 <= v < 2^n) client-side with Web Crypto SHA-512 and commitment veri"
+  },
+  {
+    "slug": "crypto-zk-pedersen-commitment-studio",
+    "title": "Zero",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-zk-pedersen-commitment-studio.html",
+    "description": "Client-side Zero-Knowledge Pedersen Commitment & Homomorphic Blinding Factor Studio. 100% Web Crypto API."
+  },
+  {
+    "slug": "crypto-zk-pedersen-hash-prover",
+    "title": "Web Crypto ZK Pedersen Hash & Commitment Prover | Quanxs SA Labs",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-zk-pedersen-hash-prover.html",
+    "description": "Client-side Zero-Knowledge Pedersen Commitment and cryptographic hash prover powered by Web Crypto API and BigInt ellipt"
+  },
+  {
+    "slug": "crypto-zk-pedersen-vector-commitment-studio",
+    "title": "Zero",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-zk-pedersen-vector-commitment-studio.html",
+    "description": "Client-side cryptographic Pedersen Vector Commitment and homomorphic range proof generator using Web Crypto API SHA-512 "
+  },
+  {
+    "slug": "crypto-zk-snark-groth16-verifier-pro",
+    "title": "ZK",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-zk-snark-groth16-verifier-pro.html",
+    "description": "순수 클라이언트 사이드 BN254 / Alt-bn128 타원곡선 바이리니어 페어링 및 Groth16 영지식 증명(Zero-Knowledge Proof) 무결성 검증기 스튜디오입니다."
+  },
+  {
+    "slug": "crypto-zk-snark-groth16-verifier-studio",
+    "title": "Zero",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-zk-snark-groth16-verifier-studio.html",
+    "description": "Client-side Zero-Knowledge Proof (Groth16/zk-SNARK) simulator and elliptic curve verification engine using Web Crypto AP"
+  },
+  {
+    "slug": "crypto-zk-snark-halo2-ipa-verifier-studio",
+    "title": "Halo2 ZK",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-zk-snark-halo2-ipa-verifier-studio.html",
+    "description": "Interactive Halo2 Zero-Knowledge Proof (ZK-SNARK) & Inner Product Argument (IPA) recursive polynomial commitment verifie"
+  },
+  {
+    "slug": "crypto-zk-snark-marlin-universal-verifier",
+    "title": "Marlin Universal zk",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-zk-snark-marlin-universal-verifier.html",
+    "description": "Universal preprocessing zk-SNARK verifier and Algebraic Holographic Proof (AHP) simulator using Web Crypto API. Free cli"
+  },
+  {
+    "slug": "crypto-zk-snark-plonk-verifier-pro",
+    "title": "ZK",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-zk-snark-plonk-verifier-pro.html",
+    "description": "Web Crypto API 및 순수 JavaScript 기반의 클라이언트 사이드 영지식 증명(ZK-SNARK PLONK) 다항식 커밋먼트 및 게이트 제약 검증기입니다."
+  },
+  {
+    "slug": "crypto-zk-snark-plonk-verifier-studio",
+    "title": "ZK",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-zk-snark-plonk-verifier-studio.html",
+    "description": "Zero-Knowledge PLONK polynomial gate commitment, permutation accumulator, and cryptographic proof verification studio. 1"
+  },
+  {
+    "slug": "crypto-zk-spseq-signature-verifier",
+    "title": "SPS",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-zk-spseq-signature-verifier.html",
+    "description": "Structure-Preserving Signatures on Equivalence Classes (SPS-EQ) & Zero-Knowledge Equivalence Verifier. 100% Client-Side "
+  },
+  {
+    "slug": "crypto-zk-stark-fri-verifier-studio",
+    "title": "ZK",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/crypto-zk-stark-fri-verifier-studio.html",
+    "description": "100% Pure Client-Side Zero-Knowledge STARK Fast Reed-Solomon Interactive Oracle Proof of Proximity (FRI) Prover and Veri"
+  },
+  {
+    "slug": "css-3d-glassmorphism-lighting-studio",
+    "title": "3D Glassmorphism & Normal Lighting Studio",
+    "category": "spatial_3d_cad",
+    "url": "https://salabs.quanxs.com/tools/css-3d-glassmorphism-lighting-studio.html",
+    "description": "Interactive 3D glassmorphism UI designer with real-time normal map raymarching lighting and CSS exporter."
+  },
+  {
+    "slug": "css-animation-generator",
+    "title": "CSS Animation & Keyframe Generator",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-animation-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-animation-keyframe-generator",
+    "title": "CSS Animation Keyframe Generator",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-animation-keyframe-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-backdrop-filter-generator",
+    "title": "CSS Backdrop Filter Generator",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-backdrop-filter-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-border-radius-generator",
+    "title": "CSS Border Radius & Shape Generator",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-border-radius-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-box-border-gradient-studio",
+    "title": "CSS Gradient Border Studio",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-box-border-gradient-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-box-border-radius-studio",
+    "title": "CSS Border Radius Studio",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-box-border-radius-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-box-filter-generator",
+    "title": "CSS Filter & Backdrop Studio",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-box-filter-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-box-model-grid",
+    "title": "CSS Box Model & Responsive Grid Visualizer",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-box-model-grid.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-box-shadow-3d",
+    "title": "CSS 3D Box Shadow Studio",
+    "category": "spatial_3d_cad",
+    "url": "https://salabs.quanxs.com/tools/css-box-shadow-3d.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-box-shadow-generator",
+    "title": "CSS Box Shadow Generator",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-box-shadow-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-box-shadow-inset-studio",
+    "title": "CSS Inset & Layered Box Shadow Studio",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-box-shadow-inset-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-box-shadow-neumorphic-generator",
+    "title": "Neumorphism CSS Box Shadow Generator",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-box-shadow-neumorphic-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-box-shadow-studio",
+    "title": "CSS Layered Box Shadow Studio",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-box-shadow-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-button-generator",
+    "title": "CSS Button & UI Component Styler",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-button-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-clamp-calculator",
+    "title": "CSS Clamp() Fluid Typography Calculator",
+    "category": "math_scientific",
+    "url": "https://salabs.quanxs.com/tools/css-clamp-calculator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-clip-path-generator",
+    "title": "CSS Clip",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-clip-path-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-clip-path-polygon-generator",
+    "title": "CSS Clip",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-clip-path-polygon-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-cubic-bezier-generator",
+    "title": "CSS Cubic Bezier Easing Generator",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-cubic-bezier-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-flexbox-playground",
+    "title": "CSS Flexbox Interactive Playground",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-flexbox-playground.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-font-typography-tester",
+    "title": "CSS Typography Tester",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-font-typography-tester.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-glassmorphism-generator",
+    "title": "UI Glassmorphism CSS Generator",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-glassmorphism-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-gradient-generator",
+    "title": "CSS Gradient Generator Studio",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-gradient-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-grid-layout-generator",
+    "title": "CSS Grid Layout Studio",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-grid-layout-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-js-minifier",
+    "title": "CSS & JS Code Minifier & Beautifier",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-js-minifier.html",
+    "description": "Minify and beautify CSS and JavaScript code in realtime with byte reduction analytics. Pure client-side tool by SA Labs."
+  },
+  {
+    "slug": "css-keyframe-animator",
+    "title": "CSS Keyframe Animation Builder",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-keyframe-animator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-mesh-gradient-generator",
+    "title": "CSS Mesh & Conic Gradient Studio",
+    "category": "spatial_3d_cad",
+    "url": "https://salabs.quanxs.com/tools/css-mesh-gradient-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-neomorphic-button-generator",
+    "title": "CSS Neumorphic UI Button Generator",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-neomorphic-button-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-scrollbar-customizer",
+    "title": "CSS Custom Scrollbar Studio",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-scrollbar-customizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-scrollbar-design-studio",
+    "title": "CSS Scrollbar Design Studio",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/css-scrollbar-design-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "css-text-shadow-generator",
+    "title": "CSS Text Shadow & Glow Generator",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/css-text-shadow-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "csv-delimiter-converter",
+    "title": "CSV Delimiter & Transposer",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/csv-delimiter-converter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "csv-excel-viewer",
+    "title": "CSV & Spreadsheet Table Viewer",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/csv-excel-viewer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "csv-json-transformer",
+    "title": "CSV to JSON & JSON to CSV Converter",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/csv-json-transformer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "curl-to-fetch",
+    "title": "cURL to Fetch / Axios / Python Converter",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/curl-to-fetch.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "diff-checker",
+    "title": "Unified Text Diff Checker",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/diff-checker.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "dns-lookup-record-parser",
+    "title": "DNS DoH Lookup & Record Inspector",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/dns-lookup-record-parser.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "dns-spf-dmarc-analyzer",
+    "title": "DNS SPF & DMARC Policy Syntax Analyzer",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/dns-spf-dmarc-analyzer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "finops-cloud-cost-quota-calculator",
+    "title": "FinOps Cloud Cost & Quota Estimator",
+    "category": "math_scientific",
+    "url": "https://salabs.quanxs.com/tools/finops-cloud-cost-quota-calculator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "flex-grid-playground",
+    "title": "CSS Flexbox & Grid Realtime Visual Playground",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/flex-grid-playground.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "graphql-query-formatter",
+    "title": "GraphQL Query Formatter",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/graphql-query-formatter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "hash-bcrypt-argon-tester",
+    "title": "Key Derivation & PBKDF2 Password Hash Studio",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/hash-bcrypt-argon-tester.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "hash-checksum-generator",
+    "title": "SHA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/hash-checksum-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "hash-checksum",
+    "title": "Cryptographic Hash Generator",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/hash-checksum.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "hash-cipher",
+    "title": "Cryptographic Hash & Digest Generator",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/hash-cipher.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "hash-generator",
+    "title": "Hash Generator & Checksum Validator",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/hash-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "hash-hmac-generator",
+    "title": "Cryptographic Hash & SHA Checksum Generator",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/hash-hmac-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "hash-sha512-keccak",
+    "title": "SHA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/hash-sha512-keccak.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "hex-hexdump-viewer",
+    "title": "Hexdump Inspector",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/hex-hexdump-viewer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-3d-quaternion-orbit-simulator",
+    "title": "3D Quaternion Orbit & Gimbal Simulator | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-3d-quaternion-orbit-simulator.html",
+    "description": "Interactive HTML5 Canvas 3D Quaternion Rotation and Orbital Mechanics Simulator. Calculate SLERP interpolation and preve"
+  },
+  {
+    "slug": "html-canvas-3d-wireframe-cube",
+    "title": "Canvas 3D Wireframe Cube Visualizer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-3d-wireframe-cube.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-boy-surface-immersion",
+    "title": "Boy's Surface 3D ASCII Immersion Studio | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-boy-surface-immersion.html",
+    "description": "Realtime Boy"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-calabi-yau-manifold",
+    "title": "3D Calabi",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-calabi-yau-manifold.html",
+    "description": "Real-time 6D Calabi-Yau compactification manifold projection to 3D ASCII matrix renderer with full parameter morphing."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-calabi-yau-quintic",
+    "title": "HTML5 Canvas ASCII 3D 칼라비",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-calabi-yau-quintic.html",
+    "description": "순수 브라우저 로컬 캔버스 및 6차원 칼라비-야우(Calabi-Yau) 퀸틱 다양체 3차원 투영 ASCII 실시간 렌더러입니다."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-catalan-surface",
+    "title": "3D Catalan Minimal Surface ASCII Studio",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-catalan-surface.html",
+    "description": "100% Client-Side Pure JS Mathematical Catalan Minimal Surface ASCII/Canvas 3D Projection Studio."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-clifford-manifold-knot",
+    "title": "3D 클리포드 다양체 매듭 ASCII 렌더러 | SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-clifford-manifold-knot.html",
+    "description": "순수 브라우저 Canvas 기반 4차원 클리포드 토러스 매듭(Clifford Torus Manifold Knot) 실시간 ASCII 투영 인터랙티브 시뮬레이터입니다."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-clifford-torus-knot",
+    "title": "ASCII 3D 클리퍼드 토러스 매듭 시뮬레이터 | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-clifford-torus-knot.html",
+    "description": "4차원 유클리드 공간 R4 상의 클리퍼드 토러스(Clifford Torus)를 3차원 및 2차원 ASCII 문자 행렬로 입체 사영하는 수학 그래픽 시뮬레이터"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-clifford-torus",
+    "title": "4D",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-clifford-torus.html",
+    "description": "Interactive 100% Client-Side 4D Clifford Torus stereographic projection rendered via ASCII art Canvas engine."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-costa-minimal-surface",
+    "title": "3D Costa Minimal Surface ASCII / Canvas Studio | SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-costa-minimal-surface.html",
+    "description": "Real-time 3D Costa Minimal Surface generator and mathematical topological renderer in ASCII and Canvas. 100% Client-Side"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-cube-renderer",
+    "title": "Canvas ASCII 3D Cube Renderer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube-renderer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-cube-rotation",
+    "title": "Canvas ASCII 3D Cube Rotation Engine",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube-rotation.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-cube",
+    "title": "3D Rotating ASCII Cube Studio",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-cube.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-dodecahedron-knot",
+    "title": "Canvas 3D ASCII Dodecahedron Knot",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-dodecahedron-knot.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-dodecahedron",
+    "title": "Canvas ASCII 3D Dodecahedron Renderer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-dodecahedron.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-enneper-surface",
+    "title": "3D ASCII Enneper Minimal Surface Studio | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-enneper-surface.html",
+    "description": "100% Client-Side Pure JS HTML5 Canvas Real-Time 3D ASCII Weierstrass-Enneper Minimal Surface & Parametric Topological Ra"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-gyroid-surface",
+    "title": "Mathematical ASCII 3D Gyroid Surface Raymarcher",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-gyroid-surface.html",
+    "description": "100% Client-Side Pure JS Mathematical ASCII 3D Gyroid Triply Periodic Minimal Surface Raymarcher by Quanxs SA Labs."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-henneberg-surface",
+    "title": "HTML5 Canvas ASCII 3D Henneberg Minimal Surface Studio | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-henneberg-surface.html",
+    "description": "Interactive 3D Henneberg non-orientable minimal surface visualizer rendered in real-time ASCII characters via HTML5 Canv"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-hopf-fibration",
+    "title": "3D ASCII Hopf Fibration Renderer | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-hopf-fibration.html",
+    "description": "Interactive 100% client-side 3D ASCII Hopf Fibration topology simulation and matrix projection engine."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-hopf-fibrator-manifold",
+    "title": "3D Hopf Fibrator Manifold Raymarcher",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-hopf-fibrator-manifold.html",
+    "description": "Realtime 4D-to-3D stereographic Hopf fibration torus manifold raymarcher and ASCII art generator. Pure client-side JavaS"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-hopf-torus-knot-pro",
+    "title": "3D 홉프 토러스 매듭 ASCII 렌더러 프로 | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-hopf-torus-knot-pro.html",
+    "description": "고차원 4D 홉프 파이브레이션(Hopf Fibration) 및 (p,q) 토러스 매듭의 3D 입체 투영 실시간 ASCII 아트 렌더링 엔진입니다."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-hopf-torus-knot",
+    "title": "3D ASCII Hopf Torus Knot Raymarcher | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-hopf-torus-knot.html",
+    "description": "Interactive 3D mathematical Hopf Torus Knot and 4D stereographic projection rendered via real-time ASCII raymarching eng"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-hyperbolic-paraboloid",
+    "title": "3D Hyperbolic Paraboloid Saddle Surface ASCII Simulator",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-hyperbolic-paraboloid.html",
+    "description": "Real-time mathematical 3D Hyperbolic Paraboloid (Saddle Surface) ASCII Wireframe simulator with interactive pitch, yaw, "
+  },
+  {
+    "slug": "html-canvas-ascii-3d-hyperbolic-polytope",
+    "title": "HTML5 Canvas ASCII 3D Hyperbolic Polytope",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-hyperbolic-polytope.html",
+    "description": "100% Client-Side Pure JS Canvas ASCII 4D Hyperbolic Polytope & Tesseract Raymarcher Projection Studio."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-hypercube",
+    "title": "Canvas ASCII 3D Hypercube Renderer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-hypercube.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-icosahedron",
+    "title": "Canvas ASCII 3D Icosahedron Renderer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-icosahedron.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-klein-bottle-cross-cap",
+    "title": "3D ASCII Klein Bottle & Cross",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-klein-bottle-cross-cap.html",
+    "description": "100% Client-Side Pure HTML5 Canvas 3D ASCII Non-Orientable Klein Bottle and Cross-Cap Manifold Visualizer with real-time"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-klein-bottle-knot",
+    "title": "ASCII 3D/4D Klein Bottle Knot Studio | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-klein-bottle-knot.html",
+    "description": "Real-time interactive 3D/4D ASCII Klein Bottle parametric wireframe renderer running client-side with full matrix rotati"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-klein-bottle-parametric-renderer",
+    "title": "3D Parametric Klein Bottle ASCII Renderer | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-klein-bottle-parametric-renderer.html",
+    "description": "Interactive client-side 3D parametric figure-8 Klein Bottle manifold ASCII raymarcher and wireframe topology engine."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-klein-bottle-pro",
+    "title": "4D",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-klein-bottle-pro.html",
+    "description": "Real-time 4D-to-3D Projected Klein Bottle ASCII Art Visualizer Studio with Pure Trigonometric Matrix. 100% Client-Side J"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-klein-bottle-raymarcher",
+    "title": "Canvas ASCII 3D Klein Bottle Raymarcher | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-klein-bottle-raymarcher.html",
+    "description": "순수 브라우저 HTML5 Canvas 4차원 클라인 병 ASCII 3D 투영 회전 렌더러"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-klein-quaternion-knot",
+    "title": "Canvas ASCII 3D Klein Quaternion Knot Visualizer | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-klein-quaternion-knot.html",
+    "description": "High-performance client-side 4D Klein bottle and quaternion knot parametric surface renderer in pure ASCII shader matrix"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-kummer-surface-quartic",
+    "title": "3D ASCII Kummer Surface Quartic Engine",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-kummer-surface-quartic.html",
+    "description": "Interactive 3D ASCII projection and raymarcher engine for Kummer Surface Quartic Manifold with 16 nodal singularities. 1"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-lorenz-attractor",
+    "title": "Canvas ASCII 3D 로렌츠 어트랙터 카오스 시뮬레이터 | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-lorenz-attractor.html",
+    "description": "HTML5 Canvas 및 ASCII 텍스트 매트릭스를 통해 로렌츠 카오스 끌개(Lorenz Attractor)의 3차원 비선형 동역학 궤적을 실시간 시뮬레이션하고 렌더링하는 순수 클라이언트 사이드 도구입니다."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-mandelbox-raytracer",
+    "title": "HTML5 Canvas ASCII 3D Mandelbox Raytracer Studio",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-mandelbox-raytracer.html",
+    "description": "Real-time client-side raymarching engine for 3D Mandelbox fractal rendering in dynamic ASCII text matrix with quaternion"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-mandelbulb-raymarcher",
+    "title": "Canvas ASCII 3D Mandelbulb Fractal Raymarcher | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-mandelbulb-raymarcher.html",
+    "description": "100% Client-Side 3D Mandelbulb Fractal Raymarcher rendered in real-time ASCII characters with rotation and power paramet"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-menger-sponge",
+    "title": "ASCII 3D Menger Sponge Raymarcher | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-menger-sponge.html",
+    "description": "Real-time interactive ASCII 3D Menger Sponge Fractal Raymarcher rendered in HTML5 Canvas with custom matrix character sh"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-mobius-strip",
+    "title": "Canvas ASCII 3D Möbius Strip Renderer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-mobius-strip.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-octahedron-knot-v10002",
+    "title": "HTML5 Canvas ASCII 3D Octahedron Knot Studio v10002 | SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v10002.html",
+    "description": "100% Client-Side Interactive HTML5 Canvas ASCII 3D Octahedron Knot Studio v10002"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-octahedron-knot-v11",
+    "title": "Canvas ASCII 3D Octahedron Knot v11",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v11.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-octahedron-knot-v3001",
+    "title": "Canvas ASCII 3D Octahedron Knot v3001",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v3001.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-octahedron-knot-v40",
+    "title": "HTML5 Canvas ASCII 3D Octahedron Knot Engine v40 | SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v40.html",
+    "description": "100% Client-Side HTML5 Canvas 3D ASCII Octahedron Knot Particle Simulation and Raytraced Wireframe Studio."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-octahedron-knot-v4500",
+    "title": "Web Canvas ASCII 3D Octahedron Knot Engine v4500 | SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v4500.html",
+    "description": "100% Client-Side Web Canvas ASCII 3D Octahedron Knot Render Engine v4500 Studio."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-octahedron-knot-v5",
+    "title": "Canvas ASCII 3D Octahedron Knot v5",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v5.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-octahedron-knot-v5005",
+    "title": "Canvas ASCII 3D Octahedron Knot v5005",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot-v5005.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-octahedron-knot",
+    "title": "Canvas 3D ASCII Octahedron Knot Visualizer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-knot.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-octahedron-spin",
+    "title": "Canvas ASCII 3D Octahedron Wireframe",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-spin.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-octahedron-studio",
+    "title": "Canvas 3D Octahedron Wireframe Studio",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-octahedron-wireframe",
+    "title": "Canvas ASCII 3D Wireframe Octahedron",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron-wireframe.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-octahedron",
+    "title": "Canvas ASCII 3D Spinning Octahedron",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-octahedron.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-pyramid-renderer",
+    "title": "Canvas ASCII 3D Wireframe Pyramid Renderer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-pyramid-renderer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-pyramid-wireframe",
+    "title": "Canvas ASCII 3D Wireframe Pyramid",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-pyramid-wireframe.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-quaternion-julia-fractal",
+    "title": "4D Quaternion Julia Fractal ASCII Raymarcher Studio",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-quaternion-julia-fractal.html",
+    "description": "100% Client-Side Pure JavaScript Real-Time 4D Quaternion Julia Fractal Distance-Estimator Raymarcher with ASCII Shading "
+  },
+  {
+    "slug": "html-canvas-ascii-3d-quaternion-torus",
+    "title": "Canvas ASCII 3D Quaternion Torus Knot | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-quaternion-torus.html",
+    "description": "Client-side interactive 3D Quaternion Torus Knot renderer with ASCII shader simulation and real-time matrix transformati"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-roman-surface-immersion",
+    "title": "3D ASCII Steiner's Roman Surface Immersion Studio | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-roman-surface-immersion.html",
+    "description": "Realtime 3D ASCII topological immersion simulator of Steiner"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-rossler-attractor",
+    "title": "HTML5 Canvas ASCII 3D Rössler Strange Attractor Chaos Visualizer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-rossler-attractor.html",
+    "description": "Interactive 3D ASCII Rössler Strange Attractor chaos dynamic system simulation with parameter modulation and Lyapunov ph"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-schwarz-p-minimal-surface",
+    "title": "3D ASCII Schwarz P Minimal Surface Realtime Raymarcher | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-schwarz-p-minimal-surface.html",
+    "description": "100% 브라우저 로컬 구동 HTML5 Canvas 3D ASCII Schwarz P 극소곡면 실시간 레이마처 & 회전 렌더러."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-seifert-surface-knot",
+    "title": "Canvas ASCII 3D Seifert Surface & Knot Renderer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-seifert-surface-knot.html",
+    "description": "Interactive 3D Seifert Surface and Knot geometric visualizer rendered directly in dynamic high-density ASCII art with qu"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-sphere",
+    "title": "Canvas ASCII 3D Wireframe Sphere",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-sphere.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-superquadric-ellipsoid",
+    "title": "Canvas 3D Superquadric Ellipsoid ASCII Engine",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-superquadric-ellipsoid.html",
+    "description": "100% Client-Side Pure HTML5 Canvas 3D Superquadric Ellipsoid ASCII Wireframe & Shading Engine. Parametric geometry and E"
+  },
+  {
+    "slug": "html-canvas-ascii-3d-tetrahedron",
+    "title": "3D ASCII Tetrahedron Wireframe Render Engine",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-tetrahedron.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-torus-knot-pro",
+    "title": "Canvas ASCII 3D Torus Knot & Lissajous Studio Pro | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot-pro.html",
+    "description": "Real-time 3D parametric Torus Knot and Lissajous curve ASCII rendering engine with client-side matrix transforms."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-torus-knot-renderer",
+    "title": "Canvas ASCII 3D Torus Knot Renderer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot-renderer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-torus-knot",
+    "title": "Canvas ASCII 3D Torus Knot Visualizer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus-knot.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-3d-torus",
+    "title": "Canvas ASCII 3D Torus Donut Engine",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-3d-torus.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-art-editor",
+    "title": "Canvas ASCII Art Editor",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-art-editor.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-art-studio",
+    "title": "Canvas Image to ASCII Art Converter",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-art-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-avatar-generator",
+    "title": "Canvas Pixelated ASCII Avatar Studio",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-avatar-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-banner-studio",
+    "title": "Canvas Big ASCII Banner Studio",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-banner-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-camera-feed",
+    "title": "Canvas ASCII Live Camera Feed",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-camera-feed.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-contour-map",
+    "title": "Canvas ASCII Contour Map Generator",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-contour-map.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-donut",
+    "title": "3D Animated ASCII Donut",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-donut.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-face-art",
+    "title": "Canvas Face Portrait to ASCII Art Studio",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-face-art.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-flower-matrix",
+    "title": "Canvas ASCII Flower Matrix Generator",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-flower-matrix.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-fluid-sim",
+    "title": "Canvas ASCII Wave & Fluid Dynamics Visualizer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-fluid-sim.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-hyperdimensional-tesseract",
+    "title": "ASCII Hyperdimensional 4D Tesseract Projection",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-hyperdimensional-tesseract.html",
+    "description": "100% Client-Side ASCII 4D Hypercube Tesseract Projection & 4D Rotation Simulator using HTML5 Canvas & Pure JavaScript ma"
+  },
+  {
+    "slug": "html-canvas-ascii-isometric-city-renderer",
+    "title": "ASCII 3D Isometric City & Matrix Grid Renderer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-isometric-city-renderer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-isometric-matrix-renderer",
+    "title": "Canvas ASCII Isometric 3D Matrix Renderer | Quanxs SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-isometric-matrix-renderer.html",
+    "description": "Pure client-side HTML5 Canvas ASCII Isometric 3D wireframe and volume renderer. Real-time shading and projection with ze"
+  },
+  {
+    "slug": "html-canvas-ascii-landscape-3d",
+    "title": "3D Terrain ASCII Landscape Renderer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-3d.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-landscape-generator",
+    "title": "Canvas ASCII Landscape Generator",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-landscape-studio",
+    "title": "Canvas ASCII Procedural Landscape Renderer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-landscape-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-matrix-rain",
+    "title": "Canvas Matrix Digital Rain Simulator",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-matrix-rain.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-pyramid-3d",
+    "title": "Canvas 3D ASCII Pyramid Visualizer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-pyramid-3d.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-radar-sweep",
+    "title": "Canvas ASCII Radar Sweep & Sonar",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-radar-sweep.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-raycaster",
+    "title": "Canvas ASCII Raycaster 3D Engine",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-raycaster.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-vector-field",
+    "title": "Canvas ASCII Vector Flow Field Visualizer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-vector-field.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-vector-font-studio",
+    "title": "Canvas Monospace Vector Font Studio",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-vector-font-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-video-player",
+    "title": "Canvas Stream ASCII Art Player",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-video-player.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-ascii-waveform",
+    "title": "Canvas Monoscope ASCII Waveform",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-ascii-waveform.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-bezier-curve-studio",
+    "title": "Interactive Bézier Curve Studio & Code Generator",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-bezier-curve-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-chart-generator",
+    "title": "HTML5 Canvas Chart Generator",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-chart-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-color-palette-extractor",
+    "title": "HTML5 Canvas Image Color Palette & Dominant Color Extractor | SA Labs",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-color-palette-extractor.html",
+    "description": "100% Client-side HTML5 Canvas pixel sampling engine for extracting dominant color palettes and HEX/RGB/HSL codes."
+  },
+  {
+    "slug": "html-canvas-color-picker",
+    "title": "HTML Canvas Color Picker & Palette Extractor",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-color-picker.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-color-quantizer",
+    "title": "Canvas Image Color Quantizer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-color-quantizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-contrast-stretching",
+    "title": "Canvas Contrast Stretching Studio",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-contrast-stretching.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-crop-rotate-studio",
+    "title": "Canvas Image Rotate & Flip Studio",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-crop-rotate-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-dither-filter-studio",
+    "title": "Canvas Floyd",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-dither-filter-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-drawing-pad",
+    "title": "HTML5 Canvas Sketch & Drawing Pad",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-drawing-pad.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-glitch-art-studio",
+    "title": "HTML Canvas Glitch Art Generator",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-glitch-art-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-grid-pattern-generator",
+    "title": "Canvas Seamless Grid & Pattern Studio",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-grid-pattern-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-histogram-analyzer",
+    "title": "Canvas Image RGB Histogram Analyzer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-histogram-analyzer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-image-filters",
+    "title": "HTML Canvas Image Filter Studio",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-image-filters.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-particle-generator",
+    "title": "HTML Canvas Particle Generator",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-particle-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-performance-fps-meter",
+    "title": "Canvas 60FPS Render Performance & Frame Meter",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-performance-fps-meter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-pixel-art-editor",
+    "title": "Canvas Pixel Art Grid Editor",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-pixel-art-editor.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-retro-crt-shader",
+    "title": "Canvas Retro CRT Scanline Shader",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-retro-crt-shader.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-signature-generator",
+    "title": "Canvas Signature Generator",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-signature-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-signature-pad",
+    "title": "HTML5 Canvas Digital Signature Pad",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-signature-pad.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-sobel-edge-detector",
+    "title": "Canvas Sobel Edge Detector",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-sobel-edge-detector.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-sobel-edge-studio",
+    "title": "Canvas Sobel Edge Detection Studio",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-sobel-edge-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-sprite-sheet-animator",
+    "title": "Canvas Sprite Sheet Animator",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-sprite-sheet-animator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-threshold-binarizer",
+    "title": "Canvas Image Threshold Binarizer",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-threshold-binarizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-canvas-voronoi-diagram-generator",
+    "title": "Interactive Voronoi & Delaunay Diagram Studio",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-voronoi-diagram-generator.html",
+    "description": "100% Client-Side Pure HTML5 Canvas Voronoi Diagram & Delaunay Mesh Generator. Real-time metric calculations (Euclidean, "
+  },
+  {
+    "slug": "html-canvas-watermark-studio",
+    "title": "HTML Canvas Watermark & Stamp Studio",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/html-canvas-watermark-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-entity-diff-checker",
+    "title": "HTML Entity Encoder / Decoder & Text Diff Checker",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/html-entity-diff-checker.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-entity-encoder",
+    "title": "HTML Entity Encoder & Unescaper",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/html-entity-encoder.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-formatting-sanitizer",
+    "title": "HTML Formatting Sanitizer & DOM Cleaner",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/html-formatting-sanitizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-markdown-converter",
+    "title": "HTML to Markdown Converter",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/html-markdown-converter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-meta-og-generator",
+    "title": "OpenGraph & Social Meta Tag Generator",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/html-meta-og-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "html-table-json-converter",
+    "title": "HTML Table to JSON / CSV Converter",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/html-table-json-converter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "http-request-builder",
+    "title": "HTTP Request Builder",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/http-request-builder.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "http-status-codes",
+    "title": "HTTP Status Code Reference & Search",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/http-status-codes.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "image-color-picker",
+    "title": "Image Color Picker & Eyedropper",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/image-color-picker.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "image-resizer-cropper",
+    "title": "Image Resizer & Aspect Ratio Calculator",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/image-resizer-cropper.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "index",
+    "title": "Quanxs SA Labs",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/index.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "ip-geolocation-lookup",
+    "title": "Browser Client & Network Inspector",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/ip-geolocation-lookup.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-array-flat-dedupe",
+    "title": "JS Array Flattener & Deduplicator",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-array-flat-dedupe.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-ast-code-complexity-analyzer",
+    "title": "JS Code Cyclomatic Complexity Analyzer",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-ast-code-complexity-analyzer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-ast-parser-studio",
+    "title": "JS AST & Token Parser Studio",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-ast-parser-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-base64-url-safe-encoder",
+    "title": "Base64URL Safe Encoder & Decoder",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/js-base64-url-safe-encoder.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-benchmarking-timer",
+    "title": "JS Code Benchmarking & Execution Timer",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-benchmarking-timer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-canvas-gradient-studio",
+    "title": "Canvas Gradient Mesh Studio",
+    "category": "image_graphics",
+    "url": "https://salabs.quanxs.com/tools/js-canvas-gradient-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-data-structure-visualizer",
+    "title": "JS Stack & Queue Visualizer",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-data-structure-visualizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-event-emitter-playground",
+    "title": "JS Custom Event Playground",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-event-emitter-playground.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-event-key-code",
+    "title": "JavaScript Event KeyCode Inspector",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-event-key-code.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-event-loop-visualizer",
+    "title": "JS Event Loop Call Stack & Microtask Visualizer",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-event-loop-visualizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-intersection-observer-studio",
+    "title": "JS IntersectionObserver Visualizer & Studio",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-intersection-observer-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-localstorage-session-manager",
+    "title": "JS LocalStorage Inspector",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-localstorage-session-manager.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-minifier-formatter",
+    "title": "JS Code Formatter & Tokenizer",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-minifier-formatter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-object-diff-checker",
+    "title": "JS Object & Key Diff Checker",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/js-object-diff-checker.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-performance-profiler-studio",
+    "title": "JS Client",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-performance-profiler-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-promise-async-visualizer",
+    "title": "JS Promise & Async Flow Visualizer",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-promise-async-visualizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-regex-code-generator",
+    "title": "JS Regex Code Generator",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-regex-code-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-regex-escape-tool",
+    "title": "JS RegEx String Escaper",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-regex-escape-tool.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-regexp-visualizer",
+    "title": "JS RegEx Tester & Syntax Highlighter",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-regexp-visualizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "js-web-worker-concurrency-benchmark",
+    "title": "Multi",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-web-worker-concurrency-benchmark.html",
+    "description": "100% Client-Side Pure JavaScript Multi-Thread Web Worker Parallel Computing & Concurrency Benchmarking Studio."
+  },
+  {
+    "slug": "js-web-worker-playground",
+    "title": "Web Worker Threading Playground",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/js-web-worker-playground.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "json-diff",
+    "title": "JSON Diff & Structure Comparison",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/json-diff.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "json-escape-unescape",
+    "title": "JSON String Escaper & Unescaper",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/json-escape-unescape.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "json-formatter-beautifier",
+    "title": "JSON Formatter & Tree Inspector",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/json-formatter-beautifier.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "json-path-finder",
+    "title": "JSON Path Finder &amp; Evaluator",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/json-path-finder.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "json-schema-generator",
+    "title": "JSON to JSON Schema Generator",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/json-schema-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "json-schema-validator",
+    "title": "JSON Schema Generator & Validator",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/json-schema-validator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "json-to-csv-exporter",
+    "title": "JSON to CSV & Excel Exporter",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/json-to-csv-exporter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "json-yaml-formatter",
+    "title": "JSON / YAML Formatter",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/json-yaml-formatter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jules-3d-audio-spectrum-synthesizer",
+    "title": "3D Audio Spectrum Synthesizer",
+    "category": "spatial_3d_cad",
+    "url": "https://salabs.quanxs.com/tools/jules-3d-audio-spectrum-synthesizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jules-3d-master-studio",
+    "title": "Jules 3D Master Studio",
+    "category": "spatial_3d_cad",
+    "url": "https://salabs.quanxs.com/tools/jules-3d-master-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jules-3d-vector-topology-graph",
+    "title": "Jules 3D Vector Topology Graph v3.0",
+    "category": "spatial_3d_cad",
+    "url": "https://salabs.quanxs.com/tools/jules-3d-vector-topology-graph.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jules-agentic-commerce-dashboard",
+    "title": "Jules Agentic Commerce Dashboard",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/jules-agentic-commerce-dashboard.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jules-ai-qa-cross-parsing-auditor",
+    "title": "SAPQ v1.0",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/jules-ai-qa-cross-parsing-auditor.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jules-flagship-3d-engine-dashboard",
+    "title": "Quanxs SA Labs",
+    "category": "spatial_3d_cad",
+    "url": "https://salabs.quanxs.com/tools/jules-flagship-3d-engine-dashboard.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jules-json-tree-visualizer",
+    "title": "JSON Tree Visualizer",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/jules-json-tree-visualizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jules-master-3d-spatial-engine-v1-2",
+    "title": "Jules Master 3D Spatial Engine",
+    "category": "spatial_3d_cad",
+    "url": "https://salabs.quanxs.com/tools/jules-master-3d-spatial-engine-v1-2.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jules-master-3d-spatial-engine-v5",
+    "title": "Jules Master 3D Spatial Engine",
+    "category": "spatial_3d_cad",
+    "url": "https://salabs.quanxs.com/tools/jules-master-3d-spatial-engine-v5.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jules-master-3d-spatial-engine",
+    "title": "Jules Master 3D Spatial Engine",
+    "category": "spatial_3d_cad",
+    "url": "https://salabs.quanxs.com/tools/jules-master-3d-spatial-engine.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jules-quantum-relativity-3d-studio",
+    "title": "[Jules] Quantum Relativity 3D WebGL Studio",
+    "category": "spatial_3d_cad",
+    "url": "https://salabs.quanxs.com/tools/jules-quantum-relativity-3d-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jwt-claims-inspector-debugger",
+    "title": "JWT Claims Inspector & Expiration Debugger",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/jwt-claims-inspector-debugger.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jwt-debugger-verifier",
+    "title": "JWT Token Debugger & Inspector",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/jwt-debugger-verifier.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jwt-payload-editor",
+    "title": "JWT Claims & Payload Editor",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/jwt-payload-editor.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jwt-rs256-key-generator",
+    "title": "JWT RS256 Keypair Generator",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/jwt-rs256-key-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jwt-rs256-signature-validator",
+    "title": "JWT Signature Validator Studio",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/jwt-rs256-signature-validator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jwt-signer-inspector",
+    "title": "JWT Token Signer & RSA / ECDSA Keypair Generator",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/jwt-signer-inspector.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jwt-signer",
+    "title": "JWT Signer & Inspector",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/jwt-signer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "jwt-token-playground",
+    "title": "JWT Signer & RS256/HS256 Verification Playground",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/jwt-token-playground.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "lorem-ipsum-generator",
+    "title": "Lorem Ipsum Generator",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/lorem-ipsum-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "lorem-markdown-generator",
+    "title": "Lorem Ipsum Markdown Generator",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/lorem-markdown-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "markdown-chart-generator",
+    "title": "Markdown Canvas Chart Generator",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/markdown-chart-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "markdown-html-previewer",
+    "title": "Markdown to HTML Realtime Previewer",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/markdown-html-previewer.html",
+    "description": "Convert Markdown to HTML with realtime live preview, syntax highlighting, and 1-click HTML code export. Pure client-side"
+  },
+  {
+    "slug": "markdown-slides-presenter",
+    "title": "Markdown Slides Presenter",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/markdown-slides-presenter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "markdown-table-generator",
+    "title": "Markdown Table Generator",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/markdown-table-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "markdown-to-html-converter",
+    "title": "Markdown to HTML Clean Converter",
+    "category": "frontend_web",
+    "url": "https://salabs.quanxs.com/tools/markdown-to-html-converter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "markdown-to-pdf-exporter",
+    "title": "Markdown to Print & PDF Exporter",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/markdown-to-pdf-exporter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "markdown-toc-generator",
+    "title": "Markdown Table of Contents (TOC) Generator",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/markdown-toc-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "meta-tag-generator",
+    "title": "OpenGraph & Meta Tag Generator",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/meta-tag-generator.html",
+    "description": "${desc}"
+  },
+  {
+    "slug": "micro-perf-schema-engine",
+    "title": "Micro",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/micro-perf-schema-engine.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "micro-performance-optimizer",
+    "title": "Micro",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/micro-performance-optimizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "micro-performance-schema-engine-v2",
+    "title": "Micro",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/micro-performance-schema-engine-v2.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "micro-performance-schema-engine-v3",
+    "title": "Micro",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/micro-performance-schema-engine-v3.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "micro-performance-schema-engine-v4",
+    "title": "Option NX: Micro",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/micro-performance-schema-engine-v4.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "micro-performance-schema-engine-v5",
+    "title": "Micro",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/micro-performance-schema-engine-v5.html",
+    "description": "Micro-Performance Schema Engine v5 for high-efficiency structured data parsing."
+  },
+  {
+    "slug": "micro-performance-schema-engine",
+    "title": "Micro",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/micro-performance-schema-engine.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "next-gen-client-utility-engine",
+    "title": "Next Generation Client",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/next-gen-client-utility-engine.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "next-gen-client-utility",
+    "title": "Next",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/next-gen-client-utility.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "next-gen-utility-engine",
+    "title": "Next Generation Client",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/next-gen-utility-engine.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "number-base-converter",
+    "title": "Number Base Converter (Bin, Oct, Dec, Hex)",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/number-base-converter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "polyglot-code-graph-analyzer",
+    "title": "Polyglot Code Semantic Graph Analyzer",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/polyglot-code-graph-analyzer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "qr-barcode-generator",
+    "title": "QR Code & Barcode Generator",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/qr-barcode-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "quantum-trajectory-matrix-visualizer",
+    "title": "Quantum Robotics Trajectory Matrix Visualizer",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/quantum-trajectory-matrix-visualizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "regex-batch-extractor",
+    "title": "Regex Batch Replace &amp; Text Extractor",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/regex-batch-extractor.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "regex-cheat-sheet-tester",
+    "title": "RegEx Cheat Sheet & Live Pattern Builder",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/regex-cheat-sheet-tester.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "regex-tester",
+    "title": "RegEx Realtime Tester & Text Byte Counter",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/regex-tester.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "regex-visualizer",
+    "title": "Regex Match Visualizer & Highlighting Inspector",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/regex-visualizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "sacm-coder-middleware-studio",
+    "title": "SACM Autonomous Coder Studio",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/sacm-coder-middleware-studio.html",
+    "description": "SACM Polyglot Coder & Self-Debugging Middleware Studio. Generate, parse, and debug C++, Python, Rust, and Web3 code in r"
+  },
+  {
+    "slug": "sair-chrome-extension-source-hub",
+    "title": "SAIR Multi",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/sair-chrome-extension-source-hub.html",
+    "description": "Complete open source Manifest V3 source code for SAIR 1-Click Multi-AI Auto Injector Chrome Extension. Supports Slate.js"
+  },
+  {
+    "slug": "sair-input-permutation-engine",
+    "title": "SAIR 자연어 입력 경우의 수 분석 엔진 | SA Labs",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/sair-input-permutation-engine.html",
+    "description": "SAIR 자연어 텍스트박스 입력 경우의 수 순열 분석 및 7대 수학 공리 매핑 정적 클라이언트 엔진"
+  },
+  {
+    "slug": "sair-nlp-math-axiom-debugger-v2",
+    "title": "SAIR 자연어 수학 공리 컴파일 디버거 Pro | Quanxs SA Labs",
+    "category": "math_scientific",
+    "url": "https://salabs.quanxs.com/tools/sair-nlp-math-axiom-debugger-v2.html",
+    "description": "Stella Abstraction Intermediate Representation (SA-IR) 7대 수학 공리 매핑 및 자연어 구문 분석 컴파일러 디버깅 스튜디오입니다."
+  },
+  {
+    "slug": "sair-nlp-math-axiom-debugger",
+    "title": "SAIR 7대 수학 공리 자연어 컴파일러 인터랙티브 디버거 | SA Labs",
+    "category": "math_scientific",
+    "url": "https://salabs.quanxs.com/tools/sair-nlp-math-axiom-debugger.html",
+    "description": "SAIR 자연어-수학 공리 매핑 컴파일러 AST 파서 및 중간 표현식 디버거"
+  },
+  {
+    "slug": "sair-text-permutation-matrix-studio",
+    "title": "SAIR Universal Text Injection Matrix Studio | SA Labs",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/sair-text-permutation-matrix-studio.html",
+    "description": "SAIR Chrome Extension Universal Textbox & Rich Editor Input Injection Permutation Matrix Studio (30+ Verified Frameworks"
+  },
+  {
+    "slug": "salabs-3d-ai-nukki-mesh-master",
+    "title": "SALabs AI Generative 3D Spatial Reconstruction Master v10.4 | SALabs AI",
+    "category": "spatial_3d_cad",
+    "url": "https://salabs.quanxs.com/tools/salabs-3d-ai-nukki-mesh-master.html",
+    "description": "SALabs AI Generative Poisson-RBF Texture Inpainting & 360° Bilateral Watertight Solid 3D Mesh Reconstruction Engine"
+  },
+  {
+    "slug": "salabs-compute-credit-checkout",
+    "title": "SA Labs",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/salabs-compute-credit-checkout.html",
+    "description": "SA Labs Official Checkout Page"
+  },
+  {
+    "slug": "salabs-flagship-3d-spatial-workbench",
+    "title": "Quanxs Sovereign 3D Spatial & Agentic Intelligence Workbench",
+    "category": "spatial_3d_cad",
+    "url": "https://salabs.quanxs.com/tools/salabs-flagship-3d-spatial-workbench.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "schema-jsonld-validator-studio",
+    "title": "Schema.org JSON",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/schema-jsonld-validator-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "schema-micro-optimizer",
+    "title": "Micro",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/schema-micro-optimizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "screen-resolution-dpi-checker",
+    "title": "Screen Resolution & Display DPI Checker",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/screen-resolution-dpi-checker.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "sha256-hash-calculator",
+    "title": "SHA",
+    "category": "security_crypto",
+    "url": "https://salabs.quanxs.com/tools/sha256-hash-calculator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "sql-formatter",
+    "title": "Client",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/sql-formatter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "sql-query-builder",
+    "title": "Visual SQL Query Builder",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/sql-query-builder.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "sql-query-formatter-linter",
+    "title": "SQL Query Formatter & Linter",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/sql-query-formatter-linter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "string-case-converter",
+    "title": "String Case Transformer",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/string-case-converter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "subnet-cidr-calculator",
+    "title": "IPv4 Subnet Calculator & CIDR Inspector",
+    "category": "math_scientific",
+    "url": "https://salabs.quanxs.com/tools/subnet-cidr-calculator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "svg-image-optimizer",
+    "title": "SVG & Image Optimizer / WebP Converter",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/svg-image-optimizer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "svg-path-bounding-box",
+    "title": "SVG Path Bounding Box Calculator",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/svg-path-bounding-box.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "svg-path-viewer",
+    "title": "SVG Path Inspector & Visualizer",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/svg-path-viewer.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "svg-vector-editor",
+    "title": "SVG Vector Editor & Path Inspector",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/svg-vector-editor.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "text-case-converter-slug",
+    "title": "Text Case Converter & Slugifier",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/text-case-converter-slug.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "text-case-slug-generator",
+    "title": "Text Case & URL Slug Generator",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/text-case-slug-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "text-diff-checker",
+    "title": "Text Diff Checker & Line Comparator",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/text-diff-checker.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "time-zone-converter-clock",
+    "title": "Multi",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/time-zone-converter-clock.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "toss-payments-checkout",
+    "title": "Toss Payments Native SDK Checkout Sandbox",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/toss-payments-checkout.html",
+    "description": "Toss Payments Native JS SDK Integration & Testing Sandbox Tool for SA Labs Sovereign Compute."
+  },
+  {
+    "slug": "totp-2fa-authenticator",
+    "title": "TOTP 2FA Authenticator & Token Generator",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/totp-2fa-authenticator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "units-px-rem-converter",
+    "title": "CSS Units PX REM Converter",
+    "category": "math_scientific",
+    "url": "https://salabs.quanxs.com/tools/units-px-rem-converter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "unix-timestamp-converter",
+    "title": "Unix Timestamp Converter",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/unix-timestamp-converter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "url-encoder-parser",
+    "title": "URL Encoder / Decoder & Query String Parser",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/url-encoder-parser.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "user-agent-parser",
+    "title": "User Agent Parser & Device Detector",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/user-agent-parser.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "uuid-secret-generator",
+    "title": "UUID v4 Generator & Cryptographic Password / Key Generator",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/uuid-secret-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "uuid-v7-generator",
+    "title": "UUID v7 Time",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/uuid-v7-generator.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "web-audio-equalizer-parametric-studio",
+    "title": "Realtime Web Audio 10",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/web-audio-equalizer-parametric-studio.html",
+    "description": "100% Client-side Web Audio API BiquadFilter 10-band equalizer studio and FFT frequency visualizer."
+  },
+  {
+    "slug": "web-speech-synthesis-studio",
+    "title": "Web Speech Synthesis Studio",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/web-speech-synthesis-studio.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "web3-evm-wallet-checker",
+    "title": "Web3 EVM Wallet & Checksum Inspector",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/web3-evm-wallet-checker.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "websocket-sse-debugger",
+    "title": "WebSocket & SSE Realtime Debugger",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/websocket-sse-debugger.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "websocket-sse-tester",
+    "title": "WebSocket & SSE Client Realtime Tester",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/websocket-sse-tester.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "x402-http-402-payment-gateway",
+    "title": "x402 Web3 M2M Gateway",
+    "category": "general_utilities",
+    "url": "https://salabs.quanxs.com/tools/x402-http-402-payment-gateway.html",
+    "description": "x402 HTTP 402 Web3 Micro-Payment Gateway for AI Agents"
+  },
+  {
+    "slug": "xml-json-converter",
+    "title": "XML JSON Document Converter",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/xml-json-converter.html",
+    "description": "100% Client-side pure JS utility tool."
+  },
+  {
+    "slug": "yaml-json-converter",
+    "title": "YAML JSON Bi",
+    "category": "text_data_parsing",
+    "url": "https://salabs.quanxs.com/tools/yaml-json-converter.html",
+    "description": "100% Client-side pure JS utility tool."
+  }
+]
