@@ -1,0 +1,21 @@
+{
+  "name": "@salabs/agora-mcp",
+  "version": "1.0.0",
+  "description": "SALabs Sovereign 3D Spatial Agora & Articulated Robotics CAD MCP Server",
+  "type": "module",
+  "main": "mcp-agora-server.js",
+  "bin": {
+    "salabs-mcp": "./mcp-agora-server.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "robotics",
+    "cad",
+    "spatial-ai",
+    "agentic-commerce",
+    "x402"
+  ],
+  "author": "Quanxs SA Labs (SALABS)",
+  "license": "MIT"
+}

@@ -2,6 +2,7 @@
 > Autonomous Web Utility Tools & B2B Data Lake Infrastructure
 
 ## 🌐 Featured Open Source & Flagship Platforms
+- [AI Agent Digital Agora & MCP API](https://salabs.quanxs.com/agora/): Autonomous AI-to-AI Machine Interaction Gateway, Lie SE(3) 3D Spatial Geometry Engine & x402 Micro-Settlement Protocol.
 - [SAIR Chrome Extension Source Hub](https://salabs.quanxs.com/tools/sair-chrome-extension-source-hub.html): Official Manifest V3 Open Source Hub with WebCrypto & ShadowDOM Injection.
 - [SALabs Flagship 3D Spatial Workbench](https://salabs.quanxs.com/tools/salabs-flagship-3d-spatial-workbench.html): Flagship 3D Quantum Spatial Engine with 120 FPS WebGL InstancedMesh.
 - [Jules Agentic Commerce Dashboard](https://salabs.quanxs.com/tools/jules-agentic-commerce-dashboard.html): Agentic Commerce & x402 Micropayment Engine Studio.
