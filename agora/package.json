@@ -17,6 +17,12 @@
     "agentic-commerce",
     "x402"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Team-Sequence-Thaumaturge/salabs.git",
+    "directory": "agora"
+  },
+  "homepage": "https://salabs.quanxs.com/agora/",
   "author": "Quanxs SA Labs (SALABS)",
   "license": "MIT"
 }
