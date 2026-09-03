@@ -5,8 +5,8 @@
   "type": "module",
   "main": "mcp-agora-server.js",
   "bin": {
-    "salabs-agora-mcp": "./mcp-agora-server.js",
-    "salabs-mcp": "./mcp-agora-server.js"
+    "salabs-agora-mcp": "mcp-agora-server.js",
+    "salabs-mcp": "mcp-agora-server.js"
   },
   "keywords": [
     "mcp",
@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Team-Sequence-Thaumaturge/salabs.git",
+    "url": "git+https://github.com/Team-Sequence-Thaumaturge/salabs.git",
     "directory": "agora"
   },
   "homepage": "https://salabs.quanxs.com/agora/",
