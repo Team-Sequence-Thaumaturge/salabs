@@ -32,17 +32,30 @@ try {
  */
 async function executeToolLogic(slug, rawParams = {}, action = 'execute') {
   const cleanSlug = (slug || '').replace(/\.html$/, '').toLowerCase().trim();
+  const liveUrl = `https://salabs.quanxs.com/tools/${cleanSlug}.html`;
   const toolsDir = path.join(__dirname, '..', 'tools');
   const filePath = path.join(toolsDir, cleanSlug + '.html');
 
-  if (!fs.existsSync(filePath)) {
+  let html = '';
+  if (fs.existsSync(filePath)) {
+    html = fs.readFileSync(filePath, 'utf8');
+  } else {
+    try {
+      const resp = await fetch(liveUrl);
+      if (resp.ok) {
+        html = await resp.text();
+      }
+    } catch (e) {
+      // Fallback failed
+    }
+  }
+
+  if (!html) {
     return {
       status: 'NOT_FOUND',
       error: `Tool '${cleanSlug}' not found in SALabs 580+ catalog. Use 'search_salabs_utilities' to discover tools.`
     };
   }
-
-  const html = fs.readFileSync(filePath, 'utf8');
 
   // 1. Extract input & textarea IDs
   const inputIds = [];
@@ -71,8 +84,6 @@ async function executeToolLogic(slug, rawParams = {}, action = 'execute') {
       scriptCode += code + '\n';
     }
   }
-
-  const liveUrl = `https://salabs.quanxs.com/tools/${cleanSlug}.html`;
 
   if (action === 'extract_code') {
     return {
