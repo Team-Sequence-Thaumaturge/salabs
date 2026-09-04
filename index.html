@@ -48,9 +48,110 @@ function submitFeedback(){
   .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
   .modal-content { background: #1e293b; margin: 10% auto; padding: 2rem; border: 1px solid #38bdf8; border-radius: 12px; max-width: 500px; color: #f8fafc; }
   .modal-content textarea { width: 100%; background: #0f172a; color: #f8fafc; border: 1px solid #334155; border-radius: 6px; padding: 0.8rem; margin: 1rem 0; box-sizing: border-box; }
+
+  /* Global Ecosystem Navigation Bar */
+  .global-nav {
+    max-width: 1200px;
+    margin: 0 auto 1.5rem auto;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: 12px;
+    padding: 0.6rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+  .nav-brand-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .nav-brand-link {
+    font-weight: 800;
+    font-size: 0.95rem;
+    color: #38bdf8;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 8px;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    transition: all 0.2s;
+  }
+  .nav-brand-link:hover {
+    background: rgba(56, 189, 248, 0.25);
+  }
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .nav-link-badge {
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: all 0.2s ease;
+  }
+  .badge-hf {
+    background: rgba(255, 210, 30, 0.15);
+    color: #ffd21e;
+    border: 1px solid rgba(255, 210, 30, 0.35);
+  }
+  .badge-hf:hover { background: rgba(255, 210, 30, 0.25); transform: translateY(-1px); }
+  .badge-gumroad {
+    background: rgba(255, 144, 232, 0.15);
+    color: #ff90e8;
+    border: 1px solid rgba(255, 144, 232, 0.35);
+  }
+  .badge-gumroad:hover { background: rgba(255, 144, 232, 0.25); transform: translateY(-1px); }
+  .badge-npm {
+    background: rgba(203, 56, 55, 0.15);
+    color: #ff6b6b;
+    border: 1px solid rgba(203, 56, 55, 0.35);
+  }
+  .badge-npm:hover { background: rgba(203, 56, 55, 0.25); transform: translateY(-1px); }
+  .badge-base {
+    background: rgba(0, 82, 255, 0.15);
+    color: #38bdf8;
+    border: 1px solid rgba(0, 82, 255, 0.35);
+  }
+  .badge-base:hover { background: rgba(0, 82, 255, 0.25); transform: translateY(-1px); }
+  .badge-cockpit {
+    background: rgba(0, 255, 136, 0.15);
+    color: #00ff88;
+    border: 1px solid rgba(0, 255, 136, 0.35);
+  }
+  .badge-cockpit:hover { background: rgba(0, 255, 136, 0.25); transform: translateY(-1px); }
+
 </style>
 </head>
 <body>
+
+<nav class="global-nav">
+  <div class="nav-brand-group">
+    <a href="https://quanxs.com" class="nav-brand-link" target="_blank">🌐 quanxs.com Main ↗</a>
+  </div>
+  <div class="nav-menu">
+    <a href="https://huggingface.co/datasets/suitai/salabs-robotics-spatial-topology-v9" target="_blank" class="nav-link-badge badge-hf">🤗 Hugging Face DB</a>
+    <a href="https://quanxkimchi.gumroad.com/l/robotics-v9" target="_blank" class="nav-link-badge badge-gumroad">💎 Gumroad B2B ($1,500)</a>
+    <a href="https://www.npmjs.com/package/@quanxs/salabs-agora-mcp" target="_blank" class="nav-link-badge badge-npm">📦 NPM: @quanxs/salabs-agora-mcp</a>
+    <a href="https://basescan.org/address/0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49" target="_blank" class="nav-link-badge badge-base">⛓️ Base Contract</a>
+    <a href="./agora/deploy.html" class="nav-link-badge badge-cockpit">⚡ On-Chain Cockpit</a>
+    <a href="./agora/index.html" class="nav-link-badge badge-base">🏛️ Agora 3D Studio</a>
+  </div>
+</nav>
+
 
 <header class="header-box">
   <h1>Quanxs SA Labs</h1>
@@ -66,35 +167,58 @@ function submitFeedback(){
 
 
 <!-- Section 1: Appendix Infrastructure & AI Data Lake -->
-<h2 class="section-title">🏛️ AI Autonomous Infrastructure & Sovereign 3D Workbench</h2>
+<h2 class="section-title">🏛️ AI Autonomous Infrastructure, Datasets & Web3 Cockpit</h2>
 <main class="grid" style="margin-bottom: 2rem;">
 
+  <!-- Card 1: Flagship 3D Spatial Workbench -->
   <a class="card app-card" style="border: 1px solid rgba(0, 242, 254, 0.6); background: linear-gradient(135deg, rgba(15,23,42,0.95), rgba(0,242,254,0.15)); box-shadow: 0 4px 20px rgba(0,242,254,0.2);" href="./tools/salabs-flagship-3d-spatial-workbench.html">
-  <h3>👑 Flagship 3D Spatial & Agentic Workbench</h3>
-  <p>3D Spatial Physics, Inverse Kinematics, WebXR & x402 Agentic Micropayments</p>
-</a>
-  <a class="card app-card" href="./llms.txt" target="_blank">
-    <h3>🤖 GEO & AI Search Index</h3>
-    <p>Official llms.txt AI Crawler & Search Engine Index</p>
+    <h3>👑 Flagship 3D Spatial & Agentic Workbench</h3>
+    <p>3D Spatial Physics, Inverse Kinematics, WebXR & x402 Agentic Micropayments</p>
   </a>
-  <a class="card app-card" href="./downloads/index.html">
-    <h3>📊 B2B 768-Dim Vector DB</h3>
-    <p>1.5 MB+ Live Float32 Vector Embeddings Asset</p>
+
+  <!-- Card 2: AI Agent Digital Agora & 3D CAD Studio -->
+  <a class="card app-card" style="border: 1px solid rgba(56, 189, 248, 0.6); background: linear-gradient(135deg, rgba(15,23,42,0.95), rgba(56,189,248,0.15)); box-shadow: 0 4px 20px rgba(56,189,248,0.2);" href="./agora/index.html">
+    <h3>🏛️ AI Agent Digital Agora (3D CAD Studio)</h3>
+    <p>0.02s Bishop Frame Solving, x402 Micropayments & OpenAPI 3.0 M2M Gateway</p>
   </a>
-  <a class="card app-card" href="./agora/index.html">
-    <h3>🏛️ AI Agent Agora & MCP API</h3>
-    <p>Pay-per-Call API & ZK-Public Security Specification</p>
+
+  <!-- Card 3: Base On-Chain Protocol Cockpit -->
+  <a class="card app-card" style="border: 1px solid rgba(0, 255, 136, 0.6); background: linear-gradient(135deg, rgba(15,23,42,0.95), rgba(0,255,136,0.15)); box-shadow: 0 4px 20px rgba(0,255,136,0.2);" href="./agora/deploy.html">
+    <h3>⚡ Base On-Chain Protocol Cockpit</h3>
+    <p>SalabsAgoraRegistry (0x1543...), 1-Click A2A Tool Management & Live Verification</p>
   </a>
-  
-  <a class="card" href="./tools/jules-3d-master-studio.html">
-  <h3>🎨 Jules 3D Master Studio Cockpit</h3>
-  <p>Modern ES-Module 3D Authoring & Spatial Dynamics Studio</p>
-</a>
+
+  <!-- Card 4: Hugging Face 768-D Continuous Lie SE(3) Robotics Dataset -->
+  <a class="card app-card" style="border: 1px solid rgba(255, 210, 30, 0.6); background: linear-gradient(135deg, rgba(15,23,42,0.95), rgba(255,210,30,0.15)); box-shadow: 0 4px 20px rgba(255,210,30,0.2);" href="https://huggingface.co/datasets/suitai/salabs-robotics-spatial-topology-v9" target="_blank">
+    <h3>🤗 Hugging Face 768-D Robotics Topology DB</h3>
+    <p>50,000+ Verified Lie SE(3) Tensors for Embodied AI & Humanoid Kinematics</p>
+  </a>
+
+  <!-- Card 5: Gumroad B2B Enterprise Dataset License ($1,500) -->
+  <a class="card app-card" style="border: 1px solid rgba(255, 144, 232, 0.6); background: linear-gradient(135deg, rgba(15,23,42,0.95), rgba(255,144,232,0.15)); box-shadow: 0 4px 20px rgba(255,144,232,0.2);" href="https://quanxkimchi.gumroad.com/l/robotics-v9" target="_blank">
+    <h3>💎 Gumroad B2B Commercial DB License ($1,500)</h3>
+    <p>Instant 410MB Enterprise Vector Pack & Commercial Redistribution Rights</p>
+  </a>
+
+  <!-- Card 6: Official Global NPM MCP Package -->
+  <a class="card app-card" style="border: 1px solid rgba(203, 56, 55, 0.6); background: linear-gradient(135deg, rgba(15,23,42,0.95), rgba(203,56,55,0.15)); box-shadow: 0 4px 20px rgba(203,56,55,0.2);" href="https://www.npmjs.com/package/@quanxs/salabs-agora-mcp" target="_blank">
+    <h3>📦 NPM: @quanxs/salabs-agora-mcp</h3>
+    <p>Global Model Context Protocol Server for Claude Desktop, Cursor & AgentKit</p>
+  </a>
+
+  <!-- Card 7: Jules AI QA & Cross-Parsing Auditor Cockpit -->
   <a class="card app-card" style="border: 1px solid rgba(0, 255, 204, 0.6); background: linear-gradient(135deg, rgba(15,23,42,0.95), rgba(0,255,204,0.15)); box-shadow: 0 4px 20px rgba(0,255,204,0.2);" href="./tools/jules-ai-qa-cross-parsing-auditor.html">
     <h3>🛡️ AI QA & Cross-Parsing Auditor Cockpit</h3>
     <p>4-Phase Sequence Interleaved Trajectory Audit & AST Anti-Mockup Open Source Gate</p>
   </a>
-  <a class="card" href="./tools/audio-frequency-analyzer.html"><h2>Audio Frequency Analyzer</h2><p>Client-side tool.</p></a>
+
+  <!-- Card 8: llms.txt AI Search Index -->
+  <a class="card app-card" href="./llms.txt" target="_blank">
+    <h3>🤖 GEO & AI Search Index</h3>
+    <p>Official llms.txt AI Crawler & Search Engine Vector Index</p>
+  </a>
+  
+<a class="card" href="./tools/audio-frequency-analyzer.html"><h2>Audio Frequency Analyzer</h2><p>Client-side tool.</p></a>
   <a class="card" href="./tools/css-box-shadow-inset-studio.html"><h2>Css Box Shadow Inset Studio</h2><p>Client-side tool.</p></a>
   <a class="card" href="./tools/js-localstorage-session-manager.html"><h2>Js Localstorage Session Manager</h2><p>Client-side tool.</p></a>
   <a class="card" href="./tools/web-speech-synthesis-studio.html"><h2>Web Speech Synthesis Studio</h2><p>Client-side tool.</p></a>
