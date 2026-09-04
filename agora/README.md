@@ -1,6 +1,7 @@
 # 🏛️ SALabs Agora MCP Server (`@quanxs/salabs-agora-mcp`)
 
 [![NPM Version](https://img.shields.io/npm/v/@quanxs/salabs-agora-mcp.svg?style=flat-square&color=cb3837)](https://www.npmjs.com/package/@quanxs/salabs-agora-mcp)
+[![AgentKit Action](https://img.shields.io/npm/v/@quanxs/salabs-agentkit-action.svg?style=flat-square&color=0052ff)](https://www.npmjs.com/package/@quanxs/salabs-agentkit-action)
 [![NPM Downloads](https://img.shields.io/npm/dt/@quanxs/salabs-agora-mcp.svg?style=flat-square)](https://www.npmjs.com/package/@quanxs/salabs-agora-mcp)
 [![MCP Protocol](https://img.shields.io/badge/MCP-2024--11--05-blue.svg?style=flat-square)](https://modelcontextprotocol.io/)
 [![Base Mainnet](https://img.shields.io/badge/Base%20Mainnet-0x154384Fb...-0052ff.svg?style=flat-square)](https://basescan.org/address/0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49)
@@ -9,7 +10,12 @@
 > **Official Model Context Protocol (MCP) Server for Quanxs SA Labs (SALABS)**  
 > 0.02s Lie $SE(3)$ Bishop Frame 3D Articulated Robotics CAD Engine + 580+ Autonomous Developer Utilities Suite + x402 Micropayment Protocol on Base Mainnet.
 
-- **NPM Package**: [`@quanxs/salabs-agora-mcp`](https://www.npmjs.com/package/@quanxs/salabs-agora-mcp)
+- **Hugging Face Research Org**: [`suitai`](https://huggingface.co/suitai)
+  - 🤖 [Robotics Spatial Topology v9](https://huggingface.co/datasets/suitai/salabs-robotics-spatial-topology-v9) | [💎 Gumroad B2B ($1,500)](https://quanxkimchi.gumroad.com/l/robotics-v9)
+  - 🌐 [Virtual Spatial Digital Twin v8](https://huggingface.co/datasets/suitai/salabs-virtual-spatial-digitaltwin-v8) | [💎 Gumroad B2B ($2,000)](https://quanxkimchi.gumroad.com/l/virtual-spatial-v8)
+  - 🧠 [STEM Deep Reasoning CoT v13](https://huggingface.co/datasets/suitai/salabs-stem-deep-reasoning-cot-v13) | [💎 Gumroad B2B ($2,500)](https://quanxkimchi.gumroad.com/l/stem-reasoning-v13)
+- **MCP Server Package**: [`@quanxs/salabs-agora-mcp`](https://www.npmjs.com/package/@quanxs/salabs-agora-mcp)
+- **Coinbase AgentKit Action Provider**: [`@quanxs/salabs-agentkit-action`](https://www.npmjs.com/package/@quanxs/salabs-agentkit-action)
 - **Base Registry Contract**: [`0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49`](https://basescan.org/address/0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49)
 - **Official Portal & Web Cockpit**: [https://salabs.quanxs.com/agora/](https://salabs.quanxs.com/agora/)
 

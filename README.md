@@ -5,22 +5,33 @@ This repository houses core AI modules, 3D engines, web tools, and browser autom
 
 ---
 
-## 🏛️ SALabs Agora Global MCP Server & Base Mainnet Protocol (`@quanxs/salabs-agora-mcp`)
+## 🏛️ SALabs Agora Global MCP Server & Coinbase AgentKit Action Provider
 
 [![NPM Version](https://img.shields.io/npm/v/@quanxs/salabs-agora-mcp.svg?style=flat-square&color=cb3837)](https://www.npmjs.com/package/@quanxs/salabs-agora-mcp)
+[![AgentKit Action Provider](https://img.shields.io/npm/v/@quanxs/salabs-agentkit-action.svg?style=flat-square&color=0052ff)](https://www.npmjs.com/package/@quanxs/salabs-agentkit-action)
 [![MCP Protocol](https://img.shields.io/badge/MCP-2024--11--05-blue.svg?style=flat-square)](https://modelcontextprotocol.io/)
 [![Base Mainnet](https://img.shields.io/badge/Base%20Mainnet-0x154384Fb...-0052ff.svg?style=flat-square)](https://basescan.org/address/0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 
-> **0.02s Lie SE(3) Bishop Frame 3D Articulated Robotics CAD Engine + 580+ Autonomous Developer Utilities Suite + x402 Micropayment Protocol.**
+> **0.02s Lie SE(3) Bishop Frame 3D Articulated Robotics CAD Engine + 580+ Autonomous Developer Utilities Suite + x402 Micropayment Protocol on Base Mainnet.**
 
-- **NPM Package**: [`@quanxs/salabs-agora-mcp`](https://www.npmjs.com/package/@quanxs/salabs-agora-mcp)
+- **Official Hugging Face Research Org**: [`suitai`](https://huggingface.co/suitai)
+  - 🤖 [Robotics Spatial Topology v9](https://huggingface.co/datasets/suitai/salabs-robotics-spatial-topology-v9) | [💎 Gumroad B2B ($1,500)](https://quanxkimchi.gumroad.com/l/robotics-v9)
+  - 🌐 [Virtual Spatial Digital Twin v8](https://huggingface.co/datasets/suitai/salabs-virtual-spatial-digitaltwin-v8) | [💎 Gumroad B2B ($2,000)](https://quanxkimchi.gumroad.com/l/virtual-spatial-v8)
+  - 🧠 [STEM Deep Reasoning CoT v13](https://huggingface.co/datasets/suitai/salabs-stem-deep-reasoning-cot-v13) | [💎 Gumroad B2B ($2,500)](https://quanxkimchi.gumroad.com/l/stem-reasoning-v13)
+- **Global MCP Server Package**: [`@quanxs/salabs-agora-mcp`](https://www.npmjs.com/package/@quanxs/salabs-agora-mcp)
+- **Coinbase AgentKit Action Provider**: [`@quanxs/salabs-agentkit-action`](https://www.npmjs.com/package/@quanxs/salabs-agentkit-action)
 - **Base Registry Contract**: [`0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49`](https://basescan.org/address/0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49)
+- **Master Treasury Payee**: [`0xA3f65F1C005528507e9E0E2E17cCC946f671c9d2`](https://basescan.org/address/0xA3f65F1C005528507e9E0E2E17cCC946f671c9d2)
 - **Web Cockpit**: [https://salabs.quanxs.com/agora/deploy](https://salabs.quanxs.com/agora/deploy)
 
-Run instantly with `npx`:
+### Quick Run:
 ```bash
+# Run MCP Server
 npx -y @quanxs/salabs-agora-mcp
+
+# Install Coinbase AgentKit Action Provider
+npm install @quanxs/salabs-agentkit-action
 ```
 
 

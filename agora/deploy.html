@@ -220,11 +220,61 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    .eco-bar {
+      max-width: 1000px;
+      margin: 0 auto 1.5rem auto;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 10px;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+    }
+    .eco-links {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .eco-link {
+      color: #94a3b8;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .eco-link:hover {
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.1);
+    }
+    .eco-link.highlight {
+      color: #00ff88;
+      background: rgba(0, 255, 136, 0.1);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+    }
+    .eco-link.highlight:hover {
+      background: rgba(0, 255, 136, 0.2);
+    }
   </style>
 </head>
 <body>
+
+  <div class="eco-bar">
+    <a href="https://quanxs.com" class="eco-link" style="color:#38bdf8; font-weight:700;" target="_blank">🌐 quanxs.com Main ↗</a>
+    <div class="eco-links">
+      <a href="https://huggingface.co/suitai" class="eco-link" target="_blank">🤗 Hugging Face (suitai)</a>
+      <a href="https://quanxkimchi.gumroad.com" class="eco-link" target="_blank">💎 Gumroad B2B ($6k Suite)</a>
+      <a href="https://www.npmjs.com/package/@quanxs/salabs-agora-mcp" class="eco-link" target="_blank">📦 MCP Package</a>
+      <a href="https://www.npmjs.com/package/@quanxs/salabs-agentkit-action" class="eco-link" target="_blank" style="color:#60a5fa; font-weight:700;">🦾 AgentKit Action</a>
+      <a href="./index.html" class="eco-link highlight">🏛️ Agora 3D Studio ↗</a>
+    </div>
+  </div>
 
   <div class="header">
     <div class="badge">Base Mainnet (EIP-4844) On-Chain Protocol Cockpit</div>

@@ -1,0 +1,47 @@
+{
+  "name": "@quanxs/salabs-agentkit-action",
+  "version": "1.0.1",
+  "description": "Official Coinbase AgentKit Action Provider for SALabs 0.02s Lie SE(3) Robotics CAD, Spatial Geometry & Base Mainnet A2A Commerce",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "agentkit",
+    "coinbase",
+    "coinbase-agentkit",
+    "action-provider",
+    "mcp",
+    "base",
+    "base-mainnet",
+    "robotics",
+    "cad",
+    "3d",
+    "lie-group",
+    "kinematics",
+    "ai-agent",
+    "x402"
+  ],
+  "author": "Quanxs SA Labs (SALABS)",
+  "license": "MIT",
+  "homepage": "https://salabs.quanxs.com/agora/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Team-Sequence-Thaumaturge/salabs.git",
+    "directory": "packages/salabs-agentkit-action"
+  }
+}
