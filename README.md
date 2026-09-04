@@ -5,6 +5,27 @@ This repository houses core AI modules, 3D engines, web tools, and browser autom
 
 ---
 
+## 🏛️ SALabs Agora Global MCP Server & Base Mainnet Protocol (`@quanxs/salabs-agora-mcp`)
+
+[![NPM Version](https://img.shields.io/npm/v/@quanxs/salabs-agora-mcp.svg?style=flat-square&color=cb3837)](https://www.npmjs.com/package/@quanxs/salabs-agora-mcp)
+[![MCP Protocol](https://img.shields.io/badge/MCP-2024--11--05-blue.svg?style=flat-square)](https://modelcontextprotocol.io/)
+[![Base Mainnet](https://img.shields.io/badge/Base%20Mainnet-0x154384Fb...-0052ff.svg?style=flat-square)](https://basescan.org/address/0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+
+> **0.02s Lie SE(3) Bishop Frame 3D Articulated Robotics CAD Engine + 580+ Autonomous Developer Utilities Suite + x402 Micropayment Protocol.**
+
+- **NPM Package**: [`@quanxs/salabs-agora-mcp`](https://www.npmjs.com/package/@quanxs/salabs-agora-mcp)
+- **Base Registry Contract**: [`0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49`](https://basescan.org/address/0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49)
+- **Web Cockpit**: [https://salabs.quanxs.com/agora/deploy](https://salabs.quanxs.com/agora/deploy)
+
+Run instantly with `npx`:
+```bash
+npx -y @quanxs/salabs-agora-mcp
+```
+
+
+---
+
 ## ⚡ SAIR 1-Click Auto Injector v1.0.0 (`/sair_chrome_extension`)
 
 An omnipresent Chrome Extension (Manifest v3) designed for **1-Click Automatic Injection of SAIR 487-Substyle Tensor Specification Prompts and C++ Rendered PNG Image Style References** into complex Web AI Applications (Google Flow, ChatGPT, Claude, Jules, Gemini, etc.).

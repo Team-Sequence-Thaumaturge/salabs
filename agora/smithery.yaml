@@ -1,0 +1,15 @@
+# Smithery Configuration File
+# https://smithery.ai/docs/config
+name: "@quanxs/salabs-agora-mcp"
+version: "2.1.1"
+description: "SALabs 0.02s Lie SE(3) Articulated Robotics CAD Engine, 3D Spatial Geometry and 580+ Utilities MCP Server"
+repository: "https://github.com/Team-Sequence-Thaumaturge/salabs"
+homepage: "https://salabs.quanxs.com/agora/"
+startCommand:
+  type: stdio
+  commandFunction: |-
+    (config) => ({
+      command: 'npx',
+      args: ['-y', '@quanxs/salabs-agora-mcp'],
+      env: {}
+    })
