@@ -3,17 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SALabs Agora Base On-Chain Deployment Cockpit</title>
+  <title>SALabs Agora Base On-Chain Protocol Cockpit</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.2/ethers.umd.min.js"></script>
   <style>
     :root {
       --bg: #07090e;
       --card-bg: #0d121d;
+      --card-inner: #131b2e;
       --border: #1e293b;
       --primary: #00ff88;
       --primary-glow: rgba(0, 255, 136, 0.2);
       --text: #e2e8f0;
       --text-dim: #94a3b8;
       --accent: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.2);
       --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -25,7 +28,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem 1rem;
+      padding: 2.5rem 1rem;
     }
     .header {
       text-align: center;
@@ -33,7 +36,7 @@
     }
     .badge {
       display: inline-block;
-      padding: 0.35rem 0.85rem;
+      padding: 0.4rem 0.95rem;
       border-radius: 9999px;
       font-size: 0.75rem;
       font-weight: 700;
@@ -46,7 +49,7 @@
       font-family: var(--font-mono);
     }
     h1 {
-      font-size: 2.2rem;
+      font-size: 2.3rem;
       font-weight: 800;
       background: linear-gradient(135deg, #ffffff 30%, var(--primary) 100%);
       -webkit-background-clip: text;
@@ -56,40 +59,50 @@
     .subtitle {
       color: var(--text-dim);
       font-size: 0.95rem;
-      max-width: 600px;
-      line-height: 1.5;
+      max-width: 650px;
+      line-height: 1.6;
     }
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 16px;
       width: 100%;
-      max-width: 750px;
+      max-width: 800px;
       padding: 2rem;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
       margin-bottom: 1.5rem;
+    }
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #fff;
     }
     .status-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.85rem 1rem;
+      padding: 0.85rem 1.1rem;
       background: rgba(15, 23, 42, 0.6);
       border: 1px solid rgba(51, 65, 85, 0.5);
       border-radius: 10px;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       font-family: var(--font-mono);
       font-size: 0.85rem;
     }
     .status-val {
       font-weight: 700;
       color: var(--primary);
+      word-break: break-all;
     }
     .btn {
       width: 100%;
-      padding: 1.1rem;
+      padding: 1rem 1.2rem;
       border-radius: 12px;
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 700;
       cursor: pointer;
       border: none;
@@ -99,7 +112,7 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
     .btn-connect {
       background: #1e293b;
@@ -109,21 +122,83 @@
     .btn-connect:hover {
       background: #334155;
     }
-    .btn-deploy {
+    .btn-primary {
       background: var(--primary);
       color: #000;
       box-shadow: 0 0 20px var(--primary-glow);
     }
-    .btn-deploy:hover:not(:disabled) {
+    .btn-primary:hover:not(:disabled) {
       background: #05e67a;
       transform: translateY(-2px);
       box-shadow: 0 0 30px var(--primary-glow);
+    }
+    .btn-accent {
+      background: #0284c7;
+      color: #fff;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+    .btn-accent:hover:not(:disabled) {
+      background: #0369a1;
+      transform: translateY(-2px);
     }
     .btn:disabled {
       opacity: 0.5;
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
+    }
+    .tool-box {
+      background: var(--card-inner);
+      border: 1px solid rgba(51, 65, 85, 0.6);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .tool-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .tool-name {
+      font-weight: 700;
+      font-size: 1.05rem;
+      font-family: var(--font-mono);
+      color: #fff;
+    }
+    .tool-badge {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+    .badge-pending {
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    .badge-active {
+      background: rgba(0, 255, 136, 0.15);
+      color: var(--primary);
+      border: 1px solid rgba(0, 255, 136, 0.3);
+    }
+    .tool-desc {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    .tool-meta {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.8rem;
+      font-family: var(--font-mono);
+      color: #94a3b8;
+    }
+    .tool-meta span strong {
+      color: var(--accent);
     }
     .terminal {
       background: #030712;
@@ -133,7 +208,7 @@
       font-family: var(--font-mono);
       font-size: 0.85rem;
       color: #10b981;
-      height: 220px;
+      height: 240px;
       overflow-y: auto;
       white-space: pre-wrap;
       line-height: 1.6;
@@ -152,23 +227,27 @@
 <body>
 
   <div class="header">
-    <div class="badge">Base Mainnet (EIP-4844) On-Chain Deployment</div>
-    <h1>SALabs Agora Registry Deployer</h1>
-    <p class="subtitle">0.02초 3D Lie CAD 및 580개 살랩스 도구를 전 세계 AI 에이전트 자율 과금(USDC) 규격으로 Base 체인에 영구 기록합니다.</p>
+    <div class="badge">Base Mainnet (EIP-4844) On-Chain Protocol Cockpit</div>
+    <h1>SALabs Agora Registry & Tools</h1>
+    <p class="subtitle">0.02초 3D Lie CAD 및 580개 살랩스 도구를 Base 메인넷에 영구 각인하여 전 세계 AI 에이전트 자율 과금(A2A)을 가동합니다.</p>
   </div>
 
+  <!-- Status & Wallet Connection Card -->
   <div class="card">
+    <div class="card-title">🌐 스마트 컨트랙트 및 금고 지갑 정보</div>
     <div class="status-row">
       <span>네트워크 (Target Chain):</span>
       <span class="status-val" id="net-name">Base Mainnet (Chain ID 8453)</span>
     </div>
     <div class="status-row">
-      <span>시장님 수금 지갑 (Treasury):</span>
-      <span class="status-val" style="color: #38bdf8;">0xA3f65F1C005528507e9E0E2E17cCC946f671c9d2</span>
+      <span>온체인 레지스트리 컨트랙트:</span>
+      <span class="status-val">
+        <a href="https://basescan.org/address/0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49" target="_blank" id="contract-addr">0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49 ↗</a>
+      </span>
     </div>
     <div class="status-row">
-      <span>Base USDC 토큰 규격:</span>
-      <span class="status-val">0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913</span>
+      <span>시장님 수금 금고 (Master Treasury):</span>
+      <span class="status-val" style="color: #38bdf8;">0xA3f65F1C005528507e9E0E2E17cCC946f671c9d2</span>
     </div>
     <div class="status-row">
       <span>지갑 연결 상태:</span>
@@ -178,29 +257,201 @@
     <button class="btn btn-connect" id="btn-connect" onclick="connectWallet()">
       🦊 메타마스크 / 브라우저 지갑 연결
     </button>
+  </div>
 
-    <button class="btn btn-deploy" id="btn-deploy" onclick="deployContract()" disabled>
-      ⚡ SalabsAgoraRegistry 스마트 컨트랙트 배포 (1클릭 서명)
+  <!-- On-Chain Tool Registration Cockpit -->
+  <div class="card">
+    <div class="card-title">⚡ 온체인 도구 등록 (1클릭 서명)</div>
+    <p class="subtitle" style="margin-bottom: 1.25rem;">
+      오직 금고 소유자인 시장님 지갑만 등록 권한이 있습니다. 등록 즉시 Base 메인넷 원장에 영구 기록되어 전 세계 에이전트가 호출할 수 있습니다.
+    </p>
+
+    <!-- Tool 1 -->
+    <div class="tool-box" id="box-cad">
+      <div class="tool-head">
+        <span class="tool-name">articulated-robotics-cad</span>
+        <span class="tool-badge badge-pending" id="badge-cad">조회 중...</span>
+      </div>
+      <div class="tool-desc">
+        0.02초 초고속 Lie SE(3) 다관절 로보틱스 CAD 엔진 (6-DOF URDF/SDF 사출 및 물리 검수)
+      </div>
+      <div class="tool-meta">
+        <span>가격: <strong>0.1 USDC</strong> (100,000 units)</span>
+        <span>프로토콜: <strong>x402-v1.0</strong></span>
+      </div>
+      <button class="btn btn-primary" id="btn-reg-cad" onclick="registerCadTool()" disabled>
+        ⚡ [1클릭 등록] articulated-robotics-cad 등록하기
+      </button>
+    </div>
+
+    <!-- Tool 2 -->
+    <div class="tool-box" id="box-utils">
+      <div class="tool-head">
+        <span class="tool-name">salabs-utilities-suite</span>
+        <span class="tool-badge badge-pending" id="badge-utils">조회 중...</span>
+      </div>
+      <div class="tool-desc">
+        SALabs 580+ 정밀 공학 계산기, 공간 기하학 및 연속체 수치해석 유틸리티 통합 스위트
+      </div>
+      <div class="tool-meta">
+        <span>가격: <strong>0.05 USDC</strong> (50,000 units)</span>
+        <span>프로토콜: <strong>x402-v1.0</strong></span>
+      </div>
+      <button class="btn btn-primary" id="btn-reg-utils" onclick="registerUtilsTool()" disabled>
+        ⚡ [1클릭 등록] salabs-utilities-suite 등록하기
+      </button>
+    </div>
+
+    <!-- Batch Register -->
+    <button class="btn btn-accent" id="btn-reg-all" onclick="registerAllTools()" disabled>
+      🚀 2개 핵심 도구 1클릭 순차 일괄 등록
     </button>
   </div>
 
+  <!-- Live On-Chain Registry Browser -->
   <div class="card">
-    <div class="terminal-title">Deployment Telemetry & Basescan Link</div>
-    <div class="terminal" id="term-logs">[READY] 배포 대기 중... 위의 '지갑 연결' 버튼을 눌러주십시오.
+    <div class="card-title">📊 Base 온체인 등록 도구 실시간 브라우저 (<span id="total-count">0</span>개)</div>
+    <div id="live-tools-container" style="font-size: 0.9rem; color: var(--text-dim);">
+      Base 메인넷에서 실시간 도구 목록을 조회하는 중...
+    </div>
+  </div>
+
+  <!-- Telemetry Terminal -->
+  <div class="card">
+    <div class="terminal-title">On-Chain Protocol & Telemetry Console</div>
+    <div class="terminal" id="term-logs">[SYSTEM] Agora Protocol Initialized.
+Base Mainnet RPC: https://mainnet.base.org
+Contract: 0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49
+[READY] '지갑 연결' 버튼을 눌러 등록을 시작해 주십시오.
 </div>
   </div>
 
   <script>
     const TARGET_CHAIN_ID = '0x2105'; // 8453 Base Mainnet
-    const DEPLOY_BYTECODE = '0x60c060405234801561000f575f5ffd5b506040516117de3803806117de833981810160405281019061003191906100fe565b8173ffffffffffffffffffffffffffffffffffffffff1660808173ffffffffffffffffffffffffffffffffffffffff16815250508073ffffffffffffffffffffffffffffffffffffffff1660a08173ffffffffffffffffffffffffffffffffffffffff1681525050505061013c565b5f5ffd5b5f73ffffffffffffffffffffffffffffffffffffffff82169050919050565b5f6100cd826100a4565b9050919050565b6100dd816100c3565b81146100e7575f5ffd5b50565b5f815190506100f8816100d4565b92915050565b5f5f60408385031215610114576101136100a0565b5b5f610121858286016100ea565b9250506020610132858286016100ea565b9150509250929050565b60805160a05161166c6101725f395f81816101b501526106e501525f81816101d9015281816107220152610858015261166c5ff3fe608060405234801561000f575f5ffd5b5060043610610086575f3560e01c80639ca82358116100595780639ca823581461012a578063e6d9f24814610148578063ef2cb3c314610164578063f533ae811461018057610086565b806311eac8551461008a57806361d027b3146100a857806377ed299d146100c657806389225433146100f6575b5f5ffd5b6100926101b3565b60405161009f9190610cb6565b60405180910390f35b6100b06101d7565b6040516100bd9190610cb6565b60405180910390f35b6100e060048036038101906100db9190610d13565b6101fb565b6040516100ed9190610dae565b60405180910390f35b610110600480360381019061010b9190610efa565b6102a1565b604051610121959493929190610f6a565b60405180910390f35b610132610488565b60405161013f9190610fd0565b60405180910390f35b610162600480360381019061015d9190610efa565b610494565b005b61017e60048036038101906101799190610fe9565b610856565b005b61019a60048036038101906101959190610efa565b610a50565b6040516101aa94939291906110a1565b60405180910390f35b7f000000000000000000000000000000000000000000000000000000000000000081565b7f000000000000000000000000000000000000000000000000000000000000000081565b6001818154811061020a575f80fd5b905f5260205f20015f9150905080546102229061111f565b80601f016020809104026020016040519081016040528092919081815260200182805461024e9061111f565b80156102995780601f1061027057610100808354040283529160200191610299565b820191905f5260205f20905b81548152906001019060200180831161027c57829003601f168201915b505050505081565b5f818051602081018201805184825260208301602085012081835280955050505050505f91509050805f0180546102d79061111f565b80601f01602080910402602001604051908101604052809291908181526020018280546103039061111f565b801561034e5780601f106103255761010080835404028352916020019161034e565b820191905f5260205f20905b81548152906001019060200180831161033157829003601f168201915b5050505050908060010154908060020180546103699061111f565b80601f01602080910402602001604051908101604052809291908181526020018280546103959061111f565b80156103e05780601f106103b7576101008083540402835291602001916103e0565b820191905f5260205f20905b8154815290600101906020018083116103c357829003601f168201915b5050505050908060030180546103f59061111f565b80601f01602080910402602001604051908101604052809291908181526020018280546104219061111f565b801561046c5780601f106104435761010080835404028352916020019161046c565b820191905f5260205f20905b81548152906001019060200180831161044f57829003601f168201915b505050505090806004015f9054906101000a900460ff16905085565b5f600180549050905090565b5f5f826040516104a49190611189565b90815260200160405180910390206040518060a00160405290815f820180546104cc9061111f565b80601f01602080910402602001604051908101604052809291908181526020018280546104f89061111f565b80156105435780601f1061051a57610100808354040283529160200191610543565b820191905f5260205f20905b81548152906001019060200180831161052657829003601f168201915b50505050508152602001600182015481526020016002820180546105669061111f565b80601f01602080910402602001604051908101604052809291908181526020018280546105929061111f565b80156105dd5780601f106105b4576101008083540402835291602001916105dd565b820191905f5260205f20905b8154815290600101906020018083116105c057829003601f168201915b505050505081526020016003820180546105f69061111f565b80601f01602080910402602001604051908101604052809291908181526020018280546106229061111f565b801561066d5780601f106106445761010080835404028352916020019161066d565b820191905f5260205f20905b81548152906001019060200180831161065057829003601f168201915b50505050508152602001600482015f9054906101000a900460ff161515151581525050905080608001516106d6576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004016106cd906111e9565b60405180910390fd5b5f816020015111156107e8575f7f000000000000000000000000000000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff166323b872dd337f000000000000000000000000000000000000000000000000000000000000000085602001516040518463ffffffff1660e01b815260040161076493929190611207565b6020604051808303815f875af1158015610780573d5f5f3e3d5ffd5b505050506040513d601f19601f820116820180604052508101906107a49190611266565b9050806107e6576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004016107dd906112db565b60405180910390fd5b505b816040516107f69190611189565b60405180910390203373ffffffffffffffffffffffffffffffffffffffff167f7275f07faedd9bdfa298c676668d0bd2a2e1f4a1443f852e24360e8364cbfcd083602001514260405161084a9291906112f9565b60405180910390a35050565b7f000000000000000000000000000000000000000000000000000000000000000073ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16146108e4576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004016108db9061136a565b60405180910390fd5b5f846040516108f39190611189565b90815260200160405180910390206004015f9054906101000a900460ff1661094857600184908060018154018082558091505060019003905f5260205f20015f9091909190915090816109469190611539565b505b6040518060a00160405280858152602001848152602001838152602001828152602001600115158152505f856040516109819190611189565b90815260200160405180910390205f820151815f0190816109a29190611539565b506020820151816001015560408201518160020190816109c29190611539565b5060608201518160030190816109d89190611539565b506080820151816004015f6101000a81548160ff02191690831515021790555090505083604051610a099190611189565b60405180910390207f8300e146988d31ff3483a3b052b286c423ee590b5313585afe209e0444427d188484604051610a42929190611608565b60405180910390a250505050565b5f6060805f5f5f86604051610a659190611189565b90815260200160405180910390206040518060a00160405290815f82018054610a8d9061111f565b80601f0160208091040260200160405190810160405280929190818152602001828054610ab99061111f565b8015610b045780601f10610adb57610100808354040283529160200191610b04565b820191905f5260205f20905b815481529060010190602001808311610ae757829003601f168201915b5050505050815260200160018201548152602001600282018054610b279061111f565b80601f0160208091040260200160405190810160405280929190818152602001828054610b539061111f565b8015610b9e5780601f10610b7557610100808354040283529160200191610b9e565b820191905f5260205f20905b815481529060010190602001808311610b8157829003601f168201915b50505050508152602001600382018054610bb79061111f565b80601f0160208091040260200160405190810160405280929190818152602001828054610be39061111f565b8015610c2e5780601f10610c0557610100808354040283529160200191610c2e565b820191905f5260205f20905b815481529060010190602001808311610c1157829003601f168201915b50505050508152602001600482015f9054906101000a900460ff161515151581525050905080602001518160400151826060015183608001519450945094509450509193509193565b5f73ffffffffffffffffffffffffffffffffffffffff82169050919050565b5f610ca082610c77565b9050919050565b610cb081610c96565b82525050565b5f602082019050610cc95f830184610ca7565b92915050565b5f604051905090565b5f5ffd5b5f5ffd5b5f819050919050565b610cf281610ce0565b8114610cfc575f5ffd5b50565b5f81359050610d0d81610ce9565b92915050565b5f60208284031215610d2857610d27610cd8565b5b5f610d3584828501610cff565b91505092915050565b5f81519050919050565b5f82825260208201905092915050565b8281835e5f83830152505050565b5f601f19601f8301169050919050565b5f610d8082610d3e565b610d8a8185610d48565b9350610d9a818560208601610d58565b610da381610d66565b840191505092915050565b5f6020820190508181035f830152610dc68184610d76565b905092915050565b5f5ffd5b5f5ffd5b7f4e487b71000000000000000000000000000000000000000000000000000000005f52604160045260245ffd5b610e0c82610d66565b810181811067ffffffffffffffff82111715610e2b57610e2a610dd6565b5b80604052505050565b5f610e3d610ccf565b9050610e498282610e03565b919050565b5f67ffffffffffffffff821115610e6857610e67610dd6565b5b610e7182610d66565b9050602081019050919050565b828183375f83830152505050565b5f610e9e610e9984610e4e565b610e34565b905082815260208101848484011115610eba57610eb9610dd2565b5b610ec5848285610e7e565b509392505050565b5f82601f830112610ee157610ee0610dce565b5b8135610ef1848260208601610e8c565b91505092915050565b5f60208284031215610f0f57610f0e610cd8565b5b5f82013567ffffffffffffffff811115610f2c57610f2b610cdc565b5b610f3884828501610ecd565b91505092915050565b610f4a81610ce0565b82525050565b5f8115159050919050565b610f6481610f50565b82525050565b5f60a0820190508181035f830152610f828188610d76565b9050610f916020830187610f41565b8181036040830152610fa38186610d76565b90508181036060830152610fb78185610d76565b9050610fc66080830184610f5b565b9695505050505050565b5f602082019050610fe35f830184610f41565b92915050565b5f5f5f5f6080858703121561100157611000610cd8565b5b5f85013567ffffffffffffffff81111561101e5761101d610cdc565b5b61102a87828801610ecd565b945050602061103b87828801610cff565b935050604085013567ffffffffffffffff81111561105c5761105b610cdc565b5b61106887828801610ecd565b925050606085013567ffffffffffffffff81111561108957611088610cdc565b5b61109587828801610ecd565b91505092959194509250565b5f6080820190506110b45f830187610f41565b81810360208301526110c68186610d76565b905081810360408301526110da8185610d76565b90506110e96060830184610f5b565b95945050505050565b7f4e487b71000000000000000000000000000000000000000000000000000000005f52602260045260245ffd5b5f600282049050600182168061113657607f821691505b602082108103611149576111486110f2565b5b50919050565b5f81905092915050565b5f61116382610d3e565b61116d818561114f565b935061117d818560208601610d58565b80840191505092915050565b5f6111948284611159565b915081905092915050565b7f546f6f6c206e6f7420616374697665206f7220726567697374657265640000005f82015250565b5f6111d3601d83610d48565b91506111de8261119f565b602082019050919050565b5f6020820190508181035f830152611200816111c7565b9050919050565b5f60608201905061121a5f830186610ca7565b6112276020830185610ca7565b6112346040830184610f41565b949350505050565b61124581610f50565b811461124f575f5ffd5b50565b5f815190506112608161123c565b92915050565b5f6020828403121561127b5761127a610cd8565b5b5f61128884828501611252565b91505092915050565b7f55534443207472616e73666572206661696c65640000000000000000000000005f82015250565b5f6112c5601483610d48565b91506112d082611291565b602082019050919050565b5f6020820190508181035f8301526112f2816112b9565b9050919050565b5f60408201905061130c5f830185610f41565b6113196020830184610f41565b9392505050565b7f4f6e6c792074726561737572792063616e20726567697374657220746f6f6c735f82015250565b5f611354602083610d48565b915061135f82611320565b602082019050919050565b5f6020820190508181035f83015261138181611348565b9050919050565b5f819050815f5260205f209050919050565b5f6020601f8301049050919050565b5f82821b905092915050565b5f600883026113e47fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff826113a9565b6113ee86836113a9565b95508019841693508086168417925050509392505050565b5f819050919050565b5f61142961142461141f84610ce0565b611406565b610ce0565b9050919050565b5f819050919050565b6114428361140f565b61145661144e82611430565b8484546113b5565b825550505050565b5f5f905090565b61146d61145e565b611478818484611439565b505050565b5f5b8281101561149e576114935f828401611465565b60018101905061147f565b505050565b601f8211156114f157828211156114f0576114bd81611388565b6114c68361139a565b6114cf8561139a565b60208610156114dc575f90505b8083016114eb8284038261147d565b505050505b5b505050565b5f82821c905092915050565b5f6115115f19846008026114f6565b1980831691505092915050565b5f6115298383611502565b9150826002028217905092915050565b61154282610d3e565b67ffffffffffffffff81111561155b5761155a610dd6565b5b611565825461111f565b6115708282856114a3565b5f60209050601f8311600181146115a1575f841561158f578287015190505b611599858261151e565b865550611600565b601f1984166115af86611388565b5f5b828110156115d6578489015182556001820191506020850194506020810190506115b1565b868310156115f357848901516115ef601f891682611502565b8355505b6001600288020188555050505b505050505050565b5f60408201905061161b5f830185610f41565b818103602083015261162d8184610d76565b9050939250505056fea264697066735822122063d81802cdab03a7e109dc5b5f57a956143d47c1cb50025ed437cebfbb2c034264736f6c63430008240033000000000000000000000000a3f65f1c005528507e9e0e2e17ccc946f671c9d2000000000000000000000000833589fcd6edb6e08f4c7c32d4f71b54bda02913';
-    const CONTRACT_ABI = [{"inputs":[{"internalType":"address","name":"_treasury","type":"address"},{"internalType":"address","name":"_usdcToken","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"agentCaller","type":"address"},{"indexed":true,"internalType":"string","name":"slug","type":"string"},{"indexed":false,"internalType":"uint256","name":"amountPaid","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"timestamp","type":"uint256"}],"name":"ToolCallPurchased","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"string","name":"slug","type":"string"},{"indexed":false,"internalType":"uint256","name":"priceUsdcUnits","type":"uint256"},{"indexed":false,"internalType":"string","name":"mcpEndpoint","type":"string"}],"name":"ToolRegistered","type":"event"},{"inputs":[{"internalType":"string","name":"slug","type":"string"}],"name":"getTool","outputs":[{"internalType":"uint256","name":"priceUsdcUnits","type":"uint256"},{"internalType":"string","name":"mcpEndpoint","type":"string"},{"internalType":"string","name":"description","type":"string"},{"internalType":"bool","name":"active","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"slug","type":"string"}],"name":"purchaseToolCall","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"string","name":"slug","type":"string"},{"internalType":"uint256","name":"priceUsdcUnits","type":"uint256"},{"internalType":"string","name":"mcpEndpoint","type":"string"},{"internalType":"string","name":"description","type":"string"}],"name":"registerTool","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"toolList","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"string","name":"","type":"string"}],"name":"tools","outputs":[{"internalType":"string","name":"slug","type":"string"},{"internalType":"uint256","name":"priceUsdcUnits","type":"uint256"},{"internalType":"string","name":"mcpEndpoint","type":"string"},{"internalType":"string","name":"description","type":"string"},{"internalType":"bool","name":"active","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalTools","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"treasury","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"usdcToken","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}];
+    const CONTRACT_ADDRESS = '0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49';
+    const TREASURY_ADDRESS = '0xA3f65F1C005528507e9E0E2E17cCC946f671c9d2';
+    const MCP_ENDPOINT = 'https://salabs.quanxs.com/agora/mcp-agora-server.js';
+
+    const CONTRACT_ABI = [
+      "function totalTools() view returns (uint256)",
+      "function toolList(uint256) view returns (string)",
+      "function getTool(string slug) view returns (uint256 priceUsdcUnits, string mcpEndpoint, string description, bool active)",
+      "function treasury() view returns (address)",
+      "function usdcToken() view returns (address)",
+      "function registerTool(string slug, uint256 priceUsdcUnits, string mcpEndpoint, string description) external",
+      "function purchaseToolCall(string slug) external",
+      "event ToolRegistered(string indexed slug, uint256 priceUsdcUnits, string mcpEndpoint)",
+      "event ToolCallPurchased(address indexed agentCaller, string indexed slug, uint256 amountPaid, uint256 timestamp)"
+    ];
 
     let userAddress = '';
+    let browserProvider = null;
+    let signer = null;
+    let writeContract = null;
+    let readContract = null;
 
     function log(msg) {
       const term = document.getElementById('term-logs');
       term.textContent += msg + '\n';
       term.scrollTop = term.scrollHeight;
+    }
+
+    // Public Read-Only Provider for instant status fetching
+    async function initReadOnly() {
+      try {
+        const readProvider = new ethers.JsonRpcProvider('https://mainnet.base.org');
+        readContract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, readProvider);
+        await refreshOnChainTools();
+      } catch (err) {
+        log('⚠️ 온체인 실시간 조회 오류: ' + err.message);
+      }
+    }
+
+    async function refreshOnChainTools() {
+      try {
+        const total = await readContract.totalTools();
+        document.getElementById('total-count').textContent = total.toString();
+        log(`📡 Base 온체인 상태: 등록된 도구 총 ${total.toString()}개`);
+
+        const container = document.getElementById('live-tools-container');
+        if (Number(total) === 0) {
+          container.innerHTML = '<p style="padding: 0.5rem 0;">현재 온체인에 등록된 도구가 없습니다. 위의 등록 버튼을 눌러 첫 도구를 각인하십시오.</p>';
+          updateToolBadges({}, false);
+          return;
+        }
+
+        let html = '';
+        const registeredMap = {};
+        for (let i = 0; i < Number(total); i++) {
+          const slug = await readContract.toolList(i);
+          const tool = await readContract.getTool(slug);
+          registeredMap[slug] = tool;
+          const priceUsd = (Number(tool.priceUsdcUnits) / 1000000).toFixed(2);
+          html += `
+            <div style="background: rgba(15,23,42,0.7); border: 1px solid #334155; border-radius: 10px; padding: 1rem; margin-bottom: 0.75rem;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.4rem;">
+                <span style="font-family: var(--font-mono); font-weight: 700; color: #fff;">#${i + 1} ${slug}</span>
+                <span class="tool-badge ${tool.active ? 'badge-active' : 'badge-pending'}">${tool.active ? 'LIVE ACTIVE' : 'INACTIVE'}</span>
+              </div>
+              <div style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 0.4rem;">${tool.description}</div>
+              <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent);">
+                가격: ${priceUsd} USDC (${tool.priceUsdcUnits.toString()} units) | 엔드포인트: ${tool.mcpEndpoint}
+              </div>
+            </div>
+          `;
+        }
+        container.innerHTML = html;
+        updateToolBadges(registeredMap, true);
+      } catch (err) {
+        log('❌ 도구 목록 갱신 오류: ' + err.message);
+      }
+    }
+
+    function updateToolBadges(regMap, hasData) {
+      // CAD Tool
+      const cadTool = regMap['articulated-robotics-cad'];
+      const badgeCad = document.getElementById('badge-cad');
+      const btnCad = document.getElementById('btn-reg-cad');
+      if (cadTool && cadTool.active) {
+        badgeCad.className = 'tool-badge badge-active';
+        badgeCad.textContent = '온체인 등록 완료 (ACTIVE)';
+        btnCad.textContent = '✅ 등록 완료 (0.1 USDC)';
+        btnCad.disabled = true;
+        btnCad.style.background = '#1e293b';
+        btnCad.style.color = '#94a3b8';
+      } else {
+        badgeCad.className = 'tool-badge badge-pending';
+        badgeCad.textContent = '미등록 (Unregistered)';
+        if (userAddress) btnCad.disabled = false;
+      }
+
+      // Utils Tool
+      const utilsTool = regMap['salabs-utilities-suite'];
+      const badgeUtils = document.getElementById('badge-utils');
+      const btnUtils = document.getElementById('btn-reg-utils');
+      if (utilsTool && utilsTool.active) {
+        badgeUtils.className = 'tool-badge badge-active';
+        badgeUtils.textContent = '온체인 등록 완료 (ACTIVE)';
+        btnUtils.textContent = '✅ 등록 완료 (0.05 USDC)';
+        btnUtils.disabled = true;
+        btnUtils.style.background = '#1e293b';
+        btnUtils.style.color = '#94a3b8';
+      } else {
+        badgeUtils.className = 'tool-badge badge-pending';
+        badgeUtils.textContent = '미등록 (Unregistered)';
+        if (userAddress) btnUtils.disabled = false;
+      }
+
+      // Batch Button
+      const btnAll = document.getElementById('btn-reg-all');
+      if (cadTool?.active && utilsTool?.active) {
+        btnAll.textContent = '🎉 모든 핵심 도구 온체인 등록 완료';
+        btnAll.disabled = true;
+        btnAll.style.background = '#1e293b';
+        btnAll.style.color = '#94a3b8';
+      } else if (userAddress) {
+        btnAll.disabled = false;
+      }
     }
 
     async function connectWallet() {
@@ -209,16 +460,20 @@
         return;
       }
       try {
-        log('[1] 지갑 연결 요청 중...');
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        log('[1] 메타마스크 지갑 연결 요청 중...');
+        browserProvider = new ethers.BrowserProvider(window.ethereum);
+        const accounts = await browserProvider.send("eth_requestAccounts", []);
         userAddress = accounts[0];
+        signer = await browserProvider.getSigner();
+        writeContract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+
         document.getElementById('wallet-status').textContent = userAddress.slice(0, 6) + '...' + userAddress.slice(-4);
         document.getElementById('wallet-status').style.color = '#00ff88';
         log('✅ 지갑 연결 성공: ' + userAddress);
 
         // Check Chain
-        const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-        if (chainId !== TARGET_CHAIN_ID) {
+        const network = await browserProvider.getNetwork();
+        if (network.chainId !== 8453n) {
           log('[2] Base Mainnet으로 네트워크 전환 요청 중...');
           try {
             await window.ethereum.request({
@@ -240,62 +495,93 @@
             }
           }
         }
-        log('✅ Base Mainnet 활성화 완료');
+        log('✅ Base Mainnet (Chain ID 8453) 확인 완료');
         document.getElementById('btn-connect').style.display = 'none';
-        document.getElementById('btn-deploy').disabled = false;
-        log('👉 이제 아래의 초록색 [스마트 컨트랙트 배포] 버튼을 누르시면 됩니다.');
+
+        // Check ownership
+        if (userAddress.toLowerCase() !== TREASURY_ADDRESS.toLowerCase()) {
+          log('⚠️ 경고: 현재 연결된 지갑(' + userAddress + ')은 금고 관리자 지갑(' + TREASURY_ADDRESS + ')과 다릅니다. 등록 권한이 없을 수 있습니다.');
+        } else {
+          log('👑 금고 관리자(시장님) 지갑 인증 완료! 온체인 도구 등록 권한 활성화.');
+        }
+
+        await refreshOnChainTools();
       } catch (e) {
         log('❌ 오류: ' + e.message);
       }
     }
 
-    async function deployContract() {
-      const btn = document.getElementById('btn-deploy');
+    async function registerCadTool() {
+      const btn = document.getElementById('btn-reg-cad');
       btn.disabled = true;
-      btn.textContent = '⏳ 컨트랙트 트랜잭션 전송 중...';
+      btn.textContent = '⏳ 메타마스크 서명 대기 중...';
 
       try {
-        log('\n[3] Base 체인으로 컨트랙트 배포 트랜잭션 전송 중...');
-        const txHash = await window.ethereum.request({
-          method: 'eth_sendTransaction',
-          params: [{
-            from: userAddress,
-            data: DEPLOY_BYTECODE,
-            value: '0x0'
-          }]
-        });
+        log('\n[TX] articulated-robotics-cad 등록 트랜잭션 서명 요청...');
+        const tx = await writeContract.registerTool(
+          'articulated-robotics-cad',
+          100000n, // 0.1 USDC (6 decimals)
+          MCP_ENDPOINT,
+          '0.02s Ultra-fast Lie SE(3) Articulated Robotics CAD Engine with 6-DOF URDF/SDF export'
+        );
+        log('⚡ 트랜잭션 전송 완료! 해시: ' + tx.hash);
+        log('🔗 Basescan 확인: https://basescan.org/tx/' + tx.hash);
+        log('⏳ 온체인 블록 채굴 대기 중 (약 2초)...');
+        btn.textContent = '⏳ 블록 채굴 대기 중...';
 
-        log('⚡ 트랜잭션 사출 성공!');
-        log('🔗 Basescan 확인: https://basescan.org/tx/' + txHash);
-        log('⏳ 블록체인 채굴 대기 중 (약 2~4초)...');
-
-        // Poll for receipt
-        let receipt = null;
-        for (let i = 0; i < 30; i++) {
-          await new Promise(r => setTimeout(r, 2000));
-          receipt = await window.ethereum.request({
-            method: 'eth_getTransactionReceipt',
-            params: [txHash]
-          });
-          if (receipt) break;
-        }
-
-        if (receipt && receipt.contractAddress) {
-          log('\n🎉 [배포 100% 완료!] SalabsAgoraRegistry 컨트랙트 주소:');
-          log('👉 ' + receipt.contractAddress);
-          log('🔗 컨트랙트 Basescan: https://basescan.org/address/' + receipt.contractAddress);
-          btn.textContent = '✅ 배포 완료 (' + receipt.contractAddress.slice(0, 8) + '...)';
-          btn.style.background = '#0284c7';
-          btn.style.color = '#fff';
-        } else {
-          log('✅ 트랜잭션이 채굴 대기 중입니다. Basescan 링크에서 잠시 후 확인해 주십시오.');
-        }
+        await tx.wait();
+        log('🎉 [등록 성공!] articulated-robotics-cad 온체인 각인 완료!');
+        await refreshOnChainTools();
       } catch (err) {
-        log('❌ 배포 취소 또는 오류: ' + err.message);
+        log('❌ 등록 실패 또는 취소: ' + err.message);
         btn.disabled = false;
-        btn.textContent = '⚡ SalabsAgoraRegistry 스마트 컨트랙트 배포 (재시도)';
+        btn.textContent = '⚡ [1클릭 등록] articulated-robotics-cad 재시도';
       }
     }
+
+    async function registerUtilsTool() {
+      const btn = document.getElementById('btn-reg-utils');
+      btn.disabled = true;
+      btn.textContent = '⏳ 메타마스크 서명 대기 중...';
+
+      try {
+        log('\n[TX] salabs-utilities-suite 등록 트랜잭션 서명 요청...');
+        const tx = await writeContract.registerTool(
+          'salabs-utilities-suite',
+          50000n, // 0.05 USDC (6 decimals)
+          MCP_ENDPOINT,
+          'SALabs 580+ Precision Engineering, Spatial Kinematics & Mathematical Utilities'
+        );
+        log('⚡ 트랜잭션 전송 완료! 해시: ' + tx.hash);
+        log('🔗 Basescan 확인: https://basescan.org/tx/' + tx.hash);
+        log('⏳ 온체인 블록 채굴 대기 중 (약 2초)...');
+        btn.textContent = '⏳ 블록 채굴 대기 중...';
+
+        await tx.wait();
+        log('🎉 [등록 성공!] salabs-utilities-suite 온체인 각인 완료!');
+        await refreshOnChainTools();
+      } catch (err) {
+        log('❌ 등록 실패 또는 취소: ' + err.message);
+        btn.disabled = false;
+        btn.textContent = '⚡ [1클릭 등록] salabs-utilities-suite 재시도';
+      }
+    }
+
+    async function registerAllTools() {
+      log('\n[일괄 등록 시작] 1번 도구(CAD)부터 등록을 진행합니다...');
+      await registerCadTool();
+      log('\n[일괄 등록 2단계] 2번 도구(Utilities) 등록을 이어서 진행합니다...');
+      await registerUtilsTool();
+      log('\n🎉 모든 핵심 도구 온체인 일괄 등록 시퀀스 종료!');
+    }
+
+    // Auto-init on page load
+    window.addEventListener('load', () => {
+      initReadOnly();
+      if (window.ethereum && window.ethereum.selectedAddress) {
+        connectWallet();
+      }
+    });
   </script>
 </body>
 </html>

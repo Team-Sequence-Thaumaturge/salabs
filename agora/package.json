@@ -1,6 +1,9 @@
 {
-  "name": "salabs-agora-mcp",
-  "version": "2.1.0",
+  "name": "@quanxs/salabs-agora-mcp",
+  "version": "2.1.1",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "SALabs Sovereign 3D Spatial Agora, Articulated Robotics CAD & 580+ Utilities Suite MCP Server",
   "type": "module",
   "main": "mcp-agora-server.js",
