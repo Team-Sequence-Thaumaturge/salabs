@@ -356,11 +356,44 @@ Contract: 0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49
       term.scrollTop = term.scrollHeight;
     }
 
+    const BASE_RPC_POOL = [
+      'https://mainnet.base.org',
+      'https://base.llamarpc.com',
+      'https://base-rpc.publicnode.com',
+      'https://1rpc.io/base'
+    ];
+
+    async function getWorkingContract() {
+      // 1. Prioritize active MetaMask provider if already on Base (Chain 8453)
+      if (browserProvider) {
+        try {
+          const net = await browserProvider.getNetwork();
+          if (net.chainId === 8453n) {
+            return new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, browserProvider);
+          }
+        } catch (e) {}
+      }
+
+      // 2. Iterate through public Base RPC pool
+      for (const rpcUrl of BASE_RPC_POOL) {
+        try {
+          const p = new ethers.JsonRpcProvider(rpcUrl);
+          const c = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, p);
+          // Quick test call
+          await c.totalTools();
+          return c;
+        } catch (e) {
+          // Try next RPC in pool
+        }
+      }
+
+      return new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, new ethers.JsonRpcProvider(BASE_RPC_POOL[0]));
+    }
+
     // Public Read-Only Provider for instant status fetching
     async function initReadOnly() {
       try {
-        const readProvider = new ethers.JsonRpcProvider('https://mainnet.base.org');
-        readContract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, readProvider);
+        readContract = await getWorkingContract();
         await refreshOnChainTools();
       } catch (err) {
         log('⚠️ 온체인 실시간 조회 오류: ' + err.message);
@@ -369,7 +402,9 @@ Contract: 0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49
 
     async function refreshOnChainTools() {
       try {
-        const total = await readContract.totalTools();
+        const contract = await getWorkingContract();
+        readContract = contract;
+        const total = await contract.totalTools();
         document.getElementById('total-count').textContent = total.toString();
         log(`📡 Base 온체인 상태: 등록된 도구 총 ${total.toString()}개`);
 
@@ -383,8 +418,8 @@ Contract: 0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49
         let html = '';
         const registeredMap = {};
         for (let i = 0; i < Number(total); i++) {
-          const slug = await readContract.toolList(i);
-          const tool = await readContract.getTool(slug);
+          const slug = await contract.toolList(i);
+          const tool = await contract.getTool(slug);
           registeredMap[slug] = tool;
           const priceUsd = (Number(tool.priceUsdcUnits) / 1000000).toFixed(2);
           html += `
