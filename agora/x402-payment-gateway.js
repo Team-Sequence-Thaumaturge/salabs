@@ -15,6 +15,7 @@ export class SalabsX402Gateway {
       base_evm: "0xA3f65F1C005528507e9E0E2E17cCC946f671c9d2",
       solana: "DkyioiU3ugjhvoDBTwb1MTkmceETCg4nstuPPf6PGBZV"
     },
+    onchain_registry_contract: "0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49",
     supported_networks: ["base", "solana", "arbitrum", "polygon"]
   };
 
