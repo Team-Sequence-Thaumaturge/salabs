@@ -42,6 +42,44 @@ function submitFeedback(){
   .header-box p { color: #94a3b8; margin: 0.5rem 0; }
   .btn-feedback { background: #38bdf8; color: #0f172a; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; margin: 0.2rem; }
   .btn-github { background: #334155; color: #f8fafc; border: 1px solid #475569; padding: 0.5rem 1rem; border-radius: 6px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; margin: 0.2rem; }
+  .btn-sponsor {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: linear-gradient(180deg, #1e2638 0%, #111722 100%);
+    color: #f8fafc;
+    border: 1px solid rgba(234, 74, 170, 0.5);
+    padding: 0.5rem 1.05rem;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: -0.01em;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 0.2rem;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    vertical-align: middle;
+  }
+  .btn-sponsor:hover {
+    background: linear-gradient(180deg, #2b364e 0%, #172030 100%);
+    border-color: #ea4aaa;
+    color: #ffffff;
+    transform: translateY(-1.5px);
+    box-shadow: 0 0 16px rgba(234, 74, 170, 0.45), 0 4px 12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+  .btn-sponsor .sponsor-heart {
+    color: #ea4aaa;
+    font-size: 1.05rem;
+    line-height: 1;
+    display: inline-block;
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .btn-sponsor:hover .sponsor-heart {
+    transform: scale(1.25);
+    filter: drop-shadow(0 0 6px #ea4aaa);
+  }
   .section-title { color: #38bdf8; border-bottom: 2px solid #334155; padding-bottom: 0.5rem; margin-top: 3rem; max-width: 1200px; margin-left: auto; margin-right: auto; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; max-width: 1200px; margin: 0 auto; }
   .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 1.5rem; text-decoration: none; color: #f8fafc; display: block; transition: all 0.2s; }
@@ -139,6 +177,18 @@ function submitFeedback(){
     border: 1px solid rgba(0, 255, 136, 0.35);
   }
   .badge-cockpit:hover { background: rgba(0, 255, 136, 0.25); transform: translateY(-1px); }
+  .badge-sponsor {
+    background: rgba(234, 74, 170, 0.12);
+    color: #ff60be;
+    border: 1px solid rgba(234, 74, 170, 0.35);
+  }
+  .badge-sponsor:hover {
+    background: rgba(234, 74, 170, 0.25);
+    border-color: #ea4aaa;
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(234, 74, 170, 0.4);
+    transform: translateY(-1px);
+  }
 
 </style>
 </head>
@@ -156,6 +206,7 @@ function submitFeedback(){
     <a href="https://basescan.org/address/0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49" target="_blank" class="nav-link-badge badge-base">⛓️ Base Contract</a>
     <a href="./agora/deploy.html" class="nav-link-badge badge-cockpit">⚡ On-Chain Cockpit</a>
     <a href="./agora/index.html" class="nav-link-badge badge-base">🏛️ Agora 3D Studio</a>
+    <a href="https://github.com/sponsors/Team-Sequence-Thaumaturge" target="_blank" class="nav-link-badge badge-sponsor">💖 GitHub Sponsors</a>
   </div>
 </nav>
 
@@ -167,6 +218,7 @@ function submitFeedback(){
     <button class="btn-feedback" onclick="openModal()">💬 Instant In-Page Feedback</button>
     <a class="btn-github" href="./billing.html" style="background: linear-gradient(135deg, #7928ca, #ff0080); border: 1px solid #ff0080;">💳 Billing & Credits</a>
     <a class="btn-github" href="https://github.com/Team-Sequence-Thaumaturge" target="_blank">🐙 GitHub Team</a>
+    <a class="btn-sponsor" href="https://github.com/sponsors/Team-Sequence-Thaumaturge" target="_blank" rel="noopener noreferrer"><span class="sponsor-heart">♥</span> Sponsor</a>
   </div>
 </header>
 

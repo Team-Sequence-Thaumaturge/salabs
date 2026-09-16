@@ -12,6 +12,7 @@ This repository houses core AI modules, 3D engines, web tools, and browser autom
 [![MCP Protocol](https://img.shields.io/badge/MCP-2024--11--05-blue.svg?style=flat-square)](https://modelcontextprotocol.io/)
 [![Base Mainnet](https://img.shields.io/badge/Base%20Mainnet-0x154384Fb...-0052ff.svg?style=flat-square)](https://basescan.org/address/0x154384Fb1BA2EB6570B8B6A016798bC9Dc064b49)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+[![GitHub Sponsors](https://img.shields.io/badge/Sponsor-Team_Sequence_Thaumaturge-ea4aaa.svg?style=flat-square&logo=github-sponsors&logoColor=white)](https://github.com/sponsors/Team-Sequence-Thaumaturge)
 
 > **0.02s Lie SE(3) Bishop Frame 3D Articulated Robotics CAD Engine + 580+ Autonomous Developer Utilities Suite + x402 Micropayment Protocol on Base Mainnet.**
 
@@ -130,6 +131,15 @@ salabs/
 ├── index.html                  # SALABS Main Portal Page
 └── README.md                   # SALABS Master Engineering Specs
 ```
+
+---
+
+## 💖 Sponsorship & Community Backers
+
+SALabs develops open developer tooling, WebGL 3D spatial simulation runtimes, Base smart contract registries, and 580+ client-side utility engines.
+
+Support open-source development and autonomous infrastructure:
+👉 **[Sponsor Team Sequence Thaumaturge on GitHub](https://github.com/sponsors/Team-Sequence-Thaumaturge)** ($1/mo Supporter, $5/mo Autonomous Backer, $25/mo Research Sponsor)
 
 ---
 
