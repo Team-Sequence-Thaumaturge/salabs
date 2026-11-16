@@ -11,7 +11,8 @@
 - Legal & Policy Pages: [About](https://salabs.quanxs.com/about.html) | [Privacy Policy](https://salabs.quanxs.com/privacy.html) | [Terms of Service](https://salabs.quanxs.com/terms.html) | [Billing](https://salabs.quanxs.com/billing.html)
 
 ## 🌐 Featured Open Source & Flagship Platforms
-- [SADT Document Transfer MCP](https://github.com/Team-Sequence-Thaumaturge/-document-IR): Stella Actuation Document Transfer (`sadt-mcp`) deterministic MCP server & IR converter for HWP/HWPX, DOCX, XLSX, PDF (`pip install sadt-mcp`).
+- [SADT: HWP · HWPX · DOCX Document MCP Hub](https://salabs.quanxs.com/tools/sadt-hwp-hwpx-document-mcp-hub.html): Official bilingual showcase, 1-line `uvx` quickstart, and FAQ for SADT (`sadt-mcp`).
+- [SADT GitHub Repository (-document-IR)](https://github.com/Team-Sequence-Thaumaturge/-document-IR): Stella Actuation Document Transfer zero-dependency Python MCP server for HWP v5.0, HWPX, DOCX, XLSX, PDF, HTML, Markdown, and CSV (`uvx --from git+https://github.com/Team-Sequence-Thaumaturge/-document-IR sadt-mcp`).
 - [AI Agent Digital Agora & MCP API](https://salabs.quanxs.com/agora/): Autonomous AI-to-AI Machine Interaction Gateway, Lie SE(3) 3D Spatial Geometry Engine & x402 Micro-Settlement Protocol.
 - [B2B 768-Dim Vector Embeddings Download](https://salabs.quanxs.com/downloads/): Enterprise-grade 768-dimensional float32 Vertex AI vector embeddings asset.
 - [SAIR Chrome Extension Source Hub](https://salabs.quanxs.com/tools/sair-chrome-extension-source-hub.html): Official Manifest V3 Open Source Hub with WebCrypto & ShadowDOM Injection.

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SADT (sadt-mcp) — 파이썬 HWP · HWPX · DOCX 무의존성 문서 변환 MCP 서버 | Quanxs SA Labs</title>
+  <link rel="canonical" href="https://salabs.quanxs.com/tools/sadt-hwp-hwpx-document-mcp-hub.html">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <meta name="author" content="김치성 대표 (Quanxs / Team Sequence)">
+  <meta http-equiv="last-modified" content="2026-11-16">
+  <meta name="keywords" content="파이썬 HWP 파서, HWPX 변환 MCP, 한글 문서 자동화 AI 에이전트, Python HWP converter without Hancom Office, HWPX DOCX MCP server, sadt-mcp, T-DIR, document-IR, OWPML, OMML, HWP EQN">
+  <meta name="description" content="SADT (Stella Actuation Document Transfer): 한컴오피스 없이 순수 Python 3.10+ 표준 라이브러리만으로 HWP v5.0, HWPX(한글), DOCX, XLSX, PDF, HTML, Markdown, CSV를 변환·조판·검증하는 제로 디펜던시 MCP 서버 (-document-IR).">
+  <meta property="og:title" content="SADT (sadt-mcp) — Zero-Dependency HWP · HWPX · DOCX Document MCP Server">
+  <meta property="og:description" content="한컴오피스 없이 동작하는 순수 파이썬 HWP/HWPX/DOCX/XLSX/PDF 변환 및 3원 수식 AST(OMML-EQN-LaTeX) MCP 서버. uvx 한 줄 실행 지원.">
+  <meta property="og:url" content="https://salabs.quanxs.com/tools/sadt-hwp-hwpx-document-mcp-hub.html">
+  <meta property="og:image" content="https://quanxs.com/favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:updated_time" content="2026-11-16T20:40:00+09:00">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="SADT (sadt-mcp) — Python HWP · HWPX · DOCX Document MCP Server">
+  <meta name="twitter:description" content="Zero-dependency Python MCP server for HWP, HWPX, DOCX, XLSX, PDF, Markdown & CSV with 3-way Equation AST.">
+  <meta name="twitter:image" content="https://quanxs.com/favicon.png">
+  <link rel="alternate" type="text/plain" title="SADT LLMs.txt" href="https://raw.githubusercontent.com/Team-Sequence-Thaumaturge/-document-IR/main/llms.txt">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://quanxs.com/#organization",
+        "name": "Quanxs (Team Sequence)",
+        "url": "https://quanxs.com",
+        "email": "chi@quanxs.com",
+        "founder": {
+          "@type": "Person",
+          "name": "김치성",
+          "alternateName": "Kim Chisung",
+          "jobTitle": "대표"
+        }
+      },
+      {
+        "@type": "SoftwareSourceCode",
+        "@id": "https://salabs.quanxs.com/tools/sadt-hwp-hwpx-document-mcp-hub.html#source",
+        "name": "SADT (-document-IR / sadt-mcp)",
+        "alternateName": ["SADT", "Stella Actuation Document Transfer", "T-DIR", "sadt-mcp"],
+        "description": "Zero-dependency Python 3.10+ MCP server and document intermediate representation engine for Korean HWP v5.0 (.hwp), HWPX (.hwpx), DOCX, XLSX, PDF, HTML, Markdown, and CSV with 3-way Equation AST translation.",
+        "codeRepository": "https://github.com/Team-Sequence-Thaumaturge/-document-IR",
+        "programmingLanguage": "Python",
+        "runtimePlatform": "Python 3.10+ (Stdlib Only)",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "version": "4.1.0",
+        "dateModified": "2026-11-16",
+        "author": { "@id": "https://quanxs.com/#organization" },
+        "keywords": ["hwp", "hwpx", "mcp", "mcp-server", "docx", "xlsx", "pdf", "korean", "hangul", "sadt"]
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://salabs.quanxs.com/tools/sadt-hwp-hwpx-document-mcp-hub.html#app",
+        "name": "SADT (Stella Actuation Document Transfer MCP Server)",
+        "url": "https://salabs.quanxs.com/tools/sadt-hwp-hwpx-document-mcp-hub.html",
+        "downloadUrl": "https://github.com/Team-Sequence-Thaumaturge/-document-IR",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Windows, macOS, Linux",
+        "softwareVersion": "4.1.0",
+        "license": "https://www.apache.org/licenses/LICENSE-2.0",
+        "dateModified": "2026-11-16",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "publisher": { "@id": "https://quanxs.com/#organization" }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://salabs.quanxs.com/tools/sadt-hwp-hwpx-document-mcp-hub.html#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "한컴오피스 없이 Python으로 .hwp 및 .hwpx 문서를 파싱·생성할 수 있습니까?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "예. SADT(-document-IR)는 Python 3.10+ 표준 라이브러리만으로 구현된 순수 파이썬 MS-CFB OLE2 리더/라이터와 HWP v5.0·OWPML(.hwpx) 코덱을 내장하여 Windows, macOS, Linux 어디서나 한컴오피스 설치 없이 HWP/HWPX 문서를 처리합니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Claude Desktop이나 Cursor, Antigravity에 SADT MCP를 한 줄로 연동하는 방법은 무엇입니까?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Git 저장소를 직접 클론하지 않고도 터미널에서 'uvx --from git+https://github.com/Team-Sequence-Thaumaturge/-document-IR sadt-mcp' 명령으로 stdio MCP 서버를 즉시 실행하거나 mcpServers JSON에 동일한 uvx 인자를 등록할 수 있습니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "수식(OMML, HWP EQN, LaTeX)과 공공기관 양식 표 구조가 변환 시 유지됩니까?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SADT는 공유 수식 AST를 통해 Word OMML, 한글 HWP Equation Script, LaTeX 수식을 상호 변환하며, 비지도 섹션 슬롯 스캐너와 6단계 탄성 솔버(MinimumInvasionElasticSolver)를 통해 양식 외곽 표와 쪽수 예산을 보존합니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "SADT의 라이선스 및 기술 문의 창구는 어디입니까?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SADT는 Apache License 2.0 오픈소스 프로젝트이며, 소스 코드는 GitHub Team-Sequence-Thaumaturge/-document-IR에서 공개되어 있습니다. 기업 기술 지원 및 파트너십 문의는 김치성 대표(chi@quanxs.com)로 연락하실 수 있습니다."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #0b1120;
+      --surface: #111827;
+      --card: #1e293b;
+      --border: #334155;
+      --accent: #38bdf8;
+      --emerald: #10b981;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 2rem 1rem 3rem;
+      background: radial-gradient(circle at top center, rgba(56, 189, 248, 0.08), transparent 45%), var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", sans-serif;
+      line-height: 1.65;
+    }
+    .wrap { max-width: 1080px; margin: 0 auto; }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+      padding: 0.75rem 1rem;
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .topbar a { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+    .topbar a:hover { text-decoration: underline; }
+    .hero {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      border-radius: 14px;
+      padding: 2.25rem 2rem;
+      margin-bottom: 1.75rem;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+    .pill {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.14);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #7dd3fc;
+    }
+    h1 { margin: 0 0 0.75rem; font-size: clamp(1.6rem, 3vw, 2.25rem); color: #fff; line-height: 1.3; }
+    .lead { color: #cbd5e1; font-size: 1rem; margin: 0 0 1.4rem; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.68rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      text-decoration: none;
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+    .btn-primary { background: #38bdf8; color: #0f172a; }
+    .btn-primary:hover { background: #7dd3fc; }
+    .btn-secondary { background: #0f172a; color: #f8fafc; border-color: #475569; }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+    h2 { margin: 0 0 0.9rem; color: var(--accent); font-size: 1.3rem; }
+    h3 { margin: 0 0 0.45rem; color: #e2e8f0; font-size: 1.05rem; }
+    .code-wrap { position: relative; margin: 0.75rem 0 1.25rem; }
+    pre {
+      margin: 0;
+      padding: 1rem 4.5rem 1rem 1rem;
+      background: #020617;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      color: #38bdf8;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.86rem;
+      overflow-x: auto;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 0.6rem;
+      right: 0.6rem;
+      background: #1e293b;
+      color: #e2e8f0;
+      border: 1px solid #475569;
+      border-radius: 6px;
+      padding: 0.28rem 0.65rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 0.5rem; }
+    th, td { padding: 0.65rem 0.75rem; border-bottom: 1px solid #1e293b; text-align: left; }
+    th { color: var(--accent); border-bottom-color: #475569; }
+    td { color: #cbd5e1; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+    .card {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+    }
+    .card code { color: #34d399; font-size: 0.9rem; }
+    footer {
+      margin-top: 2.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    footer nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.25rem; margin: 0.75rem 0; }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="topbar" aria-label="Portal navigation">
+      <a href="../index.html">← Back to Quanxs SA Labs</a>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <a href="https://quanxs.com" target="_blank" rel="noopener noreferrer">quanxs.com</a>
+        <a href="https://github.com/Team-Sequence-Thaumaturge/-document-IR" target="_blank" rel="noopener noreferrer">GitHub (-document-IR) ↗</a>
+        <a href="https://raw.githubusercontent.com/Team-Sequence-Thaumaturge/-document-IR/main/llms.txt" target="_blank" rel="noopener noreferrer">Raw llms.txt ↗</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="pill-row">
+        <span class="pill">v4.1.0 · Apache-2.0</span>
+        <span class="pill">Python 3.10+ Stdlib Only (0 Dependencies)</span>
+        <span class="pill">HWP · HWPX · DOCX · XLSX · PDF · MD · HTML · CSV</span>
+        <span class="pill">Native MCP stdio Server</span>
+      </div>
+      <h1>SADT (sadt-mcp) — 파이썬 HWP · HWPX · DOCX 무의존성 문서 변환 MCP 서버</h1>
+      <p class="lead">
+        <strong>SADT (Stella Actuation Document Transfer)</strong>는 한컴오피스나 LibreOffice 없이 순수 Python 표준 라이브러리만으로
+        <strong>한글(.hwp v5.0 / .hwpx OWPML), MS Word(.docx), Excel(.xlsx), PDF 1.4(.pdf), HTML5, Markdown, CSV</strong>를
+        변환하고, 템플릿 슬롯(`SLOT 01..M`)과 3원 수식(`OMML ↔ HWP EQN ↔ LaTeX`)을 보존하는 오픈소스 MCP 엔진입니다.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://github.com/Team-Sequence-Thaumaturge/-document-IR" target="_blank" rel="noopener noreferrer">GitHub 저장소 바로가기 (-document-IR) ↗</a>
+        <a class="btn btn-secondary" href="https://github.com/Team-Sequence-Thaumaturge/-document-IR/blob/main/README_KO.md" target="_blank" rel="noopener noreferrer">한국어 매뉴얼 (README_KO) ↗</a>
+        <a class="btn btn-secondary" href="https://github.com/Team-Sequence-Thaumaturge/-document-IR/blob/main/server.json" target="_blank" rel="noopener noreferrer">MCP Manifest (server.json) ↗</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel" aria-labelledby="quickstart-heading">
+        <h2 id="quickstart-heading">1. Zero-Clone 1-Line Quickstart (`uvx` / `pip` / Claude · Cursor MCP)</h2>
+        <p style="color:#cbd5e1;margin:0;">Git 저장소를 수동으로 클론하지 않고 한 줄로 바로 실행하거나 MCP 클라이언트에 등록할 수 있습니다.</p>
+
+        <h3 style="margin-top:1rem;">터미널 1줄 실행 (`uvx`)</h3>
+        <div class="code-wrap">
+          <pre id="cmd-uvx">uvx --from git+https://github.com/Team-Sequence-Thaumaturge/-document-IR sadt-mcp</pre>
+          <button type="button" class="copy-btn" onclick="copyText('cmd-uvx', this)">Copy</button>
+        </div>
+
+        <h3>Claude Desktop · Cursor · Windsurf · Antigravity `mcpServers` 설정</h3>
+        <div class="code-wrap">
+          <pre id="cmd-mcp">{
+  "mcpServers": {
+    "sadt-mcp": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/Team-Sequence-Thaumaturge/-document-IR",
+        "sadt-mcp"
+      ]
+    }
+  }
+}</pre>
+          <button type="button" class="copy-btn" onclick="copyText('cmd-mcp', this)">Copy</button>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="compare-heading">
+        <h2 id="compare-heading">2. Capability Matrix (Why Developers Use SADT)</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>SADT (`sadt-mcp` / `-document-IR`)</th>
+              <th>`pyhwp` / `olefile`</th>
+              <th>`pandoc`</th>
+              <th>`python-docx`</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Pure-Python HWP v5.0 Read &amp; Write</strong></td>
+              <td>Read + Template Slot Write (`CFBArchive`)</td>
+              <td>Mainly Read / Extract</td>
+              <td>Not supported</td>
+              <td>Not supported</td>
+            </tr>
+            <tr>
+              <td><strong>Standalone `.hwpx` (OWPML) Synthesis</strong></td>
+              <td>Supported (`&lt;hp:pic&gt;`, `BinData`)</td>
+              <td>Not supported</td>
+              <td>Not supported</td>
+              <td>Not supported</td>
+            </tr>
+            <tr>
+              <td><strong>Multi-Format Coverage</strong></td>
+              <td>8 formats (HWP, HWPX, DOCX, XLSX, HTML, PDF, MD, CSV)</td>
+              <td>HWP focus</td>
+              <td>Text / DOCX / HTML / LaTeX</td>
+              <td>DOCX only</td>
+            </tr>
+            <tr>
+              <td><strong>3-Way Equation AST Translation</strong></td>
+              <td>`OMML` ↔ `HWP EQN` ↔ `LaTeX`</td>
+              <td>Limited</td>
+              <td>No HWP equation support</td>
+              <td>Raw XML</td>
+            </tr>
+            <tr>
+              <td><strong>External Dependencies</strong></td>
+              <td>Zero (Python 3.10+ stdlib only)</td>
+              <td>External dependencies</td>
+              <td>Haskell binary</td>
+              <td>`lxml`</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="panel" aria-labelledby="tools-heading">
+        <h2 id="tools-heading">3. Built-In MCP Tools (`5` Stdio JSON-RPC Endpoints)</h2>
+        <div class="grid-2">
+          <article class="card">
+            <h3><code>tdir_probe_files</code></h3>
+            <p style="color:#94a3b8;margin:0;font-size:0.9rem;">입력 문서 및 HWP/HWPX 양식 템플릿의 타이포그래피, 여백, 섹션 슬롯(`SLOT 01..M`), 첨부 그리드(`MEDIA 01..P`)를 런타임 탐색합니다.</p>
+          </article>
+          <article class="card">
+            <h3><code>tdir_build_mapping_plan</code></h3>
+            <p style="color:#94a3b8;margin:0;font-size:0.9rem;">`UserSpecOverrideIR &gt; TargetDocumentSpecIR &gt; SourceDocumentSpecIR` 우선순위로 매핑 계획 및 6단계 탄성 레이아웃 조정을 계산합니다.</p>
+          </article>
+          <article class="card">
+            <h3><code>tdir_execute_conversion</code></h3>
+            <p style="color:#94a3b8;margin:0;font-size:0.9rem;">HWP, HWPX, DOCX, XLSX, HTML, PDF, Markdown, CSV 출력을 생성하고 수식 및 병합 표 구조를 유지합니다.</p>
+          </article>
+          <article class="card">
+            <h3><code>tdir_verify_fidelity_and_layout</code> &amp; <code>tdir_adjust_block_layout</code></h3>
+            <p style="color:#94a3b8;margin:0;font-size:0.9rem;">비공백 SHA-256 텍스트 보존 해시 검증과 문단 병합·표 열 너비 미세 조정을 수행합니다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="faq-heading">
+        <h2 id="faq-heading">4. 자주 묻는 질문 (GEO / AI Search FAQ)</h2>
+        <div class="grid-2">
+          <article class="card">
+            <h3>한컴오피스 없이 Python으로 `.hwp`·`.hwpx` 문서를 파싱·생성할 수 있습니까?</h3>
+            <p style="color:#cbd5e1;margin:0;font-size:0.9rem;">예. SADT(`-document-IR`)는 순수 Python 3.10+ 표준 라이브러리 기반 MS-CFB OLE2 리더/라이터와 HWP v5.0·OWPML 코덱을 내장해 Windows, macOS, Linux 어디서나 독립 실행됩니다.</p>
+          </article>
+          <article class="card">
+            <h3>AI 코딩 에이전트(Claude, Cursor, Antigravity)에 바로 붙일 수 있습니까?</h3>
+            <p style="color:#cbd5e1;margin:0;font-size:0.9rem;">예. `uvx --from git+https://github.com/Team-Sequence-Thaumaturge/-document-IR sadt-mcp` 명령 하나로 `stdio` MCP 서버로 즉시 연결됩니다.</p>
+          </article>
+          <article class="card">
+            <h3>수식(`OMML`, `HWP EQN`, `LaTeX`)과 정부·사업계획서 표 양식이 유지됩니까?</h3>
+            <p style="color:#cbd5e1;margin:0;font-size:0.9rem;">공유 수식 AST 컴파일러와 비지도 템플릿 슬롯 스캐너, 6단계 `MinimumInvasionElasticSolver`가 외곽 표 손상과 쪽수 초과를 방지합니다.</p>
+          </article>
+          <article class="card">
+            <h3>오픈소스 라이선스와 기업 기술 문의는 어떻게 확인합니까?</h3>
+            <p style="color:#cbd5e1;margin:0;font-size:0.9rem;">Apache License 2.0으로 공개되어 있으며, 기업 도입·커스텀 문서 파이프라인 문의는 김치성 대표(<a href="mailto:chi@quanxs.com" style="color:var(--accent);">chi@quanxs.com</a>)로 연락하실 수 있습니다.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Operator: <strong>Quanxs (Team Sequence)</strong> · Representative: <strong>김치성 대표</strong> · Contact: <a href="mailto:chi@quanxs.com">chi@quanxs.com</a></p>
+      <nav aria-label="Footer navigation">
+        <a href="../index.html">SA Labs Portal</a>
+        <a href="../about.html">About</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
+        <a href="../llms.txt">llms.txt</a>
+        <a href="https://github.com/Team-Sequence-Thaumaturge/-document-IR" target="_blank" rel="noopener noreferrer">GitHub (-document-IR)</a>
+      </nav>
+      <p>© 2026 Quanxs SA Labs (Team Sequence) · Last Updated: <time datetime="2026-11-16">2026-11-16</time></p>
+    </footer>
+  </div>
+
+  <script>
+    function copyText(id, btn) {
+      var el = document.getElementById(id);
+      if (!el || !navigator.clipboard) return;
+      navigator.clipboard.writeText(el.textContent).then(function () {
+        var orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(function () { btn.textContent = orig; }, 1600);
+      });
+    }
+  </script>
+</body>
+</html>
