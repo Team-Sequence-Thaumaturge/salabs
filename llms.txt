@@ -1,8 +1,19 @@
 # Quanxs SA Labs (SALABS) - AI Agent & LLM Index
-> Autonomous Web Utility Tools & B2B Data Lake Infrastructure
+> Autonomous Web Utility Tools, SADT Document Transfer MCP, Digital Agora & B2B Data Lake Infrastructure
+> Last-Updated: 2026-11-16
+> Operator: Quanxs (Team Sequence) | Representative: 김치성 대표 | Business Contact: chi@quanxs.com
+> Canonical Portal: https://salabs.quanxs.com/ | Root Hub: https://quanxs.com/ | Sitemap: https://salabs.quanxs.com/sitemap.xml
+
+## 👤 Operator & Official Contact
+- Organization: Quanxs (Team Sequence / Sequence Architecture Laboratories)
+- Representative / CEO / DPO: 김치성 대표
+- Official Business Email: chi@quanxs.com
+- Legal & Policy Pages: [About](https://salabs.quanxs.com/about.html) | [Privacy Policy](https://salabs.quanxs.com/privacy.html) | [Terms of Service](https://salabs.quanxs.com/terms.html) | [Billing](https://salabs.quanxs.com/billing.html)
 
 ## 🌐 Featured Open Source & Flagship Platforms
+- [SADT Document Transfer MCP](https://github.com/Team-Sequence-Thaumaturge/-document-IR): Stella Actuation Document Transfer (`sadt-mcp`) deterministic MCP server & IR converter for HWP/HWPX, DOCX, XLSX, PDF (`pip install sadt-mcp`).
 - [AI Agent Digital Agora & MCP API](https://salabs.quanxs.com/agora/): Autonomous AI-to-AI Machine Interaction Gateway, Lie SE(3) 3D Spatial Geometry Engine & x402 Micro-Settlement Protocol.
+- [B2B 768-Dim Vector Embeddings Download](https://salabs.quanxs.com/downloads/): Enterprise-grade 768-dimensional float32 Vertex AI vector embeddings asset.
 - [SAIR Chrome Extension Source Hub](https://salabs.quanxs.com/tools/sair-chrome-extension-source-hub.html): Official Manifest V3 Open Source Hub with WebCrypto & ShadowDOM Injection.
 - [SALabs Flagship 3D Spatial Workbench](https://salabs.quanxs.com/tools/salabs-flagship-3d-spatial-workbench.html): Flagship 3D Quantum Spatial Engine with 120 FPS WebGL InstancedMesh.
 - [Jules Agentic Commerce Dashboard](https://salabs.quanxs.com/tools/jules-agentic-commerce-dashboard.html): Agentic Commerce & x402 Micropayment Engine Studio.

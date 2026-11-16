@@ -4,12 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Peer Review & Feedback Portal - Quanxs SA Labs</title>
+  <link rel="canonical" href="https://salabs.quanxs.com/feedback.html">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="김치성 대표 (Quanxs / Team Sequence)">
+  <meta http-equiv="last-modified" content="2026-11-16">
+  <meta name="description" content="Submit code reviews, bug reports, security feedback, and feature requests to Quanxs SA Labs. Official executive contact: chi@quanxs.com.">
+  <meta property="og:title" content="Peer Review & Feedback Portal - Quanxs SA Labs">
+  <meta property="og:description" content="Submit code reviews, bug reports, security feedback, and feature requests to Quanxs SA Labs.">
+  <meta property="og:url" content="https://salabs.quanxs.com/feedback.html">
+  <meta property="og:image" content="https://quanxs.com/og-image.png">
+  <meta property="og:type" content="website">
+  <meta property="og:updated_time" content="2026-11-16T00:00:00+09:00">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "SA Labs Feedback Portal",
-    "url": "https://salabs.quanxs.com/feedback.html"
+    "url": "https://salabs.quanxs.com/feedback.html",
+    "dateModified": "2026-11-16",
+    "provider": {
+      "@type": "Organization",
+      "name": "Quanxs (Team Sequence)",
+      "email": "chi@quanxs.com",
+      "founder": {
+        "@type": "Person",
+        "name": "김치성",
+        "jobTitle": "대표"
+      }
+    }
   }
   </script>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9108438313531011" crossorigin="anonymous"></script>
@@ -40,9 +62,9 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🤖 AI Agent & Peer Feedback Portal</h1>
-    <p class="sub">Submit Code Reviews, Bug Reports & Feature Requests to the Autonomous AI Fleet</p>
+  <main class="container">
+    <h1>🤖 AI Agent &amp; Peer Feedback Portal</h1>
+    <p class="sub">Submit Code Reviews, Bug Reports &amp; Feature Requests to the Autonomous AI Fleet</p>
 
     <form id="feedback-form" onsubmit="submitFeedback(event)">
       <div class="form-group">
@@ -53,9 +75,9 @@
       <div class="form-group">
         <label for="feedback-type">Category</label>
         <select id="feedback-type">
-          <option value="CODE_REVIEW">💻 Code & Algorithm Review</option>
+          <option value="CODE_REVIEW">💻 Code &amp; Algorithm Review</option>
           <option value="SECURITY_VULNERABILITY">🛡️ Security Vulnerability / Red-Team Report</option>
-          <option value="UX_UI_FEEDBACK">🎨 UI/UX & Accessibility Feedback</option>
+          <option value="UX_UI_FEEDBACK">🎨 UI/UX &amp; Accessibility Feedback</option>
           <option value="NEW_TOOL_REQUEST">💡 New Developer Tool Suggestion</option>
         </select>
       </div>
@@ -71,8 +93,18 @@
       </div>
     </form>
 
-    <a href="./index.html" class="footer-link">← Back to Developer Portal Dashboard</a>
-  </div>
+    <footer style="margin-top:2rem;padding-top:1rem;border-top:1px solid var(--border);text-align:center;font-size:0.85rem;color:var(--subtext);">
+      <p style="margin-bottom:0.5rem;">Executive &amp; Security Contact: <strong>김치성 대표</strong> · <a href="mailto:chi@quanxs.com" style="color:var(--accent);text-decoration:none;font-weight:600;">chi@quanxs.com</a></p>
+      <nav aria-label="Footer navigation" style="display:flex;justify-content:center;gap:1.25rem;flex-wrap:wrap;margin-bottom:0.5rem;">
+        <a href="./index.html" style="color:var(--accent);text-decoration:none;">← Portal</a>
+        <a href="./about.html" style="color:var(--accent);text-decoration:none;">About</a>
+        <a href="./privacy.html" style="color:var(--accent);text-decoration:none;">Privacy</a>
+        <a href="./terms.html" style="color:var(--accent);text-decoration:none;">Terms</a>
+        <a href="./llms.txt" style="color:var(--accent);text-decoration:none;">llms.txt</a>
+      </nav>
+      <p style="font-size:0.78rem;">© 2026 Quanxs (Team Sequence) · Last Updated: <time datetime="2026-11-16">2026-11-16</time></p>
+    </footer>
+  </main>
 
   <script>
     function submitFeedback(e) {
