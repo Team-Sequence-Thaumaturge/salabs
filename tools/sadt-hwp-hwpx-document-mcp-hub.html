@@ -280,26 +280,28 @@
 
     <main>
       <section class="panel" aria-labelledby="quickstart-heading">
-        <h2 id="quickstart-heading">1. Zero-Clone 1-Line Quickstart (`uvx` / `pip` / Claude · Cursor MCP)</h2>
-        <p style="color:#cbd5e1;margin:0;">Git 저장소를 수동으로 클론하지 않고 한 줄로 바로 실행하거나 MCP 클라이언트에 등록할 수 있습니다.</p>
+        <h2 id="quickstart-heading">1. Zero-Clone 1-Line Quickstart (`npx` / `uvx` / Claude · Cursor MCP)</h2>
+        <p style="color:#cbd5e1;margin:0;">Git 저장소를 수동으로 클론하지 않고 `npx` 또는 `uvx` 한 줄로 바로 실행하거나 MCP 클라이언트에 등록할 수 있습니다.</p>
 
-        <h3 style="margin-top:1rem;">터미널 1줄 실행 (`uvx`)</h3>
+        <h3 style="margin-top:1rem;">npm / npx 1줄 실행 (`@quanxs/sadt-mcp`)</h3>
+        <div class="code-wrap">
+          <pre id="cmd-npx">npx -y @quanxs/sadt-mcp</pre>
+          <button type="button" class="copy-btn" onclick="copyText('cmd-npx', this)">Copy</button>
+        </div>
+
+        <h3 style="margin-top:1rem;">uvx 1줄 실행 (GitHub 직접 실행)</h3>
         <div class="code-wrap">
           <pre id="cmd-uvx">uvx --from git+https://github.com/Team-Sequence-Thaumaturge/-document-IR sadt-mcp</pre>
           <button type="button" class="copy-btn" onclick="copyText('cmd-uvx', this)">Copy</button>
         </div>
 
-        <h3>Claude Desktop · Cursor · Windsurf · Antigravity `mcpServers` 설정</h3>
+        <h3>Claude Desktop · Cursor · Windsurf · Antigravity `mcpServers` 설정 (`npx`)</h3>
         <div class="code-wrap">
           <pre id="cmd-mcp">{
   "mcpServers": {
     "sadt-mcp": {
-      "command": "uvx",
-      "args": [
-        "--from",
-        "git+https://github.com/Team-Sequence-Thaumaturge/-document-IR",
-        "sadt-mcp"
-      ]
+      "command": "npx",
+      "args": ["-y", "@quanxs/sadt-mcp"]
     }
   }
 }</pre>
