@@ -3815,13 +3815,6 @@
     "description": "SALabs AI Generative Poisson-RBF Texture Inpainting & 360° Bilateral Watertight Solid 3D Mesh Reconstruction Engine"
   },
   {
-    "slug": "salabs-compute-credit-checkout",
-    "title": "SA Labs",
-    "category": "general_utilities",
-    "url": "https://salabs.quanxs.com/tools/salabs-compute-credit-checkout.html",
-    "description": "SA Labs Official Checkout Page"
-  },
-  {
     "slug": "salabs-flagship-3d-spatial-workbench",
     "title": "Quanxs Sovereign 3D Spatial & Agentic Intelligence Workbench",
     "category": "spatial_3d_cad",
@@ -3946,13 +3939,6 @@
     "category": "general_utilities",
     "url": "https://salabs.quanxs.com/tools/time-zone-converter-clock.html",
     "description": "100% Client-side pure JS utility tool."
-  },
-  {
-    "slug": "toss-payments-checkout",
-    "title": "Toss Payments Native SDK Checkout Sandbox",
-    "category": "general_utilities",
-    "url": "https://salabs.quanxs.com/tools/toss-payments-checkout.html",
-    "description": "Toss Payments Native JS SDK Integration & Testing Sandbox Tool for SA Labs Sovereign Compute."
   },
   {
     "slug": "totp-2fa-authenticator",

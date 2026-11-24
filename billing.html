@@ -3,29 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Billing & Credits Center - Quanxs SA Labs</title>
-  <link rel="canonical" href="https://salabs.quanxs.com/billing.html">
+  <title>AI Agent M2M &amp; Web3 Settlement Center - Quanxs SA Labs</title>
+  <link rel="canonical" href="https://salabs.quanxs.com/billing">
   <meta name="robots" content="index, follow">
   <meta name="author" content="김치성 대표 (Quanxs / Team Sequence)">
-  <meta http-equiv="last-modified" content="2026-11-16">
-  <meta name="description" content="SA Labs Unified Billing Center. Compute Credits, Subscriptions, and x402 AI Agent Web3 Micropayments.">
-  <meta property="og:title" content="Billing & Credits Center - Quanxs SA Labs">
-  <meta property="og:description" content="SA Labs Unified Billing Center. Compute Credits, Enterprise Datasets, and x402 AI Agent Web3 Micropayments.">
-  <meta property="og:url" content="https://salabs.quanxs.com/billing.html">
+  <meta http-equiv="last-modified" content="2026-11-24">
+  <meta name="description" content="SA Labs Autonomous AI-to-AI x402 Web3 Micro-Settlement Gateway (Base &amp; Solana) and Enterprise B2B Licensing Inquiry Center.">
+  <meta property="og:title" content="AI Agent M2M &amp; Web3 Settlement Center - Quanxs SA Labs">
+  <meta property="og:description" content="Autonomous AI-to-AI x402 Web3 micro-settlements on Base &amp; Solana and Enterprise B2B technical inquiry hub.">
+  <meta property="og:url" content="https://salabs.quanxs.com/billing">
   <meta property="og:image" content="https://quanxs.com/favicon.png">
   <meta property="og:type" content="website">
-  <meta property="og:updated_time" content="2026-11-16T00:00:00+09:00">
+  <meta property="og:updated_time" content="2026-11-24T16:30:00+09:00">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Billing & Credits Center - Quanxs SA Labs",
-    "url": "https://salabs.quanxs.com/billing.html",
-    "dateModified": "2026-11-16",
+    "name": "AI Agent M2M & Web3 Settlement Center - Quanxs SA Labs",
+    "url": "https://salabs.quanxs.com/billing",
+    "dateModified": "2026-11-24",
     "publisher": {
       "@type": "Organization",
       "name": "Quanxs (Team Sequence)",
+      "url": "https://quanxs.com",
       "email": "chi@quanxs.com",
+      "telephone": "+82-10-3954-4096",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "건원대로 67 한진빌딩 3층 301호",
+        "addressLocality": "구리시",
+        "addressRegion": "경기도",
+        "addressCountry": "KR"
+      },
       "founder": {
         "@type": "Person",
         "name": "김치성",
@@ -43,8 +52,8 @@
       --card-bg: rgba(18, 22, 31, 0.75);
       --card-border: rgba(255, 255, 255, 0.1);
       --accent-cyan: #00f2fe;
+      --accent-green: #00ff88;
       --accent-purple: #7928ca;
-      --accent-pink: #ff0080;
       --text-main: #f1f5f9;
       --text-muted: #94a3b8;
     }
@@ -52,8 +61,8 @@
     body {
       font-family: 'Inter', sans-serif;
       background-color: var(--bg-dark);
-      background-image: 
-        radial-gradient(circle at 15% 15%, rgba(121, 40, 202, 0.15) 0%, transparent 40%),
+      background-image:
+        radial-gradient(circle at 15% 15%, rgba(0, 255, 136, 0.12) 0%, transparent 40%),
         radial-gradient(circle at 85% 85%, rgba(0, 242, 254, 0.15) 0%, transparent 40%);
       color: var(--text-main);
       min-height: 100vh;
@@ -62,183 +71,109 @@
       align-items: center;
       padding: 3rem 1.5rem;
     }
-    .container {
-      width: 100%;
-      max-width: 1100px;
-    }
-    header {
-      text-align: center;
-      margin-bottom: 4rem;
-    }
+    .container { width: 100%; max-width: 1100px; }
+    header { text-align: center; margin-bottom: 4rem; }
     .badge {
-      display: inline-block;
-      padding: 0.4rem 1rem;
-      background: linear-gradient(135deg, rgba(0,242,254,0.1), rgba(121,40,202,0.1));
-      border: 1px solid rgba(0,242,254,0.3);
-      border-radius: 9999px;
-      color: var(--accent-cyan);
-      font-weight: 600;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 1.5rem;
+      display: inline-block; padding: 0.4rem 1rem;
+      background: linear-gradient(135deg, rgba(0,242,254,0.1), rgba(0,255,136,0.1));
+      border: 1px solid rgba(0,242,254,0.3); border-radius: 9999px;
+      color: var(--accent-cyan); font-weight: 600; font-size: 0.85rem;
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1.5rem;
     }
     h1 {
-      font-size: 3.5rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 1rem;
+      font-size: 3rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem;
       background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
-    p.subtitle {
-      font-size: 1.25rem;
-      color: var(--text-muted);
-      max-width: 650px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-    
+    p.subtitle { font-size: 1.15rem; color: var(--text-muted); max-width: 680px; margin: 0 auto; line-height: 1.6; }
     .nav-back {
-      position: absolute;
-      top: 2rem;
-      left: 2rem;
-      color: var(--text-muted);
-      text-decoration: none;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: color 0.2s;
+      position: absolute; top: 2rem; left: 2rem; color: var(--text-muted); text-decoration: none;
+      font-weight: 500; display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s;
     }
     .nav-back:hover { color: var(--accent-cyan); }
-    
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-    }
-    
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 2rem; }
     .card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 2.5rem;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px;
+      padding: 2.5rem; display: flex; flex-direction: column; position: relative; overflow: hidden;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
-      text-decoration: none;
-      color: inherit;
+      text-decoration: none; color: inherit;
     }
-    .card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(255,255,255,0.25);
-    }
-    
-    .card.premium:hover { box-shadow: 0 10px 40px rgba(121, 40, 202, 0.3); border-color: var(--accent-purple); }
-    .card.ai:hover { box-shadow: 0 10px 40px rgba(0, 242, 254, 0.3); border-color: var(--accent-cyan); }
-    .card.fiat:hover { box-shadow: 0 10px 40px rgba(255, 0, 128, 0.3); border-color: var(--accent-pink); }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; height: 3px;
-    }
-    .card.premium::before { background: linear-gradient(90deg, var(--accent-purple), var(--accent-pink)); }
+    .card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.25); }
+    .card.ai:hover { box-shadow: 0 10px 40px rgba(0, 242, 254, 0.28); border-color: var(--accent-cyan); }
+    .card.chain:hover { box-shadow: 0 10px 40px rgba(0, 255, 136, 0.25); border-color: var(--accent-green); }
+    .card.b2b:hover { box-shadow: 0 10px 40px rgba(121, 40, 202, 0.28); border-color: var(--accent-purple); }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
     .card.ai::before { background: linear-gradient(90deg, var(--accent-cyan), #3b82f6); }
-    .card.fiat::before { background: linear-gradient(90deg, var(--accent-pink), #f59e0b); }
-
-    .card h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: #fff; }
+    .card.chain::before { background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan)); }
+    .card.b2b::before { background: linear-gradient(90deg, var(--accent-purple), #38bdf8); }
+    .card h2 { font-size: 1.45rem; font-weight: 700; margin-bottom: 1rem; color: #fff; }
     .card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 2rem; flex-grow: 1; }
-    
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      padding: 1rem;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      background: rgba(255,255,255,0.05);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.1);
+      display: inline-flex; align-items: center; justify-content: center; width: 100%;
+      padding: 1rem; border-radius: 12px; font-size: 0.98rem; font-weight: 600;
+      text-decoration: none; transition: all 0.2s ease;
+      background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1);
     }
-    
-    .card.premium .btn { background: var(--accent-purple); border: none; }
-    .card.premium .btn:hover { background: #6b21a8; }
-    .card.ai .btn { background: rgba(0,242,254,0.1); color: var(--accent-cyan); border-color: var(--accent-cyan); }
-    .card.ai .btn:hover { background: rgba(0,242,254,0.2); }
-    .card.fiat .btn:hover { background: rgba(255,255,255,0.1); }
-    
+    .card.ai .btn { background: rgba(0,242,254,0.12); color: var(--accent-cyan); border-color: var(--accent-cyan); }
+    .card.chain .btn { background: rgba(0,255,136,0.12); color: var(--accent-green); border-color: var(--accent-green); }
+    .card.b2b .btn { background: rgba(121,40,202,0.22); color: #d8b4fe; border-color: var(--accent-purple); }
     .pill {
-      position: absolute;
-      top: 1rem; right: 1rem;
-      font-size: 0.75rem; font-weight: 700;
-      padding: 0.25rem 0.75rem; border-radius: 99px;
-      font-family: 'JetBrains Mono', monospace;
+      position: absolute; top: 1rem; right: 1rem; font-size: 0.72rem; font-weight: 700;
+      padding: 0.25rem 0.75rem; border-radius: 99px; font-family: 'JetBrains Mono', monospace;
     }
-    .pill.b2c { background: rgba(255,0,128,0.2); color: var(--accent-pink); border: 1px solid var(--accent-pink); }
-    .pill.b2b { background: rgba(121,40,202,0.2); color: #c084fc; border: 1px solid var(--accent-purple); }
     .pill.m2m { background: rgba(0,242,254,0.2); color: var(--accent-cyan); border: 1px solid var(--accent-cyan); }
+    .pill.onchain { background: rgba(0,255,136,0.18); color: var(--accent-green); border: 1px solid var(--accent-green); }
+    .pill.b2b { background: rgba(121,40,202,0.22); color: #c084fc; border: 1px solid var(--accent-purple); }
   </style>
 </head>
 <body>
 
-  <a href="./index.html" class="nav-back">
+  <a href="/" class="nav-back">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
     Back to Main Portal
   </a>
 
   <main class="container">
     <header>
-      <div class="badge">SA Labs Global Settlement</div>
-      <h1>Billing & Credits Center</h1>
-      <p class="subtitle">Fuel your compute workloads. From human B2C credit top-ups to autonomous Web3 M2M micro-transactions for AI Agents.</p>
+      <div class="badge">AI-to-AI M2M &amp; On-Chain Protocol</div>
+      <h1>x402 &amp; Web3 Settlement Center</h1>
+      <p class="subtitle">Autonomous HTTP 402 machine-to-machine micro-settlements on Base &amp; Solana for AI Agents, plus offline B2B enterprise dataset licensing inquiries.</p>
     </header>
 
-    <section class="grid" aria-label="Billing and licensing tiers">
-      <!-- Card: Gumroad B2B Enterprise Dataset -->
-      <a href="https://quanxkimchi.gumroad.com/l/robotics-v9" target="_blank" rel="noopener noreferrer" class="card premium" style="border-color: #ff90e8;">
-        <div class="pill b2b" style="color: #ff90e8; border-color: #ff90e8; background: rgba(255,144,232,0.15);">Enterprise Dataset</div>
-        <h2>B2B 768-D Robotics DB</h2>
-        <p>Continuous Lie SE(3) &amp; Type-2 Bishop Frame Kinematics 410MB Enterprise Vector Pack. Instant commercial license purchase ($1,500 USD).</p>
-        <div class="btn" style="background: linear-gradient(135deg, #ff90e8, #7928ca); border:none;">Purchase on Gumroad ↗</div>
-      </a>
-
-      <!-- Card 1: Compute Credit -->
-      <a href="./tools/salabs-compute-credit-checkout.html" class="card premium">
-        <div class="pill b2c">B2C / B2B</div>
-        <h2>Compute Credit Top-Up</h2>
-        <p>Purchase compute credits to unlock heavy AI models, 3D rendering nodes, and enterprise-grade data lake pipelines. Supports Tiered Pricing (Starter, Pro, Enterprise).</p>
-        <div class="btn">View Pricing Tiers</div>
-      </a>
-
-      <!-- Card 4: x402 Web3 M2M -->
-      <a href="./tools/x402-http-402-payment-gateway.html" class="card ai">
+    <section class="grid" aria-label="AI Agent M2M and Web3 settlement endpoints">
+      <a href="/tools/x402-http-402-payment-gateway" class="card ai">
         <div class="pill m2m">AI Agent M2M</div>
         <h2>x402 Web3 AI Gateway</h2>
-        <p>HTTP 402 Payment Required enforcement for autonomous AI Agents. Supports 0.001 USDC cryptographic micro-settlements on Base &amp; Solana networks.</p>
-        <div class="btn">Access M2M Gateway</div>
+        <p>HTTP 402 Payment Required protocol for autonomous AI-to-AI agent tool calls. Supports 0.001 USDC cryptographic micro-settlements on Base &amp; Solana networks.</p>
+        <div class="btn">Access x402 M2M Gateway</div>
+      </a>
+
+      <a href="/agora/deploy" class="card chain">
+        <div class="pill onchain">Base On-Chain</div>
+        <h2>Base On-Chain Protocol Cockpit</h2>
+        <p>Direct smart-contract verification and autonomous A2A tool registry management for SalabsAgoraRegistry on Base Mainnet &amp; AgentKit integration.</p>
+        <div class="btn">Open On-Chain Cockpit</div>
+      </a>
+
+      <a href="mailto:chi@quanxs.com?subject=%5BSA%20Labs%20B2B%20Enterprise%20License%20Inquiry%5D" class="card b2b">
+        <div class="pill b2b">B2B Contract Only</div>
+        <h2>Enterprise Dataset Licensing</h2>
+        <p>Direct B2B contract consultation for 768-D Robotics Spatial Topology, Digital Twin CAD Manifolds, and STEM CoT datasets (no B2C online checkout on SA Labs).</p>
+        <div class="btn">Contact B2B Desk (chi@quanxs.com)</div>
       </a>
     </section>
 
     <footer style="margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,0.1);text-align:center;color:var(--text-muted);font-size:0.85rem;">
-      <p style="margin-bottom:0.6rem;">Enterprise Billing &amp; Licensing Contact: <strong style="color:#fff;">퀀스(Quanxs) · 대표 김치성</strong> · 사업자등록번호: <strong style="color:#fff;">769-19-02375</strong> · 주소: 경기 구리시 건원대로 67 한진빌딩 3층 · <a href="mailto:chi@quanxs.com" style="color:var(--accent-cyan);text-decoration:none;font-weight:600;">chi@quanxs.com</a></p>
+      <p style="margin-bottom:0.6rem;">운영자: <strong style="color:#fff;">퀀스(Quanxs) · 대표 김치성</strong> · 사업자등록번호: <strong style="color:#fff;">769-19-02375</strong> · 대표전화: <a href="tel:010-3954-4096" style="color:var(--accent-cyan);text-decoration:none;font-weight:600;">010-3954-4096</a> · 주소: 경기 구리시 건원대로 67 한진빌딩 3층 301호 · <a href="mailto:chi@quanxs.com" style="color:var(--accent-cyan);text-decoration:none;font-weight:600;">chi@quanxs.com</a> · 호스팅 서비스 제공: Vercel Inc.</p>
       <nav aria-label="Footer policy links" style="display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:0.5rem;">
-        <a href="./about.html" style="color:var(--accent-cyan);text-decoration:none;">About</a>
-        <a href="./privacy.html" style="color:var(--accent-cyan);text-decoration:none;">Privacy Policy</a>
-        <a href="./terms.html" style="color:var(--accent-cyan);text-decoration:none;">Terms of Service</a>
-        <a href="./llms.txt" style="color:var(--accent-cyan);text-decoration:none;">llms.txt</a>
+        <a href="/about" style="color:var(--accent-cyan);text-decoration:none;">About</a>
+        <a href="/privacy" style="color:var(--accent-cyan);text-decoration:none;">Privacy Policy</a>
+        <a href="/terms" style="color:var(--accent-cyan);text-decoration:none;">Terms of Service</a>
+        <a href="/agora" style="color:var(--accent-cyan);text-decoration:none;">Digital Agora</a>
+        <a href="/llms.txt" style="color:var(--accent-cyan);text-decoration:none;">llms.txt</a>
       </nav>
-      <p style="font-size:0.78rem;">© 2026 퀀스(Quanxs) SA Labs · 대표 김치성 · 사업자등록번호 769-19-02375 · Last Updated: <time datetime="2026-11-18">2026-11-18</time></p>
+      <p style="font-size:0.78rem;">© 2026 퀀스(Quanxs) SA Labs · 대표 김치성 · 사업자등록번호 769-19-02375 · Last Updated: <time datetime="2026-11-24">2026-11-24</time></p>
     </footer>
   </main>
 
