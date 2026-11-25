@@ -1,7 +1,7 @@
 # Quanxs SA Labs (SALABS) - AI Agent & LLM Index
 > Autonomous Web Utility Tools, SADT Document Transfer MCP, Digital Agora & B2B Data Lake Infrastructure
 > Last-Updated: 2026-11-24
-> Operator: 퀀스(Quanxs / Team Sequence) | CEO/DPO: 김치성 대표 | Business Reg: 769-19-02375 | Tel: 010-3954-4096 | Address: 경기 구리시 건원대로 67 한진빌딩 3층 301호 | Hosting: Vercel Inc. | Email: chi@quanxs.com
+> Operator: 퀀스(Quanxs / Team Sequence) | CEO/DPO: 김치성 대표 | Business Reg: 769-19-02375 | Tel: 010-3954-4096 | Address: 경기도 구리시 건원대로 67, 한진빌딩 3층 구리청년창업센터 301호 (인창동) | Hosting: Vercel Inc. | Email: chi@quanxs.com
 > Canonical Portal: https://salabs.quanxs.com/ | Root Hub: https://quanxs.com/ | Sitemap: https://salabs.quanxs.com/sitemap.xml
 
 ## 👤 Operator & Official Contact
@@ -9,7 +9,7 @@
 - Representative / CEO / DPO: 김치성 대표
 - Business Registration No.: 769-19-02375
 - Telephone: 010-3954-4096 (+82-10-3954-4096)
-- Address: 경기 구리시 건원대로 67 한진빌딩 3층 301호
+- Address: 경기도 구리시 건원대로 67, 한진빌딩 3층 구리청년창업센터 301호 (인창동)
 - Hosting Provider: Vercel Inc.
 - Official Business Email: chi@quanxs.com
 - Legal & Policy Pages: [About](https://salabs.quanxs.com/about) | [Privacy Policy](https://salabs.quanxs.com/privacy) | [Terms of Service](https://salabs.quanxs.com/terms) | [x402 & Web3 Settlement](https://salabs.quanxs.com/billing)
